@@ -1,0 +1,686 @@
+<IdentitasModul
+  kode="F1"
+  tier="Klaster Fondasi · Modul 1 dari 19"
+  posisi="Bahasa Kuantitatif, Dimensi & Skala Kosmik"
+  estimasi="55 menit studi mendalam"
+  tingkat="S1 Pengantar & Pra-IOAA"
+  prasyarat={[]}
+  koneksi={[
+    { id: 'f2', label: 'F2 · Trigonometri & Vektor', peran: 'Formalisasi sudut kecil dan geometri 3D' },
+    { id: 'f3', label: 'F3 · Kalkulus & Analisis Data', peran: 'Linearisasi grafik log-log dan propagasi galat' },
+    { id: 'a1', label: 'A1 · Skala Alam Semesta', peran: 'Paralaks trigonometri dan rantai tangga jarak' },
+    { id: 'a5', label: 'A5 · Radiasi & Fotometri', peran: 'Skala Pogson bolometrik dan hukum Stefan–Boltzmann' },
+  ]}
+  sumberUtama={['SRC-01', 'SRC-02', 'SRC-05', 'SRC-11', 'SRC-17']}
+/>
+
+<Tujuan>
+
+- Membedakan **konstanta definisi eksak IAU 2012/2015** ($1\ \text{au}$, $c$, $M_{\text{bol}}$) dari **besaran ukur empiris** ($G$, $M_\odot$, $H_0$) serta menjaga konsistensi **angka penting** sepanjang rantai komputasi.
+- Menerapkan **analisis dimensional formal** dan **Teorema $\Pi$ Buckingham** secara elementer untuk memeriksa kelayakan persamaan dan menurunkan bentuk hukum skala (*scaling laws*) tanpa menghafal koefisien.
+- Memanipulasi hukum pangkat $y = k x^n$ dan persamaan eksponensial melalui **logaritma basis 10** dan **linearisasi grafik log–log / semi-log** (mencakup hukum Pogson, modulus jarak, dan hukum Kepler III).
+- Menurunkan batas galat kuantitatif **aproksimasi sudut kecil** ($\sin\theta \approx \tan\theta \approx \theta$) dari deret Taylor orde-3 dan menentukan batas resolusi parsek.
+- Membangun **estimasi Fermi berorde besar** (*order-of-magnitude physics*) lengkap dengan batas atas/bawah fisik sebelum melakukan integrasi atau perhitungan numerik rinci.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'definisi',
+      label: 'Definisi Eksak IAU & SI',
+      peran: 'Memisahkan nilai eksak (1 au, c) dari besaran terukur berketidakpastian (G, M☉).',
+      ke: ['dimensi', 'sudut'],
+    },
+    {
+      id: 'dimensi',
+      label: 'Analisis Dimensional & Scaling',
+      peran: 'Menguji konsistensi satuan dan mereduksi konstanta lewat rasio matahari.',
+      ke: ['log', 'fermi'],
+    },
+    {
+      id: 'log',
+      label: 'Logaritma & Linearisasi Pangkat',
+      peran: 'Memetakan rentang fluks 10¹⁰× ke garis lurus dan skala magnitudo Pogson.',
+      ke: ['rantai'],
+    },
+    {
+      id: 'sudut',
+      label: 'Sudut Kecil & Parsek',
+      peran: 'Menghubungkan jarak radial dengan ukuran sudut atau paralaks tahunan.',
+      ke: ['rantai'],
+    },
+    {
+      id: 'fermi',
+      label: 'Estimasi Fermi Orde Besar',
+      peran: 'Menaksir cepat jumlah atom, tekanan pusat, atau skala waktu bintang.',
+      ke: ['rantai'],
+    },
+    {
+      id: 'rantai',
+      label: 'Rantai Observables Kosmik',
+      peran: 'Menyambung paralaks → jarak → modulus → magnitudo → luminositas → radius.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Astrofisika bekerja di rentang ekstrem yang tidak dijumpai di laboratorium biasa: dari panjang gelombang sinar gamma ($10^{-14}\ \text{m}$) hingga cakrawala alam semesta teramati ($4{,}4 \times 10^{26}\ \text{m}$) — selisih 40 orde besar. Modul ini tidak sekadar melatih konversi satuan, melainkan membangun <Sorot>disiplin dimensional, pemisahan definisi eksak vs pengukuran empiris, linearisasi hukum pangkat, dan intuisi orde besar</Sorot> sebagai perisai pertama terhadap kesalahan aljabar dan fisis.
+</div>
+
+<Bagian id="satuan-iau" judul="1. Sistem Satuan SI, Resolusi IAU 2012/2015 & Angka Penting" tag="Definisi Eksak vs Pengukuran">
+
+Dalam perhitungan ilmiah, menuliskan bilangan tanpa memahami asal-usul satuannya sering menyebabkan pencampuran antara **angka eksak definisi** dan **angka hasil pengukuran berketidakpastian**. Sejak resolusi Persatuan Astronomi Internasional (**IAU**) tahun 2012 dan 2015 (`SRC-17`), sejumlah besaran astronomi tidak lagi bergantung pada pengukuran massa Bumi atau orbit yang berubah-ubah, melainkan ditetapkan sebagai konstanta definisi eksak.
+
+<Epistemik jenis="fakta" judul="Resolusi IAU 2012 B2 & 2015 B2/B3">
+
+1. **Satuan Astronomi ($1\ \text{au}$, IAU 2012 B2):** Ditetapkan **tepat** sebesar $1\ \text{au} = 149\,597\,870\,700\ \text{m}$ (tanpa galat pengukuran). Sebelumnya, $1\ \text{au}$ bergantung pada penentuan massa Matahari $GM_\odot$.
+2. **Tahun cahaya ($\text{ly}$):** Didefinisikan dari tahun Julian eksak ($1\ \text{yr}_J = 365{,}25 \times 86\,400\ \text{s} = 31\,557\,600\ \text{s}$) dan laju cahaya eksak $c = 299\,792\,458\ \text{m/s}$, sehingga $1\ \text{ly} = 9{,}4607304725808 \times 10^{15}\ \text{m}$ (eksak).
+3. **Parsek ($\text{pc}$, IAU 2015 B2 Note 4):** Didefinisikan sebagai jarak di mana $1\ \text{au}$ tepat membentangkan sudut $1''$ dalam aproksimasi sudut kecil:
+   $$1\ \text{pc} \equiv \frac{648\,000}{\pi}\ \text{au} \approx 206\,264{,}806247\ \text{au} \approx 3{,}08567758149 \times 10^{16}\ \text{m}.$$
+4. **Konstanta Nominal Matahari (IAU 2015 B3):** Nilai rujukan baku agar publikasi ilmiah seragam: $\mathcal{R}_\odot^{\text{N}} = 6{,}957 \times 10^8\ \text{m}$, $\mathcal{L}_\odot^{\text{N}} = 3{,}828 \times 10^{26}\ \text{W}$, dan $(\mathcal{GM})_\odot^{\text{N}} = 1{,}3271244 \times 10^{20}\ \text{m}^3\text{s}^{-2}$.
+5. **Mengapa $GM_\odot$ jauh lebih presisi daripada $M_\odot$?** Dari hukum Kepler III, pengamatan radar planet dan wahana antariksa mengukur produk $GM_\odot$ hingga ketelitian $>10$ angka signifikan, sedangkan konstanta gravitasi $G = (6{,}67430 \pm 0{,}00015) \times 10^{-11}\ \text{m}^3\text{kg}^{-1}\text{s}^{-2}$ hanya diketahui hingga $\sim 4$–$5$ angka penting. Akibatnya, massa Matahari $M_\odot = (GM_\odot)/G \approx 1{,}9884 \times 10^{30}\ \text{kg}$ terbatasi kepresisiannya oleh $G$, bukan oleh orbit Bumi!
+
+</Epistemik>
+
+### Aturan Angka Penting dalam Komputasi Berantai
+
+Dalam perhitungan astronomi, <Sorot warna="cyan">pembulatan dini adalah musuh utama ketelitian</Sorot>, terutama pada operasi pengurangan dua angka yang hampir sama besar (*catastrophic cancellation*) atau perpangkatan eksponen tinggi ($T^4$ pada Stefan–Boltzmann, di mana galat $1\%$ pada suhu menghasilkan galat $4\%$ pada luminositas).
+
+- **Perkalian / Pembagian:** Jumlah angka penting hasil mengikuti faktor dengan jumlah angka penting paling sedikit.
+- **Penjumlahan / Pengurangan:** Jumlah desimal di belakang koma mengikuti suku dengan desimal paling kasar (paling sedikit tempat desimalnya).
+- **Logaritma ($y = \log_{10} x$):** Karakteristik (bagian bilangan bulat di depan koma) hanya menentukan orde besar $10^k$; <Sorot>hanya mantisa (angka di belakang koma) yang membawa angka penting dari $x$</Sorot>. Contoh: $x = 2{,}50 \times 10^4$ memiliki $3$ angka penting, maka $\log_{10} x = 4{,}39794\ldots \approx 4{,}398$ (3 angka di belakang koma!).
+- **Aturan Simpan Digit Tambahan:** Pertahankan minimal 2 digit pengaman (*guard digits*) pada semua langkah antara, dan baru bulatkan di baris hasil akhir.
+
+| Besaran Astronomi Baku | Simbol | Nilai Rujukan | Satuan SI | Status Epistemik |
+|---|---|---|---|---|
+| Satuan Astronomi | $1\ \text{au}$ | $1{,}495978707 \times 10^{11}$ | $\text{m}$ | Eksak (IAU 2012) |
+| Parsek | $1\ \text{pc}$ | $3{,}0857 \times 10^{16}$ | $\text{m}$ | Turunan eksak dari au & $\pi$ |
+| Tahun cahaya | $1\ \text{ly}$ | $9{,}4607 \times 10^{15}$ | $\text{m}$ | Eksak (tahun Julian & $c$) |
+| Produk massa Matahari | $(GM)_\odot$ | $1{,}3271244 \times 10^{20}$ | $\text{m}^3\text{s}^{-2}$ | Nominal IAU 2015 |
+| Massa Matahari | $M_\odot$ | $1{,}9884 \times 10^{30}$ | $\text{kg}$ | Terbatasi presisi $G$ |
+| Radius nominal Matahari | $R_\odot$ | $6{,}957 \times 10^{8}$ | $\text{m}$ | Nominal IAU 2015 |
+| Luminositas nominal Matahari | $L_\odot$ | $3{,}828 \times 10^{26}$ | $\text{W}$ | Nominal IAU 2015 |
+| Magnitudo bolometrik nol | $M_{\text{bol}} = 0$ | $L_0 = 3{,}0128 \times 10^{28}$ | $\text{W}$ | Eksak (IAU 2015 B2) |
+
+<VisualParametrik
+  type="data_table"
+  judul="Sampel Katalog Observasi Mini (untuk latihan konversi & rantai magnitudo)"
+  params={{
+    title: 'Data Fotometri & Astrometri Lima Bintang Sampel',
+    columns: [
+      { key: 'bintang', label: 'Bintang', align: 'left' },
+      { key: 'p', label: 'Paralaks p', unit: 'arcsec', align: 'right' },
+      { key: 'm', label: 'Mag. semu m', unit: 'mag', align: 'right' },
+      { key: 'T', label: 'Suhu T', unit: 'K', align: 'right' },
+    ],
+    rows: [
+      { bintang: 'Alpha-1', p: 0.25, m: 3.5, T: 5778 },
+      { bintang: 'Beta-2', p: 0.05, m: 6.2, T: 8200 },
+      { bintang: 'Gamma-3', p: 0.02, m: 8.4, T: 4200 },
+      { bintang: 'Delta-4', p: 0.01, m: 7.0, T: 11556 },
+      { bintang: 'Epsilon-5', p: 0.1, m: 4.83, T: 5778 },
+    ],
+    uncertaintyNote: 'Klik baris mana saja untuk menandai bintang acuan; perhatikan bahwa jarak d = 1/p selalu berbanding terbalik dengan paralaks.',
+  }}
+  caption="Bandingkan baris Alpha-1 dan Epsilon-5: paralaks p = 0,25'' berarti jarak d = 4 pc, sedangkan Epsilon-5 (p = 0,10'', d = 10 pc) memiliki m = M = 4,83 mag sehingga secara fisis seterang Matahari."
+/>
+
+<Contoh judul="Konversi berantai dengan penjagaan digit & rasio presisi">
+
+<Langkah>
+
+Bintang Proxima Centauri diukur wahana Gaia memiliki paralaks $p = 0{,}76807''$ (berarti $5$ angka penting). Tentukan jaraknya dalam $\text{pc}$, $\text{au}$, $\text{ly}$, dan $\text{m}$ serta cek konsistensi antar-satuan.
+
+</Langkah>
+
+<Langkah>
+
+Dari definisi paralaks sudut kecil:
+$$d_{\text{pc}} = \frac{1}{p''} = \frac{1}{0{,}76807} \approx 1{,}30196\ \text{pc} \longrightarrow 1{,}3020\ \text{pc} \text{ (5 angka penting)}.$$
+
+</Langkah>
+
+<Langkah>
+
+Simpan digit pengaman $1{,}30196467\ \text{pc}$ saat mengkonversi ke $\text{au}$ agar tidak terjadi ralat pembulatan:
+$$d_{\text{au}} = d_{\text{pc}} \times \frac{648\,000}{\pi} \approx 1{,}30196467 \times 206\,264{,}806 \approx 2{,}6855 \times 10^{5}\ \text{au}.$$
+
+</Langkah>
+
+<Langkah>
+
+Konversi ke meter dan tahun cahaya:
+$$d_{\text{m}} = 2{,}68549 \times 10^{5}\ \text{au} \times 1{,}4959787 \times 10^{11}\ \text{m/au} \approx 4{,}0174 \times 10^{16}\ \text{m},$$
+$$d_{\text{ly}} = \frac{4{,}01744 \times 10^{16}\ \text{m}}{9{,}46073 \times 10^{15}\ \text{m/ly}} \approx 4{,}2464\ \text{ly}.$$
+Perhatikan bahwa jika kita terlanjur membulatkan $d_{\text{pc}} \to 1{,}30$ lalu mengalikan $3{,}26$, hasilnya menjadi $4{,}238\ \text{ly}$ — meleset hampir $0{,}2\%$ pada digit ketiga hanya akibat pembulatan dini!
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="analisis-dimensi" judul="2. Analisis Dimensional, Teorema Pi & Teknik Rasio" tag="Konsistensi Fisis & Hukum Skala">
+
+Persamaan fisika yang sahih harus selalu **homogen secara dimensional**: kedua ruas dan setiap suku yang dijumlahkan wajib memiliki dimensi fundamental $[M]^\alpha [L]^\beta [T]^\gamma [\Theta]^\delta$ yang identik. Lebih jauh lagi, analisis dimensional memungkinkan kita menebak struktur hukum alam sebelum memecahkan persamaan diferensialnya.
+
+<Rumus judul="Prinsip Homogenitas & Konstruksi Skala Buckingham">
+
+$$[Q] = [M]^{\alpha}[L]^{\beta}[T]^{\gamma}[\Theta]^{\delta}, \qquad \Pi = Q_1^{a_1} Q_2^{a_2} \cdots Q_k^{a_k} \quad (\text{tak berdimensi})$$
+
+</Rumus>
+
+<Contoh judul="Menurunkan periode orbit Kepler & skala waktu jatuh bebas (tanpa integral!)" olimpiade>
+
+<Langkah>
+
+**Masalah:** Sebuah awan gas bola bermassa $M$ dan kerapatan seragam $\rho$ (atau radius awal $R$) runtuh akibat gravitasi dirinya sendiri dari keadaan diam. Berapa skala waktu keruntuhan *free-fall* $t_{\text{ff}}$ jika parameter yang relevan hanyalah $G$, $\rho$ (atau $M$ dan $R$)?
+
+</Langkah>
+
+<Langkah>
+
+Catat dimensi fundamental tiap besaran:
+$$[t_{\text{ff}}] = \text{T}, \qquad [G] = \frac{[\text{F}][\text{L}]^2}{[\text{M}]^2} = \text{M}^{-1}\text{L}^3\text{T}^{-2}, \qquad [\rho] = \text{M}\text{L}^{-3}.$$
+
+</Langkah>
+
+<Langkah>
+
+Susun ansats hukum pangkat $t_{\text{ff}} = \kappa\, G^a \rho^b$, dengan $\kappa$ konstanta murni tak berdimensi:
+$$\text{T}^1 = \left(\text{M}^{-1}\text{L}^3\text{T}^{-2}\right)^a \left(\text{M}\text{L}^{-3}\right)^b = \text{M}^{-a+b}\,\text{L}^{3a-3b}\,\text{T}^{-2a}.$$
+
+</Langkah>
+
+<Langkah>
+
+Samakan eksponen di kedua ruas:
+$$\text{Untuk T: } -2a = 1 \implies a = -\frac{1}{2}.$$
+$$\text{Untuk M (dan L): } -a + b = 0 \implies b = a = -\frac{1}{2}.$$
+Maka diperoleh hukum skala eksak hingga faktor numerik $\kappa$:
+$$t_{\text{ff}} = \kappa\,\frac{1}{\sqrt{G\rho}} \propto (G\rho)^{-1/2}.$$
+(Integrasi kalkulus penuh di Mekanika Langit nanti memberi $\kappa = \sqrt{3\pi/32} \approx 0{,}543$; dengan $\rho = 3M/(4\pi R^3)$ ini pula yang menghasilkan $T^2 \propto R^3/(GM)$!).
+
+</Langkah>
+
+</Contoh>
+
+### Teknik Rasio Dimensi (Menghilangkan Konstanta Universal)
+
+Saat membandingkan dua objek sejenis (misalnya bintang X terhadap Matahari, atau planet B terhadap Bumi), **membagi persamaan asli dengan versi rujukannya** secara serentak membatalkan semua konstanta universal ($4\pi, \sigma, G, h, c$), sehingga mengurangi peluang salah menekan tombol kalkulator dan mengungkap ketergantungan fungsional dengan seketika:
+
+$$L = 4\pi R^2 \sigma T^4 \implies \frac{L}{L_\odot} = \left(\frac{R}{R_\odot}\right)^2 \left(\frac{T}{T_\odot}\right)^4, \qquad v_{\text{orb}} = \sqrt{\frac{GM}{r}} \implies \frac{v}{v_\oplus} = \sqrt{\frac{M/M_\odot}{r/\text{au}}}.$$
+
+<VisualParametrik
+  type="schematic"
+  judul="Geometri Hukum Kuadrat Terbalik Fluks Radiasi"
+  params={{
+    variant: 'inverse_square',
+    sourceLabel: 'L = 4πR²σT⁴',
+    baseFluxLabel: 'F₀',
+    radii: [1, 2, 4],
+  }}
+  caption="Perhatikan luas penampang kotak cyan: saat jarak menjadi 2r₀ dan 4r₀, energi total L yang menembus tiap cangkang bola tetap sama, namun tersebar ke luas 4A₀ dan 16A₀ sehingga fluks terukur turun menjadi 1/4 dan 1/16 kali lipat."
+/>
+
+</Bagian>
+
+<Bagian id="logaritma-linearisasi" judul="3. Logaritma Basis 10, Skala Kosmik & Linearisasi Hukum Pangkat" tag="Skala Logaritmik">
+
+Logaritma basis 10 ($\log x$) dan logaritma natural ($\ln x$) terhubung melalui identitas basis:
+
+$$\log_{10} x = \frac{\ln x}{\ln 10} \approx \frac{\ln x}{2{,}302585}, \qquad \frac{d}{dx}(\log_{10} x) = \frac{1}{x \ln 10}.$$
+
+Identitas turunan di atas sangat krusial saat menurunkan propagasi galat pada magnitudo bintang (akan dibuktikan lengkap di modul F3 & A5): jika jarak $d$ punya ketidakpastian $\sigma_d$, maka ketidakpastian modulus jarak $\mu = 5\log_{10}(d/10)$ langsung mengikuti $\sigma_\mu = \dfrac{5}{\ln 10}\dfrac{\sigma_d}{d} \approx 2{,}1715\,\dfrac{\sigma_d}{d}$.
+
+<Gambar id="skala-log" />
+
+<VisualParametrik
+  type="log_scale_bar"
+  judul="Penggaris Orde Besar Panjang Kosmik (dari Inti Atom hingga Horizon Alam Semesta)"
+  params={{
+    axisLabel: 'Orde besar panjang dalam meter',
+    unit: 'm',
+    minExp: -15,
+    maxExp: 27,
+    compareLinear: true,
+    zones: [
+      { label: 'Mikroskopis', fromExp: -15, toExp: -9, tone: 'ungu' },
+      { label: 'Tata Surya', fromExp: 6, toExp: 13, tone: 'amber' },
+      { label: 'Galaksi & Kosmos', fromExp: 16, toExp: 27, tone: 'cyan' },
+    ],
+    markers: [
+      { label: 'Proton', exp: -15, valueText: '10⁻¹⁵ m', note: 'Skala inti atom' },
+      { label: 'Bumi (R)', exp: 6.8, valueText: '6,4×10⁶ m' },
+      { label: '1 AU', exp: 11.17, valueText: '1,5×10¹¹ m', highlight: true },
+      { label: '1 pc', exp: 16.49, valueText: '3,1×10¹⁶ m' },
+      { label: 'Bima Sakti', exp: 21, valueText: '10²¹ m' },
+      { label: 'Alam semesta', exp: 26.6, valueText: '4×10²⁶ m' },
+    ],
+  }}
+  caption="Klik dua penanda berbeda pada garis log untuk membaca rasio ordenya langsung (10^Δ). Aktifkan perbandingan skala linear untuk melihat mengapa skala linear memampatkan hampir semua objek ke titik nol."
+/>
+
+### Linearisasi Grafik: Log–Log vs Semi-Log
+
+Dalam analisis data observasi, hampir jarang kita mem-fit kurva melengkung secara langsung sebelum menguji apakah ia merupakan **hukum pangkat** (*power law*) atau **fungsi eksponensial** (*exponential decay/growth*):
+
+1. **Uji Hukum Pangkat ($y = k x^n$):** Ambil $\log_{10}$ di kedua ruas:
+   $$\log y = n \log x + \log k \quad \Longleftrightarrow \quad Y = n X + c.$$
+   Di grafik **log–log** ($\log y$ vs $\log x$), kurva berubah menjadi **garis lurus** dengan <Sorot>gradien sama dengan pangkat $n$</Sorot> dan intersep $c = \log k$. Contoh klasik: Diagram Hertzsprung–Russell ($\log L$ vs $\log T_{\text{eff}}$), di mana garis bintang beradius konstan memiliki kemiringan tepat $4$ (atau $-4$ bila sumbu suhu dibalik ke kiri), serta Hukum Kepler III ($\log P = \tfrac{3}{2}\log a + \text{konst}$).
+2. **Uji Eksponensial ($y = y_0 e^{-\alpha x}$):** Ambil $\ln$ (atau $\log_{10}$) di kedua ruas terhadap $x$ biasa (bukan $\log x$):
+   $$\ln y = -\alpha x + \ln y_0 \qquad \text{atau} \qquad \log_{10} y = -(\alpha \log_{10} e)\, x + \log_{10} y_0.$$
+   Di grafik **semi-log** ($\log y$ vs $x$), peluruhan radioaktif inti dan atenuasi intensitas atmosfer ($I = I_0 e^{-\tau_0 \sec z}$, Hukum Bouguer–Lambert) tampak sebagai garis lurus bergradien negatif.
+
+<Gambar id="kepler-loglog" />
+
+<VisualParametrik
+  type="hr_diagram"
+  judul="Pratinjau Skala Log–Log Astronomi: Garis Iso-Radius pada Diagram H–R"
+  params={{
+    showIsoRadius: true,
+    stars: [
+      { name: 'Matahari', teff: 5778, lum: 1, highlight: true },
+      { name: 'Bintang X', teff: 11556, lum: 16 },
+      { name: 'Raksasa K', teff: 4000, lum: 230 },
+    ],
+  }}
+  caption="Perhatikan garis putus-putus radius konstan (0,1; 1; 10 R☉): karena kedua sumbu logaritmik dan log(L/L☉) = 2 log(R/R☉) + 4 log(T/T☉), bintang dengan R tetap membentuk garis lurus miring sejajar."
+/>
+
+<Contoh judul="Hukum Pogson & penggabungan magnitudo sistem bintang ganda">
+
+<Langkah>
+
+**Situasi:** Sebuah sistem bintang ganda tampak tidak terpisah di teleskop kecil, terdiri atas komponen A ($m_A = 4{,}00$) dan komponen B ($m_B = 5{,}50$). Hitung magnitudo gabungan $m_{\text{tot}}$ yang terukur detektor.
+
+</Langkah>
+
+<Langkah>
+
+**Prinsip fisis:** Magnitudo adalah besaran logaritmik, sehingga **tidak boleh dijumlahkan langsung** ($m_{\text{tot}} \neq 4{,}00 + 5{,}50$ dan bukan pula rata-ratanya). Besaran yang aditif secara fisis adalah **fluks energi** $F_{\text{tot}} = F_A + F_B$.
+
+</Langkah>
+
+<Langkah>
+
+Dari hukum Pogson $m - m_{\text{ref}} = -2{,}5 \log(F / F_{\text{ref}})$, nyatakan perbandingan fluks terhadap komponen primer A:
+$$\frac{F_B}{F_A} = 10^{-0{,}4(m_B - m_A)} = 10^{-0{,}4(5{,}50 - 4{,}00)} = 10^{-0{,}60} \approx 0{,}25119.$$
+
+</Langkah>
+
+<Langkah>
+
+Maka total fluks adalah $F_{\text{tot}} = F_A + F_B = F_A(1 + 0{,}25119) = 1{,}25119\,F_A$. Konversi kembali ke skala magnitudo terhadap $m_A$:
+$$m_{\text{tot}} = m_A - 2{,}5 \log_{10}\!\left(\frac{F_{\text{tot}}}{F_A}\right) = 4{,}00 - 2{,}5\log_{10}(1{,}25119) \approx 4{,}00 - 0{,}243 = 3{,}76\ \text{mag}.$$
+Cek intuisi: bintang gabungan harus lebih terang (magnitudo lebih kecil) daripada komponen paling terang ($m_A = 4{,}00$), namun selisihnya harus kurang dari $0{,}753\ \text{mag}$ (kasus kembar identik $F_{\text{tot}} = 2F_A \implies \Delta m = -2{,}5\log 2 \approx -0{,}753$). Konsisten!
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="sudut-kecil" judul="4. Aproksimasi Sudut Kecil, Batas Galat Taylor & Parsek" tag="Geometri Sudut Kecil">
+
+Untuk sembarang sudut $\theta$ yang dinyatakan dalam **radian** (wajib radian, karena $1\ \text{rad} = s/R$ bersifat tak berdimensi), deret Taylor di sekitar $\theta = 0$ adalah:
+
+$$\sin\theta = \theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \cdots, \qquad \tan\theta = \theta + \frac{\theta^3}{3} + \frac{2\theta^5}{15} + \cdots, \qquad \cos\theta = 1 - \frac{\theta^2}{2!} + \frac{\theta^4}{4!} - \cdots.$$
+
+Dengan memangkas deret pada suku pertama tak-konstan ($\sin\theta \approx \theta$, $\tan\theta \approx \theta$), kita memperoleh **rumus sudut kecil** untuk ukuran linier $D$ yang tegak lurus garis pandang pada jarak $d$:
+
+$$D \approx d\,\theta_{\text{rad}} = d \cdot \frac{\theta''}{206\,264{,}8}.$$
+
+<BatasValiditas
+  aturan={[
+    {
+      rumus: 'sin θ ≈ θ  dan  tan θ ≈ θ  (θ dalam radian)',
+      berlakuJika: '|θ| ≪ 1 rad. Pada θ = 5° (0,0873 rad), suku sisa orde-3 θ³/6 ≈ 1,1×10⁻⁴ menghasilkan galat relatif hanya ~0,13% (sin) dan ~0,25% (tan).',
+      gagalJika: 'θ ≥ 15°–20° (galat tan melampaui 2–4%), atau saat membandingkan dua sudut kecil yang hampir sama besar hingga akurasi ppm.',
+      akibat: 'Diameter benda dekat yang berdiameter sudut besar (seperti Bulan ~0,5° masih aman < 0,001%, tetapi jarak sudut antar rasi ~30° akan menyimpang parah).',
+    },
+    {
+      rumus: 'd [pc] = 1 / p [arcsec]',
+      berlakuJika: 'Paralaks p ≪ 1 rad (semua bintang di luar Tata Surya memiliki p < 0,77″ ≈ 3,7×10⁻⁶ rad) dan galat pengukuran σ_p/p ≪ 10%.',
+      gagalJika: 'p memiliki galat relatif besar (σ_p/p ≥ 20%, bias Lutz–Kelker menggeser taksiran jarak 1/p secara sistematis), atau benda berada di dalam Tata Surya (paralaks planet pakai sin p = 1 au / d).',
+      akibat: 'Memakai d = 1/p untuk bintang dengan paralaks negatif atau SNR rendah memberi estimasi jarak tak fisis.',
+    },
+    {
+      rumus: 'L / L☉ = (R / R☉)² (T_eff / T☉)⁴',
+      berlakuJika: 'Fluks total terintegrasi atas seluruh panjang gelombang (luminositas bolometrik) dengan geometri bola homogen.',
+      gagalJika: 'Digunakan langsung untuk luminositas pada satu filter optik (seperti V atau B) tanpa koreksi bolometrik (BC), atau bintang cepat berotasi yang memipih (oblate).',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="estimasi-fermi" judul="5. Estimasi Fermi & Kontrol Orde Besar Fisika" tag="Fisika Orde Besar">
+
+Estimasi Fermi memecah kuantitas astronomis raksasa menjadi produk dan rasio dari besaran sehari-hari atau konstanta mikroskopis/makroskopis yang diketahui. Prinsip utamanya: <Sorot warna="hijau">jika kamu membagi masalah menjadi 4–5 faktor independen dan masing-masing sedikit meleset ke atas atau ke bawah, galat acaknya saling mengompensasi sebagai $\sqrt{N}$</Sorot>.
+
+<Contoh judul="Estimasi Fermi: Waktu hidup nuklir Matahari vs waktu Kelvin–Helmholtz" olimpiade>
+
+<Langkah>
+
+**Pertanyaan:** Sebelum fisika nuklir ditemukan, fisikawan abad ke-19 (Kelvin & Helmholtz) mengira Matahari bersinar dari energi potensial gravitasi yang menyusut. Bandingkan umur energi gravitasi ($t_{\text{KH}}$) dengan umur energi fusi nuklir ($t_{\text{nuk}}$).
+
+</Langkah>
+
+<Langkah>
+
+**Tahap 1 — Skala energi gravitasi:** Energi ikat gravitasi bola seragam adalah $|E_{\text{grav}}| = \frac{3}{5}\frac{GM_\odot^2}{R_\odot} \sim \frac{GM_\odot^2}{R_\odot}$. Dengan $GM_\odot \approx 1{,}33 \times 10^{20}\ \text{m}^3\text{s}^{-2}$, $M_\odot \approx 2 \times 10^{30}\ \text{kg}$, dan $R_\odot \approx 7 \times 10^8\ \text{m}$:
+$$|E_{\text{grav}}| \approx \frac{3}{5} \times \frac{1{,}33 \times 10^{20} \times 2 \times 10^{30}}{7 \times 10^8} \approx 2{,}3 \times 10^{41}\ \text{J}.$$
+Dengan luminositas $L_\odot \approx 3{,}8 \times 10^{26}\ \text{W}$, waktu Kelvin–Helmholtz adalah:
+$$t_{\text{KH}} \approx \frac{2{,}3 \times 10^{41}}{3{,}8 \times 10^{26}} \approx 6 \times 10^{14}\ \text{s} \approx 1{,}9 \times 10^7\ \text{tahun} \text{ (~20 juta tahun)}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Tahap 2 — Skala energi fusi nuklir ($\text{4p} \to {}^4\text{He}$):** Fusi mengubah fraksi massa $\eta \approx 0{,}007$ ($0{,}7\%$) menjadi energi menurut $E = \Delta m c^2$. Hanya inti dalam sekitar $f_{\text{inti}} \approx 10\%$ massa hidrogen Matahari ($X \approx 0{,}75$) yang cukup panas untuk terbakar sebelum meninggalkan deret utama:
+$$E_{\text{nuk}} \approx 0{,}10 \times 0{,}007 \times M_\odot c^2 \approx 7 \times 10^{-4} \times (2 \times 10^{30}) \times (9 \times 10^{16}) \approx 1{,}3 \times 10^{44}\ \text{J}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Tahap 3 — Waktu hidup nuklir:**
+$$t_{\text{nuk}} \approx \frac{1{,}3 \times 10^{44}}{3{,}8 \times 10^{26}} \approx 3{,}3 \times 10^{17}\ \text{s} \approx 10^{10}\ \text{tahun} \text{ (~10 miliar tahun)}.$$
+**Kesimpulan:** $t_{\text{KH}} \sim 20\ \text{juta tahun}$ bertentangan keras dengan bukti geologi batuan Bumi ($> 4\ \text{miliar tahun}$), membuktikan secara kuantitatif bahwa kontraksi gravitasi mustahil menopang Matahari.
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="rantai-olimpiade" judul="6. Rantai Komputasi Berantai: Paralaks → Modulus → Luminositas → Radius" tag="Sintesis Olimpiade">
+
+Soal OSN dan IOAA menggabungkan seluruh perkakas F1 menjadi rantai deduksi tunggal:
+
+$$\underbrace{p'' \longrightarrow d = \frac{1}{p''}}_{\text{Sudut kecil}} \longrightarrow \underbrace{\mu = m - M = 5\log d - 5}_{\text{Hukum kuadrat terbalik + Pogson}} \longrightarrow \underbrace{M - M_{\text{bol},\odot} = -2{,}5\log\frac{L}{L_\odot}}_{\text{Skala fluks}} \longrightarrow \underbrace{\frac{R}{R_\odot} = \sqrt{\frac{L/L_\odot}{(T/T_\odot)^4}}}_{\text{Stefan–Boltzmann}}.$$
+
+<Contoh judul="Rantai lengkap: dari data observasi mentah ke radius bintang" olimpiade>
+
+<Langkah>
+
+**Data:** Bintang Delta-4 pada tabel katalog mini memiliki paralaks $p = 0{,}010''$, magnitudo bolometrik semu $m_{\text{bol}} = 7{,}00\ \text{mag}$, dan suhu efektif $T = 11\,556\ \text{K}$. Tentukan luminositas ($L/L_\odot$) dan jari-jarinya ($R/R_\odot$). (Ambil $M_{\text{bol},\odot} = 4{,}74$, $T_\odot = 5\,778\ \text{K}$).
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Jarak dan modulus jarak:**
+$$d = \frac{1}{0{,}010} = 100\ \text{pc}, \qquad \mu = 5\log_{10}(100) - 5 = 5(2) - 5 = 5{,}00\ \text{mag}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Magnitudo bolometrik absolut:**
+$$M_{\text{bol}} = m_{\text{bol}} - \mu = 7{,}00 - 5{,}00 = 2{,}00\ \text{mag}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 3 — Luminositas relatif terhadap Matahari:**
+$$M_{\text{bol}} - M_{\text{bol},\odot} = 2{,}00 - 4{,}74 = -2{,}74 = -2{,}5\log_{10}\!\left(\frac{L}{L_\odot}\right)$$
+$$\implies \log_{10}\!\left(\frac{L}{L_\odot}\right) = \frac{2{,}74}{2{,}5} = 1{,}096 \implies \frac{L}{L_\odot} = 10^{1{,}096} \approx 12{,}47.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 4 — Jari-jari bintang dari rasio Stefan–Boltzmann:**
+Perhatikan bahwa $T / T_\odot = 11\,556 / 5\,778 = 2{,}000$, sehingga $(T / T_\odot)^4 = 2^4 = 16$. Maka:
+$$\frac{R}{R_\odot} = \sqrt{\frac{12{,}47}{16}} \approx \sqrt{0{,}7796} \approx 0{,}883\ R_\odot.$$
+**Interpretasi:** Meski suhunya $2\times$ lebih panas dari Matahari dan luminositasnya $12{,}5\,L_\odot$, radiusnya sedikit lebih kecil dari Matahari (kemungkinan bintang katai putih muda yang masih panas atau sub-katai tipe B panas).
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="7. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Magnitudo dua bintang kembar identik dengan m = 5,0 digabungkan menghasilkan magnitudo 10,0 (atau rata-ratanya 5,0).',
+      kenapaKeliru: 'Skala magnitudo bersifat logaritmik dan berarah terbalik: angka lebih kecil berarti lebih terang. Besaran yang bersifat aditif adalah fluks radiasi F, bukan magnitudo m.',
+      caraDeteksi: 'Uji batas konsistensi: menyalakan dua lampu identik secara bersamaan harus membuat ruangan 2 kali lebih terang, artinya magnitudo total wajib turun sebesar Δm = −2,5 log₁₀(2) ≈ −0,753 mag (menjadi 4,247 mag), bukan naik menjadi 10,0 atau tetap 5,0.',
+      benar: 'F_tot = F₁ + F₂, sehingga m_tot = m₁ − 2,5 log₁₀(1 + 10^(−0,4(m₂ − m₁))). Untuk kembar identik, m_tot = m − 0,753 mag.',
+    },
+    {
+      salah: '1 tahun cahaya (ly) lebih panjang daripada 1 parsek (pc), dan parsek adalah satuan waktu.',
+      kenapaKeliru: 'Kata "tahun" pada tahun cahaya dan akhiran "-sek" (detik busur) pada parsek sering mengecoh seolah keduanya satuan waktu.',
+      caraDeteksi: 'Cek definisi dimensi: ly = c × 1 tahun = [L T⁻¹][T] = [L]; sedangkan pc = 1 au / 1″ = [L] / [tak berdimensi] = [L]. Lalu bandingkan rasio numerik: 1 pc = 206 265 au ≈ 3,26 ly > 1 ly.',
+      benar: 'Keduanya adalah satuan panjang. 1 pc ≈ 3,2616 ly ≈ 3,086 × 10¹⁶ m.',
+    },
+    {
+      salah: 'Pada bilangan x = 1,500 × 10⁵, jumlah angka pentingnya ditentukan oleh pangkat 10⁵, dan pada log x = 5,1761 ada 5 angka penting.',
+      kenapaKeliru: 'Pangkat 10ⁿ pada notasi ilmiah dan bagian bulat (karakteristik) pada logaritma semata-mata menyatakan posisi koma desimal (skala orde), bukan presisi pengukuran instrumen.',
+      caraDeteksi: 'Ubah satuan dari meter ke kilometer (1,500 × 10² km): presisi relatif alat ukur (1/1500) tidak berubah walau pangkat 10 berubah. Jadi mantisa logaritmalah (0,1761 → 4 desimal) yang mencerminkan 4 angka penting asli.',
+      benar: '1,500 × 10⁵ memiliki 4 angka penting; pada log₁₀(1,500 × 10⁵) = 5,1761, karakteristik 5 menandai orde 10⁵ sedangkan 4 angka penting tersimpan di mantisa .1761.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="8. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="f1-cek-1"
+  pertanyaan="Sebuah bintang berjarak $50\\ \\text{pc}$. Berapa paralaks tahunannya dalam arcsec?"
+  opsi={['$0{,}02\\text{ arcsec}$', '$0{,}05\\text{ arcsec}$', '$0{,}10\\text{ arcsec}$', '$50\\text{ arcsec}$']}
+  jawaban={0}
+  penjelasan="Paralaks $p = 1/d(\\text{pc}) = 1/50 = 0{,}02\\text{ arcsec}$. Parsek didefinisikan tepat sehingga hubungan ini berlaku secara definisi pada sudut kecil."
+/>
+
+<CekPaham
+  id="f1-cek-2"
+  pertanyaan="Dua bintang memiliki magnitudo semu $1{,}0$ dan $6{,}0$. Berapa rasio fluks bintang pertama terhadap bintang kedua?"
+  opsi={['$100$', '$10$', '$5$', '$50$']}
+  jawaban={0}
+  penjelasan="$\\Delta m = -5$, dan setiap selisih $5$ magnitudo setara faktor $100$ dalam fluks menurut hukum Pogson: $F_1/F_2 = 10^{0{,}4 \\times 5} = 100$."
+/>
+
+<CekPaham
+  id="f1-cek-3"
+  pertanyaan="Sebuah bintang memiliki luminositas $4\\,L_\\odot$ dan jari-jari $2\\,R_\\odot$. Berapa suhu efektifnya relatif terhadap Matahari?"
+  opsi={['$T_\\odot/\\sqrt{2}$', '$T_\\odot$', '$\\sqrt{2}\\,T_\\odot$', '$2\\,T_\\odot$']}
+  jawaban={1}
+  penjelasan="Dari $L/L_\\odot = (R/R_\\odot)^2(T/T_\\odot)^4$, diperoleh $4 = 2^2 (T/T_\\odot)^4 = 4(T/T_\\odot)^4 \\implies T = T_\\odot$."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'f1-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Sebuah bintang ganda visual terdiri atas dua komponen identik bermagnitudo sama $m_1 = m_2 = 6{,}00$. Jika kita menjauhkan sistem ini dua kali lebih jauh dari posisi semula tanpa mengubah luminositasnya, berapa magnitudo gabungan yang diamati sekarang?',
+      petunjuk: 'Hitung fluks gabungan awal (2F), lalu terapkan hukum kuadrat terbalik saat jarak d menjadi 2d.',
+      langkahKunci: [
+        'Fluks awal satu bintang adalah $F_1$. Gabungan dua bintang pada jarak $d$ memberi $F_{\\text{awal}} = 2 F_1$.',
+        'Saat jarak digandakan ($d\' = 2d$), hukum kuadrat terbalik menurunkan fluks total sebesar faktor $4$: $F_{\\text{akhir}} = \\frac{2F_1}{4} = \\frac{1}{2} F_1$.',
+        'Modulus jarak bertambah $\\Delta \\mu = 5\\log_{10}(2) \\approx 1{,}505\\ \\text{mag}$, namun gabungan dua bintang lebih terang $-2{,}5\\log_{10}(2) \\approx -0{,}753\\ \\text{mag}$ dibanding satu bintang.',
+        'Total magnitudo gabungan: $m_{\\text{akhir}} = 6{,}00 - 2{,}5\\log_{10}(1/2) = 6{,}00 + 0{,}753 = 6{,}75\\ \\text{mag}$.',
+      ],
+      rubrik: [
+        'Mengakumulasi fluks kedua bintang sebelum menjauhkan sistem (tidak menjumlahkan magnitudo langsung).',
+        'Menerapkan hukum kuadrat terbalik $F \\propto d^{-2}$ sehingga faktor jarak $2\\times$ mengubah fluks sebesar $1/4$.',
+        'Hasil numerik tepat sekitar $6{,}75\\ \\text{mag}$.',
+      ],
+    },
+    {
+      id: 'f1-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dengan analisis dimensional saja, turunkan bentuk ketergantungan kecepatan bunyi $c_s$ dalam gas ideal isotermal yang hanya bergantung pada tekanan $P$ dan kerapatan massa $\\rho$. Kemudian substitusikan hukum gas ideal $P = \\rho k_B T / (\\mu m_H)$ untuk memperoleh ketergantungan $c_s$ terhadap $T$.',
+      petunjuk: 'Tulis dimensi $[P] = \\text{M}\\text{L}^{-1}\\text{T}^{-2}$ dan $[\\rho] = \\text{M}\\text{L}^{-3}$.',
+      langkahKunci: [
+        'Dimensi target $[c_s] = \\text{L}\\text{T}^{-1}$. Dimensi $[P] = \\text{M}\\text{L}^{-1}\\text{T}^{-2}$ dan $[\\rho] = \\text{M}\\text{L}^{-3}$.',
+        'Susun $c_s = \\kappa\\, P^a \\rho^b \\implies \\text{L}\\text{T}^{-1} = \\text{M}^{a+b} \\text{L}^{-a-3b} \\text{T}^{-2a}$.',
+        'Dari eksponen T: $-2a = -1 \\implies a = 1/2$. Dari eksponen M: $a + b = 0 \\implies b = -1/2$. Cek eksponen L: $-1/2 - 3(-1/2) = +1$ (konsisten!).',
+        'Didapat $c_s = \\kappa\\sqrt{P/\\rho}$. Memasukkan $P/\\rho = k_B T/(\\mu m_H)$ menghasilkan $c_s = \\kappa\\sqrt{k_B T/(\\mu m_H)}$ (untuk gas isotermal $\\kappa = 1$, untuk adiabatik $\\kappa = \\sqrt{\\gamma}$).',
+      ],
+      rubrik: [
+        'Menjabarkan dimensi $[P]$ dan $[\\rho]$ dalam M, L, T secara benar.',
+        'Menyelesaikan sistem persamaan linear tiga eksponen dan memeriksa konsistensi dimensi panjang L.',
+        'Mengubah $P/\\rho$ menjadi suhu $T$ lewat persamaan keadaan gas ideal.',
+      ],
+    },
+    {
+      id: 'f1-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Perkirakan orde besar jumlah foton cahaya tampak yang jatuh pada pupil mata manusia berdiameter $d \\approx 5\\ \\text{mm}$ setiap detik ketika menatap bintang bermagnitudo semu $m_V = 0$ (diketahui fluks bintang $m_V = 0$ di pita tampak $\\Delta\\lambda \\approx 100\\ \\text{nm}$ sekitar $\\lambda = 550\\ \\text{nm}$ adalah $F_0 \\approx 3{,}6 \\times 10^{-9}\\ \\text{W/m}^2$).',
+      petunjuk: 'Hitung daya yang masuk luas pupil $A = \\pi d^2/4$, lalu bagi dengan energi satu foton $E = hc/\\lambda$.',
+      langkahKunci: [
+        'Luas pupil: $A = \\frac{\\pi}{4}(5 \\times 10^{-3}\\ \\text{m})^2 \\approx 2 \\times 10^{-5}\\ \\text{m}^2$.',
+        'Daya optik masuk mata: $P = F_0 A \\approx (3{,}6 \\times 10^{-9})(2 \\times 10^{-5}) \\approx 7{,}2 \\times 10^{-14}\\ \\text{W}$.',
+        'Energi satu foton $\\lambda = 550\\ \\text{nm}$: $E_{\\gamma} = \\frac{hc}{\\lambda} \\approx \\frac{6{,}63\\times 10^{-34} \\times 3\\times 10^8}{5{,}5\\times 10^{-7}} \\approx 3{,}6 \\times 10^{-19}\\ \\text{J}$.',
+        'Laju foton masuk mata: $\\dot{N}_\\gamma = P / E_{\\gamma} \\approx \\frac{7{,}2\\times 10^{-14}}{3{,}6\\times 10^{-19}} \\approx 2 \\times 10^5\\ \\text{foton/s}$. Untuk bintang batas mata telanjang $m_V = 6$ ($250\\times$ lebih redup), tinggal sekitar $\\sim 800\\ \\text{foton/s}$!',
+      ],
+      rubrik: [
+        'Mengkonversi diameter pupil mm ke meter dan menghitung luas penampang lingkaran.',
+        'Menghitung energi satu foton hijau dalam Joule.',
+        'Memperoleh orde besar sekitar $10^5$ foton/s (dan penalaran batas mata telanjang menjadi nilai tambah).',
+      ],
+    },
+    {
+      id: 'f1-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Dari tabel Katalog Mini di Bagian 1, tentukan bintang mana yang memiliki **radius terbesar** antara Alpha-1 ($p = 0{,}25^{\\prime\\prime}$, $m = 3{,}5$, $T = 5\\,778\\ \\text{K}$) dan Delta-4 ($p = 0{,}01^{\\prime\\prime}$, $m = 7{,}0$, $T = 11\\,556\\ \\text{K}$), dengan asumsi tidak ada ekstingsi dan nilai $m$ adalah bolometrik.',
+      petunjuk: 'Hitung $M$ masing-masing dari $p$ dan $m$, lalu bandingkan $\\log(L_1/L_2)$ dan rasio suhu $(T_1/T_2)^4$.',
+      langkahKunci: [
+        'Alpha-1: $d_1 = 1/0{,}25 = 4\\ \\text{pc} \\implies \\mu_1 = 5\\log(4) - 5 = 3{,}01 - 5 = -1{,}99$. Maka $M_1 = 3{,}50 - (-1{,}99) = 5{,}49\\ \\text{mag}$.',
+        'Delta-4: $d_2 = 1/0{,}01 = 100\\ \\text{pc} \\implies \\mu_2 = 5{,}00$. Maka $M_2 = 7{,}00 - 5{,}00 = 2{,}00\\ \\text{mag}$.',
+        'Selisih magnitudo absolut: $M_1 - M_2 = 3{,}49 \\implies L_2/L_1 = 10^{0{,}4 \\times 3{,}49} \\approx 24{,}9$.',
+        'Rasio suhu $T_2/T_1 = 11\,556 / 5\,778 = 2$, sehingga $(T_2/T_1)^4 = 16$. Maka $(R_2/R_1)^2 = (L_2/L_1)/(T_2/T_1)^4 = 24{,}9/16 \\approx 1{,}56 \\implies R_2 \\approx 1{,}25\\,R_1$. Delta-4 beradius lebih besar!',
+      ],
+      rubrik: [
+        'Menghitung modulus jarak bertanda negatif dengan benar untuk bintang lebih dekat dari 10 pc ($d_1 = 4\\ \\text{pc}$).',
+        'Menemukan rasio luminositas intrinsik dari selisih magnitudo absolut $M_1 - M_2$.',
+        'Mengisolasi rasio radius $(R_2/R_1) = \\sqrt{(L_2/L_1)/(T_2/T_1)^4}$.',
+      ],
+    },
+    {
+      id: 'f1-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Mengapa resolusi IAU 2012 memutuskan mengubah $1\\ \\text{au}$ menjadi sebuah bilangan meter eksak alih-alih tetap mendefinisikannya sebagai radius orbit lingkaran sebuah partikel uji bermassa nol yang mengelilingi Matahari dengan periode $2\\pi/k$ hari (konstanta Gauss)?',
+      petunjuk: 'Pikirkan hubungan $GM_\\odot$ terhadap kehilangan massa Matahari akibat angin matahari & fusi, serta konsistensi relativitas umum.',
+      langkahKunci: [
+        'Dalam definisi lama berbasis konstanta gravitasi Gauss $k$, nilai meter dari $1\\ \\text{au}$ terikat pada $GM_\\odot$. Padahal Matahari terus kehilangan massa sekitar $\\sim 6\\times 10^{12}\\ \\text{g/s}$ akibat fusi nuklir ($\\Delta m = L_\\odot/c^2$) dan angin matahari, sehingga $GM_\\odot$ perlahan menurun seiring waktu kosmik.',
+        'Selain itu, dalam Relativitas Umum jarak koordinat bergantung pada kerangka metrik (BCRS vs TDB), sehingga definisi dinamis memerlukan koreksi kerangka referensi rumit.',
+        'Dengan membakukan $1\\ \\text{au} = 149\\,597\\,870\\,700\\ \\text{m}$ secara eksak, skala jarak Tata Surya menjadi invarian terhadap evolusi massa Matahari dan langsung tertaut ke standar meter berbasis $c$.',
+      ],
+      rubrik: [
+        'Menyebut ketergantungan definisi lama pada $GM_\\odot$ dan konstanta Gauss.',
+        'Mengidentifikasi konsekuensi hilangnya massa Matahari ($L_\\odot/c^2$ + angin surya) atau perubahan kerangka relativistik.',
+        'Menjelaskan manfaat metrologis pembakuan eksak berbasis satuan SI meter.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'f1-log-1',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Misalkan di suatu alam semesta hipotetis, hukum radiasi Stefan–Boltzmann berubah menjadi $j = \\sigma\' T^3$ (bukan $T^4$). Bagaimana kemiringan garis jari-jari konstan ($R = \\text{konst}$) pada diagram H–R standar ($\\log L$ vs $\\log T_{\\text{eff}}$ dengan $T_{\\text{eff}}$ meningkat ke kiri)?',
+      petunjuk: 'Logaritmakan $L = 4\\pi R^2 \\sigma\' T^3$ terhadap sumbu $X = -\\log T$ dan $Y = \\log L$.',
+      rubrik: [
+        'Menuliskan $\\log L = \\log(4\\pi R^2 \\sigma\') + 3\\log T$.',
+        'Memperhatikan arah sumbu horizontal diagram H–R konvensional ($T$ naik ke kiri, $X = -\\log T$).',
+        'Menyimpulkan garis iso-radius tetap lurus namun menjadi lebih landai dengan kemiringan $-3$ (sebelumnya $-4$).',
+      ],
+      jawabanKunci:
+        'Karena $\\log L = 3\\log T + \\text{konst}(R)$, pada grafik log–log standar dengan sumbu $\\log T$ meningkat ke kanan gradiennya adalah $+3$, sedangkan pada diagram H–R astronomi ($T_{\\text{eff}}$ meningkat ke kiri, sehingga koordinat horizontal $X \\propto -\\log T$), garis radius konstan akan turun ke kanan dengan gradien $-3$ (lebih landai daripada $-4$ di alam semesta kita).',
+    },
+    {
+      id: 'f1-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang siswa menulis di pembahasannya: "Karena paralaks bintang $p = 0{,}25^{\\prime\\prime}$ dan galatnya $\\sigma_p = 0{,}01^{\\prime\\prime}$, maka jarak $d = 1/0{,}25 = 4\\ \\text{pc}$. Dengan aturan sudut kecil $\\sin p \\approx p$, panjang diameter sudut Matahari yang tampak dari bintang tersebut pada $d = 4\\ \\text{pc}$ adalah $2\\times 0{,}25^{\\prime\\prime} = 0{,}50^{\\prime\\prime}$." Temukan kesalahan konseptual yang tersembunyi!',
+      petunjuk: 'Bedakan antara jari-jari orbit Bumi ($1\\ \\text{au}$) sebagai baseline paralaks dengan diameter fisik Matahari ($2 R_\\odot \\approx 0{,}0093\\ \\text{au}$)!',
+      rubrik: [
+        'Mengidentifikasi bahwa paralaks tahunan $p$ memakai baseline radius orbit Bumi $a = 1\\ \\text{au}$, BUKAN jari-jari Matahari $R_\\odot$.',
+        'Menghitung ukuran sudut Matahari yang sebenarnya dari $4\\ \\text{pc}$: $\\theta_\\odot = D_\\odot / d \\approx (1{,}39\\times 10^9) / (4 \\times 3{,}086\\times 10^{16}) \\text{ rad} \\approx 0{,}0023^{\\prime\\prime}$.',
+      ],
+      jawabanKunci:
+        'Siswa menyamakan radius orbit Bumi ($1\\ \\text{au}$) dengan radius fisik Matahari ($R_\\odot$). Paralaks $p = 0{,}25^{\\prime\\prime}$ berarti jarak $1\\ \\text{au}$ membentangkan sudut $0{,}25^{\\prime\\prime}$ jika dilihat tegak lurus dari bintang tersebut. Karena diameter Matahari hanya $2R_\\odot \\approx 1{,}392\\times 10^9\\ \\text{m} \\approx 0{,}0093\\ \\text{au}$, diameter sudut Matahari dari jarak $4\\ \\text{pc}$ hanyalah $0{,}0093 \\times 0{,}25^{\\prime\\prime} \\approx 0{,}0023^{\\prime\\prime}$, seratus kali lebih kecil dari $0{,}50^{\\prime\\prime}$!',
+    },
+    {
+      id: 'f1-log-3',
+      tipe: 'prediksi_akibat',
+      pertanyaan:
+        'Jika dalam suatu eksperimen radiasi bintang seseorang lupa mengonversi suhu dari derajat Celcius ke Kelvin saat menghitung rasio luminositas bintang A ($27^\\circ\\text{C}$ hipotetis, benda dingin) dan bintang B ($327^\\circ\\text{C}$), ke arah mana galat perhitungannya menyimpang dan seberapa besar faktor penyimpangannya?',
+      petunjuk: 'Bandingkan rasio $(327+273)/(27+273) = 600/300$ versus $327/27$.',
+      rubrik: [
+        'Menghitung rasio benar dalam Kelvin: $(600/300)^4 = 2^4 = 16$.',
+        'Menghitung rasio salah dalam Celcius: $(327/27)^4 \\approx (12{,}11)^4 \\approx 21\,510$.',
+        'Menyimpulkan hasil salah terlalu besar lebih dari seribu kali lipat ($\\approx 1\,344\\times$ kebesaran) karena suhu Celcius tidak memiliki titik nol mutlak termodinamika.',
+      ],
+      jawabanKunci:
+        'Skala Stefan–Boltzmann mensyaratkan suhu mutlak Kelvin karena daya radiasi nol hanya terjadi pada $0\\ \\text{K}$. Secara benar, rasio fluks adalah $(600\\ \\text{K} / 300\\ \\text{K})^4 = 16$. Jika memakai Celcius, rasio terhitung menjadi $(327/27)^4 \\approx 21\,510$, melenceng terlalu besar sekitar $1\,344$ kali lipat!',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="f1-refleksi-1"
+  pertanyaan="Mengapa astronom menggunakan sistem rasio matahari ($L/L_\odot, M/M_\odot, R/R_\odot$) bersama konstanta nominal IAU 2015 dan skala logaritmik Pogson alih-alih selalu menghitung dalam Joule dan kilogram murni? Apa risiko yang muncul bila konversi balik ke SI diperlukan?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'f1-m1', gerbang: 'observasi', teks: 'Membedakan nilai definisi eksak IAU ($1\\ \\text{au}$, $c$, $M_{\\text{bol}}=0$) vs konstanta empiris ($G$) beserta aturan angka penting logaritma (mantisa).' },
+    { id: 'f1-m2', gerbang: 'derivasi', teks: 'Menggunakan analisis dimensional untuk menguji persamaan baru dan menurunkan bentuk hukum skala (seperti $t_{\\text{ff}} \\propto (G\\rho)^{-1/2}$).' },
+    { id: 'f1-m3', gerbang: 'derivasi', teks: 'Mengonversi hukum pangkat ke grafik log–log dan eksponensial ke semi-log serta memaknai gradien dan intersepnya.' },
+    { id: 'f1-m4', gerbang: 'fermi', teks: 'Menghitung estimasi Fermi orde besar (atom bintang, laju foton, $t_{\\text{KH}}$ vs $t_{\\text{nuk}}$) tanpa kalkulator.' },
+    { id: 'f1-m5', gerbang: 'logika', teks: 'Menjelaskan mengapa magnitudo tidak boleh dijumlahkan langsung dan kapan aproksimasi sudut kecil & $d = 1/p$ gagal.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="9. Tabel Konstanta & Referensi Akademik" tag="Rujukan Modul F1">
+
+<Konstanta
+  data={[
+    { simbol: '1 au (eksak IAU 2012)', nilai: '1,495978707 × 10¹¹', satuan: 'm' },
+    { simbol: '1 pc', nilai: '3,0857 × 10¹⁶', satuan: 'm' },
+    { simbol: '1 pc', nilai: '206 264,8', satuan: 'au' },
+    { simbol: '1 ly (eksak Julian)', nilai: '9,4607 × 10¹⁵', satuan: 'm' },
+    { simbol: '(GM)☉ (nominal IAU 2015)', nilai: '1,3271244 × 10²⁰', satuan: 'm³ s⁻²' },
+    { simbol: 'M☉', nilai: '1,9884 × 10³⁰', satuan: 'kg' },
+    { simbol: 'L☉ (nominal IAU 2015)', nilai: '3,828 × 10²⁶', satuan: 'W' },
+    { simbol: 'R☉ (nominal IAU 2015)', nilai: '6,957 × 10⁸', satuan: 'm' },
+    { simbol: 'M_bol,☉ (IAU 2015)', nilai: '4,74', satuan: 'mag' },
+    { simbol: 'ln 10', nilai: '2,302585', satuan: '—' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-01', 'SRC-02', 'SRC-05', 'SRC-11', 'SRC-17']}
+  pemetaan={[
+    { sumberId: 'SRC-01', rujukan: 'Basic Mathematical Tools & Order-of-Magnitude Estimation pada silabus IOAA.' },
+    { sumberId: 'SRC-02', rujukan: 'Silabus Matematika Dasar, Satuan Astronomi & Metode Estimasi OSN Astronomi.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al. (6e), Bab 1 & Appendix A: satuan astronomi, definisi parsek, sistem magnitudo.' },
+    { sumberId: 'SRC-11', rujukan: 'OpenStax University Physics Vol. 1 Bab 1: analisis dimensional, angka penting, dan perkiraan Fermi.' },
+    { sumberId: 'SRC-17', rujukan: 'IAU Resolutions 2012 B2 (1 au eksak) dan 2015 B2/B3 (skala magnitudo bolometrik & nilai nominal matahari).' },
+  ]}
+/>
+
+</Bagian>

@@ -1,0 +1,535 @@
+<IdentitasModul
+  kode="F5"
+  tier="Klaster Fondasi · Modul 5 dari 19"
+  posisi="Gelombang, Doppler Relativistik, Optik Difraksi & Termodinamika Gas/Radiasi"
+  estimasi="85 menit studi mendalam"
+  tingkat="S1 Pengantar & IOAA Penuh"
+  prasyarat={[
+    { id: 'f3', label: 'F3 · Kalkulus & Analisis Data' },
+    { id: 'f4', label: 'F4 · Mekanika' },
+  ]}
+  koneksi={[
+    { id: 'f6', label: 'F6 · Listrik-Magnet & Modern', peran: 'Sifat kuantum foton, spektroskopi atom Bohr, dan tekanan radiasi' },
+    { id: 'a5', label: 'A5 · Radiasi & Fotometri', peran: 'Kurva Planck lengkap, hukum Wien, Stefan–Boltzmann, dan ekstingsi' },
+    { id: 'a6', label: 'A6 · Tata Surya & Eksoplanet', peran: 'Kesetimbangan termal planet dan lepasnya atmosfer Jeans' },
+    { id: 'a7', label: 'A7 · Instrumen & Observasi', peran: 'Optik teleskop, piringan Airy, skala pelat CCD, dan spektrograf kisi' },
+    { id: 'l1', label: 'L1 · Bintang: Karakteristik & Spektrum', peran: 'Kecepatan radial Doppler dan pelebaran garis termal/rotasi' },
+  ]}
+  sumberUtama={['SRC-04', 'SRC-06', 'SRC-11', 'SRC-13']}
+/>
+
+<Tujuan>
+
+- Memahami persamaan gelombang 1D, prinsip superposisi/interferensi, serta membedakan **Efek Doppler non-relativistik**, **Efek Doppler relativistik khusus lengkap**, dan **Doppler transversal**.
+- Menerapkan optik geometris (pembiasan Snellius, lensa tipis, teleskop afokal, *plate scale* bidang fokus) serta memisahkan secara tegas peran diameter aperture ($D^2$) dan panjang fokus ($f_{\text{obj}}/f_{\text{ok}}$).
+- Menurunkan syarat interferensi kisi difraksi $d\sin\theta = m\lambda$ dan **daya pisah spektroskopik $R = mN$**, kriteria Rayleigh piringan Airy $\theta_{\min} = 1{,}22\,\lambda/D$, serta batas *seeing* atmosfer.
+- Menurunkan hubungan adiabatik kuasi-statik $PV^\gamma = \text{konstan}$ dari Hukum I Termodinamika dan teori kinetik gas ideal, serta membandingkan laju termal Maxwell–Boltzmann terhadap kelajuan lepas planet.
+- Menghubungkan tekanan radiasi $P_{\text{rad}} = \frac{1}{3}aT^4$, hukum Wien, dan hukum Stefan–Boltzmann sebagai fondasi termodinamika foton.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'gelombang',
+      label: 'Persamaan Gelombang & Superposisi',
+      peran: 'Beda fasa δφ = 2πΔs/λ yang melahirkan interferensi konstruktif dan destruktif.',
+      ke: ['optik-fisik', 'doppler'],
+    },
+    {
+      id: 'doppler',
+      label: 'Doppler Klasik vs Relativistik',
+      peran: 'Mengubah pergeseran spektrum Δλ/λ₀ menjadi kecepatan radial & redshift kosmologi.',
+      ke: ['sintesis'],
+    },
+    {
+      id: 'optik-geo',
+      label: 'Optik Geometri & Plate Scale',
+      peran: 'Pemetaan sudut langit ke skala mm detektor CCD serta perbesaran sudut teleskop.',
+      ke: ['optik-fisik'],
+    },
+    {
+      id: 'optik-fisik',
+      label: 'Difraksi Airy & Kisi Spektrograf',
+      peran: 'Batas resolusi sudut θ_min = 1,22λ/D dan resolusi spektrum R = λ/Δλ = mN.',
+      ke: ['sintesis'],
+    },
+    {
+      id: 'termo',
+      label: 'Hukum I Termo, Adiabatik & Maxwell',
+      peran: 'PV^γ = konst, konveksi bintang, v_rms gas, dan tekanan radiasi foton.',
+      ke: ['sintesis'],
+    },
+    {
+      id: 'sintesis',
+      label: 'Observasi Spektral & Astrofisika',
+      peran: 'Membaca suhu, ukuran, rotasi, dan atmosfer objek langit dari foton saja.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Berbeda dengan fisika laboratorium, astronom hampir tidak pernah bisa menyentuh bintang atau mengambil sampel nebula ke atas meja. Hampir seluruh informasi astrofisika tiba sebagai radiasi elektromagnetik yang diproses oleh optik teleskop dan dianalisis memakai hukum termodinamika gas serta radiasi. Di modul ini kita mendalami <Sorot>gelombang, Doppler relativistik, optik difraksi, serta penurunan hukum termodinamika gas ideal dan radiasi</Sorot> (`SRC-04`, `SRC-13`).
+</div>
+
+<Bagian id="gelombang-doppler" judul="1. Persamaan Gelombang, Superposisi & Efek Doppler Relativistik" tag="Gelombang & Relativitas">
+
+Gelombang elektromagnetik di ruang hampa menjalar memenuhi persamaan gelombang diferensial parsial dan relasi dispersi linear $c = \lambda\nu$:
+
+$$\frac{\partial^2 \vec{E}}{\partial x^2} = \frac{1}{c^2}\frac{\partial^2 \vec{E}}{\partial t^2}, \qquad E_{\gamma} = h\nu = \frac{hc}{\lambda}.$$
+
+Jika dua berkas cahaya koheren menempuh lintasan berbeda sebesar $\Delta s$, beda fasanya adalah $\Delta\phi = \frac{2\pi}{\lambda}\Delta s$. Interferensi konstruktif terjadi saat $\Delta s = m\lambda$ ($m \in \mathbb{Z}$) dan destruktif saat $\Delta s = (m + \frac{1}{2})\lambda$ — prinsip dasar interferometri radio dan kisi spektrograf.
+
+### Efek Doppler: Mengapa Gelombang Cahaya Tidak Mengenal "Medium Diam"?
+
+Untuk gelombang bunyi di udara, pergeseran frekuensi bergantung secara terpisah pada gerak sumber vs gerak pengamat terhadap medium udara. Namun bagi cahaya di ruang hampa, **tidak ada eter diam**: hanya kecepatan relatif radial $v_r$ (dianggap positif bila menjauh) dan dilatasi waktu relativistik $\gamma = (1 - \beta^2)^{-1/2}$ (dengan $\beta \equiv v_r/c$) yang berperan (`SRC-06`, `SRC-11`).
+
+Dalam kerangka sumber diam, periode puncak gelombang adalah $\tau_0 = \lambda_0/c$. Bagi pengamat yang melihat sumber menjauh dengan laju $v_r$:
+1. Jam milik sumber melambat menurut pengamat (dilatasi waktu), sehingga interval antar puncak emisi yang diukur di kerangka pengamat adalah $\Delta t_{\text{emis}} = \gamma \tau_0$.
+2. Selama selang $\Delta t_{\text{emis}}$ tersebut, sumber telah menjauh sejauh $v_r \Delta t_{\text{emis}}$, sehingga puncak gelombang berikutnya menempuh jarak ekstra ini dengan laju $c$. Waktu tiba antar puncak berturut-turut di pengamat adalah:
+   $$\tau_{\text{obs}} = \Delta t_{\text{emis}} + \frac{v_r \Delta t_{\text{emis}}}{c} = \gamma\tau_0(1 + \beta) = \tau_0 \frac{1 + \beta}{\sqrt{1 - \beta^2}} = \tau_0 \sqrt{\frac{1 + \beta}{1 - \beta}}.$$
+
+Karena $\lambda_{\text{obs}} = c\,\tau_{\text{obs}}$ dan $\lambda_0 = c\,\tau_0$, kita memperoleh **Rumus Doppler Relativistik Eksak** beserta definisi **redshift** $z$:
+
+<Rumus judul="Pergeseran Doppler Relativistik Longitudinal & Limit Taylor">
+
+$$1 + z \equiv \frac{\lambda_{\text{obs}}}{\lambda_0} = \sqrt{\frac{1 + v_r/c}{1 - v_r/c}} \approx 1 + \frac{v_r}{c} + \frac{1}{2}\left(\frac{v_r}{c}\right)^2 + \cdots \quad (|v_r| \ll c)$$
+
+</Rumus>
+
+Bagaimana jika sumber bergerak **tegak lurus garis pandang** ($v_r = 0$, laju total $v_\perp \neq 0$)? Tidak ada perubahan jarak gelombang per siklus, tetapi faktor dilatasi waktu $\gamma$ tetap bekerja! Efek ini disebut **Efek Doppler Transversal** murni relativistik: $\lambda_{\text{obs}} = \gamma\lambda_0 \approx \left(1 + \frac{v_\perp^2}{2c^2}\right)\lambda_0$ (selalu bergeser ke merah walau bergerak menyamping).
+
+<Gambar id="doppler-geser" />
+
+<Contoh judul="Kecepatan radial kuasar tinggi-redshift: rumus klasik vs relativistik" olimpiade>
+
+<Langkah>
+
+Sebuah kuasar jauh memancarkan garis emisi Lyman-$\alpha$ ($\lambda_0 = 121{,}57\ \text{nm}$) yang teramati bergeser jauh ke panjang gelombang tampak $\lambda_{\text{obs}} = 364{,}71\ \text{nm}$, artinya $z = \dfrac{364{,}71 - 121{,}57}{121{,}57} = 2{,}000$. Hitung kecepatan menjauhnya jika ditafsirkan sebagai Doppler relativitas khusus!
+
+</Langkah>
+
+<Langkah>
+
+**Peringatan jebakan klasik:** Memakai $v = z c$ memberi $v = 2{,}000\,c$ — jelas mustahil melanggar batas kelajuan cahaya! Ini karena $|v/c|$ tidak lagi kecil ($\not\ll 1$).
+
+</Langkah>
+
+<Langkah>
+
+Gunakan rumus relativistik penuh dengan $1 + z = 3{,}000$:
+$$\sqrt{\frac{1 + \beta}{1 - \beta}} = 3{,}000 \implies \frac{1 + \beta}{1 - \beta} = 9 \implies 1 + \beta = 9 - 9\beta \implies 10\beta = 8 \implies \beta = \frac{v_r}{c} = 0{,}800.$$
+*(Secara umum, membalik rumus Doppler memberi $\beta = \dfrac{(1+z)^2 - 1}{(1+z)^2 + 1}$).*
+
+</Langkah>
+
+<Langkah>
+
+*(Catatan kosmologi untuk L5: untuk $z > 0{,}1$ pada skala galaksi jauh, pergeseran merah sebenarnya bukan akibat kecepatan kinematik lokal di ruang datar, melainkan peregangan faktor skala alam semesta $1+z = a_0/a(t)$, namun rumus relativistik ini merupakan batas valid yang jauh lebih aman untuk objek berkecepatan tinggi lokal seperti semburan jet mikro-kuasar!).*
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="optik-geometri" judul="2. Optik Geometri, Teleskop & Skala Pelat (Plate Scale)" tag="Optik Instrumen">
+
+Berkas cahaya yang melintasi batas dua medium mematuhi hukum pembiasan Snellius ($n_1\sin\theta_1 = n_2\sin\theta_2$). Untuk lensa tipis di udara atau cermin sferis berpanjang fokus $f$ dalam aproksimasi paraksial ($\sin\theta \approx \theta$), jarak benda $s$ dan bayangan $s'$ memenuhi:
+
+$$\frac{1}{f} = \frac{1}{s} + \frac{1}{s'}.$$
+
+Karena seluruh objek langit praktis berada di tak hingga ($s \to \infty$), bayangan nyata terbentuk persis di **bidang fokus** pada jarak $s' = f$. Ukuran linier $y$ di atas sensor CCD dari dua titik di langit yang terpisah sudut $\theta$ (dalam radian) adalah $y = f\,\theta_{\text{rad}}$. Ini melahirkan besaran paling sering dipakai pengamat teleskop, yaitu **skala pelat** (*plate scale* $P$ dalam detik busur per milimeter):
+
+$$P \equiv \frac{\theta''}{y\ [\text{mm}]} = \frac{206\,265''}{f\ [\text{mm}]}.$$
+
+<Gambar id="refraktor" />
+
+Pada **teleskop visual afokal** (menggabungkan objektif panjang fokus $f_{\text{obj}}$ dan okuler $f_{\text{ok}}$ agar berkas keluar sejajar menuju mata relaks), panjang total tabung adalah $L = f_{\text{obj}} + f_{\text{ok}}$, dan **perbesaran sudutnya** adalah $M_\theta = \dfrac{f_{\text{obj}}}{f_{\text{ok}}}$.
+
+<Epistemik jenis="fakta" judul="Tiga Besaran Teleskop yang Sering Tertukar">
+
+1. **Daya kumpul cahaya (*Light-Gathering Power*):** Sebanding dengan luas aperture efektif $\propto D^2$ (bukan $f$!). Teleskop $D = 8\ \text{m}$ mengumpulkan $(8/0{,}007)^2 \approx 1{,}3\times 10^6$ kali lebih banyak foton daripada pupil mata $7\ \text{mm}$.
+2. **Skala bayangan (*Plate Scale*) & Perbesaran:** Diatur oleh panjang fokus efektif $f_{\text{obj}}$ (atau rasio $f_{\text{obj}}/f_{\text{ok}}$). Memperbesar $f_{\text{obj}}$ tanpa memperbesar $D$ hanya menyebarkan jumlah foton yang **sama** ke lebih banyak piksel sehingga kecerahan permukaan per piksel (*surface brightness*) turun $\propto (D/f)^2$!
+3. **Batas ketajaman sudut:** Diatur oleh difraksi ($\propto \lambda/D$) dan *seeing* atmosfer, bukan oleh perbesaran okuler.
+
+</Epistemik>
+
+</Bagian>
+
+<Bagian id="difraksi-resolusi" judul="3. Difraksi Celah, Kisi Spektrograf & Kriteria Rayleigh (Airy)" tag="Optik Fisik">
+
+Karena cahaya bersifat gelombang, cahaya dari bintang titik yang melewati bukaan teleskop berdiameter $D$ mengalami difraksi menjadi piringan terang pusat dikelilingi cincin-cincin gelap-terang yang disebut **pola Airy**. Minimum gelap pertama terletak pada sudut $\theta_{\min} = 1{,}22\frac{\lambda}{D}\ \text{rad}$ (faktor $1{,}220$ adalah akar pertama fungsi Bessel $J_1(\pi x)/\pi x$ dibagi $\pi$ untuk bukaan lingkaran, berbeda dengan $1{,}00\,\lambda/a$ pada celah persegi selebar $a$).
+
+Menurut **Kriteria Rayleigh**, dua bintang terpisah sudut $\theta$ baru dapat dibedakan bila pusat piringan Airy bintang kedua jatuh minimal pada cincin gelap pertama bintang pertama:
+
+$$\theta_{\min}\ [\text{rad}] = 1{,}22\,\frac{\lambda}{D}, \qquad \theta_{\min}'' \approx 0{,}2516\,\frac{\lambda\ [\mu\text{m}]}{D\ [\text{m}]}.$$
+
+<Gambar id="pola-airy" />
+
+### Interferensi Banyak Celah: Kisi Difraksi Spektrograf ($R = mN$)
+
+Untuk membedah cahaya bintang menjadi spektrum beresolusi tinggi, astronom memakai **kisi difraksi** dengan $N$ celah berjarak pisah $d$. Maksimum utama orde-$m$ terjadi bila beda lintasan antardua celah bersebelahan tepat kelipatan bulat panjang gelombang:
+
+$$d\sin\theta = m\lambda \qquad (m = 0, \pm 1, \pm 2, \ldots).$$
+
+Bagaimana batas ketajaman kisi untuk memisahkan dua garis spektrum berdekatan $\lambda$ dan $\lambda + \Delta\lambda$ (misal garis ganda Natrium D1 & D2 di $589{,}0\ \text{nm}$ vs $589{,}6\ \text{nm}$)? Dari $N$ celah total selebar $W = Nd$, minimum difraksi orde pertama di sekitar puncak orde-$m$ terjadi pada pergeseran sudut $\delta\theta = \dfrac{\lambda}{Nd\cos\theta}$. Sementara dari turunan persamaan kisi $d\cos\theta\,\Delta\theta = m\,\Delta\lambda$, penyebaran sudut dua panjang gelombang adalah $\Delta\theta = \dfrac{m\,\Delta\lambda}{d\cos\theta}$. Menyamakan $\Delta\theta = \delta\theta$ (Kriteria Rayleigh pada kisi) membatalkan $d\cos\theta$ dan melahirkan rumus **Daya Pisah Spektral (*Resolving Power*)** `SRC-13`:
+
+<Rumus judul="Daya Pisah Spektroskopik Kisi Difraksi">
+
+$$R \equiv \frac{\lambda}{\Delta\lambda_{\min}} = m\,N$$
+
+</Rumus>
+
+<Contoh judul="Menentukan diameter teleskop & jumlah celah kisi untuk mengukur rotasi bintang" olimpiade>
+
+<Langkah>
+
+Sebuah bintang tipe A cepat berputar memiliki kecepatan proyeksi tepi $v_{\text{rot}} = 51\ \text{km/s}$. Pada garis Natrium $\lambda_0 = 589{,}0\ \text{nm}$, dua sisi tepi bintang (mendekat $-v_{\text{rot}}$ dan menjauh $+v_{\text{rot}}$) melebarkan garis spektrum sebesar:
+$$\Delta\lambda_{\text{rot}} = 2\,\lambda_0\,\frac{v_{\text{rot}}}{c} = 2 \times 589{,}0\ \text{nm} \times \frac{51}{3{,}00\times 10^5} \approx 0{,}200\ \text{nm}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Syarat spektrograf:** Agar pelebaran rotasi ini terukur (bukan sekadar kabur oleh instrumen), spektrograf membutuhkan daya pisah minimum:
+$$R_{\min} = \frac{\lambda_0}{\Delta\lambda_{\text{rot}}} = \frac{589{,}0}{0{,}200} = 2\,945.$$
+Jika spektrograf bekerja pada kisi orde $m = 2$, maka berkas cahaya kolimasi harus menerangi minimal $N_{\min} = R_{\min}/m = 2\,945 / 2 \approx 1\,473$ garis kisi!
+
+</Langkah>
+
+<Langkah>
+
+**Pengecekan batas seeing atmosfer:** Pada panjang gelombang tampak $\lambda = 550\ \text{nm}$, bahkan teleskop kecil $D = 15\ \text{cm}$ sudah memiliki batas difraksi $\theta_{\min}'' \approx 0{,}252 \times 0{,}55 / 0{,}15 \approx 0{,}92''$, hampir menyamai batas *seeing* atmosfer normal ($1''$–$2''$). Untuk melampaui batas seeing tanpa ke luar angkasa, teleskop besar memakai **optik adaptif**.
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="termodinamika-gas-radiasi" judul="4. Termodinamika Gas Ideal, Proses Adiabatik & Radiasi Benda Hitam" tag="Termodinamika & Radiasi">
+
+Di bagian dalam bintang maupun atmosfer planet, materi berada dalam wujud gas atau plasma yang memenuhi **Persamaan Keadaan Gas Ideal**:
+
+$$P V = N k_B T \quad \Longleftrightarrow \quad P = n k_B T = \frac{\rho k_B T}{\mu m_H},$$
+
+dengan $n$ kerapatan cacah partikel ($\text{m}^{-3}$), $m_H \approx 1{,}6735\times 10^{-27}\ \text{kg}$ satuan massa atom hidrogen, dan $\mu$ **berat molekul rata-rata** per partikel bebas (untuk hidrogen netral $\mu \approx 1$; untuk plasma hidrogen terionisasi penuh $p^+ + e^-$ di inti bintang, jumlah partikel berlipat dua sehingga $\mu \approx 0{,}5$; untuk komposisi Matahari terionisasi $\mu \approx 0{,}62$).
+
+Menurut **Teorema Ekipartisi Energi**, setiap derajat kebebasan kuadratik menyimpan energi rata-rata $\frac{1}{2}k_B T$, sehingga energi dalam molar/partikel untuk gas berderajat kebebasan $f$ ($f = 3$ untuk monoatomik atau plasma ion, $f = 5$ untuk molekul diatomik $\text{H}_2, \text{N}_2$ suhu sedang) adalah $U = \frac{f}{2} N k_B T$.
+
+### Penurunan Proses Adiabatik $P V^\gamma = \text{konstan}$ (Kunci Stabilitas Bintang!)
+
+Dalam atmosfer bintang atau awan antarbintang, gumpalan gas yang naik atau turun dengan cepat nyaris tidak sempat bertukar kalor dengan sekelilingnya (**proses adiabatik**: $\delta Q = 0$). Terapkan **Hukum I Termodinamika** ($dU = \delta Q - P\,dV = -P\,dV$):
+
+1. Tulis $C_V \equiv \left(\dfrac{\partial U}{\partial T}\right)_V = \frac{f}{2} N k_B$, dan $C_P = C_V + N k_B$ (relasi Mayer), dengan rasio kapasitas panas **indeks adiabatik** $\gamma \equiv \frac{C_P}{C_V} = 1 + \frac{2}{f}$ ($\gamma = 5/3$ untuk gas monoatomik/plasma bintang; $\gamma = 7/5$ untuk udara diatomik).
+2. Dari $dU = C_V\,dT = -P\,dV$ dan diferensial gas ideal $P\,dV + V\,dP = N k_B\,dT$:
+   $$dT = \frac{P\,dV + V\,dP}{N k_B} \implies \frac{C_V}{N k_B}(P\,dV + V\,dP) + P\,dV = 0.$$
+3. Substitusikan $\dfrac{C_V}{N k_B} = \dfrac{1}{\gamma - 1}$ lalu kalikan semua suku dengan $(\gamma - 1)/(PV)$:
+   $$\frac{dV}{V} + \frac{dP}{P} + (\gamma - 1)\frac{dV}{V} = 0 \implies \frac{dP}{P} + \gamma\frac{dV}{V} = 0.$$
+4. Integralkan kedua ruas (untuk $\gamma$ konstan):
+
+<Rumus judul="Hukum Proses Adiabatik Kuasi-Statik Gas Ideal">
+
+$$\ln P + \gamma \ln V = \text{konst} \implies P\,V^\gamma = \text{konstan}, \qquad T\,V^{\gamma - 1} = \text{konstan}, \qquad P^{1-\gamma} T^\gamma = \text{konstan}$$
+
+</Rumus>
+
+### Distribusi Maxwell–Boltzmann & Lepasnya Atmosfer Planet (*Jeans Escape*)
+
+Pada suhu $T$, kelajuan molekul gas tidak seragam, melainkan tersebar mengikuti **distribusi Maxwell–Boltzmann**, dengan tiga kelajuan karakteristik ($m$ = massa satu partikel):
+
+$$v_{\text{mp}} = \sqrt{\frac{2 k_B T}{m}}, \qquad \bar{v} = \sqrt{\frac{8 k_B T}{\pi m}}, \qquad v_{\text{rms}} = \sqrt{\frac{3 k_B T}{m}}.$$
+
+Jika $v_{\text{rms}}$ suatu spesies gas sudah melebihi sekitar $\frac{1}{6}\,v_{\text{lepas}}$ planet (karena ekor berkecepatan tinggi distribusi Maxwell–Boltzmann melampaui $v_{\text{lepas}}$!), atmosfer gas tersebut akan menguap hilang dalam skala waktu miliaran tahun — menjelaskan mengapa Bumi menahan $\text{N}_2, \text{O}_2$ namun kehilangan $\text{H}_2, \text{He}$, sedangkan planet raksasa dingin mampu menahan hidrogen primordialnya (`SRC-07`).
+
+### Radiasi Benda Hitam: Wien, Stefan–Boltzmann & Tekanan Radiasi Foton
+
+Radiasi foton dalam kesetimbangan termal pada suhu $T$ membentuk **gas foton** dengan spektrum universal Planck $B_\lambda(T)$:
+- **Hukum Pergeseran Wien:** $\lambda_{\text{maks}} T = b = 2{,}8978\times 10^{-3}\ \text{m}\cdot\text{K}$.
+- **Hukum Stefan–Boltzmann:** Fluks total dari satu sisi permukaan benda hitam adalah $F = \sigma T^4$ ($\sigma = 5{,}6704\times 10^{-8}\ \text{W m}^{-2}\text{K}^{-4}$), sehingga luminositas bintang bola beradius $R$ adalah $L = 4\pi R^2\sigma T^4$.
+- **Kerapatan Energi & Tekanan Radiasi:** Di dalam ruang bersuhu $T$, kerapatan energi radiasi adalah $u = \frac{4\sigma}{c}T^4 \equiv a T^4$, dan karena gas foton bersifat ultra-relativistik ($\gamma = 4/3$), ia memberikan **tekanan radiasi isotropik** $P_{\text{rad}} = \frac{1}{3} u = \frac{1}{3}a T^4$. Pada bintang sangat masif ($M \gtrsim 50\,M_\odot$), tekanan radiasi menyaingi tekanan gas termal sehingga bintang mendekati ketidakstabilan Eddington!
+
+<Gambar id="kurva-benda-hitam" />
+
+<Gambar id="warna-suhu" />
+
+<Contoh judul="Kelajuan termal gas H₂ vs O₂ di atmosfer Bumi & raksasa merah vs Matahari">
+
+<Langkah>
+
+**Bagian A (Atmosfer Bumi):** Pada puncak termosfer $T \approx 1\,000\ \text{K}$, bandingkan $v_{\text{rms}}$ molekul hidrogen ($\text{H}_2$, $m = 2 m_p = 3{,}35\times 10^{-27}\ \text{kg}$) dan oksigen ($\text{O}_2$, $m = 32 m_p = 5{,}36\times 10^{-26}\ \text{kg}$) terhadap $v_{\text{lepas},\oplus} = 11{,}2\ \text{km/s}$!
+$$v_{\text{rms}}(\text{H}_2) = \sqrt{\frac{3(1{,}38\times 10^{-23})(1\,000)}{3{,}35\times 10^{-27}}} \approx 3{,}52\ \text{km/s} \quad (> \tfrac{1}{6}v_{\text{lepas}} \approx 1{,}87\ \text{km/s} \implies \text{lepas!}).$$
+$$v_{\text{rms}}(\text{O}_2) = \frac{3{,}52\ \text{km/s}}{\sqrt{16}} \approx 0{,}88\ \text{km/s} \quad (< \tfrac{1}{6}v_{\text{lepas}} \implies \text{tertahan!}).$$
+
+</Langkah>
+
+<Langkah>
+
+**Bagian B (Raksasa Merah vs Matahari):** Sebuah raksasa merah memiliki $R_* = 10\,R_\odot$ dan $T_* = 3\,000\ \text{K}$ ($T_\odot = 5\,778\ \text{K}$). Hitung rasio luminositas dan panjang gelombang puncaknya:
+$$\frac{L_*}{L_\odot} = \left(\frac{R_*}{R_\odot}\right)^2\left(\frac{T_*}{T_\odot}\right)^4 = 10^2 \left(\frac{3\,000}{5\,778}\right)^4 \approx 100 \times 0{,}0727 = 7{,}27,$$
+$$\lambda_{\text{maks},*} = \frac{2{,}898\times 10^{-3}\ \text{m}\cdot\text{K}}{3\,000\ \text{K}} \approx 966\ \text{nm} \text{ (puncak di inframerah dekat, tampak kemerahan!)}.$$
+
+</Langkah>
+
+</Contoh>
+
+<BatasValiditas
+  aturan={[
+    {
+      rumus: 'Δλ/λ₀ ≈ v_r / c  (Doppler klasik)',
+      berlakuJika: '|v_r| ≪ c (bintang normal Tata Surya/Galaksi hingga ~1000 km/s memberi galat β²/2 < 6×10⁻⁶).',
+      gagalJika: 'Jet relativistik / kuasar ber-redshift besar (z ≳ 0,1) atau gerak transversal berkecepatan tinggi.',
+      akibat: 'Untuk z > 1, rumus klasik memberikan v_r > c (tidak fisis); gunakan Doppler relativistik √((1+β)/(1−β)) atau hubungan kosmologi L5.',
+    },
+    {
+      rumus: 'P V^γ = konstan  (Adiabatik)',
+      berlakuJika: 'Proses berlangsung kuasi-statik (reversibel, tekanan seragam) tanpa pertukaran kalor (δQ = 0) dan dengan γ konstan.',
+      gagalJika: 'Ekspansi bebas ke ruang hampa (irreversibel!), adanya gelombang kejut supernova (entropi naik tajam), atau saat gas mengalami ionisasi sebagian sehingga γ berubah drastis.',
+    },
+    {
+      rumus: 'θ_min = 1,22 λ / D  (Kriteria Rayleigh)',
+      berlakuJika: 'Sumber koheren/inkohoren titik terbatas difraksi murni (teleskop luar angkasa atau optik adaptif terkoreksi sempurna).',
+      gagalJika: 'Pengamatan darat optik konvensional berdiameter D ≳ 20 cm, di mana turbulensi atmosfer (seeing ~1″) memburamkan citra melampaui batas difraksi teoretis.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="5. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Untuk melihat detail benda langit lebih tajam, cukup ganti lensa okuler teleskop dengan yang fokusnya sangat pendek agar perbesarannya 500×.',
+      kenapaKeliru: 'Perbesaran sudut M = f_obj / f_ok hanya membentangkan bayangan yang SUDAH terbentuk oleh objektif; ia tidak menambah informasi sudut di atas batas difraksi 1,22λ/D maupun seeing atmosfer!',
+      caraDeteksi: 'Bandingkan θ_min = 1,22λ/D (~1″ untuk D = 14 cm) dengan resolusi mata (~60″): perbesaran berguna maksimal hanya sekitar 2D(mm) (~280×). Di atas itu, piringan Airy yang kabur hanya terlihat makin besar dan redup (*empty magnification*).',
+      benar: 'Resolusi sudut fisik ditentukan murni oleh diameter aperture D (batas difraksi 1,22λ/D) dan kualitas optik/seeing, bukan oleh f_ok.',
+    },
+    {
+      salah: 'Dalam proses adiabatik (δQ = 0, tidak ada kalor masuk/keluar), suhu gas pasti tetap konstan (ΔT = 0).',
+      kenapaKeliru: 'Menyamakan kata "kalor Q" dengan "suhu T / energi dalam U". Menurut Hukum I Termodinamika, dU = δQ − P dV: meski δQ = 0, kerja ekspansi P dV menguras energi dalam sehingga suhu tetap berubah!',
+      caraDeteksi: 'Cek relasi T V^{γ−1} = konstan: saat gas memuai secara adiabatik (V naik), T WAJIB turun; saat awan gas menyusut adiabatik (V turun), T naik drastis.',
+      benar: 'Adiabatik berarti δQ = 0, BUKAN isotermal (ΔT = 0). Kompresi adiabatik selalu memanaskan gas, dan ekspansi adiabatik selalu mendinginkan gas.',
+    },
+    {
+      salah: 'Jika kelajuan v_rms molekul hidrogen di atmosfer Bumi (≈ 1,9 km/s pada 300 K) lebih kecil daripada v_lepas (11,2 km/s), maka Bumi tidak mungkin kehilangan gas hidrogennya.',
+      kenapaKeliru: 'Mengira semua molekul gas bergerak dengan laju tunggal v_rms! Padahal kecepatan gas tersebar mengikuti ekor distribusi Maxwell–Boltzmann yang merentang hingga kelajuan jauh melampaui v_rms.',
+      caraDeteksi: 'Hitung perbandingan v_lepas / v_rms: untuk v_rms ~ 3,5 km/s di termosfer (1000 K), v_lepas hanya ~3,2 × v_rms, sehingga fraksi signifikan molekul di ekor eksponensial distribusi terus-menerus lolos selama miliaran tahun.',
+      benar: 'Aturan stabilitas atmosfer menuntut v_lepas ≳ 6 v_rms (atau bahkan 10 v_rms untuk retensi penuh miliaran tahun) agar ekor distribusi Maxwell–Boltzmann yang melampaui v_lepas cukup kecil.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="6. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="f5-cek-1"
+  pertanyaan="Foton dengan panjang gelombang $400\\ \\text{nm}$ memiliki energi berapa dalam $\\text{eV}$?"
+  opsi={['$3{,}1\\ \\text{eV}$', '$1{,}8\\ \\text{eV}$', '$0{,}31\\ \\text{eV}$', '$31\\ \\text{eV}$']}
+  jawaban={0}
+  penjelasan="$E \\approx 1240/400 = 3{,}10\\ \\text{eV}$. Foton ini berada tepat di batas ungu–ultraviolet dekat."
+/>
+
+<CekPaham
+  id="f5-cek-2"
+  pertanyaan="Jika diameter aperture teleskop luar angkasa digandakan pada panjang gelombang tetap, apa yang terjadi pada batas resolusi difraksinya?"
+  opsi={[
+    'Sudut batas menjadi separuh (resolusi $2\\times$ lebih tajam)',
+    'Sudut batas menjadi dua kali',
+    'Sudut batas menjadi seperempat',
+    'Tidak berubah',
+  ]}
+  jawaban={0}
+  penjelasan="$\\theta_{\\min} = 1{,}22\\lambda/D$ berbanding terbalik dengan diameter $D$. Menggandakan $D$ membuat sudut minimum pisah menjadi separuhnya — sekaligus mengumpulkan cahaya $4\\times$ lebih banyak ($D^2$)."
+/>
+
+<CekPaham
+  id="f5-cek-3"
+  pertanyaan="Garis spektrum suatu bintang teramati pada panjang gelombang yang lebih panjang daripada nilai laboratorium. Ini berarti…"
+  opsi={[
+    'Bintang menjauh dari pengamat (redshift)',
+    'Bintang mendekat ke pengamat (blueshift)',
+    'Bintang lebih panas dari rata-rata',
+    'Teleskop mengalami aberasi kromatik',
+  ]}
+  jawaban={0}
+  penjelasan="Pergeseran ke panjang gelombang lebih panjang ($\\lambda_{\\text{obs}} > \\lambda_0$) adalah redshift: $v_r > 0$, sumber menjauh dari pengamat."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'f5-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Teleskop ruang angkasa James Webb (JWST) memiliki cermin berdiameter $D = 6{,}5\\ \\text{m}$ dan terutama mengamati di inframerah ($\\lambda \\approx 2{,}0\\ \\mu\\text{m}$), sedangkan Hubble (HST) berdiameter $D = 2{,}4\\ \\text{m}$ dan mengamati di optik ($\\lambda \\approx 0{,}50\\ \\mu\\text{m}$). Teleskop mana yang punya batas difraksi sudut lebih tajam pada panjang gelombang operasi tipikal tersebut, dan bagaimana perbandingan daya kumpul fotonnya?',
+      petunjuk: 'Hitung $\\theta_{\\min} = 1{,}22\\lambda/D$ dan rasio luas $(D_{\\text{JWST}}/D_{\\text{HST}})^2$.',
+      langkahKunci: [
+        'Batas difraksi HST ($\\lambda = 0{,}50\\ \\mu\\text{m}$): $\\theta_{\\text{HST}}^{\\prime\\prime} \\approx 0{,}252 \\times \\frac{0{,}50}{2{,}4} \\approx 0{,}052^{\\prime\\prime}$.',
+        'Batas difraksi JWST ($\\lambda = 2{,}0\\ \\mu\\text{m}$): $\\theta_{\\text{JWST}}^{\\prime\\prime} \\approx 0{,}252 \\times \\frac{2{,}0}{6{,}5} \\approx 0{,}078^{\\prime\\prime}$. (Ketajamannya setara pada $\\lambda \\approx 1{,}35\\ \\mu\\text{m}$!).',
+        'Jadi pada $\\lambda = 2\\ \\mu\\text{m}$, HST di optik tetap sedikit lebih tajam sudutnya, NAMUN daya kumpul area cermin JWST adalah $(6{,}5/2{,}4)^2 \\approx 7{,}3\\times$ lebih besar (dan jauh unggul di inframerah tempat debu galaksi menjadi transparan serta galaksi awal ter-redshift!).',
+      ],
+      rubrik: [
+        'Menghitung kedua sudut Rayleigh pada panjang gelombang masing-masing.',
+        'Membandingkan rasio luas pengumpulan $(D_1/D_2)^2 \\approx 7{,}3\\times$.',
+      ],
+    },
+    {
+      id: 'f5-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Sebuah gumpalan gas monoatomik ($\\gamma = 5/3$) di zona konvektif bintang bergerak naik secara adiabatik dalam medan gravitasi vertikal konstan $g$. Dengan menggabungkan persamaan gas ideal $P = \\rho k_B T/(\\mu m_H)$, persamaan keseimbangan hidrostatik $dP/dz = -\\rho g$, dan relasi adiabatik $P^{1-\\gamma}T^\\gamma = \\text{konst}$, turunkan **laju penurunan suhu adiabatik terhadap ketinggian** $\\left|\\dfrac{dT}{dz}\\right|_{\\text{ad}}$!',
+      petunjuk: 'Diferensiasikan $\\ln(P^{1-\\gamma}T^\\gamma) = \\text{konst}$ terhadap $z$, lalu substitusikan $dP/dz = -\\rho g$.',
+      langkahKunci: [
+        'Ambil logaritma dari relasi adiabatik: $(1 - \\gamma)\\ln P + \\gamma \\ln T = \\text{konst}$.',
+        'Diferensiasikan terhadap ketinggian $z$: $\\frac{1 - \\gamma}{P}\\frac{dP}{dz} + \\frac{\\gamma}{T}\\frac{dT}{dz} = 0 \\implies \\frac{dT}{dz} = \\frac{\\gamma - 1}{\\gamma}\\frac{T}{P}\\frac{dP}{dz}$.',
+        'Substitusikan keseimbangan hidrostatik $dP/dz = -\\rho g$ dan $P = \\rho k_B T / (\\mu m_H)$, sehingga $T/P = \\mu m_H / (\\rho k_B)$:',
+        '$$\\frac{dT}{dz} = -\\left(\\frac{\\gamma - 1}{\\gamma}\\right)\\frac{\\mu m_H g}{k_B}.$$ (Untuk udara kering Bumi $\\gamma = 7/5$, $\\mu \\approx 29$, nilainya $\\approx -9{,}8\\ \\text{K/km}$; untuk plasma Matahari terionisasi $\\gamma = 5/3$, rumus inilah yang menentukan kriteria ketidakstabilan konveksi Schwarzschild!).',
+      ],
+      rubrik: [
+        'Mendiferensiasikan relasi adiabatik $P^{1-\\gamma}T^\\gamma = \\text{konst}$ secara tepat.',
+        'Menggabungkan $dP/dz = -\\rho g$ dan $P/\\rho = k_B T/(\\mu m_H)$ hingga memperoleh bentuk bebas variabel $\\rho, P, T$.',
+      ],
+    },
+    {
+      id: 'f5-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Perkirakan berapa **total tekanan radiasi** di pusat Matahari ($T_c \\approx 1{,}5 \\times 10^7\\ \\text{K}$) dibandingkan tekanan gas ideal di tempat yang sama ($\\rho_c \\approx 1{,}5\\times 10^5\\ \\text{kg/m}^3$, $\\mu \\approx 0{,}83$ akibat helium hasil fusi). Apakah Matahari ditopang terutama oleh tekanan gas atau tekanan radiasi?',
+      petunjuk: 'Hitung $P_{\\text{rad}} = \\frac{1}{3}aT^4$ (dengan $a = 4\\sigma/c \\approx 7{,}56\\times 10^{-16}\\ \\text{J m}^{-3}\\text{K}^{-4}$) dan $P_{\\text{gas}} = \\rho k_B T/(\\mu m_H)$.',
+      langkahKunci: [
+        'Tekanan radiasi pusat: $P_{\\text{rad}} = \\frac{1}{3}(7{,}56\\times 10^{-16})(1{,}5\\times 10^7)^4 \\approx 2{,}52\\times 10^{-16} \\times 5{,}06\\times 10^{28} \\approx 1{,}28\\times 10^{13}\\ \\text{Pa}$.',
+        'Tekanan gas pusat: $P_{\\text{gas}} = \\frac{(1{,}5\\times 10^5)(1{,}38\\times 10^{-23})(1{,}5\\times 10^7)}{0{,}83 \\times 1{,}67\\times 10^{-27}} \\approx 2{,}24\\times 10^{16}\\ \\text{Pa}$.',
+        'Rasio $P_{\\text{rad}} / P_{\\text{gas}} \\approx 1{,}3\\times 10^{13} / 2{,}2\\times 10^{16} \\approx 6\\times 10^{-4}$ ($< 0{,}1\\%$). Jadi Matahari ditopang $99{,}9\\%$ oleh tekanan gas termal! (Baru pada bintang supermasif $>50\\,M_\\odot$ di mana $T_c$ lebih tinggi dan $\\rho_c$ jauh lebih rendah, $P_{\\text{rad}}$ mendominasi).',
+      ],
+      rubrik: [
+        'Menghitung kedua orde tekanan dalam Pascal dengan konstanta radiasi $a = 4\\sigma/c$.',
+        'Menunjukkan $P_{\\text{rad}}/P_{\\text{gas}} \\sim 10^{-3}$ dan menyimpulkan dominasi tekanan gas di Matahari.',
+      ],
+    },
+    {
+      id: 'f5-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Sebuah teleskop berfokus efektif $f = 2\\,400\\ \\text{mm}$ dipasangi sensor CCD berukuran piksel $12\\ \\mu\\text{m}$. (a) Berapa skala pelat sistem dalam $\\text{arcsec/mm}$ dan skala piksel dalam $\\text{arcsec/piksel}$? (b) Jika seeing malam itu $1{,}8^{\\prime\\prime}$, berapa lebar profil bintang (FWHM) dalam satuan piksel — sudah cukup ter-sampling (kriteria Nyquist $\\ge 2$ piksel per FWHM) atau masih *undersampled*?',
+      petunjuk: 'Gunakan $P = 206\\,265^{\\prime\\prime} / f(\\text{mm})$ lalu kalikan dengan ukuran piksel $0{,}012\\ \\text{mm}$.',
+      langkahKunci: [
+        'Skala pelat: $P = \\frac{206\\,265}{2\\,400} \\approx 85{,}94^{\\prime\\prime}/\\text{mm}$.',
+        'Skala piksel: $\\text{pixel scale} = 85{,}94 \\times 0{,}012\\ \\text{mm/px} \\approx 1{,}03^{\\prime\\prime}/\\text{piksel}$.',
+        'Lebar citra seeing: $\\text{FWHM} = 1{,}8^{\\prime\\prime} / 1{,}03^{\\prime\\prime}\\text{px}^{-1} \\approx 1{,}75\\ \\text{piksel}$. Karena $< 2{,}0\\ \\text{piksel}$, citra sedikit *undersampled* menurut batas Nyquist!',
+      ],
+      rubrik: [
+        'Menghitung skala pelat $\\approx 85{,}9^{\\prime\\prime}/\\text{mm}$ dan skala piksel $\\approx 1{,}03^{\\prime\\prime}/\\text{px}$.',
+        'Membandingkan FWHM ($\\approx 1{,}75$ piksel) dengan ambang Nyquist $2$ piksel.',
+      ],
+    },
+    {
+      id: 'f5-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Teleskop radio (misal ALMA yang bekerja di $\\lambda \\approx 1\\ \\text{mm}$) mengamati objek pada panjang gelombang sekitar $2\\,000\\times$ lebih panjang daripada teleskop optik ($\\lambda \\approx 500\\ \\text{nm}$). Mengapa teleskop radio dapat mencapai resolusi sudut lebih tajam daripada teleskop optik tunggal tanpa harus membangun satu piringan parabola utuh berdiameter $10\\ \\text{km}$?',
+      petunjuk: 'Pikirkan prinsip **interferometri sintesis bukaan** serta koherensi fasa gelombang radio dibanding optik.',
+      langkahKunci: [
+        'Batas difraksi $\\theta \\sim \\lambda/D$ menuntut diameter efektif $D$ ribuan kali lebih besar di radio untuk menyamai ketajaman optik. Membangun satu antena tunggal $10\\ \\text{km}$ mustahil secara struktural.',
+        'Sebagai gantinya, beberapa antena kecil dipisahkan sejauh baseline $B_{\\max} \\sim 10\\ \\text{km}$ hingga ribuan kilometer (VLBI) dan sinyal amplitudo + fasa gelombangnya dikorelasikan (*interferometri*), menghasilkan resolusi efektif $\\theta \\sim \\lambda / B_{\\max}$ (mencapai sub-milidetik busur!).',
+        'Teknik ini jauh lebih mudah di radio karena frekuensi gelombang ($\\sim\\text{GHz}$) cukup rendah sehingga pencatatan **fasa** elektromagnetik oleh jam atom di tiap antena dapat direkam dan digabungkan secara digital pasca-pengamatan.',
+      ],
+      rubrik: [
+        'Mengidentifikasi $\\theta \\sim \\lambda / B_{\\max}$ melalui korelasi antar-antena terpisah.',
+        'Menjelaskan mengapa pencatatan fasa koheren jauh lebih praktis pada frekuensi radio daripada optik.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'f5-log-1',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Dalam buku catatan seorang siswa tertulis: "Karena rumus perbesaran teleskop adalah $M = f_{\\text{obj}} / f_{\\text{ok}}$ dan jarak pisah kisi $d\\sin\\theta = m\\lambda$, jika saya ingin membuat teleskop yang sama-sama memotret planet dengan terang di CCD, saya cukup memperpanjang $f_{\\text{obj}}$ dua kali lipat agar planet tampak $2\\times$ lebih besar sekaligus mengumpulkan $4\\times$ lebih banyak foton." Periksa kebenaran kedua klaim itu!',
+      petunjuk: 'Apakah memperpanjang $f_{\\text{obj}}$ sambil mempertahankan diameter lensa $D$ menambah jumlah foton yang masuk ke lubang bukaan depan teleskop?',
+      rubrik: [
+        'Klaim 1 benar sebagian: $f_{\\text{obj}} \\times 2$ menggandakan ukuran linier bayangan planet ($y = f\\theta$) pada bidang fokus CCD.',
+        'Klaim 2 salah total: jumlah foton yang ditangkap per detik murni ditentukan oleh luas penampang lubang masuk ($\\pi D^2/4$), TIDAK oleh $f_{\\text{obj}}$. Bahkan karena luas bayangan di CCD naik $4\\times$, fluks foton per piksel (*surface brightness*) justru turun menjadi $1/4$!',
+      ],
+      jawabanKunci:
+        'Memperbesar panjang fokus $f_{\\text{obj}}$ $2\\times$ memang menggandakan ukuran bayangan objek di CCD ($y = f\\theta$), tetapi sama sekali TIDAK menambah jumlah foton yang dikumpulkan — total foton hanya bergantung pada luas aperture $\\propto D^2$. Justru karena jumlah foton yang sama kini disebar ke area bayangan $4\\times$ lebih luas di detektor, kecerahan per piksel (atau per mm²) turun menjadi seperempatnya (rasio fokal $f/D$ yang lebih lambat)!',
+    },
+    {
+      id: 'f5-log-2',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa di laboratorium kimia atau fisika kita sering menggunakan kapasitas panas molar $C_V = \\frac{3}{2}R$ untuk gas monoatomik, tetapi ketika dua awan gas antarbintang saling memampatkan secara adiabatik atau dalam kesetimbangan termal bintang, tekanan radiasi mengikuti indeks adiabatik efektif $\\gamma = 4/3$ alih-alih $5/3$?',
+      petunjuk: 'Bandingkan relasi energi-tekanan partikel non-relativistik ($P = \\frac{2}{3}u$) versus gas foton ultra-relativistik ($P = \\frac{1}{3}u$).',
+      rubrik: [
+        'Menunjukkan untuk partikel klasik non-relativistik: $E = p^2/(2m) \\implies u = \\frac{3}{2}P \\implies \\gamma = 5/3$.',
+        'Menunjukkan untuk foton tak bermassa ($E = pc$): tekanan isotropik $P = \\frac{1}{3}u$, artinya energi dalam per satuan volume $u = 3P = \\frac{P}{\\gamma - 1} \\implies \\gamma - 1 = 1/3 \\implies \\gamma = 4/3$.',
+      ],
+      jawabanKunci:
+        'Relasi umum gas ideal dengan energi dalam $u = \\frac{P}{\\gamma - 1}$ menghubungkan indeks adiabatik langsung dengan sifat dispersi energi partikelnya. Bagi atom klasik ($E = p^2/2m$), tekanan adalah $P = \\frac{2}{3}u$ sehingga $\\gamma = 1 + 2/3 = 5/3$. Bagi foton ultra-relativistik ($E = pc$), tekanan isotropik adalah $P = \\frac{1}{3}u$, yang memaksa $\\gamma = 1 + 1/3 = 4/3$. Menurunnya $\\gamma$ menuju $4/3$ ini pula yang menjadi ambang batas instabilitas gravitasi pada bintang sangat masif dan katai putih!',
+    },
+    {
+      id: 'f5-log-3',
+      tipe: 'prediksi_akibat',
+      pertanyaan:
+        'Suatu bintang ganda spektroskopik memiliki kedua komponen bergerak dalam bidang orbit tegak lurus garis pandang pengamat (inklinasi $i = 0^\\circ$, orbit tampak lingkaran penuh di langit *face-on*). Jika kita amati dengan spektrograf beresolusi ultra-tinggi ($R \\sim 10^6$), apakah kita masih bisa mendeteksi pergeseran Doppler periodik pada garis spektrumnya?',
+      petunjuk: 'Periksa arah kecepatan orbit terhadap garis pandang ($v_r$) serta apakah laju orbit berubah sepanjang orbit lingkaran.',
+      rubrik: [
+        'Pada $i = 0^\\circ$ (face-on), komponen kecepatan radial $v_r = v\\sin i = 0$ sepanjang seluruh orbit, sehingga pergeseran Doppler orde pertama ($\\propto v_r/c$) lenyap nol!',
+        'Pergeseran Doppler transversal orde-2 ($z \\approx v^2/(2c^2)$) tetap ada karena bintang bergerak melingkar, namun karena orbitnya lingkaran sempurna kelajuannya $v$ konstan — artinya tidak ada variasi *periodik* yang bisa memisahkan gerak orbit dari redshift sistem!',
+      ],
+      jawabanKunci:
+        'Tidak ada pergeseran Doppler periodik yang terukur! Pertama, kecepatan radial $v_r = v_{\\text{orb}}\\sin i$ bernilai nol konstan pada $i = 0^\\circ$, sehingga Efek Doppler longitudinal biasa menghilang total. Kedua, meskipun Efek Doppler transversal relativistik orde-2 ($\\Delta\\lambda/\\lambda_0 \\approx +v^2/(2c^2)$) tidak nol, pada orbit lingkaran laju total $v$ bersifat konstan sepanjang periode, sehingga ia hanya memberi pergeseran statis konstan yang tak terpisahkan dari gerak ruang sistem.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="f5-refleksi-1"
+  pertanyaan="Mengapa astronom membangun teleskop raksasa berdiameter puluhan meter di puncak gunung tinggi atau di luar angkasa, padahal perbesaran tinggi bisa dicapai lensa okuler kecil di taman belakang? Rangkai jawabanmu lewat daya kumpul cahaya, batas difraksi, seeing atmosfer, dan statistik foton."
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'f5-m1', gerbang: 'derivasi', teks: 'Menurunkan rumus Doppler relativistik penuh dan batas Taylor v_r/c beserta Doppler transversal v²/(2c²).' },
+    { id: 'f5-m2', gerbang: 'observasi', teks: 'Menghitung perbesaran teleskop, plate scale CCD, batas Rayleigh 1,22λ/D, dan resolusi kisi R = mN.' },
+    { id: 'f5-m3', gerbang: 'derivasi', teks: 'Menurunkan hubungan adiabatik PV^γ = konstan dan gradien suhu adiabatik |dT/dz|_ad dari Hukum I Termodinamika.' },
+    { id: 'f5-m4', gerbang: 'fermi', teks: 'Membandingkan v_rms Maxwell–Boltzmann terhadap v_lepas atmosfer planet serta P_rad vs P_gas di bintang.' },
+    { id: 'f5-m5', gerbang: 'logika', teks: 'Menjelaskan mengapa D² mengatur fluks kumpul sedangkan f mengatur skala bayangan, serta batas difraksi vs seeing.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="7. Konstanta & Referensi Akademik" tag="Rujukan Modul F5">
+
+<Konstanta
+  data={[
+    { simbol: 'c (kelajuan cahaya vakum eksak)', nilai: '2,99792458 × 10⁸', satuan: 'm s⁻¹' },
+    { simbol: 'h (konstanta Planck)', nilai: '6,62607 × 10⁻³⁴', satuan: 'J s' },
+    { simbol: 'hc (konversi cepat)', nilai: '1 239,84', satuan: 'eV nm' },
+    { simbol: 'k_B (konstanta Boltzmann)', nilai: '1,38065 × 10⁻²³', satuan: 'J K⁻¹' },
+    { simbol: 'σ (Stefan–Boltzmann)', nilai: '5,67037 × 10⁻⁸', satuan: 'W m⁻² K⁻⁴' },
+    { simbol: 'a = 4σ/c (konstanta kerapatan radiasi)', nilai: '7,5657 × 10⁻¹⁶', satuan: 'J m⁻³ K⁻⁴' },
+    { simbol: 'b (konstanta pergeseran Wien)', nilai: '2,89777 × 10⁻³', satuan: 'm K' },
+    { simbol: '1 detik busur (″)', nilai: '4,84814 × 10⁻⁶', satuan: 'radian' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-04', 'SRC-06', 'SRC-11', 'SRC-13']}
+  pemetaan={[
+    { sumberId: 'SRC-04', rujukan: 'MIT OCW 8.03 Physics III (Vibrations & Waves): persamaan gelombang, difraksi kisi, interferensi, dan Doppler.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Bab 3, 4, 6: optik teleskop, relativitas khusus Doppler, termodinamika radiasi & atmosfer.' },
+    { sumberId: 'SRC-11', rujukan: 'OpenStax University Physics Vol. 2 (Thermodynamics) & Vol. 3 (Optics): proses adiabatik, distribusi Maxwell, Rayleigh.' },
+    { sumberId: 'SRC-13', rujukan: 'Hecht Optics (5e) Ch. 10 (Airy disk & diffraction grating) & Schroeder Thermal Physics Ch. 1–3 (PV^γ, gas foton).' },
+  ]}
+/>
+
+</Bagian>

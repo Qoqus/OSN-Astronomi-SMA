@@ -1,0 +1,582 @@
+<IdentitasModul
+  kode="L1"
+  tier="Klaster Lanjutan · Modul 1 dari 6"
+  posisi="Spektroskopi Kuantum Bintang, Termodinamika Ionisasi & Diagram H–R"
+  estimasi="90 menit studi mendalam"
+  tingkat="S1 Astrofisika Pengantar & IOAA Penuh"
+  prasyarat={[
+    { id: 'f6', label: 'F6 · Listrik-Magnet & Fisika Modern' },
+    { id: 'a5', label: 'A5 · Radiasi, Magnitudo & Fotometri' },
+  ]}
+  koneksi={[
+    { id: 'l2', label: 'L2 · Interior & Evolusi Bintang', peran: 'Menjelaskan mengapa jalur evolusi bintang bergerak di diagram H–R' },
+    { id: 'l3', label: 'L3 · Bintang Ganda, Gugus & Eksoplanet', peran: 'Kalibrasi relasi M–L dari SB2 dan penentuan umur gugus via turn-off' },
+    { id: 'l4', label: 'L4 · Galaksi & Materi Antarbintang', peran: 'Kinematika Doppler garis 21 cm HI & populasi bintang di Bima Sakti' },
+  ]}
+  sumberUtama={['SRC-04', 'SRC-05', 'SRC-06', 'SRC-07']}
+/>
+
+<Tujuan>
+
+- Menurunkan penjelasan fisis **urutan spektrum Harvard OBAFGKM** secara kuantitatif melalui penggabungan **persamaan eksitasi Boltzmann** dan **persamaan ionisasi Saha**, termasuk membuktikan mengapa garis Balmer hidrogen memuncak pada bintang kelas **A0** ($T \approx 9\,500\ \text{K}$).
+- Membedakan **Diagram Hertzsprung–Russell (H–R) observasional** ($M_V$ vs $B-V$) dan **teoretis** ($\log L/L_\odot$ vs $\log T_{\text{eff}}$), menurunkan kemiringan **garis iso-radius** pada diagram H–R, serta menginterpretasikan **kelas luminositas Morgan–Keenan (Yerkes Ia–V–wd)**.
+- Menurunkan relasi empiris–teoretis **Massa–Luminositas ($L \propto M^\alpha$)** dan membuktikan penskalaan **usia deret utama** ($\tau_{\text{MS}} \propto M^{-2{,}5}$) serta membandingkannya terhadap skala waktu termal Kelvin–Helmholtz.
+- Menganalisis pergeseran garis spektrum melalui **Efek Doppler** (klasik & relativistik) serta membedakan mekanisme **pelebaran garis spektrum** (alami, termal Doppler, tekanan/Stark, Zeeman, dan rotasi $v\sin i$) melalui konsep **lebar ekuivalen ($W_\lambda$)**.
+- Memadukan data fotometri, paralaks, dan spektroskopi resolusi tinggi untuk menentukan parameter fisis lengkap ($T_{\text{eff}}, R, M, \log g, \bar{\rho}$) beserta batas galatnya.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'boltzmann-saha',
+      label: 'Boltzmann & Ionisasi Saha',
+      peran: 'Mengatur populasi tingkat energi dan tingkat ionisasi atom fotosfer sebagai fungsi (T, P_e).',
+      ke: ['obafgkm', 'profil-garis'],
+    },
+    {
+      id: 'obafgkm',
+      label: 'Urutan Spektrum OBAFGKM',
+      peran: 'Termometer fisika atomik: dari He II di bintang O (>30.000 K) hingga pita TiO di bintang M.',
+      ke: ['diagram-hr'],
+    },
+    {
+      id: 'diagram-hr',
+      label: 'Diagram H–R & Kelas Yerkes',
+      peran: 'Memetakan L vs T_eff (iso-radius L = 4πR²σT⁴) dan memisahkan katai V vs raksasa III vs superraksasa I.',
+      ke: ['massa-usia', 'sintesis'],
+    },
+    {
+      id: 'massa-usia',
+      label: 'Relasi M–L & Masa Hidup τ_MS',
+      peran: 'Bintang masif membakar bahan bakar jauh lebih boros (τ_MS ∝ M^-2,5).',
+      ke: ['sintesis'],
+    },
+    {
+      id: 'profil-garis',
+      label: 'Profil Garis, Doppler & log g',
+      peran: 'Mengukur kecepatan radial v_r, rotasi v sin i, medan magnet B, dan gravitasi permukaan g = GM/R².',
+      ke: ['sintesis'],
+    },
+    {
+      id: 'sintesis',
+      label: 'Sintesis Parameter Bintang',
+      peran: 'Menggabungkan fotometri, spektroskopi, dan paralaks untuk menimbang & mengukur bintang tunggal.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Spektroskopi adalah tulang punggung astrofisika observasional: hampir seluruh pengetahuan kita tentang suhu, komposisi kimia, kerapatan atmosfer, medan magnet, rotasi, dan kecepatan gerak bintang diekstrak dari seberkas cahaya yang diurai menjadi garis-garis spektrum. Bab pembuka klaster lanjutan ini mengangkat spektroskopi dari hafalan huruf OBAFGKM menjadi sintesis <Sorot>mekanika statistik Boltzmann–Saha, fisika profil garis atomik, dan arsitektur Diagram Hertzsprung–Russell</Sorot> (`SRC-04`, `SRC-06`).
+</div>
+
+<Bagian id="boltzmann-saha" judul="1. Fisika Urutan Spektrum: Persamaan Boltzmann & Ionisasi Saha" tag="Termodinamika Spektral">
+
+Pada awal abad ke-20, Annie Jump Cannon di Harvard Observatory menyusun ratusan ribu spektrum bintang berdasarkan kekuatan garis hidrogen Balmer (A, B, C, ...), lalu Cecilia Payne-Gaposchkin (1925) — dengan menerapkan teori mekanika statistik Meghnad Saha — membuktikan bahwa perbedaan kelas spektrum bintang **bukan** disebabkan oleh perbedaan komposisi kimia (bintang mayoritas tersusun atas $\sim 73\%$ H dan $\sim 25\%$ He secara massa), melainkan murni akibat perbedaan **temperatur atmosfer** (`SRC-06`, `SRC-07`).
+
+<Gambar id="spektrum-absorpsi" />
+
+Untuk memahami mengapa suatu garis absorpsi (misalnya garis Balmer hidrogen yang menyerap foton dari tingkat $n=2 \to n \ge 3$) muncul kuat atau lemah, diperlukan **dua syarat atomik serentak**:
+1. Atom tersebut belum kehilangan elektronnya (berada pada tingkat ionisasi yang tepat, misalnya hidrogen **netral** H I, bukan proton telanjang H II).
+2. Elektron pada ion/atom itu harus sudah berada di tingkat eksitasi awal $n$ yang siap menyerap foton (misalnya $n=2$ untuk deret Balmer, bukan $n=1$).
+
+### A. Persamaan Eksitasi Boltzmann
+
+Dalam kesetimbangan termodinamika lokal (LTE) pada suhu $T$, rasio jumlah atom dalam keadaan tereksitasi $b$ terhadap keadaan energi $a$ dari **tingkat ionisasi yang sama** diberikan oleh distribusi Maxwell–Boltzmann:
+
+<Rumus judul="Persamaan Eksitasi Boltzmann">
+
+$$\frac{N_b}{N_a} = \frac{g_b}{g_a}\exp\!\left(-\frac{E_b - E_a}{k_B T}\right)$$
+
+</Rumus>
+
+Di sini $g_a, g_b$ adalah **degenerasi statistik** (untuk atom hidrogen dengan bilangan kuantum utama $n$, $g_n = 2n^2$, sehingga $g_1 = 2$ dan $g_2 = 8$), $E_b - E_a$ adalah selisih energi tingkat ($\Delta E_{1\to 2} = 10{,}20\ \text{eV}$ pada H I), dan $k_B = 8{,}6173\times 10^{-5}\ \text{eV/K}$.
+
+Karena hampir seluruh atom H netral berada di keadaan dasar ($n=1$) atau tingkat tereksitasi terendah, kita dapat mendekati rasio atom pada $n=2$ terhadap total H netral melalui **fungsi partisi** $Z_I = \sum_{n=1}^{\infty} g_n e^{-(E_n - E_1)/(k_B T)} \approx g_1 = 2$:
+
+$$\frac{N_2}{N_I} \approx \frac{g_2}{g_1}e^{-10{,}20\ \text{eV}/(k_B T)} = 4\,e^{-118\,400\ \text{K}/T}.$$
+
+Pada suhu dingin ($T = 4\,000\ \text{K}$, bintang K–M), eksponen $-118\,400/4\,000 \approx -29{,}6$ menghasilkan $N_2/N_I \sim 5\times 10^{-13}$ — nyaris nol atom berada di tingkat $n=2$, sehingga garis Balmer hampir tak terlihat pada bintang dingin!
+
+### B. Persamaan Ionisasi Saha
+
+Sebaliknya, pada suhu yang terlalu tinggi, tumbukan termal melepaskan elektron dari inti atom. Perbandingan jumlah atom pada tingkat ionisasi $i+1$ (misalnya H II = proton) terhadap tingkat $i$ (H I = hidrogen netral) ditentukan oleh **Persamaan Ionisasi Saha** (1920):
+
+<Rumus judul="Persamaan Ionisasi Saha">
+
+$$\frac{N_{i+1}}{N_i} = \frac{2\,k_B T\,Z_{i+1}}{P_e\,Z_i}\left(\frac{2\pi m_e k_B T}{h^2}\right)^{3/2}\exp\!\left(-\frac{\chi_i}{k_B T}\right)$$
+
+</Rumus>
+
+dengan $P_e = n_e k_B T$ adalah tekanan elektron bebas, $Z_i$ dan $Z_{i+1}$ fungsi partisi kedua tahap ionisasi (untuk transisi H I $\to$ H II, $Z_{\text{II}} = 1$ untuk proton tunggal dan $Z_{\text{I}} \approx 2$), dan $\chi_i$ adalah **energi ionisasi** ($\chi_{\text{H}} = 13{,}60\ \text{eV}$).
+
+### C. Penggabungan Boltzmann × Saha: Puncak Garis Balmer di Kelas A0
+
+Fraksi total atom hidrogen di seluruh bintang yang berada pada tingkat $n=2$ netral adalah produk dua probabilitas bersyarat:
+
+$$\frac{N_2}{N_{\text{total}}} = \left(\frac{N_2}{N_{\text{I}}}\right) \times \left(\frac{N_{\text{I}}}{N_{\text{I}} + N_{\text{II}}}\right) = \frac{N_2 / N_{\text{I}}}{1 + N_{\text{II}}/N_{\text{I}}}.$$
+
+- Saat $T$ naik dari $4\,000\ \text{K}$ ke $9\,500\ \text{K}$, faktor Boltzmann $N_2/N_I$ melonjak drastis karena lebih banyak elektron naik ke $n=2$, sementara hidrogen masih sebagian besar netral ($N_{\text{II}}/N_{\text{I}} \ll 1$).
+- Begitu $T > 10\,000\ \text{K}$, faktor Saha $N_{\text{II}}/N_{\text{I}} \gg 1$ meledak naik: hidrogen terionisasi sempurna menjadi proton bebas ($H^+$) sehingga penyebut tumbuh jauh lebih cepat daripada pembilang!
+- Turunan $\dfrac{d(N_2/N_{\text{total}})}{dT} = 0$ pada tekanan elektron fotosfer tipikal ($P_e \approx 20\ \text{Pa}$) jatuh tepat pada **$T \approx 9\,520\ \text{K}$ — yaitu bintang kelas A0V seperti Vega**!
+
+<Epistemik jenis="fakta" judul="Mengapa bintang kelas B/O tetap punya garis He kuat sementara bintang M punya TiO">
+
+Setiap unsur memiliki energi eksitasi dan $\chi_i$ berbeda: Helium netral (He I) butuh $\chi = 24{,}6\ \text{eV}$ dan tingkat eksitasi $\sim 21\ \text{eV}$, sehingga puncak garis He I baru tercapai di kelas **B** ($15\,000\text{--}25\,000\ \text{K}$), sedangkan ion He II ($\chi = 54{,}4\ \text{eV}$) mendominasi kelas **O** ($>30\,000\ \text{K}$). Sebaliknya di bawah $3\,800\ \text{K}$ (kelas **M**), energi termal $k_B T \approx 0{,}3\ \text{eV}$ terlalu lemah untuk memutus ikatan molekul Titanium Oksida (**TiO**), membentuk pita absorpsi molekuler yang sangat lebar!
+
+</Epistemik>
+
+| Kelas | Rentang $T_{\text{eff}}$ (K) | Warna Tampak | Indikator Spektrum Utama (Boltzmann–Saha) | Contoh Bintang |
+|---|---|---|---|---|
+| **O** | $> 30\,000$ | Biru | Garis He II, Si IV, N III; Balmer H sangat lemah (H terionisasi) | Alnitak (O9.7 Ib) |
+| **B** | $10\,000\text{--}30\,000$ | Biru-putih | Garis He I mencapai puncak di B2; Balmer menguat cepat | Spica (B1 III), Rigel (B8 Ia) |
+| **A** | $7\,500\text{--}10\,000$ | Putih | Garis Balmer H mencapai **maksimum mutlak di A0**; logam terion muncul | Vega (A0 V), Sirius (A1 V) |
+| **F** | $6\,000\text{--}7\,500$ | Putih-kuning | Balmer melemah; garis Ca II H & K dan logam netral/ion tumbuh | Canopus (F0 II), Procyon (F5 IV) |
+| **G** | $5\,200\text{--}6\,000$ | Kuning | Garis **Ca II H & K** sangat kuat; garis Fe I netral melimpah | Matahari (G2 V), Alpha Cen A |
+| **K** | $3\,700\text{--}5\,200$ | Oranye | Logam netral (Fe I, Na I D) dominan; pita CH/CN muncul | Arcturus (K1.5 III), Aldebaran (K5 III) |
+| **M** | $2\,400\text{--}3\,700$ | Merah | Pita molekul **TiO** dan VO sangat kuat; garis Ca I netral | Betelgeuse (M1–2 Ia), Proxima Cen (M5.5 V) |
+
+</Bagian>
+
+<Bagian id="diagram-hr" judul="2. Diagram Hertzsprung–Russell, Garis Iso-Radius & Kelas Yerkes" tag="Pemetaan Bintang">
+
+Ketika Ejnar Hertzsprung (1911) dan Henry Norris Russell (1913) memetakan luminositas bintang terhadap suhu permukaannya, bintang ternyata tidak tersebar acak melainkan terkumpul pada pita-pita sempit bermakna fisis mendalam:
+
+- **Diagram H–R Observasional (CMD / Warna–Magnitudo):** Memplot **magnitudo mutlak visual ($M_V$)** pada sumbu vertikal (makin terang ke atas, jadi $M_V$ makin negatif di atas!) terhadap **indeks warna $(B-V)$** atau kelas spektrum pada sumbu horizontal (biru/panas di kiri, merah/dingin di kanan).
+- **Diagram H–R Teoretis:** Memplot **$\log_{10}(L/L_\odot)$** pada sumbu vertikal terhadap **$\log_{10}(T_{\text{eff}})$** terbalik ke kiri pada sumbu horizontal.
+
+<Gambar id="hr-skematis" />
+
+<Interaktif jenis="hr" />
+
+### Garis Iso-Radius & Kelas Luminositas Morgan–Keenan (Yerkes)
+
+Dari hukum Stefan–Boltzmann $L = 4\pi R^2 \sigma T_{\text{eff}}^4$, ambil logaritma basis 10 dinormalisasi terhadap nilai Matahari ($L_\odot, R_\odot, T_\odot$):
+
+<Rumus judul="Persamaan Garis Iso-Radius pada Diagram H–R Teoretis">
+
+$$\log_{10}\!\left(\frac{L}{L_\odot}\right) = 2\log_{10}\!\left(\frac{R}{R_\odot}\right) + 4\log_{10}\!\left(\frac{T_{\text{eff}}}{T_\odot}\right)$$
+
+</Rumus>
+
+Pada grafik $\log L$ vs $-\log T_{\text{eff}}$, persamaan ini membentuk berkas **garis lurus sejajar bergradien tetap $-4$** (karena sumbu suhu dibalik ke kanan, radius konstan miring ke kanan-bawah: suhu makin rendah pada radius sama berarti luminositas anjlok tajam sebagai $T^4$). Semakin ke **kanan atas**, radius bintang makin raksasa ($100\text{--}1\,000\,R_\odot$); semakin ke **kiri bawah**, radius bintang makin mungil seperti **katai putih** ($R \sim 0{,}01\,R_\odot \approx R_\oplus$).
+
+<Gambar id="hr-iso-radius" />
+
+Sistem klasifikasi dua dimensi **Yerkes / Morgan–Keenan (MKK)** menambahkan angka Romawi kelas luminositas di belakang kelas spektrum Harvard untuk membedakan bintang bersuhu sama tetapi beradius sangat berbeda:
+- **Ia / Ib:** Superraksasa sangat terang / terang (contoh: Rigel B8Ia, Betelgeuse M1Ia)
+- **II:** Raksasa terang (*Bright Giants*)
+- **III:** Raksasa normal (contoh: Aldebaran K5III, Arcturus K1.5III)
+- **IV:** Subraksasa (*Subgiants*, bintang yang baru mengakhiri fusi H inti)
+- **V:** Deret Utama / Katai (*Main Sequence / Dwarfs*, contoh: Matahari **G2V**, Vega **A0V**)
+- **VI / sd:** Subkatai (*Subdwarfs*, bintang miskin logam)
+- **VII / D / wd:** Katai Putih (*White Dwarfs*, contoh: Sirius B **DA2**)
+
+</Bagian>
+
+<Bagian id="massa-usia" judul="3. Relasi Massa–Luminositas & Skala Waktu Hidup Bintang" tag="Energetika Deret Utama">
+
+Sepanjang jalur **Deret Utama (kelas V)**, bintang berada dalam kesetimbangan hidrostatik dan termal sambil membakar hidrogen menjadi helium di inti. Pengamatan bintang ganda (L3) menunjukkan bahwa massa bintang menjadi parameter pengendali tunggal yang menentukan hampir seluruh sifat deret utamanya melalui **hukum pangkat empiris–teoretis Massa–Luminositas** (`SRC-06`):
+
+<Rumus judul="Relasi Massa–Luminositas & Skala Waktu Nuklir">
+
+$$\frac{L}{L_\odot} \approx \left(\frac{M}{M_\odot}\right)^\alpha, \qquad \tau_{\text{MS}} \approx \frac{E_{\text{nuklir}}}{L} = \tau_{\text{MS},\odot}\left(\frac{M}{M_\odot}\right)^{1-\alpha}$$
+
+</Rumus>
+
+Nilai eksponen $\alpha$ berubah menurut rezim fisika transport energi & tekanan di dalam bintang:
+- Bintang bermassa sangat rendah ($M < 0{,}43\,M_\odot$, konvektif penuh): $\alpha \approx 2{,}3$.
+- Bintang bermassa menengah–tinggi ($0{,}43\,M_\odot \lesssim M \lesssim 20\,M_\odot$, di mana tekanan gas ideal & opasitas Kramers/Thomson mendominasi): **$\alpha \approx 3{,}5\text{--}4{,}0$** (nilai standar soal OSN/IOAA adalah $\alpha = 3{,}5$).
+- Bintang supermasif ($M > 50\,M_\odot$, didominasi **tekanan radiasi** $P_{\text{rad}} = \frac{1}{3}aT^4$ dan batas Eddington $L \propto M$): **$\alpha \approx 1$**.
+
+### Penurunan Numerik Masa Hidup Nuklir Matahari ($\tau_{\text{MS},\odot}$)
+
+Pada rantai proton–proton ($4\,{}^1\text{H} \to {}^4\text{He}$), efisiensi konversi massa menjadi energi adalah $\epsilon_{\text{nuk}} = 0{,}0071$ ($0{,}71\%$, dari F6). Namun hanya sekitar **$f_{\text{inti}} \approx 10\%$** massa total bintang yang cukup panas di inti ($T > 10^7\ \text{K}$) untuk ikut berfusi sebelum bintang meninggalkan deret utama! Dengan demikian cadangan energi nuklir Matahari adalah:
+
+$$E_{\text{nuk}} = \epsilon_{\text{nuk}}\,f_{\text{inti}}\,M_\odot c^2 = (0{,}0071)(0{,}10)(1{,}989\times 10^{30}\ \text{kg})(2{,}998\times 10^8\ \text{m/s})^2 \approx 1{,}27\times 10^{44}\ \text{J}.$$
+
+Membaginya dengan luminositas Matahari $L_\odot = 3{,}828\times 10^{26}\ \text{W}$ menghasilkan:
+
+$$\tau_{\text{MS},\odot} \approx \frac{1{,}27\times 10^{44}}{3{,}828\times 10^{26}} \approx 3{,}3\times 10^{17}\ \text{s} \approx 1{,}05\times 10^{10}\ \text{tahun} \approx 10\ \text{miliar tahun}!$$
+
+Bandingkan dengan **skala waktu termal Kelvin–Helmholtz** (berapa lama bintang bersinar jika hanya mengandalkan energi potensial gravitasi $\sim \frac{3}{5}\frac{GM^2}{R}$ tanpa fusi nuklir): $\tau_{\text{KH}} \approx \frac{GM_\odot^2}{R_\odot L_\odot} \approx 3\times 10^7\ \text{tahun}$ — hanya 30 juta tahun! Perbedaan 300 kali lipat antara $\tau_{\text{MS}}$ dan $\tau_{\text{KH}}$ inilah bukti historis tak terbantahkan bahwa Matahari ditenagai reaksi nuklir, bukan kontraksi gravitasi. Untuk bintang deret utama umum dengan $\alpha = 3{,}5$, kita peroleh penskalaan tajam:
+
+$$\tau_{\text{MS}} \approx 10^{10}\ \text{tahun} \times \left(\frac{M}{M_\odot}\right)^{-2{,}5}.$$
+
+</Bagian>
+
+<Bagian id="doppler-profil-garis" judul="4. Efek Doppler, Profil Garis Spektrum, Lebar Ekuivalen & log g" tag="Dinamika Atmosfer Bintang">
+
+### A. Pergeseran Doppler Garis Spektrum
+
+Gerak radial $v_r$ bintang di sepanjang garis pandang menggeser seluruh panjang gelombang garis spektrum dari panjang gelombang diam laboratorium $\lambda_0$ menjadi $\lambda_{\text{obs}}$. Untuk kelajuan non-relativistik ($|v_r| \ll c$) maupun relativistik (objek kompak, jet kuasar, atau koreksi tingkat tinggi):
+
+<Rumus judul="Efek Doppler Non-Relativistik & Relativistik">
+
+$$\frac{\Delta\lambda}{\lambda_0} = \frac{\lambda_{\text{obs}} - \lambda_0}{\lambda_0} = \frac{v_r}{c} \quad (|v_r|\ll c), \qquad 1 + z = \frac{\lambda_{\text{obs}}}{\lambda_0} = \sqrt{\frac{1 + v_r/c}{1 - v_r/c}} \quad (\text{relativistik})$$
+
+</Rumus>
+
+Dengan konvensi astronomi standar: **$v_r > 0$ ($\Delta\lambda > 0$, *redshift*)** berarti bintang bergerak **menjauhi** pengamat; **$v_r < 0$ ($\Delta\lambda < 0$, *blueshift*)** berarti bintang **mendekati** pengamat. Jangan lupa pula mengoreksi komponen gerak orbit Bumi mengitari Matahari ($v_\oplus \approx 29{,}78\ \text{km/s}$) melalui **koreksi heliosentris / barisentrrik** sebelum mengklaim gerak intrinsik bintang!
+
+<Gambar id="doppler-geser" />
+
+### B. Lebar Ekuivalen ($W_\lambda$) & Lima Mekanisme Pelebaran Garis
+
+Kekuatan total sebuah garis absorpsi diukur secara bebas-resolusi menggunakan **lebar ekuivalen (*equivalent width*, $W_\lambda$)** — yaitu lebar sebuah persegi panjang hitam sempurna (fluks $0$) yang memiliki luas serapan sama persis dengan garis spektrum terhadap kontinum $F_c$:
+
+$$W_\lambda = \int \left(1 - \frac{F_\lambda}{F_c}\right) d\lambda.$$
+
+Bentuk terperinci profil garis $F_\lambda$ menyimpan informasi fisika langsung tentang kondisi atmosfer bintang (`SRC-04`, `SRC-06`):
+
+1. **Pelebaran Alami (*Natural Broadening*):** Akibat prinsip ketidakpastian Heisenberg $\Delta E\,\Delta t \ge \hbar/2$, tingkat energi tereksitasi dengan waktu hidup rata-rata $\Delta t \sim 10^{-8}\ \text{s}$ memiliki ketidakpastian lebar frekuensi alami berbentuk kurva **Lorentzian** ($\Delta\lambda_{\text{nat}} \sim 10^{-5}\ \text{nm}$, paling kecil namun sayapnya meluruh lambat).
+2. **Pelebaran Termal Doppler & Mikro-turbulensi:** Atom gas bergerak acak mengikuti distribusi kecepatan Maxwell–Boltzmann 1D ($v_{\text{rms,1D}} = \sqrt{k_B T / m}$) ditambah turbulensi skala kecil $\xi_{\text{turb}}$. Ini menggeser frekuensi tiap atom menghasilkan profil **Gaussian** dengan lebar setengah-maksimum termal:
+   $$\Delta\lambda_D = \frac{\lambda_0}{c}\sqrt{\frac{2k_B T}{m} + \xi_{\text{turb}}^2}.$$
+   Perhatikan: untuk unsur ringan seperti hidrogen ($m = m_p$) garis termalnya jauh lebih lebar daripada besi ($m = 56\,m_p$) pada suhu yang sama!
+3. **Pelebaran Tekanan / Tumbukan (*Pressure / Stark Broadening*):** Pada fotosfer berkerapatan tinggi, ion dan elektron bebas tetangga menciptakan medan listrik mikro lokal yang menggeser tingkat energi atom (efek Stark linear pada hidrogen) dan memutus koherensi pancaran, menghasilkan profil **Lorentzian** dengan sayap melebar (*broad wings*). Karena dalam kesetimbangan hidrostatik tekanan fotosfer berbanding lurus dengan gravitasi permukaan ($P \propto g / \kappa$), **lebar sayap garis Balmer sensitif langsung terhadap $\log_{10} g$** ($g = GM/R^2$ dalam $\text{cm/s}^2$):
+   - **Superraksasa (Ia, $R \sim 100\text{--}500\,R_\odot$):** $\log g \approx 0{,}0\text{--}1{,}5$ $\to$ atmosfer sangat renggang $\to$ garis spektrum **sempit & tajam**.
+   - **Raksasa (III, $R \sim 10\text{--}30\,R_\odot$):** $\log g \approx 2{,}0\text{--}3{,}0$ $\to$ garis sedang.
+   - **Katai Deret Utama (V):** $\log g \approx 4{,}0\text{--}4{,}5$ (Matahari: $\log g_\odot \approx 4{,}438$) $\to$ sayap Balmer lebar.
+   - **Katai Putih (wd, $R \sim 0{,}01\,R_\odot$):** $\log g \approx 7{,}5\text{--}8{,}5$ $\to$ pelebaran Stark luar biasa ekstrem!
+   *(Konvolusi antara profil inti Gaussian Doppler dan profil sayap Lorentzian alami+tekanan membentuk **profil Voigt**.)*
+4. **Pelebaran Rotasi ($v\sin i$):** Ketika bintang berotasi dengan kecepatan ekuator $v_{\text{rot}}$ dan inklinasi sumbu $i$, belahan yang berputar mendekat mengalami *blueshift* dan belahan yang menjauh mengalami *redshift*. Mengintegrasikan seluruh cakram bintang melebarkan semua garis secara proporsional sebesar $\Delta\lambda_{\text{rot}} / \lambda_0 \approx (v_{\text{rot}}\sin i)/c$ dan memotong tajam puncak garisnya.
+5. **Pemisahan Magnetik (*Zeeman Splitting*):** Medan magnet permukaan bintang $B$ memecah satu tingkat energi menjadi sub-tingkat $\Delta E_Z = \mu_B B$, memecah atau melebarkan garis spektrum sebanding dengan **$\Delta\lambda_Z \propto \lambda_0^2 B$** — sehingga medan magnet bintang paling mudah dideteksi pada garis inframerah!
+
+<BatasValiditas
+  aturan={[
+    {
+      rumus: '$L/L_\\odot = (M/M_\\odot)^{3{,}5}$ dan $\\tau_{\\text{MS}} \\propto M^{-2{,}5}$',
+      berlakuJika: 'Bintang deret utama (kelas V) bermassa $0{,}43\\,M_\\odot \\lesssim M \\lesssim 20\\,M_\\odot$ ber-metalitas dekat Matahari.',
+      gagalJika: 'Bintang sudah berevolusi ke cabang raksasa/superraksasa (kelas III/I), katai putih, atau bintang supermasif $M > 50\\,M_\\odot$ di mana tekanan radiasi mendominasi ($L \\propto M^1$).',
+      akibat: 'Mengira Betelgeuse (superraksasa merah $L \\sim 10^5\\,L_\\odot$) bermassa $M = (10^5)^{1/3{,}5} \\approx 27\\,M_\\odot$ masih bisa benar sebagai orde kasar leluhurnya, tetapi salah fatal bila diterapkan ke raksasa merah $1\\,M_\\odot$ ber-luminositas $10^3\\,L_\\odot$ (keliru mengiranya bintang deret utama $7\\,M_\\odot$!).',
+    },
+    {
+      rumus: 'Persamaan Boltzmann–Saha dalam Kesetimbangan Termodinamika Lokal (LTE)',
+      berlakuJika: 'Fotosfer bintang cukup rapat sehingga laju tumbukan antar-partikel jauh lebih cepat daripada laju transisi radiatif spontan.',
+      gagalJika: 'Atmosfer luar superraksasa renggang (kelas Ia), kromosfer/korona panas, atau nebula antarbintang yang tipis optis (non-LTE).',
+      akibat: 'Populasi atom tidak lagi mengikuti distribusi suhu tunggal $T$, sehingga penentuan kelimpahan unsur dan $T_{\\text{eff}}$ dari rumus Saha klasik menyimpang sistematis.',
+    },
+    {
+      rumus: '$\\Delta\\lambda / \\lambda_0 = v_r / c$',
+      berlakuJika: 'Gerak bintang non-relativistik ($|v_r| \\ll c$, misalnya $< 3\\,000\\ \\text{km/s}$ dengan galat $< 0{,}5\\%$) serta sudah dikoreksi terhadap gerak orbit Bumi mengelilingi barisentrum Tata Surya.',
+      gagalJika: 'Kecepatan jet kuasar/bintang hiperkecepatan mendekati fraksi berarti $c$, atau lupa menghilangkan kecepatan orbital Bumi ($\\pm 30\\ \\text{km/s}$).',
+      akibat: 'Jika lupa koreksi heliosentris, sinyal kecepatan radial eksoplanet $\\sim 100\\ \\text{m/s}$ atau biner tenggelam total oleh siklus 1 tahun revolusi Bumi.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="sintesis-contoh" judul="5. Worked Example: Sintesis Spektroskopi, Fotometri & Paralaks" tag="Notebook Hitung">
+
+<Contoh judul="Menentukan R, M, ρ, kelas luminositas, dan v_r bintang dari data multi-instrumen">
+
+<Langkah>
+
+**Data Observasi:** Sebuah bintang tunggal memiliki paralaks Gaia $p = 0{,}0125''$ (tanpa ekstingsi berarti), magnitudo tampak visual $m_V = 4{,}80$, koreksi bolometrik $BC_V = -0{,}55\ \text{mag}$, suhu efektif spektroskopik $T_{\text{eff}} = 11\,556\ \text{K}$ ($= 2{,}00\,T_\odot$, kelas B8), dan profil sayap garis Balmer memberikan gravitasi permukaan $\log_{10} g = 4{,}00$ ($\text{cm/s}^2$). Selain itu, pusat garis H$\alpha$ ($\lambda_0 = 656{,}281\ \text{nm}$) bergeser sinusoidal akibat pasangan tak terlihat antara $\lambda_{\min} = 656{,}194\ \text{nm}$ hingga $\lambda_{\max} = 656{,}368\ \text{nm}$.
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Jarak, Magnitudo Mutlak & Luminositas Bolometrik:**
+Jarak $d = 1/p = 1/0{,}0125 = 80{,}0\ \text{pc}$.
+Magnitudo mutlak visual:
+$$M_V = m_V - 5\log_{10}(80{,}0) + 5 = 4{,}80 - 5(1{,}9031) + 5 = +0{,}285\ \text{mag}.$$
+Magnitudo mutlak bolometrik ($BC_V = M_{\text{bol}} - M_V$):
+$$M_{\text{bol}} = 0{,}285 + (-0{,}55) = -0{,}265\ \text{mag}.$$
+Menggunakan $M_{\text{bol},\odot} = +4{,}74\ \text{mag}$ (IAU 2015 B2):
+$$\frac{L}{L_\odot} = 10^{-0{,}4(M_{\text{bol}} - M_{\text{bol},\odot})} = 10^{-0{,}4(-0{,}265 - 4{,}74)} = 10^{2{,}002} \approx 100{,}5\,L_\odot.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Radius Bintang dari Garis Iso-Radius H–R:**
+Karena $T_{\text{eff}}/T_\odot = 2{,}00$, hukum Stefan–Boltzmann memberi:
+$$\frac{R}{R_\odot} = \sqrt{\frac{L}{L_\odot}}\left(\frac{T_\odot}{T_{\text{eff}}}\right)^2 = \sqrt{100{,}5}\left(\frac{1}{2{,}00}\right)^2 = \frac{10{,}02}{4{,}00} \approx 2{,}51\,R_\odot.$$
+Secara fisik $R = 2{,}51 \times 6{,}957\times 10^8 \approx 1{,}74\times 10^9\ \text{m}$.
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 3 — Massa & Kerapatan Rata-rata dari $\log g$:**
+Dari $\log_{10} g = 4{,}00$ ($\text{cm/s}^2$), maka $g = 10^4\ \text{cm/s}^2 = 100{,}0\ \text{m/s}^2$. Menggunakan $g = GM/R^2$:
+$$M = \frac{g R^2}{G} = \frac{(100{,}0)(1{,}74\times 10^9)^2}{6{,}674\times 10^{-11}} \approx 4{,}54\times 10^{30}\ \text{kg} \approx 2{,}28\,M_\odot.$$
+Uji konsistensi dengan relasi Massa–Luminositas deret utama kelas V: $(2{,}28)^{3{,}5}$ terlalu kecil ($\sim 18\,L_\odot$), atau dengan $\alpha = 4{,}0$ masih di bawah $100\,L_\odot$ — menandakan bintang ini memiliki $L$ sedikit di atas ZAMS ($M \approx 3\,M_\odot$ dengan galat kecil pada $\log g$, khas B8V tua / awal subraksasa IV!). Kerapatan rata-ratanya:
+$$\bar{\rho} = \frac{M}{\frac{4}{3}\pi R^3} = \frac{4{,}54\times 10^{30}}{\frac{4}{3}\pi (1{,}74\times 10^9)^3} \approx 206\ \text{kg/m}^3 \approx 0{,}21\ \text{g/cm}^3.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 4 — Semi-Amplitudo Kecepatan Radial Doppler:**
+$$\Delta\lambda_{\text{amp}} = \frac{\lambda_{\max} - \lambda_{\min}}{2} = \frac{656{,}368 - 656{,}194}{2} = 0{,}087\ \text{nm}.$$
+Maka semi-amplitudo kecepatan radial bintang:
+$$K = c\frac{\Delta\lambda_{\text{amp}}}{\lambda_0} = (2{,}9979\times 10^5\ \text{km/s})\frac{0{,}087}{656{,}281} \approx 39{,}7\ \text{km/s}.$$
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Bintang kelas A memiliki kelimpahan unsur hidrogen paling tinggi di alam semesta karena garis absorpsi Balmer-nya paling kuat, sementara bintang kelas O kehabisan hidrogen.',
+      kenapaKeliru: 'Menyamakan kekuatan garis absorpsi (konsentrasi tingkat n=2 H netral) secara langsung dengan kelimpahan total unsur kimia tanpa memperhitungkan tingkat eksitasi Boltzmann dan ionisasi Saha.',
+      caraDeteksi: 'Hitung rasio Saha N_II/N_I di kelas O (T = 35.000 K): hampir 100% atom hidrogen sudah kehilangan elektronnya sehingga tidak bisa menyerap foton Balmer meski komposisi hidrogennya tetap ~73%!',
+      benar: 'Semua bintang populasi normal memiliki komposisi ~73% H dan ~25% He; kekuatan garis Balmer memuncak di kelas A0 semata karena kesetimbangan Boltzmann–Saha memaksimalkan populasi atom H netral di n=2 pada T ≈ 9.520 K.',
+    },
+    {
+      salah: 'Garis Balmer yang sangat lebar pada suatu bintang berarti bintang itu jauh lebih panas daripada bintang bergaris Balmer sempit.',
+      kenapaKeliru: 'Mengabaikan pelebaran tekanan/Stark (yang bergantung pada kerapatan gas dan log g) dan hanya mengingat pelebaran termal Doppler.',
+      caraDeteksi: 'Bandingkan bintang katai putih DA (T ~ 12.000 K, garis Balmer amat lebar selebar puluhan nm!) vs superraksasa A0Ia (T ~ 10.000 K, garis Balmer amat tajam setipis jarum!).',
+      benar: 'Lebar sayap garis hidrogen terutama dikendalikan oleh kerapatan elektron lokal dan gravitasi permukaan g = GM/R² (pelebaran Stark), bukan hanya suhu fotosfer.',
+    },
+    {
+      salah: 'Bintang dengan luminositas lebih besar selalu memiliki massa lebih besar dan hidup lebih lama karena memiliki lebih banyak bahan bakar hidrogen.',
+      kenapaKeliru: 'Terjebak dua kesalahan: (1) menerapkan relasi M–L deret utama ke bintang raksasa/superraksasa, dan (2) mengira τ_MS sebanding M bukan M/L.',
+      caraDeteksi: 'Cek dua hal: apakah bintang berada di kelas V (deret utama)? Lalu hitung rasio pasokan terhadap laju bakar τ = M/L ∝ M / M^3,5 = M^-2,5.',
+      benar: 'Pada deret utama, bintang lebih masif jauh lebih boros membakar bahan bakar sehingga hidup jauh lebih singkat; sementara raksasa merah ber-L = 1000 L☉ bisa saja bermassa hanya 1 M☉.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="l1-cek-1"
+  pertanyaan="Mengapa garis absorpsi hidrogen deret Balmer (H-alfa, H-beta) mencapai intensitas terkuat pada bintang kelas spektrum A (suhu ~10.000 K), bukan pada kelas O yang lebih panas?"
+  opsi={[
+    'Pada kelas O hidrogen hampir terionisasi sempurna, sedangkan pada suhu ~10.000 K populasi atom hidrogen pada tingkat n=2 berada di kondisi optimal',
+    'Bintang kelas A memiliki kelimpahan unsur hidrogen yang jauh lebih melimpah daripada kelas O',
+    'Bintang kelas O terlalu dingin untuk mengeksitasi elektron ke tingkat n=2',
+    'Atmosfer bintang kelas O tidak memiliki elektron bebas'
+  ]}
+  jawaban={0}
+  penjelasan="Kombinasi persamaan Boltzmann dan Saha: di bawah 10.000 K elektron mayoritas di n=1; di atas 25.000 K (kelas O) hidrogen terionisasi total. Puncak populasi n=2 terjadi di kelas A0 (~9.520 K)."
+/>
+
+<CekPaham
+  id="l1-cek-2"
+  pertanyaan="Dua bintang memiliki kelas spektrum yang sama persis (G2), namun bintang pertama memiliki garis-garis absorpsi yang sangat sempit dan tajam (kelas luminositas Ia), sedangkan bintang kedua memiliki garis yang lebar dengan sayap difus (kelas V). Apa kesimpulan fisisnya?"
+  opsi={[
+    'Bintang pertama adalah superraksasa dengan kerapatan fotosfer dan gravitasi permukaan yang sangat rendah',
+    'Bintang pertama adalah katai putih dengan gravitasi permukaan sangat kuat',
+    'Bintang kedua memiliki suhu fotosfer yang jauh lebih tinggi',
+    'Bintang pertama berotasi jauh lebih cepat daripada bintang kedua'
+  ]}
+  jawaban={0}
+  penjelasan="Pelebaran tekanan (Stark effect) sebanding dengan kerapatan dan gravitasi permukaan g. Superraksasa (Ia) memiliki atmosfer sangat renggang (g rendah), menghasilkan garis spektrum yang tajam dan sempit."
+/>
+
+<CekPaham
+  id="l1-cek-3"
+  pertanyaan="Bintang deret utama X memiliki massa tiga kali massa bintang deret utama Y (M_X = 3 M_Y). Dengan asumsi relasi L ~ M^3,5, berapakah perbandingan masa hidup bintang Y dibanding bintang X (tau_Y / tau_X)?"
+  opsi={[
+    'Bintang Y hidup sekitar 15,6 kali lebih lama daripada bintang X',
+    'Bintang X hidup sekitar 15,6 kali lebih lama daripada bintang Y',
+    'Bintang Y hidup 3 kali lebih lama daripada bintang X',
+    'Keduanya memiliki masa hidup yang sama karena pasokan bahan bakar sebanding dengan luminositas'
+  ]}
+  jawaban={0}
+  penjelasan="Masa hidup deret utama tau ~ M / L ~ M / M^3,5 = M^-2,5. Maka tau_Y / tau_X = (M_Y / M_X)^-2,5 = (1/3)^-2,5 = 3^2,5 = 3^2 × sqrt(3) ≈ 9 × 1,732 ≈ 15,6 kali."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'l1-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Dua bintang deret utama memiliki spektrum identik kelas A0V, tetapi salah satunya menunjukkan garis logam (seperti Mg II 448,1 nm) berbentuk lebar dengan profil "mangkuk" dangkal namun **lebar ekuivalennya ($W_\\lambda$)** tetap sama dengan bintang pasangannya yang bergaris tajam dalam. Jelaskan mekanisme fisis yang membedakan keduanya!',
+      petunjuk: 'Apakah rotasi bintang ($v\\sin i$) atau suhu/kelimpahan unsur yang mengubah lebar profil tanpa mengubah total foton yang diserap?',
+      langkahKunci: [
+        'Bentuk garis melebar dengan puncak dangkal yang khas pada semua garis spektrum sekaligus merupakan tanda **pelebaran rotasi ($v\\sin i$)** (rotasi cepat di bintang A0V seperti Altair vs rotasi lambat Vega yang menghadap kutub).',
+        'Efek Doppler rotasional hanya mendistribusikan ulang foton yang diserap sepanjang rentang panjang gelombang $\\pm \\lambda_0 (v\\sin i)/c$ tanpa mengubah jumlah total atom penyerap di garis pandang.',
+        'Oleh sebab itu, luas total kurva absorpsi — yaitu **lebar ekuivalen $W_\\lambda = \\int (1 - F_\\lambda/F_c)\\,d\\lambda$** — tetap **konservatif (sama)** antara kedua bintang A0V tersebut.',
+      ],
+      rubrik: [
+        'Mengidentifikasi pelebaran rotasi ($v\\sin i$) sebagai penyebab garis dangkal-lebar pada semua unsur.',
+        'Menjelaskan mengapa luas integral absorpsi ($W_\\lambda$) tetap konstan saat profil diregangkan secara Doppler.',
+      ],
+    },
+    {
+      id: 'l1-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari kombinasi persamaan Boltzmann ($N_2/N_1 = 4 e^{-\\Delta E / k_B T}$ dengan $\\Delta E = 10{,}20\\ \\text{eV}$) dan persamaan Saha ($N_{\\text{II}}/N_{\\text{I}} = \\frac{C}{P_e} T^{5/2} e^{-\\chi / k_B T}$ dengan $\\chi = 13{,}60\\ \\text{eV}$), turunkan kondisi matematis (persamaan transendental untuk $T_{\\text{puncak}}$) ketika fraksi atom hidrogen di tingkat $n=2$ ($N_2 / N_{\\text{total}}$) mencapai **maksimum**! Tunjukkan pula bagaimana letak $T_{\\text{puncak}}$ bergeser pada superraksasa yang $P_e$-nya $100\\times$ lebih rendah daripada katai deret utama.',
+      petunjuk: 'Tulis $f(T) = \\frac{4 e^{-\\Delta E/k_B T}}{1 + \\frac{C}{P_e} T^{5/2} e^{-\\chi/k_B T}}$, lalu ambil $\\frac{d\\ln f}{dT} = 0$.',
+      langkahKunci: [
+        'Nyatakan $f(T) = \\frac{N_2}{N_I + N_{II}} \\approx \\frac{4 e^{-E_2/k_B T}}{1 + x(T)}$ dengan $x(T) \\equiv \\frac{N_{II}}{N_I} = \\frac{C}{P_e} T^{5/2} e^{-\\chi/k_B T}$ (menggunakan $Z_I \\approx 2, Z_{II} = 1$).',
+        'Turunan logaritmik $\\frac{d\\ln f}{dT} = \\frac{\\Delta E}{k_B T^2} - \\frac{1}{1+x}\\frac{dx}{dT} = 0$. Karena $\\frac{dx}{dT} = x\\left(\\frac{5}{2T} + \\frac{\\chi}{k_B T^2}\\right)$, syarat maksimum adalah:',
+        '$$\\frac{x}{1+x}\\left(\\frac{5}{2} k_B T + \\chi\\right) = \\Delta E \\implies \\frac{N_{II}}{N_I} = \\frac{\\Delta E}{\\chi - \\Delta E + \\frac{5}{2} k_B T}.$$',
+        'Dengan $\\Delta E = 10{,}2\\ \\text{eV}$, $\\chi = 13{,}6\\ \\text{eV}$, dan $k_B T \\approx 0{,}8\\ \\text{eV}$, puncak selalu terjadi saat $N_{II}/N_I \\approx \\frac{10{,}2}{3{,}4 + 2{,}0} \\approx 1{,}9$ (sekitar $\\sim 65\\%$ terionisasi!). Karena $x \\propto P_e^{-1}$, di atmosfer superraksasa dengan $P_e$ $100\\times$ lebih rendah, ionisasi yang sama dicapai pada **suhu $T_{\\text{puncak}}$ yang lebih rendah** (puncak Balmer superraksasa sedikit bergeser ke suhu lebih dingin dibanding kelas V)!',
+      ],
+      rubrik: [
+        'Menuliskan fungsi pecahan Boltzmann/(1 + Saha) dengan benar.',
+        'Menurunkan syarat $N_{II}/N_I = \\Delta E / (\\chi - \\Delta E + \\frac{5}{2}k_B T)$ via kalkulus.',
+        'Menyimpulkan arah pergeseran $T_{\\text{puncak}}$ ke nilai lebih rendah saat $P_e$ turun.',
+      ],
+    },
+    {
+      id: 'l1-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Taksirlah besarnya **pelebaran termal Doppler** $\\Delta\\lambda_D$ pada garis H$\\alpha$ ($656{,}28\\ \\text{nm}$) di fotosfer Matahari ($T = 5\\,778\\ \\text{K}$, tanpa turbulensi), lalu bandingkan dengan pelebaran termal garis besi netral Fe I ($\\lambda_0 \\approx 656{,}9\\ \\text{nm}$, $m_{\\text{Fe}} \\approx 56\\,m_p$) dan dengan **resolusi spektral** spektrograf amatir ($R = 10\\,000$). Apakah spektrograf $R = 10\\,000$ dapat memisahkan profil termal garis Fe I?',
+      petunjuk: 'Gunakan $\\Delta\\lambda_D = \\frac{\\lambda_0}{c}\\sqrt{2k_B T / m}$ dan resolusi instrumen $\\Delta\\lambda_{\\text{inst}} = \\lambda_0 / R$.',
+      langkahKunci: [
+        'Kelajuan termal karakteristik proton pada $5\\,778\\ \\text{K}$: $v_{\\text{th,H}} = \\sqrt{\\frac{2 k_B T}{m_p}} = \\sqrt{\\frac{2(1{,}381\\times 10^{-23})(5\\,778)}{1{,}673\\times 10^{-27}}} \\approx 9{,}77\\ \\text{km/s}$.',
+        'Pelebaran Doppler garis H$\\alpha$: $\\Delta\\lambda_{D,\\text{H}} = 656{,}28\\ \\text{nm} \\times \\frac{9{,}77}{2{,}998\\times 10^5} \\approx 0{,}0214\\ \\text{nm}$ ($21{,}4\\ \\text{pm}$).',
+        'Untuk Fe I ($m_{\\text{Fe}} = 56\\,m_p$), kelajuan termal turun oleh faktor $\\sqrt{56} \\approx 7{,}48$: $\\Delta\\lambda_{D,\\text{Fe}} \\approx \\frac{0{,}0214}{7{,}48} \\approx 0{,}00286\\ \\text{nm}$ ($2{,}86\\ \\text{pm}$).',
+        'Sementara resolusi spektrograf $R = 10\\,000$ adalah $\\Delta\\lambda_{\\text{inst}} = \\frac{656{,}9}{10\\,000} = 0{,}0657\\ \\text{nm}$ — lebih dari **$20\\times$ lebih lebar** daripada profil termal Fe I! Maka profil garis intrinsik Fe I tidak terpisah ($R > 200\\,000$ diperlukan untuk memecahnya secara penuh).',
+      ],
+      rubrik: [
+        'Menghitung $v_{\\text{th}} \\approx 9{,}8\\ \\text{km/s}$ dan $\\Delta\\lambda_{D,\\text{H}} \\approx 0{,}021\\ \\text{nm}$.',
+        'Memakai faktor massa $1/\\sqrt{56}$ untuk Fe I dan membandingkannya tepat dengan $\\lambda_0/R$.',
+      ],
+    },
+    {
+      id: 'l1-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Tabel pengamatan 3 bintang kelas spektrum sama (G2): Bintang P memiliki $M_V = +4{,}8$, $\\log g = 4{,}44$; Bintang Q memiliki $M_V = +0{,}5$, $\\log g = 2{,}5$; Bintang R memiliki $M_V = -6{,}0$, $\\log g = 0{,}8$. (a) Tentukan rasio radius $R_R / R_P$ (asumsikan $T_{\\text{eff}}$ dan $BC_V$ identik). (b) Taksir rasio massa $M_R / M_P$ dari nilai $\\log g$ dan bandingkan usia deret utama leluhur R vs P!',
+      petunjuk: 'Dari $M_V$ konstan-$BC$, $\\Delta M_V = -2{,}5\\log_{10}(L_R/L_P) = -5\\log_{10}(R_R/R_P)$. Lalu $M \\propto g R^2$.',
+      langkahKunci: [
+        'Selisih magnitudo mutlak R dan P: $\\Delta M_V = -6{,}0 - 4{,}8 = -10{,}8\\ \\text{mag}$. Karena $T_{\\text{eff}}$ sama, $L \\propto R^2$ sehingga $\\frac{R_R}{R_P} = 10^{-0{,}2 \\Delta M_V} = 10^{2{,}16} \\approx 145\\times$ (Bintang R adalah superraksasa G2Ia beradius $\\sim 145\\,R_\\odot$, Q raksasa G2III $\\sim 7{,}2\\,R_\\odot$, dan P deret utama G2V!).',
+        'Rasio gravitasi permukaan: $\\frac{g_R}{g_P} = 10^{0{,}8 - 4{,}44} = 10^{-3{,}64} \\approx 2{,}29\\times 10^{-4}$.',
+        'Maka rasio massa dari $M \\propto g R^2$: $\\frac{M_R}{M_P} = (2{,}29\\times 10^{-4})(145)^2 \\approx 4{,}8$ (atau jika dihitung lebih akurat $10^{-3{,}64} \\times 10^{4{,}32} = 10^{0{,}68} \\approx 4{,}8\\,M_\\odot$, khas bintang bermassa menengah yang berevolusi melintasi celah Hertzsprung sebagai superraksasa kuning/Cepheid).',
+        'Leluhur Bintang R ($\\sim 5\\,M_\\odot$) hidup di deret utama hanya $\\tau_{\\text{MS}} \\approx 10^{10}\\,(5)^{-2{,}5} \\approx 1{,}8\\times 10^8\\ \\text{tahun}$ ($\\sim 55\\times$ lebih singkat dari Bintang P yang mirip Matahari)!',
+      ],
+      rubrik: [
+        'Menghitung $R_R/R_P = 10^{0{,}2(10{,}8)} \\approx 145$.',
+        'Menggunakan $M_R/M_P = (g_R/g_P)(R_R/R_P)^2 \\approx 4{,}8$.',
+        'Menghubungkan hasil dengan kelas MKK (V, III, Ia) dan usia evolusi.',
+      ],
+    },
+    {
+      id: 'l1-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Sebuah bintang ganda tak-terpisah (*unresolved binary*) teramati memiliki magnitudo tampak komposit $V = 5{,}00$ dan spektrum komposit aneh: garis Balmer sangat tajam dan kuat seperti bintang kelas **A0**, sekaligus memiliki pita molekul **TiO** yang jelas seperti bintang kelas **M2**! Mengapa satu bintang tunggal normal mustahil menghasilkan kedua ciri ini sekaligus, dan perkirakan perbedaan luminositas visual kedua komponennya jika kedua fitur terdeteksi jelas di spektrum tampak!',
+      petunjuk: 'Tinjau hukum kesetimbangan Boltzmann–Saha untuk suhu pembentukan TiO ($<3\\,800\\ \\text{K}$) vs puncak Balmer ($\\sim 9\\,500\\ \\text{K}$), serta syarat agar komponen M2 tidak kalah tenggelam oleh silau komponen A0V di pita V!',
+      langkahKunci: [
+        'Secara termodinamika (persamaan Saha–Boltzmann), molekul TiO berdisosiasi total di atas $\\sim 4\\,000\\ \\text{K}$, sedangkan eksitasi Balmer $n=2$ mustahil terlihat di bawah $\\sim 5\\,000\\ \\text{K}$: tidak ada satu fotosfer tunggal berkesetimbangan LTE yang bisa sekaligus $3\\,500\\ \\text{K}$ dan $9\\,500\\ \\text{K}$!',
+        'Agar kedua spektrum tampil setara terang pada pita visual V ($\\Delta m_V \\lesssim 1{,}5\\ \\text{mag}$), luminositas visual bintang dingin M2 harus sebanding dengan bintang A0 ($M_V \\approx +0{,}6$ untuk A0V).',
+        'Padahal katai merah M2V memiliki $M_V \\approx +10$ (lebih dari $5\\,000\\times$ lebih redup di pita V dan pasti tenggelam!). Oleh karena itu, komponen M2 tersebut **wajib berupa Raksasa Merah (M2III) atau Superraksasa Merah (M2I)** yang memiliki radius raksasa sehingga $M_V \\sim -0{,}5$ hingga $-5$, mampu menyaingi bintang A0V (atau pasangan simbiotik/bintang ganda berevolusi)!',
+      ],
+      rubrik: [
+        'Menjelaskan kontradiksi termal LTE antara TiO ($<4\\,000\\ \\text{K}$) dan Balmer A0 ($\\sim 9\\,500\\ \\text{K}$).',
+        'Menyimpulkan bahwa komponen M2 harus berukuran raksasa/superraksasa (M2III/I), bukan katai M2V, agar fluks visualnya setara komponen A0.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'l1-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa untuk mengukur kelimpahan unsur dan suhu efektif di fotosfer bintang kelas M yang dingin, astronom tidak boleh memakai lebar garis hidrogen Balmer, dan mengapa garis radiasi atomik yang berasal dari tingkat tereksitasi tinggi justru sangat sensitif terhadap perubahan kecil suhu?',
+      petunjuk: 'Periksa turunan eksponensial faktor Boltzmann $e^{-\\Delta E / k_B T}$ ketika $\\Delta E \\gg k_B T$.',
+      rubrik: [
+        'Pada kelas M ($T \\approx 3\\,000\\ \\text{K}$, $k_B T \\approx 0{,}26\\ \\text{eV}$), tingkat $n=2$ hidrogen berada di $\\Delta E = 10{,}2\\ \\text{eV} \\approx 39\\,k_B T$, sehingga populasinya $e^{-39} \\sim 10^{-17}$ dan garis Balmer lenyap tak terukur.',
+        'Sebaliknya, laju perubahan relatif populasi $\\frac{1}{N}\\frac{dN}{dT} = \\frac{\\Delta E}{k_B T^2}$ berbanding lurus dengan $\\Delta E$, membuat garis berenergi eksitasi sedang (atau rasio garis ionisasi berdekatan / pita TiO) menjadi termometer sensitif selama garis masih berada di batas deteksi SNR.',
+      ],
+      jawabanKunci:
+        'Di bintang M ($T \\approx 3\\,000\\ \\text{K}$), energi termal $k_B T \\approx 0{,}26\\ \\text{eV}$ sangat jauh di bawah $\\Delta E_{1\\to 2} = 10{,}2\\ \\text{eV}$, sehingga hanya $10^{-17}$ bagian atom H yang berada di $n=2$ dan garis Balmer lenyap di bawah derau kontinum. Secara umum, sensitivitas relatif $\\frac{d\\ln(N_b/N_a)}{dT} = \\frac{\\Delta E}{k_B T^2}$ membesar untuk eksitasi tinggi, tetapi pada kelas M transisi dengan $\\Delta E \\gg 10\\,k_B T$ terlalu lemah teramati; oleh sebab itu dipakai pita molekul TiO/VO dan garis logam netral rendah energi seperti Ca I atau Na I D.',
+    },
+    {
+      id: 'l1-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang peserta olimpiade mengukur pergeseran panjang gelombang garis spektrum Fe I ($\\lambda_0 = 500{,}000\\ \\text{nm}$) dari sebuah bintang dan menemukan $\\lambda_{\\text{obs}} = 500{,}040\\ \\text{nm}$ pada bulan Januari serta $499{,}960\\ \\text{nm}$ pada bulan Juli. Ia langsung menyimpulkan bahwa bintang tersebut merupakan bintang biner dengan semi-amplitudo kecepatan radial $K = 24\\ \\text{km/s}$ dan periode $P = 1\\ \\text{tahun}$! Di mana letak kekeliruan fatal interpretasinya?',
+      petunjuk: 'Hitung kecepatan pergeseran $\\Delta\\lambda = \\pm 0{,}040\\ \\text{nm}$ di $500\\ \\text{nm}$ dan cek periode tepat $1\\ \\text{tahun}$ dengan fase berlawanan Januari vs Juli!',
+      rubrik: [
+        'Menghitung kecepatan terukur $v = c(\\pm 0{,}040/500{,}0) = \\pm 24\\ \\text{km/s}$, yang berada tepat di rentang komponen gerak orbital Bumi mengelilingi Matahari ($v_\\oplus = 29{,}78\\ \\text{km/s} \\times \\cos\\beta$).',
+        'Menjelaskan bahwa peserta **lupa melakukan koreksi heliosentris/barisentris**: periode tepat $1{,}000\\ \\text{tahun}$ adalah refleksi gerak orbit Bumi sendiri, bukan orbit bintang biner sejati!',
+      ],
+      jawabanKunci:
+        'Kesalahannya adalah melupakan **koreksi kecepatan orbital Bumi (koreksi heliosentris/barisentris)**. Sinyal periodik berperiode persis $1{,}000\\ \\text{tahun}$ dengan amplitudo $\\le 29{,}8\\ \\text{km/s}$ (di sini $24\\ \\text{km/s} = v_\\oplus\\cos\\beta$ untuk bintang di lintang ekliptika $\\beta \\approx 36^\\circ$) yang berbalik tanda tepat setelah $6$ bulan berasal dari proyeksi kecepatan revolusi pengamat di Bumi menuju/menjauhi bintang, bukan dari gerak intrinsik bintang tersebut!',
+    },
+    {
+      id: 'l1-log-3',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Andai sebuah bintang raksasa merah (kelas K3III) yang tadinya memiliki kerapatan atmosfer rendah mengalami pengurangan radius menjadi **100 kali lebih kecil** (menuju ukuran katai putih) pada massa yang tetap, sementara suhunya sementara dianggap sama. Bagaimana perubahan dramatis yang terjadi pada (a) $\\log g$ dan (b) profil garis spektrumnya?',
+      petunjuk: 'Gunakan $g = GM/R^2$ dan kaitkan kenaikan tekanan fotosfer terhadap pelebaran tumbukan/Stark.',
+      rubrik: [
+        'Jika $R$ menyusut $100\\times$ pada $M$ tetap, gravitasi permukaan $g = GM/R^2$ melonjak $100^2 = 10^4\\times$ ($\\Delta\\log g = +4{,}0$, misalnya dari $2{,}5$ menjadi $6{,}5$).',
+        'Kenaikan ekstrem tekanan elektron & tumbukan di atmosfer memicu **pelebaran Stark / tekanan** masif pada sayap garis spektrum (berubah dari garis raksasa yang tajam menjadi sayap Lorentzian sangat lebar), serta sedikit menggeser keseimbangan ionisasi Saha ke tahap ionisasi yang lebih rendah akibat naiknya $P_e$!',
+      ],
+      jawabanKunci:
+        'Pertama, dari $g = GM/R^2$, penyusutan radius sebesar faktor $100$ menaikkan gravitasi permukaan sebesar $10^4$ kali lipat ($\\Delta \\log g = +4$). Kedua, naiknya gravitasi memampatkan atmosfer sehingga kerapatan partikel bermuatan dan tekanan elektron $P_e$ melonjak drastis: akibatnya profil garis spektrum berubah dari garis sempit tajam menjadi ber-sayap sangat lebar oleh pelebaran tekanan/Stark, dan di saat bersamaan naiknya $P_e$ dalam persamaan Saha mendorong rekombinasi (menekan fraksi ionisasi $N_{i+1}/N_i$ pada suhu yang sama).',
+    },
+    {
+      id: 'l1-log-4',
+      tipe: 'bandingkan_model',
+      pertanyaan:
+        'Mengapa dua garis spektrum pada bintang G2V dapat dibedakan antara pelebaran akibat **medan magnet kuat (Zeeman)** vs pelebaran akibat **rotasi cepat ($v\\sin i$)** hanya dengan membandingkan garis di panjang gelombang biru ($\\lambda \\approx 400\\ \\text{nm}$) dan inframerah dekat ($\\lambda \\approx 1\\,600\\ \\text{nm}$)?',
+      petunjuk: 'Bandingkan penskalaan lebar fraksional $\\Delta\\lambda / \\lambda_0$ terhadap $\\lambda_0$ untuk efek Doppler rotasional vs efek Zeeman.',
+      rubrik: [
+        'Pada pelebaran rotasi (Doppler), $\\Delta\\lambda_{\\text{rot}} / \\lambda_0 = (v\\sin i)/c$ bersifat **independen terhadap $\\lambda_0$**, sehingga lebar dalam skala kecepatan $\\Delta v$ identik di biru maupun inframerah.',
+        'Pada pemisahan Zeeman, energi $\\Delta E_Z = \\mu_B B$ konstan sehingga $\\Delta\\nu_Z = \\text{konstan}$, yang berarti $\\Delta\\lambda_Z \\propto \\lambda_0^2 B$, atau $\\Delta\\lambda_Z / \\lambda_0 \\propto \\lambda_0 B$: garis di $1\\,600\\ \\text{nm}$ melebar **$4\\times$ lebih besar dalam skala kecepatan** dibanding garis di $400\\ \\text{nm}$!',
+      ],
+      jawabanKunci:
+        'Dalam skala kecepatan ($v = c\\,\\Delta\\lambda/\\lambda_0$), pelebaran Doppler rotasional menghasilkan lebar $\\Delta v_{\\text{rot}} = v\\sin i$ yang **persis sama** di seluruh panjang gelombang (biru $400\\ \\text{nm}$ maupun IR $1\\,600\\ \\text{nm}$). Sebaliknya, pemecahan Zeeman tetap berenergi konstan ($\\Delta E \\propto B$), sehingga $\\Delta\\lambda_Z = \\frac{\\lambda_0^2 e B}{4\\pi m_e c}$ memberikan lebar skala-kecepatan $\\Delta v_Z \\propto \\lambda_0 B$ — di $1\\,600\\ \\text{nm}$ efek magnetiknya **4 kali lebih lebar** daripada di $400\\ \\text{nm}$ (dan juga bergantung faktor Landé garis serta terpolarisasi)!',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="l1-refleksi-1"
+  pertanyaan="Jika sebuah gugus bintang terbuka diamati tidak lagi memiliki bintang deret utama kelas O dan B, tetapi masih memiliki bintang deret utama kelas A, F, dan G yang melimpah, apa yang dapat kamu simpulkan mengenai usia gugus tersebut? Jelaskan prinsip fisisnya melalui relasi M–L."
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'l1-m1', gerbang: 'konsep', teks: 'Menjelaskan urutan spektrum OBAFGKM beserta mengapa Balmer memuncak di A0 lewat penggabungan persamaan Boltzmann dan Saha.' },
+    { id: 'l1-m2', gerbang: 'derivasi', teks: 'Menurunkan persamaan garis iso-radius log L = 2 log R + 4 log T pada Diagram H–R serta membedakan kelas luminositas Ia–V–wd.' },
+    { id: 'l1-m3', gerbang: 'derivasi', teks: 'Menurunkan masa hidup deret utama τ_MS ∝ M^-2,5 dari relasi M–L dan membedakannya dari skala waktu Kelvin–Helmholtz.' },
+    { id: 'l1-m4', gerbang: 'logika', teks: 'Membedakan pelebaran garis Doppler termal, tekanan/Stark (log g), rotasi (v sin i), dan Zeeman serta arti kekekalan lebar ekuivalen W_λ.' },
+    { id: 'l1-m5', gerbang: 'observasi', teks: 'Menghitung (d, M_V, M_bol, L, R, M, ρ̄, v_r) secara terpadu dari paralaks, magnitudo, koreksi bolometrik, T_eff, log g, dan pergeseran garis.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul L1">
+
+<Konstanta
+  data={[
+    { simbol: 'T_eff,☉', nilai: '5.772', satuan: 'K (IAU 2015 B3)' },
+    { simbol: 'L_☉', nilai: '3,828 × 10²⁶', satuan: 'W' },
+    { simbol: 'M_☉', nilai: '1,9885 × 10³⁰', satuan: 'kg' },
+    { simbol: 'R_☉', nilai: '6,957 × 10⁸', satuan: 'm' },
+    { simbol: 'log g_☉ (cgs)', nilai: '4,438', satuan: 'log₁₀(cm s⁻²)' },
+    { simbol: 'M_bol,☉', nilai: '+4,74', satuan: 'mag (IAU 2015 B2)' },
+    { simbol: 'τ_MS,☉', nilai: '~1,0 × 10¹⁰', satuan: 'tahun' },
+    { simbol: 'λ_Hα (udara)', nilai: '656,281', satuan: 'nm' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-04', 'SRC-05', 'SRC-06', 'SRC-07']}
+  pemetaan={[
+    { sumberId: 'SRC-04', rujukan: 'MIT OCW 8.901 (Astrophysics I): mekanika statistik atmosfer bintang, profil garis & radiasi spektral.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al., Fundamental Astronomy (6e), Ch. 8: klasifikasi spektrum, diagram H–R, MKK & pelebaran garis.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Ch. 8–9: penurunan urutan OBAFGKM via Boltzmann–Saha, lebar ekuivalen, profil Voigt & tekanan.' },
+    { sumberId: 'SRC-07', rujukan: 'Ryden & Peterson, Foundations of Astrophysics, Ch. 13–14: sifat fisis bintang, massa–luminositas & spektroskopi bintang.' },
+  ]}
+/>
+
+</Bagian>

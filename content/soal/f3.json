@@ -1,0 +1,1183 @@
+[
+  {
+    "id": "f3-01",
+    "topik": "kalkulus",
+    "level": "fondasi",
+    "tipe": "pilihan-ganda",
+    "soal": "Posisi sebuah benda mengikuti s = 4t³ meter, dengan t dalam sekon. Berapa kecepatannya pada t = 2 s?",
+    "opsi": [
+      "48 m/s",
+      "24 m/s",
+      "96 m/s",
+      "32 m/s"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Kecepatan adalah turunan posisi: v = ds/dt.",
+      "Turunkan 4t³: v = 12t².",
+      "Pada t = 2 s: v = 12 × 4 = 48 m/s.",
+      "Periksa dimensi: t³ memiliki satuan s³, dikali koefisien 4 m/s³, lalu diturunkan menjadi m/s² × s = m/s. Konsisten."
+    ]
+  },
+  {
+    "id": "f3-02",
+    "topik": "kalkulus",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Kecepatan sebuah benda bertambah mengikuti v = 3t m/s. Berapa perpindahannya dari t = 0 sampai t = 4 s?",
+    "opsi": [
+      "24 m",
+      "12 m",
+      "48 m",
+      "6 m"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Perpindahan adalah integral kecepatan: Δs = ∫3t dt = 1,5t².",
+      "Evaluasi dari 0 sampai 4 s: 1,5 × 16 = 24 m.",
+      "Cek dengan luas: daerah di bawah garis v = 3t berbentuk segitiga dengan alas 4 s dan tinggi 12 m/s, luas ½ × 4 × 12 = 24 m."
+    ]
+  },
+  {
+    "id": "f3-03",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Hukum Kepler ketiga menyatakan T² ∝ a³. Pada grafik log T terhadap log a, berapa kemiringan garis lurusnya?",
+    "opsi": [
+      "1,5",
+      "2",
+      "3",
+      "0,67"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Ambil logaritma: 2 log T = 3 log a + konstan, sehingga log T = 1,5 log a + konstan.",
+      "Bentuk y = mx + c menunjukkan kemiringan m = 1,5.",
+      "Jadi T ∝ a^(3/2), bukan T ∝ a³ — pangkat pada T yang dibagi dua."
+    ]
+  },
+  {
+    "id": "f3-04",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "soal": "Fluks bintang berbanding terbalik dengan kuadrat jarak, F ∝ 1/d². Jika jarak terukur memiliki ketidakpastian 5%, berapa perkiraan ketidakpastian fluksnya?",
+    "opsi": [
+      "10%",
+      "5%",
+      "2,5%",
+      "25%"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Untuk pangkat, galat relatif dikalikan nilai pangkat: ΔF/F = |−2| × Δd/d.",
+      "ΔF/F = 2 × 5% = 10%.",
+      "Tafsirkan: jarak adalah besaran yang sangat menentukan fluks. Kesalahan 5% pada jarak menjadi 10% pada fluks, sehingga jarak harus diukur lebih teliti daripada fluks yang diinginkan."
+    ]
+  },
+  {
+    "id": "f3-05",
+    "topik": "kalkulus",
+    "level": "fondasi",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan yang benar tentang hubungan posisi, kecepatan, percepatan, dan grafiknya.",
+    "opsi": [
+      "Turunan posisi terhadap waktu adalah kecepatan",
+      "Turunan kecepatan terhadap waktu adalah percepatan",
+      "Luas di bawah kurva kecepatan–waktu adalah perpindahan",
+      "Turunan percepatan terhadap waktu adalah kecepatan",
+      "Integral posisi terhadap waktu menghasilkan percepatan"
+    ],
+    "jawaban": [0, 1, 2],
+    "pembahasan": [
+      "Definisi kecepatan: v = ds/dt.",
+      "Definisi percepatan: a = dv/dt.",
+      "Perpindahan adalah akumulasi kecepatan: Δs = ∫v dt, yaitu luas di bawah kurva v–t.",
+      "Turunan percepatan disebut sentakan (jerk), bukan kecepatan.",
+      "Integral posisi terhadap waktu memiliki satuan m·s, bukan m/s² — bukan percepatan."
+    ]
+  },
+  {
+    "id": "f3-06",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan yang benar tentang statistik dan galat pengukuran.",
+    "opsi": [
+      "Simpangan baku sampel membagi jumlah kuadrat selisih dengan n − 1",
+      "Menambahkan konstanta yang sama ke semua data tidak mengubah simpangan baku",
+      "Galat acak pada rata-rata berkurang sebanding 1/√n",
+      "Merata-ratakan banyak pengukuran menghilangkan galat sistematis",
+      "Simpangan baku selalu sama dengan galat baku rata-rata"
+    ],
+    "jawaban": [0, 1, 2],
+    "pembahasan": [
+      "Pembagi n − 1 memberi estimasi tak bias varians populasi dari sampel.",
+      "Pergeseran tetap mengubah rata-rata, tetapi jarak antar-data tetap — simpangan baku tidak berubah.",
+      "Galat baku rata-rata s/√n: empat kali lebih banyak data menurunkan galat acak menjadi separuh.",
+      "Galat sistematis bergeser satu arah; merata-ratakan justru mengunci nilai yang salah dengan keyakinan tinggi.",
+      "Galat baku rata-rata adalah s/√n, lebih kecil dari simpangan baku sampel kecuali n = 1."
+    ]
+  },
+  {
+    "id": "f3-07",
+    "topik": "analisis-data",
+    "level": "fondasi",
+    "tipe": "isian",
+    "soal": "Lima pengukuran kecepatan radial sebuah bintang: 10,0; 10,2; 9,8; 10,1; 9,9 km/s. Berapa rata-ratanya, dalam km/s?",
+    "jawaban": 10,
+    "toleransiRel": 0.01,
+    "satuan": "km/s",
+    "pembahasan": [
+      "Jumlahkan: 10,0 + 10,2 + 9,8 + 10,1 + 9,9 = 50,0 km/s.",
+      "Bagi dengan n = 5: 50,0/5 = 10,0 km/s.",
+      "Perhatikan bahwa data simetris di sekitar 10,0 — jumlah simpangan positif sama dengan jumlah simpangan negatif."
+    ]
+  },
+  {
+    "id": "f3-08",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "isian",
+    "soal": "Lima pengukuran kecepatan: 2; 4; 4; 4; 6 m/s. Berapa simpangan baku sampelnya, dalam m/s?",
+    "jawaban": 1.41,
+    "toleransiRel": 0.02,
+    "satuan": "m/s",
+    "pembahasan": [
+      "Rata-rata: (2 + 4 + 4 + 4 + 6)/5 = 4 m/s.",
+      "Selisih: −2; 0; 0; 0; +2. Jumlah kuadrat = 4 + 0 + 0 + 0 + 4 = 8.",
+      "Simpangan baku sampel: s = √(8/4) = √2 ≈ 1,41 m/s.",
+      "Galat baku rata-rata = 1,41/√5 ≈ 0,63 m/s — jauh lebih kecil dari sebaran satu pengukuran."
+    ]
+  },
+  {
+    "id": "f3-09",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "isian",
+    "soal": "Kedalaman transit sebuah eksoplanet adalah 1% dari fluks bintang, sehingga (R_p/R★)² = 0,01. Jika jari-jari bintang 6,96 × 10⁸ m, berapa jari-jari planet dalam km?",
+    "jawaban": 69600,
+    "toleransiRel": 0.02,
+    "satuan": "km",
+    "pembahasan": [
+      "Akar kuadrat kedalaman transit: R_p/R★ = √0,01 = 0,1.",
+      "Jari-jari planet: 0,1 × 6,96 × 10⁸ = 6,96 × 10⁷ m.",
+      "Ubah ke km: 6,96 × 10⁷ m = 69.600 km, sekitar 11 kali jari-jari Bumi — seukuran planet raksasa gas.",
+      "Periksa arah: planet yang lebih kecil memberi transit lebih dangkal karena kedalaman sebanding kuadrat rasio jari-jari."
+    ]
+  },
+  {
+    "id": "f3-10",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "esai",
+    "soal": "Seorang siswa mengukur magnitudo bintang berulang kali. Jelaskan mengapa pengulangan menurunkan galat acak tetapi tidak menghilangkan galat sistematis, lalu jelaskan mengapa grafik log–log dipakai untuk menguji hukum pangkat seperti hukum Kepler.",
+    "rubrik": [
+      {
+        "poin": "Membedakan galat acak (tersebar dua arah, berkurang saat dirata-ratakan sebanding 1/√n) dan galat sistematis (bergeser satu arah karena kalibrasi atau bias, tidak hilang dengan pengulangan).",
+        "bobot": 2
+      },
+      {
+        "poin": "Menyebut rumus galat baku rata-rata s/√n dan menafsirkan bahwa 4 kali lebih banyak data menurunkan galat acak menjadi separuh, bukan seperempat.",
+        "bobot": 2
+      },
+      {
+        "poin": "Menjelaskan linearisasi hukum pangkat y = kx^n menjadi log y = n log x + log k, sehingga kemiringan grafik log–log langsung memberi pangkat n.",
+        "bobot": 1
+      },
+      {
+        "poin": "Memberi contoh penerapan, misalnya T² ∝ a³ memberi kemiringan 1,5 pada grafik log T terhadap log a, atau modulus jarak linear terhadap jarak dalam skala logaritmik.",
+        "bobot": 1
+      }
+    ],
+    "jawabanTeladan": "Galat acak berasal dari fluktuasi yang tidak terkendali — getaran udara, derau detektor, perubahan seeing. Karena arahnya acak, rata-rata dari banyak pengukuran mendekati nilai sebenarnya, dan galat baku rata-rata mengecil sebanding 1/√n: empat kali lebih banyak pengukuran hanya menurunkan galat menjadi separuh. Galat sistematis berbeda: kalibrasi yang salah, bias warna, atau kesalahan nol alat menggeser semua pengukuran ke arah yang sama. Merata-ratakan data seperti ini justru menghasilkan angka yang sangat presisi tetapi tetap salah — presisi tinggi bukan jaminan akurasi. Karena itu astronom mengkalibrasi alat dan membandingkan dengan standar, bukan hanya menambah jumlah pengukuran. Untuk menguji hukum pangkat y = kx^n, kedua ruas dilogaritmakan: log y = n log x + log k. Pada grafik log y terhadap log x, data seharusnya membentuk garis lurus dengan kemiringan n. Contohnya hukum Kepler T² ∝ a³ menjadi kemiringan 1,5 pada grafik log T terhadap log a. Penyimpangan dari garis lurus menunjukkan kesalahan data atau fisika tambahan, sehingga linearisasi sekaligus menjadi alat diagnosis.",
+    "pembahasan": [
+      "Inti pembeda: galat acak simetris dan mengecil dengan 1/√n, sedangkan galat sistematis bergeser satu arah dan tidak hilang dengan pengulangan.",
+      "Kutip galat baku rata-rata s/√n dan tafsirkan konsekuensinya untuk jumlah eksposur atau jumlah pengukuran.",
+      "Jelaskan linearisasi log–log: log y = n log x + log k, kemiringan = pangkat n; beri contoh Kepler dengan kemiringan 1,5."
+    ]
+  },
+  {
+    "id": "f3-11",
+    "topik": "kalkulus",
+    "level": "fondasi",
+    "tipe": "pilihan-ganda",
+    "soal": "Posisi sebuah wahana dinyatakan x(t)=5+2t meter. Berapa kecepatannya?",
+    "opsi": ["2 m/s", "5 m/s", "2t m/s", "7 m/s"],
+    "jawaban": 0,
+    "pembahasan": ["Kecepatan adalah turunan posisi terhadap waktu, v=dx/dt.", "Turunan 5+2t adalah 2, sehingga kecepatannya 2 m/s konstan.", "Suku posisi tetap 5 m tidak berkontribusi pada laju perubahan."]
+  },
+  {
+    "id": "f3-12",
+    "topik": "kalkulus",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Kecepatan suatu benda v(t)=6t−2 m/s. Berapa perpindahannya dari t=1 s sampai t=3 s?",
+    "opsi": ["20 m", "16 m", "24 m", "8 m"],
+    "jawaban": 0,
+    "pembahasan": ["Perpindahan adalah integral kecepatan: ∫₁³(6t−2)dt=[3t²−2t]₁³.", "Nilai antiturunan pada t=3 adalah 21 dan pada t=1 adalah 1, jadi selisihnya 20 m.", "Kecepatan positif pada interval ini, sehingga perpindahan juga positif."]
+  },
+  {
+    "id": "f3-13",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada grafik log y terhadap log x, garis melalui titik (1,2) dan (3,6). Jika y=kxⁿ, berapa eksponen n?",
+    "opsi": ["2", "4", "1/2", "3"],
+    "jawaban": 0,
+    "pembahasan": ["Kemiringan garis adalah (6−2)/(3−1)=2.", "Pada hubungan berpangkat, log y=log k+n log x, sehingga kemiringan sama dengan n.", "Maka eksponen n=2; konstanta k menentukan intersep dan tidak diperlukan di sini."],
+    "gambar": "kepler-loglog"
+  },
+  {
+    "id": "f3-14",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "soal": "Kurva transit menunjukkan penurunan fluks berbentuk segitiga, berdurasi 4 jam dengan kedalaman maksimum 0,02 dari fluks normal. Berapa integral kehilangan fluks dalam satuan jam × fluks normal?",
+    "opsi": ["0,04", "0,08", "0,02", "0,16"],
+    "jawaban": 0,
+    "pembahasan": ["Integral kehilangan fluks adalah luas segitiga di bawah kurva penurunan.", "Luasnya ½×4 jam×0,02=0,04 jam × fluks normal.", "Luas ini mengukur akumulasi fluks relatif yang terhalang sepanjang transit."],
+    "gambar": "kurva-transit-data"
+  },
+  {
+    "id": "f3-15",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "soal": "Empat pengukuran independen memiliki simpangan baku sampel 6 satuan. Berapa galat baku rata-ratanya?",
+    "opsi": ["3 satuan", "1,5 satuan", "6 satuan", "12 satuan"],
+    "jawaban": 0,
+    "pembahasan": ["Galat baku rata-rata adalah s/√n.", "Dengan s=6 dan n=4, galat baku=6/2=3 satuan.", "Simpangan baku mengukur sebaran pengukuran individual, sedangkan galat baku mengukur ketidakpastian rata-rata."]
+  },
+  {
+    "id": "f3-16",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada grafik log T terhadap log a untuk orbit planet, a meningkat dari 1 AU menjadi 4 AU. Berdasarkan kemiringan Kepler 3/2, berapa faktor kenaikan periode T?",
+    "opsi": ["8", "4", "16", "2"],
+    "jawaban": 0,
+    "pembahasan": ["Kemiringan 3/2 menunjukkan T∝a^(3/2).", "Maka T₂/T₁=4^(3/2)=√(4³)=8.", "Hasilnya konsisten dengan T²∝a³."],
+    "gambar": "kepler-loglog"
+  },
+  {
+    "id": "f3-17",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada kurva cahaya transit, fluks normal 1,000 dan fluks minimum 0,984. Berapa kedalaman transit relatif?",
+    "opsi": ["0,016 atau 1,6%", "0,984 atau 98,4%", "0,008 atau 0,8%", "0,16 atau 16%"],
+    "jawaban": 0,
+    "pembahasan": ["Kedalaman transit δ=(F_normal−F_min)/F_normal.", "δ=(1,000−0,984)/1,000=0,016=1,6%.", "Kedalaman kecil ini dapat digunakan untuk menaksir rasio jari-jari melalui δ≈(R_p/R★)²."],
+    "gambar": "kurva-transit-data"
+  },
+  {
+    "id": "f3-18",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "pilihan-ganda",
+    "soal": "Grafik kecepatan radial sebuah bintang memiliki puncak +12 km/s dan lembah −8 km/s. Berapa kecepatan sistemik (nilai tengah) dan semi-amplitudo K?",
+    "opsi": ["2 km/s dan 10 km/s", "0 km/s dan 20 km/s", "10 km/s dan 2 km/s", "2 km/s dan 20 km/s"],
+    "jawaban": 0,
+    "pembahasan": ["Kecepatan sistemik adalah titik tengah: (12+(−8))/2=2 km/s.", "Semi-amplitudo adalah setengah rentang: (12−(−8))/2=10 km/s.", "Nilai tengah dan amplitudo sama-sama dapat dibaca dari puncak serta lembah kurva."],
+    "gambar": "kurva-kecepatan-radial"
+  },
+  {
+    "id": "f3-19",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "isian",
+    "soal": "Pada kurva cahaya variabel yang dilipat menurut fase, maksimum terjadi pada fase 0,15 dan maksimum berikutnya pada 1,15. Berapa jarak fase antara kedua maksimum?",
+    "jawaban": 1,
+    "toleransiRel": 0.001,
+    "satuan": "siklus",
+    "pembahasan": ["Selisih fase adalah 1,15−0,15=1,00.", "Fase bertambah satu ketika waktu bertambah satu periode, sehingga kedua maksimum dipisahkan satu siklus penuh.", "Pengulangan bentuk kurva dengan fase sama menandai siklus yang berulang."],
+    "gambar": "kurva-cahaya-variabel"
+  },
+  {
+    "id": "f3-20",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "isian",
+    "soal": "Grafik log y terhadap log x memiliki kemiringan 3. Jika x bertambah dua kali, berapa faktor kenaikan y menurut hubungan tersebut?",
+    "jawaban": 8,
+    "toleransiRel": 0.01,
+    "satuan": "kali",
+    "pembahasan": ["Kemiringan tiga berarti y∝x³.", "Untuk x₂/x₁=2, diperoleh y₂/y₁=2³=8.", "Kemiringan menunjukkan eksponen hubungan, bukan faktor pengali langsung."],
+    "gambar": "skala-log"
+  },
+  {
+    "id": "f3-21",
+    "topik": "kalkulus",
+    "level": "fondasi",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan benar tentang turunan dan integral gerak.",
+    "opsi": ["Jika posisi konstan, kecepatan nol", "Integral percepatan terhadap waktu memberi perubahan kecepatan", "Turunan kedua posisi terhadap waktu adalah percepatan", "Integral kecepatan terhadap waktu memberi percepatan"],
+    "jawaban": [0, 1, 2],
+    "pembahasan": ["Posisi konstan memiliki turunan waktu nol, yaitu kecepatan nol.", "Karena a=dv/dt, integral percepatan memberi perubahan kecepatan.", "Percepatan adalah turunan kedua posisi; integral kecepatan memberi perpindahan, bukan percepatan."]
+  },
+  {
+    "id": "f3-22",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan benar tentang pengukuran berulang dengan galat acak independen.",
+    "opsi": ["Galat baku rata-rata adalah s/√n", "Menambah jumlah pengukuran dapat mengurangi ketidakpastian rata-rata", "Galat sistematis tetap dapat menggeser semua pengukuran", "Jika n menjadi 9 kali, galat baku menjadi 1/9 semula"],
+    "jawaban": [0, 1, 2],
+    "pembahasan": ["Rumus galat baku rata-rata adalah s/√n.", "Sampel lebih banyak mengurangi galat acak pada rata-rata.", "Bias kalibrasi tidak hilang karena pengulangan; jika n naik sembilan kali, galat baku menjadi 1/3, bukan 1/9."]
+  },
+  {
+    "id": "f3-23",
+    "topik": "kalkulus",
+    "level": "fondasi",
+    "tipe": "isian",
+    "soal": "Posisi sebuah wahana x(t)=3t² meter. Berapa kecepatannya pada t=2 s?",
+    "jawaban": 12,
+    "toleransiRel": 0.01,
+    "satuan": "m/s",
+    "pembahasan": ["Turunkan posisi: v=dx/dt=6t.", "Pada t=2 s, v=6×2=12 m/s.", "Satuan turunannya adalah meter per sekon, sesuai satuan kecepatan."]
+  },
+  {
+    "id": "f3-24",
+    "topik": "kalkulus",
+    "level": "menengah",
+    "tipe": "isian",
+    "soal": "Kecepatan satelit berubah menurut v(t)=4t m/s. Hitung perpindahan dari t=0 s sampai t=3 s.",
+    "jawaban": 18,
+    "toleransiRel": 0.01,
+    "satuan": "m",
+    "pembahasan": ["Perpindahan adalah ∫₀³4t dt=[2t²]₀³.", "Nilai batas menghasilkan 2×9−0=18 m.", "Cek luas grafik v–t: segitiga dengan alas 3 s dan tinggi 12 m/s memiliki luas 18 m."]
+  },
+  {
+    "id": "f3-25",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "isian",
+    "soal": "Enam pengukuran independen memiliki simpangan baku sampel 4,9 km/s. Berapa galat baku rata-rata, dalam km/s?",
+    "jawaban": 2,
+    "toleransiRel": 0.02,
+    "satuan": "km/s",
+    "pembahasan": ["Galat baku rata-rata σ̄=s/√n.", "σ̄=4,9/√6≈4,9/2,449=2,00 km/s.", "Pengulangan mengurangi ketidakpastian rata-rata, tetapi simpangan baku tiap pengukuran tetap sekitar 4,9 km/s."]
+  },
+  {
+    "id": "f3-26",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "isian",
+    "soal": "Kedalaman transit eksoplanet adalah 0,0025 dan memenuhi δ=(R_p/R★)². Berapa rasio jari-jari R_p/R★?",
+    "jawaban": 0.05,
+    "toleransiRel": 0.01,
+    "satuan": "tanpa satuan",
+    "pembahasan": ["Ambil akar kuadrat kedua sisi: R_p/R★=√δ.", "√0,0025=0,05, sehingga rasio jari-jari adalah 0,05.", "Pangkat dua pada hubungan kedalaman penting; rasio jari-jari bukan 0,0025."]
+  },
+  {
+    "id": "f3-27",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "isian",
+    "soal": "Pada grafik log f terhadap log x, kemiringan garis adalah 3 dan galat relatif x sebesar 2%. Menurut propagasi galat pangkat, berapa galat relatif f?",
+    "jawaban": 6,
+    "toleransiRel": 0.01,
+    "satuan": "%",
+    "pembahasan": ["Kemiringan 3 pada grafik log–log menunjukkan f∝x³.", "Untuk f=xⁿ, galat relatif kecil memenuhi σ_f/f=|n|σ_x/x, sehingga galat f=3×2%=6%.", "Pangkat yang dibaca dari grafik memperbesar galat relatif tiga kali."],
+    "gambar": "skala-log"
+  },
+  {
+    "id": "f3-28",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "esai",
+    "soal": "Jelaskan perbedaan galat acak dan sistematis dalam pengukuran magnitudo bintang berulang. Uraikan pengaruh jumlah pengukuran pada galat acak dan berikan contoh sumber bagi kedua jenis galat.",
+    "rubrik": [{"poin":"Membedakan galat acak sebagai fluktuasi dua arah dan galat sistematis sebagai bias searah.","bobot":2},{"poin":"Menyebut galat baku rata-rata s/√n dan menjelaskan bahwa peningkatan n menurunkan galat acak.","bobot":2},{"poin":"Memberi contoh galat acak yang relevan seperti derau detektor atau variasi seeing.","bobot":1},{"poin":"Memberi contoh galat sistematis seperti kalibrasi nol magnitudo yang salah dan menyatakan pengulangan tidak menghilangkannya.","bobot":1}],
+    "jawabanTeladan":"Galat acak berfluktuasi ke dua arah, misalnya akibat derau detektor atau perubahan seeing. Ketika banyak pengukuran dirata-ratakan, galat baku rata-rata mengecil sebagai s/√n. Galat sistematis menggeser pengukuran ke satu arah, misalnya kalibrasi magnitudo nol yang salah. Pengulangan yang banyak dapat memberi rata-rata sangat presisi, tetapi tetap bias sampai kalibrasi diperbaiki.",
+    "pembahasan": ["Perbedaan utama bukan sekadar besar-kecil, melainkan pola fluktuasi dan apakah pengulangan menguranginya.", "Jawaban lengkap menghubungkan statistik s/√n dengan pengendalian bias melalui kalibrasi."]
+  },
+  {
+    "id": "f3-29",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "esai",
+    "soal": "Sebuah kurva transit berbentuk segitiga memiliki durasi 5 jam dan penurunan maksimum 0,012 dari fluks normal. Jelaskan cara memperkirakan luas kehilangan fluks dan arti fisis hasilnya.",
+    "rubrik": [{"poin":"Mengidentifikasi integral kehilangan fluks sebagai luas di bawah kurva penurunan terhadap waktu.","bobot":2},{"poin":"Menggunakan luas segitiga ½×alas×tinggi dengan nilai yang benar.","bobot":2},{"poin":"Memperoleh 0,030 jam dalam satuan fluks normal atau ekuivalennya.","bobot":1},{"poin":"Menjelaskan bahwa luas mewakili fluks relatif yang terhalang terakumulasi selama transit.","bobot":1}],
+    "jawabanTeladan":"Luas kehilangan fluks adalah integral kedalaman relatif terhadap waktu. Untuk bentuk segitiga, luas=½×5 jam×0,012=0,030 jam dalam satuan fluks normal. Besaran ini mengakumulasi kehilangan relatif sepanjang transit, tidak hanya menyatakan penurunan maksimum sesaat.",
+    "pembahasan": ["Bedakan luas integral dari kedalaman maksimum; keduanya membawa informasi berbeda.", "Penyebutan satuan relatif × waktu membantu memastikan integral ditafsirkan dengan benar."],
+    "gambar": "kurva-transit-data"
+  },
+  {
+    "id": "f3-30",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "esai",
+    "soal": "Grafik log T terhadap log a untuk planet di sekitar bintang yang sama berupa garis lurus dengan kemiringan terukur 1,48. Jelaskan makna kemiringan tersebut, bandingkan dengan prediksi Kepler, dan hitung rasio periode dua orbit jika rasio sumbu semi-mayornya 3.",
+    "rubrik": [{"poin":"Menjelaskan bahwa pada grafik log T terhadap log a kemiringan adalah eksponen hubungan T dan a.","bobot":2},{"poin":"Mengaitkan kemiringan terukur 1,48 dengan prediksi hukum Kepler 3/2=1,5 dan menyatakan kesesuaiannya dalam batas galat.","bobot":2},{"poin":"Menggunakan T₂/T₁=(a₂/a₁)^(3/2) dan memperoleh 3^(3/2)≈5,20.","bobot":1},{"poin":"Menjelaskan bahwa penyimpangan kecil dari 1,5 dapat berasal dari ketidakpastian pengukuran atau rentang data terbatas.","bobot":1}],
+    "jawabanTeladan":"Dari T∝aⁿ diperoleh log T=konstanta+n log a, sehingga kemiringan adalah n. Nilai terukur 1,48 dekat dengan prediksi hukum Kepler n=3/2=1,5 dan dapat dianggap konsisten jika ketidakpastian pengukuran mencakup selisih itu. Untuk a₂/a₁=3, rasio periode adalah 3^(3/2)=√27≈5,20. Selisih kecil pada kemiringan dapat disebabkan galat pengukuran atau rentang sampel terbatas.",
+    "pembahasan": ["Tafsir kemiringan log–log harus dinyatakan sebagai pangkat, bukan sebagai nilai periode.", "Gunakan hukum Kepler yang sama untuk menghitung rasio dan jelaskan bahwa kemiringan 1,48 merupakan hasil empiris yang dekat dengan 1,5."],
+    "gambar": "kepler-loglog"
+  },
+  {
+    "id": "f3-v1",
+    "modul": "F3",
+    "subbab": "regresi-linear",
+    "topik": "analisis-data",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_grafik",
+    "media": {
+      "type": "linearization_plot",
+      "params": {
+        "title": "Linearisasi Log–Log Periode Orbit vs Setengah Sumbu Besar",
+        "xLabel": "log(a / AU)",
+        "yLabel": "log(P / tahun)",
+        "xMin": -0.1,
+        "xMax": 1.1,
+        "yMin": -0.1,
+        "yMax": 1.65,
+        "showSlopeTriangle": true,
+        "points": [
+          { "x": 0.0, "y": 0.0, "dy": 0.04, "label": "P-1" },
+          { "x": 0.4, "y": 0.6, "dy": 0.05, "label": "P-2" },
+          { "x": 0.8, "y": 1.2, "dy": 0.05, "label": "P-3" },
+          { "x": 1.0, "y": 1.5, "dy": 0.06, "label": "P-4" }
+        ],
+        "fitLine": {
+          "slope": 1.5,
+          "intercept": 0.0,
+          "label": "m = 1,50"
+        }
+      },
+      "caption": "Pada plot log–log, hubungan hukum pangkat P = C · aⁿ membentuk garis lurus dengan gradien sama dengan eksponen n."
+    },
+    "soal": "Dari grafik regresi linear log(P) terhadap log(a) tersebut, tentukan eksponen hukum pangkat P ∝ aⁿ dan hubungan rasio periode P₂/P₁ jika a₂ = 4 a₁.",
+    "opsi": [
+      "n = 1,5 dan P₂/P₁ = 8",
+      "n = 1,5 dan P₂/P₁ = 6",
+      "n = 0,67 dan P₂/P₁ = 2,52",
+      "n = 2,0 dan P₂/P₁ = 16"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "log P = log C + n log a",
+      "P₂ / P₁ = (a₂ / a₁)ⁿ"
+    ],
+    "langkah_penyelesaian": [
+      "Kemiringan garis fit m = Δy / Δx = 1,50 / 1,00 = 1,5 sehingga P ∝ a^(1,5).",
+      "Untuk a₂/a₁ = 4, rasio periode adalah 4^(3/2) = (√4)³ = 2³ = 8."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-v2",
+    "modul": "F3",
+    "subbab": "statistika",
+    "topik": "analisis-data",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_tabel",
+    "media": {
+      "type": "data_table",
+      "params": {
+        "title": "Empat Pengukuran Independen Kecepatan Radial Bintang",
+        "columns": [
+          { "key": "obs", "label": "Pengamatan", "align": "left" },
+          { "key": "vr", "label": "v_r", "unit": "km/s", "align": "right" },
+          { "key": "dev", "label": "v_r − v̄", "unit": "km/s", "align": "right" }
+        ],
+        "rows": [
+          { "obs": "Malam 1", "vr": "12,1", "dev": "−0,1" },
+          { "obs": "Malam 2", "vr": "12,5", "dev": "+0,3" },
+          { "obs": "Malam 3", "vr": "11,9", "dev": "−0,3" },
+          { "obs": "Malam 4", "vr": "12,3", "dev": "+0,1" }
+        ],
+        "uncertaintyNote": "Rata-rata sampel v̄ = 12,2 km/s; gunakan rumus simpangan baku sampel dengan pembagi N − 1."
+      },
+      "caption": "Gunakan kolom selisih (v_r − v̄) untuk menghitung simpangan baku sampel s terlebih dahulu sebelum membaginya dengan √N."
+    },
+    "soal": "Dari tabel empat pengukuran kecepatan radial (N = 4), hitung galat baku rata-rata σ_x̄ = s / √N dalam km/s hingga tiga angka di belakang koma. (satuan: km/s)",
+    "jawaban": 0.129,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "s = √(Σ(xᵢ − x̄)² / (N − 1))",
+      "σ_x̄ = s / √N"
+    ],
+    "langkah_penyelesaian": [
+      "Jumlah kuadrat deviasi: (−0,1)² + (0,3)² + (−0,3)² + (0,1)² = 0,01 + 0,09 + 0,09 + 0,01 = 0,20 (km/s)².",
+      "Simpangan baku sampel: s = √(0,20 / 3) = 0,2582 km/s.",
+      "Galat baku rata-rata: σ_x̄ = 0,2582 / √4 = 0,2582 / 2 = 0,1291 ≈ 0,129 km/s."
+    ],
+    "satuan": "km/s"
+  },
+  {
+    "id": "f3-v3",
+    "modul": "F3",
+    "subbab": "integral-statistika",
+    "topik": "analisis-data",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_grafik",
+    "media": {
+      "type": "light_curve",
+      "params": {
+        "period": 6,
+        "depth": 0.04,
+        "duration": 2.5,
+        "noise": 0.004,
+        "errorBar": 0.005,
+        "samples": 30,
+        "timeUnit": "jam",
+        "shadeArea": true,
+        "seed": 11,
+        "showModel": true
+      },
+      "caption": "Perhatikan kedalaman transit δ = 0,040, panjang batang ralat tiap titik σ = 0,005, dan daerah arsiran amber di antara garis fluks normal 1,000 dan kurva transit."
+    },
+    "soal": "Amati kurva cahaya transit tersebut (kedalaman δ = 0,040, batang ralat satu titik σ = 0,005). Manakah tafsir fisis dan statistik yang tepat mengenai SNR satu titik di dasar transit dan luas daerah berarsir?",
+    "opsi": [
+      "SNR satu titik = δ/σ = 8,0 dan luas arsiran menyatakan integral kehilangan fluks relatif ∫(1 − F/F₀) dt selama transit.",
+      "SNR satu titik = σ/δ = 0,125 dan luas arsiran menyatakan massa planet dalam satuan Matahari.",
+      "SNR satu titik = 8,0 dan luas arsiran menyatakan kecepatan radial maksimum bintang induk.",
+      "SNR satu titik = 4,0 dan luas arsiran hanya mengukur durasi ingress tanpa bergantung pada kedalaman."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "SNR_titik = δ / σ_F",
+      "Fluens kehilangan fluks = ∫ ΔF(t) dt"
+    ],
+    "langkah_penyelesaian": [
+      "Rasio sinyal-terhadap-derau untuk satu titik data di dasar transit adalah kedalaman dibagi ralat fluks: SNR = 0,040 / 0,005 = 8,0.",
+      "Luas arsiran antara garis dasar F = 1,000 dan kurva transit adalah integral penurunan fluks relatif terhadap waktu (ekuivalen fluks energi yang terhalang per satuan fluks normal)."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-v4",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "ranking_urutan",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "error_propagation",
+        "formula": "Q = A³ B^(1/2) / (C² D)   (σ_A/A=2%, σ_B/B=4%, σ_C/C=2%, σ_D/D=3%)",
+        "terms": [
+          { "label": "Variabel A", "relPct": 2, "power": 3 },
+          { "label": "Variabel B", "relPct": 4, "power": 0.5 },
+          { "label": "Variabel C", "relPct": 2, "power": 2 },
+          { "label": "Variabel D", "relPct": 3, "power": 1 }
+        ]
+      },
+      "caption": "Kontribusi tiap variabel terhadap varians relatif (σ_Q/Q)² ditentukan oleh hasil kuadrat (pangkat × ralat relatif)²."
+    },
+    "kriteriaUrut": "Urutkan dari penyumbang varians TERBESAR ke TERKECIL",
+    "soal": "Besaran fisis Q = A³ B^(1/2) / (C² D) diukur dengan ralat relatif σ_A/A = 2%, σ_B/B = 4%, σ_C/C = 2%, dan σ_D/D = 3%. Urutkan keempat variabel dari penyumbang varians (pangkat × ralat)² PALING BESAR ke PALING KECIL.",
+    "opsi": [
+      "Variabel B (pangkat 1/2, ralat 4%)",
+      "Variabel C (pangkat 2, ralat 2%)",
+      "Variabel A (pangkat 3, ralat 2%)",
+      "Variabel D (pangkat 1, ralat 3%)"
+    ],
+    "jawaban": [2, 1, 3, 0],
+    "rumus_dibutuhkan": [
+      "(σ_Q/Q)² = Σ (nᵢ σ_xᵢ/xᵢ)²"
+    ],
+    "langkah_penyelesaian": [
+      "Hitung kontribusi masing-masing ke (σ_Q/Q)²: A → (3 × 2%)² = 36; C → (2 × 2%)² = 16; D → (1 × 3%)² = 9; B → (0,5 × 4%)² = 4.",
+      "Urutan menurun penyumbang dominan varians: A (36) > C (16) > D (9) > B (4)."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-v5",
+    "modul": "F3",
+    "subbab": "regresi-linear",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "interpretasi_grafik",
+    "media": {
+      "type": "linearization_plot",
+      "params": {
+        "title": "Estimasi Gradien & Ketidakpastiannya dari Amplop Error Bar",
+        "xLabel": "ln(R / R₀)",
+        "yLabel": "ln(L / L₀)",
+        "xMin": -0.1,
+        "xMax": 1.1,
+        "yMin": -0.2,
+        "yMax": 2.4,
+        "showSlopeTriangle": true,
+        "points": [
+          { "x": 0.0, "y": 0.0, "dy": 0.1, "label": "B-1" },
+          { "x": 0.5, "y": 1.0, "dy": 0.1, "label": "B-2" },
+          { "x": 1.0, "y": 2.0, "dy": 0.1, "label": "B-3" }
+        ],
+        "fitLine": {
+          "slope": 2.0,
+          "intercept": 0.0,
+          "minSlope": 1.8,
+          "maxSlope": 2.2,
+          "label": "m = 2,00 ± 0,20"
+        }
+      },
+      "caption": "Dua garis putus amber adalah kemiringan paling landai (m_min = 1,80) dan paling curam (m_max = 2,20) yang masih melewati error bar."
+    },
+    "soal": "Pada plot ln(L/L₀) terhadap ln(R/R₀) untuk sampel bintang isotermal, garis fit terbaik bermiringan m = 2,00 dengan amplop gradien m_min = 1,80 dan m_max = 2,20. Berapa eksponen n pada L ∝ Rⁿ beserta ketidakpastian relatifnya?",
+    "opsi": [
+      "n = 2,0 ± 0,2 (ketidakpastian relatif 10%)",
+      "n = 2,0 ± 0,4 (ketidakpastian relatif 20%)",
+      "n = 1,8 ± 0,2 (ketidakpastian relatif 11%)",
+      "n = 4,0 ± 0,2 (ketidakpastian relatif 5%)"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "ln L = c + n ln R",
+      "σ_n ≈ (m_max − m_min) / 2"
+    ],
+    "langkah_penyelesaian": [
+      "Eksponen pangkat sama dengan gradien m = 2,00 (sesuai L ∝ R² pada suhu konstan).",
+      "Setengah rentang amplop gradien memberi ketidakpastian σ_n = (2,20 − 1,80)/2 = 0,20, sehingga σ_n / n = 0,20 / 2,00 = 10%."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-v6",
+    "modul": "F3",
+    "subbab": "integral-numerik",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "interpretasi_tabel",
+    "media": {
+      "type": "data_table",
+      "params": {
+        "title": "Profil Fluks Flare Matahari terhadap Waktu",
+        "columns": [
+          { "key": "t", "label": "Waktu t", "unit": "s", "align": "right" },
+          { "key": "df", "label": "Kelebihan fluks ΔF", "unit": "W/m²", "align": "right" }
+        ],
+        "rows": [
+          { "t": 0, "df": 0 },
+          { "t": 50, "df": 6 },
+          { "t": 100, "df": 10 },
+          { "t": 150, "df": 4 },
+          { "t": 200, "df": 0 }
+        ],
+        "uncertaintyNote": "Interval waktu seragam Δt = 50 s; hitung integral ∫ ΔF(t) dt dengan aturan trapesium."
+      },
+      "caption": "Setiap selang 50 s membentuk trapesium dengan tinggi Δt = 50 s dan dua sisi sejajar ΔFᵢ serta ΔFᵢ₊₁."
+    },
+    "soal": "Dari tabel profil flare tersebut, hitung fluens energi total E = ∫₀²⁰⁰ ΔF(t) dt memakai metode integrasi trapesium. (tulis satuan: J/m^2)",
+    "jawaban": 1000,
+    "toleransi": 0.01,
+    "rumus_dibutuhkan": [
+      "∫ y dt ≈ Δt [½ y₀ + y₁ + ... + y_{n−1} + ½ y_n]",
+      "1 W·s = 1 J"
+    ],
+    "langkah_penyelesaian": [
+      "Dengan Δt = 50 s dan y = [0, 6, 10, 4, 0] W/m²:",
+      "E = 50 × (½(0) + 6 + 10 + 4 + ½(0)) = 50 × 20 = 1.000 W·s/m² = 1.000 J/m²."
+    ],
+    "satuan": "J/m^2"
+  },
+  {
+    "id": "f3-v7",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "temukan_kesalahan",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "error_propagation",
+        "formula": "ρ = 3M / (4πR³)   (σ_M/M = 3%, σ_R/R = 2%)",
+        "terms": [
+          { "label": "Jari-jari R", "relPct": 2, "power": 3 },
+          { "label": "Massa M", "relPct": 3, "power": 1 }
+        ]
+      },
+      "caption": "Bandingkan bobot jari-jari R (berpangkat 3 dalam rumus kerapatan) dengan bobot massa M (berpangkat 1)."
+    },
+    "soal": "Untuk menentukan kerapatan rata-rata planet ρ = 3M / (4πR³) dari σ_M/M = 3% dan σ_R/R = 2%, seorang siswa menghitung σ_ρ/ρ = √(3² + 2²) = 3,61%. Di mana letak kesalahan utamanya?",
+    "opsi": [
+      "Siswa lupa mengalikan ralat relatif R dengan pangkat |−3| sebelum dikuadratkan; yang benar σ_ρ/ρ = √((3%)² + (3 × 2%)²) = √45 ≈ 6,71%.",
+      "Rumus propagasi galat untuk pembagian seharusnya mengurangi kuadrat ralat: √(3² − 2²) = 2,24%.",
+      "Konstanta 4π/3 harus ikut menyumbang ralat relatif sebesar 4π%.",
+      "Ralat massa dan jari-jari tidak boleh digabung kuadratur melainkan dijumlahkan biasa menjadi 3% + 2% = 5%."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "ρ = 3M / (4π R³)",
+      "(σ_ρ/ρ)² = (σ_M/M)² + (3 σ_R/R)²"
+    ],
+    "langkah_penyelesaian": [
+      "Karena ρ ∝ M¹ R⁻³, turunan logaritmik memberi faktor |pangkat| = 3 pada ralat relatif jari-jari R.",
+      "Oleh sebab itu σ_ρ/ρ = √(3² + (3×2)²) = √(9 + 36) = √45 ≈ 6,71%, jauh didominasi oleh ketelitian R."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-v8",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "pilihan_jamak",
+    "media": {
+      "type": "light_curve",
+      "params": {
+        "period": 5,
+        "depth": 0.01,
+        "duration": 2.0,
+        "noise": 0.002,
+        "errorBar": 0.002,
+        "samples": 32,
+        "timeUnit": "jam",
+        "shadeArea": false,
+        "seed": 23,
+        "showModel": true
+      },
+      "caption": "Kurva transit ber-kedalaman δ = 0,010 ± 0,002 digunakan untuk mengukur rasio jari-jari R_p/R_* = √δ."
+    },
+    "soal": "Sebuah survei mengukur kedalaman transit δ = 0,0100 ± 0,0020 (ralat relatif 20%). Dari kurva cahaya ini, pilih SEMUA pernyataan yang benar mengenai ketidakpastian R_p/R_* = √δ dan strategi meningkatkan SNR.",
+    "opsi": [
+      "Karena R_p/R_* = δ^(1/2), ralat relatif rasio jari-jari hanya setengah dari ralat relatif δ, yaitu 10%.",
+      "Ralat mutlak pada rasio jari-jari adalah σ_(Rp/R*) = ½ (0,0020 / √0,0100) = 0,010.",
+      "Mengulang pengamatan hingga memperoleh 4 peristiwa transit (N = 4) menggandakan rasio sinyal-terhadap-derau (SNR menjadi 2× lipat).",
+      "Jika jari-jari bintang R_* juga memiliki ralat 10%, total ralat R_p akan menjadi 20% akibat penjumlahan linier."
+    ],
+    "jawaban": [0, 1, 2],
+    "rumus_dibutuhkan": [
+      "R_p / R_* = √δ → σ_r / r = ½ (σ_δ / δ)",
+      "SNR_gabungan = √N · SNR₁"
+    ],
+    "langkah_penyelesaian": [
+      "Untuk r = δ^(1/2) = 0,100, propagasi memberi σ_r/r = ½ (0,0020/0,0100) = ½ (20%) = 10% (A benar), dan σ_r = 0,10 × 0,100 = 0,010 (B benar).",
+      "Penggabungan N = 4 transit independen menurunkan galat baku rata-rata sebagai 1/√4 = ½ sehingga SNR naik 2× (C benar).",
+      "Jika σ_R*/R* = 10%, propagasi kuadratur menghasilkan √(10² + 10²) ≈ 14,1%, bukan 20% (D salah)."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-v9",
+    "modul": "F3",
+    "subbab": "taylor",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "cek_dimensi",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "trapezoid_integral",
+        "intervals": 4,
+        "xMax": 6,
+        "peak": 1.2,
+        "xLabel": "Waktu t (s)",
+        "yLabel": "Fluks f(t) (W/m²)"
+      },
+      "caption": "Setiap suku dalam ekspansi Taylor f(t₀ + Δt) = f(t₀) + f'(t₀)Δt + ½ f''(t₀)(Δt)² + ... wajib berdimensi sama dengan f(t)."
+    },
+    "soal": "Jika fluks radiasi F(t) berdimensi [M T⁻³] diekspansi menggunakan deret Taylor terhadap waktu Δt (dimensi [T]): F(t₀ + Δt) = F(t₀) + F'(t₀)Δt + ½ F''(t₀)(Δt)², apakah dimensi dari turunan kedua F''(t₀)?",
+    "opsi": [
+      "[M T⁻⁵], agar ketika dikalikan (Δt)² ([T²]) hasilnya kembali berdimensi fluks [M T⁻³].",
+      "[M T⁻³], karena turunan terhadap waktu tidak mengubah dimensi fungsi.",
+      "[M T⁻¹], karena perkalian dengan (Δt)² membagi pangkat waktu.",
+      "[M T⁻⁴], mengikuti dimensi turunan pertama."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "f(t) = Σ (f^(k)(t₀) / k!) (Δt)^k",
+      "[f^(k)] = [f] · [t]⁻ᵏ"
+    ],
+    "langkah_penyelesaian": [
+      "Setiap suku penjumlahan harus berdimensi identik [F] = [M T⁻³].",
+      "Karena (Δt)² berdimensi [T²], maka [F''] = [F] / [T²] = [M T⁻³] / [T²] = [M T⁻⁵]."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-v10",
+    "modul": "F3",
+    "subbab": "regresi-linear",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "data_tidak_lengkap",
+    "media": {
+      "type": "linearization_plot",
+      "params": {
+        "title": "Plot Relatif Fluks Terskala terhadap Jarak Terskala",
+        "xLabel": "ln(d / d₀)",
+        "yLabel": "ln(F / F₀)",
+        "xMin": -0.1,
+        "xMax": 1.3,
+        "yMin": -2.6,
+        "yMax": 0.2,
+        "showSlopeTriangle": false,
+        "points": [
+          { "x": 0.0, "y": 0.0, "dy": 0.08, "label": "Q-1" },
+          { "x": 0.4, "y": -0.8, "dy": 0.08, "label": "Q-2" },
+          { "x": 0.8, "y": -1.6, "dy": 0.09, "label": "Q-3" },
+          { "x": 1.2, "y": -2.4, "dy": 0.1, "label": "Q-4" }
+        ],
+        "fitLine": {
+          "slope": -2.0,
+          "intercept": 0.0,
+          "label": "m = −2,00"
+        }
+      },
+      "caption": "Grafik menunjukkan sumbu x dan y dinormalisasi ke konstanta acuan (d₀, F₀) yang nilainya tidak dicantumkan."
+    },
+    "soal": "Grafik ln(F/F₀) terhadap ln(d/d₀) untuk sumber isotropik menghasilkan garis lurus m = −2,00 melalui titik (0, 0). Mengapa luminositas mutlak L sumber dalam Watt BELUM dapat dihitung dari grafik ini saja?",
+    "opsi": [
+      "Kemiringan −2 hanya membuktikan hukum kuadrat terbalik F ∝ d⁻²; untuk menghitung L = 4π d₀² F₀ diperlukan nilai numerik kalibrasi F₀ (dalam W/m²) dan d₀ (dalam m).",
+      "Kemiringan negatif berarti energi foton hilang di ruang antarbintang sehingga L tidak terdefinisi.",
+      "Rumus L = 4π d² F hanya berlaku bila grafik digambar dalam koordinat linear, bukan logaritma natural.",
+      "Intersep (0, 0) sudah membuktikan bahwa L pasti tepat sama dengan 1 Watt."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "ln(F/F₀) = −2 ln(d/d₀)",
+      "L = 4π d₀² F₀"
+    ],
+    "langkah_penyelesaian": [
+      "Normalisasi F/F₀ dan d/d₀ menghilangkan informasi skala satuan absolut sehingga intersep grafik hanya nol secara definisi.",
+      "Tanpa mengetahui nilai absolut acuan d₀ dan F₀ (intersep tak ternormalisasi), konstanta L/(4π) = d₀² F₀ tidak bisa ditentukan."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-h1",
+    "modul": "F3",
+    "subbab": "taylor",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "pilihan_ganda",
+    "soal": "Suhu kesetimbangan planet bergantung pada jarak orbit menurut T_eq ∝ a^(−1/2). Jika sumbu semi-mayor orbit planet mengalami perturbasi bertambah sebesar Δa/a = +2,0%, gunakan aproksimasi deret Taylor binomial untuk memperkirakan perubahan relatif ΔT_eq / T_eq.",
+    "opsi": [
+      "−1,0%",
+      "+1,0%",
+      "−4,0%",
+      "−0,5%"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "T_eq ∝ a^(−1/2)",
+      "(1 + x)ⁿ ≈ 1 + n x"
+    ],
+    "langkah_penyelesaian": [
+      "Tuliskan T_baru / T_awal = (1 + Δa/a)^(−1/2) dengan x = +0,020 dan n = −1/2.",
+      "Terapkan binomial orde pertama: 1 + (−1/2)(+0,020) = 1 − 0,010, sehingga ΔT_eq / T_eq ≈ −1,0%."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-h2",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "cek_dimensi",
+    "soal": "Dari persamaan modulus jarak μ = m − M = 5 log₁₀(d / 10 pc), bagaimana penurunan diferensial dan pemeriksaan satuan menghasilkan rumus ketidakpastian σ_μ = (5 / ln 10)(σ_d / d)?",
+    "opsi": [
+      "Karena d(log₁₀ u)/du = 1/(u ln 10), faktor 1/ln 10 muncul saat mengubah basis 10 ke ln, sedangkan σ_d/d menjadi rasio tak berdimensi sehingga σ_μ tetap bersatuan mag.",
+      "Faktor ln 10 diperlukan untuk mengubah satuan d dari parsec menjadi meter agar cocok dengan skala magnitudo.",
+      "Turunan 5 log₁₀(d/10) adalah 5·10/d sehingga σ_μ = 50 σ_d/d bersatuan mag·pc.",
+      "Modulus jarak tidak berdimensi dan tidak terpengaruh oleh perubahan basis logaritma sehingga faktor ln 10 = 1."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "log₁₀(x) = ln(x) / ln 10",
+      "σ_f = |df/dx| σ_x"
+    ],
+    "langkah_penyelesaian": [
+      "Ubah ke logaritma natural: μ = (5 / ln 10) [ln d − ln(10 pc)].",
+      "Turunkan terhadap d: dμ/dd = 5 / (d ln 10) → σ_μ = (5 / ln 10)(σ_d / d) ≈ 2,171 (σ_d / d) dengan σ_d/d tak berdimensi dan μ bersatuan mag."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-h3",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "temukan_kesalahan",
+    "soal": "Sebuah bintang terukur dengan ralat fluks relatif σ_F/F = 4,6%. Siswa menghitung ralat magnitudo semu memakai Δm = −2,5 log₁₀(F/F₀) dengan rumus cepat: σ_m = 2,5 × (σ_F/F) = 2,5 × 0,046 = 0,115 mag. Manakah koreksi yang tepat?",
+    "opsi": [
+      "Turunan log₁₀ F adalah 1/(F ln 10), bukan 1/F; sehingga nilai yang benar adalah σ_m = (2,5 / ln 10)(0,046) ≈ 1,0857 × 0,046 = 0,050 mag.",
+      "Ralat magnitudo seharusnya σ_m = 2,5 × ln(0,046) ≈ −7,7 mag.",
+      "Karena ada tanda minus pada −2,5 log₁₀ F, maka ralat magnitudo σ_m harus dikuadratkan menjadi 0,013 mag.",
+      "Nilai 0,115 mag sudah tepat karena untuk galat di bawah 5% ln 10 dapat diabaikan."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "m = m₀ − 2,5 log₁₀(F/F₀)",
+      "σ_m = (2,5 / ln 10)(σ_F / F) ≈ 1,0857 (σ_F / F)"
+    ],
+    "langkah_penyelesaian": [
+      "Diferensialkan m = m₀ − (2,5 / ln 10) ln(F/F₀) terhadap F: |dm/dF| = 2,5 / (F ln 10).",
+      "Substitusi ln 10 ≈ 2,3026 memberi 2,5 / 2,3026 ≈ 1,0857, sehingga σ_m = 1,0857 × 0,046 = 0,050 mag (bukan 0,115 mag)."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f3-h4",
+    "modul": "F3",
+    "subbab": "integral-statistika",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "isian_angka",
+    "soal": "Laju fluks foton semburan sinar-X kosmik dimodelkan dengan fungsi waktu φ(t) = A t e^(−t/τ) untuk t ≥ 0, dengan A = 4,0×10⁶ m⁻² s⁻² dan τ = 5,0 s. Gunakan ∫₀^∞ t e^(−t/τ) dt = τ² untuk menghitung total foton per meter persegi yang tiba sepanjang semburan. (tulis dalam notasi ilmiah, satuan: m^-2)",
+    "jawaban": 100000000,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "N_tot = ∫₀^∞ φ(t) dt",
+      "∫₀^∞ u e^(−u) du = 1 (integral parsial)"
+    ],
+    "langkah_penyelesaian": [
+      "Substitusi u = t/τ (t = τ u, dt = τ du): N_tot = A τ² ∫₀^∞ u e^(−u) du = A τ².",
+      "Hitung nilainya: N_tot = (4,0×10⁶ m⁻² s⁻²) × (5,0 s)² = 4,0×10⁶ × 25 = 1,0×10⁸ m⁻²."
+    ],
+    "satuan": "m^-2"
+  },
+  {
+    "id": "f3-h5",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "multi_langkah",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "error_propagation",
+        "formula": "M/M☉ = a³ / P²   (a = 5,0 ± 0,15 AU; P = 10,0 ± 0,2 tahun)",
+        "terms": [
+          { "label": "Setengah sumbu besar a", "relPct": 3.0, "power": 3 },
+          { "label": "Periode orbit P", "relPct": 2.0, "power": 2 }
+        ]
+      },
+      "caption": "Diagram anggaran varians menunjukkan bagaimana pangkat 3 pada a (3%) mengalahkan pangkat 2 pada P (2%)."
+    },
+    "soal": "Sebuah sistem bintang ganda terukur memiliki setengah sumbu besar a = 5,00 ± 0,15 AU dan periode orbit P = 10,0 ± 0,2 tahun. Selesaikan tiga tahap berantai untuk menentukan massa total sistem beserta ketidakpastian absolutnya dalam satuan massa Matahari (M☉).",
+    "langkah": [
+      {
+        "instruksi": "Langkah 1: Hitung rasio massa total sistem terhadap Matahari M_tot / M☉ = a³ / P² (tanpa satuan).",
+        "tipe": "isian_angka",
+        "jawaban": 1.25,
+        "toleransi": 0.02,
+        "satuan": "—"
+      },
+      {
+        "instruksi": "Langkah 2: Propagasikan ketidakpastian relatif σ_M / M dalam persen (%). (satuan: %)",
+        "tipe": "isian_angka",
+        "jawaban": 9.85,
+        "toleransi": 0.02,
+        "satuan": "%"
+      },
+      {
+        "instruksi": "Langkah 3: Gabungkan hasil Langkah 1 dan Langkah 2 untuk memperoleh ralat mutlak σ_M / M☉ (tanpa satuan, 3 angka penting).",
+        "tipe": "isian_angka",
+        "jawaban": 0.123,
+        "toleransi": 0.03,
+        "satuan": "—"
+      }
+    ],
+    "jawaban": [1.25, 9.85, 0.123],
+    "rumus_dibutuhkan": [
+      "M_tot / M☉ = a_AU³ / P_yr²",
+      "(σ_M / M)² = (3 σ_a / a)² + (2 σ_P / P)²",
+      "σ_M = M · (σ_M / M)"
+    ],
+    "langkah_penyelesaian": [
+      "Langkah 1: M_tot / M☉ = 5,00³ / 10,0² = 125 / 100 = 1,25.",
+      "Langkah 2: Ralat relatif σ_a/a = 0,15/5,00 = 3,0% dan σ_P/P = 0,2/10,0 = 2,0%, sehingga σ_M/M = √((3×3,0%)² + (2×2,0%)²) = √(81 + 16) = √97 ≈ 9,85%.",
+      "Langkah 3: Ralat mutlak σ_M / M☉ = 1,25 × 0,09849 = 0,123."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus berbeda (Kepler III satuan astronomi, propagasi kuadratur pangkat tak seragam, konversi ralat relatif ke absolut) dan (c) chained reasoning 3 tahap berurutan.",
+    "satuan": "—"
+  },
+  {
+    "id": "f3-h6",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "isian_angka",
+    "soal": "Dari kombinasi hukum fluks F = L / (4π d²) dan hukum Stefan–Boltzmann L = 4π R² σ T⁴, jari-jari bintang R dapat ditentukan dari pengamatan jarak d, fluks F, dan suhu T. Jika ralat relatif masing-masing pengukuran independen adalah σ_d/d = 3,0%, σ_F/F = 4,0%, dan σ_T/T = 2,0%, hitung ketidakpastian relatif jari-jari bintang σ_R/R dalam persen. (satuan: %)",
+    "jawaban": 5.39,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "F = L / (4π d²)",
+      "L = 4π R² σ T⁴",
+      "(σ_R/R)² = (σ_d/d)² + (½ σ_F/F)² + (2 σ_T/T)²"
+    ],
+    "langkah_penyelesaian": [
+      "Gabungkan kedua hukum dan isolasi variabel R: F = R² σ T⁴ / d² → R = d (F/σ)^(1/2) T⁻².",
+      "Perhatikan pangkat masing-masing besaran pada R: d¹, F^(1/2), T⁻².",
+      "Propagasi kuadratur: σ_R/R = √((1×3,0)² + (0,5×4,0)² + (2×2,0)²) = √(9 + 4 + 16) = √29 = 5,385 ≈ 5,39%."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus berbeda (hukum kuadrat terbalik, Stefan–Boltzmann, propagasi kuadratur) dan (b) manipulasi ekspresi aljabar mengisolasi R dari d, F, T terlebih dulu agar pangkat tiap galat terbaca benar.",
+    "satuan": "%"
+  },
+  {
+    "id": "f3-h7",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "pilihan_ganda",
+    "soal": "Untuk eksoplanet berorbit lingkaran (i = 90°, M_p ≪ M_*), tiga besaran pengamatan digabungkan untuk mencari kerapatan rata-rata planet ρ_p = 3M_p/(4πR_p³): kedalaman transit δ = (R_p/R_*)² dan semiamplitudo kecepatan radial K ∝ M_p P^(−1/3) M_*^(−2/3). Setelah mengisolasi ρ_p sebagai fungsi dari (K, P, M_*, R_*, δ), manakah ekspresi varians relatif (σ_ρ/ρ)² yang benar?",
+    "opsi": [
+      "(σ_K/K)² + (1/9)(σ_P/P)² + (4/9)(σ_M*/M*)² + 9(σ_R*/R*)² + (9/4)(σ_δ/δ)²",
+      "(σ_K/K)² + (1/3)(σ_P/P)² + (2/3)(σ_M*/M*)² + 3(σ_R*/R*)² + (3/2)(σ_δ/δ)²",
+      "(σ_K/K)² + 9(σ_P/P)² + (9/4)(σ_M*/M*)² + 9(σ_R*/R*)² + 9(σ_δ/δ)²",
+      "(σ_K/K)² + (1/9)(σ_P/P)² + (4/9)(σ_M*/M*)² + 6(σ_R*/R*)² + (3/4)(σ_δ/δ)²"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "R_p = R_* δ^(1/2)",
+      "M_p ∝ K P^(1/3) M_*^(2/3)",
+      "ρ_p ∝ M_p / R_p³ → kuadratkan tiap eksponen pada propagasi galat"
+    ],
+    "langkah_penyelesaian": [
+      "Isolasi M_p dan R_p lalu substitusi ke ρ_p: M_p ∝ K P^(1/3) M_*^(2/3) dan R_p³ = R_*³ δ^(3/2).",
+      "Maka ρ_p ∝ K¹ · P^(1/3) · M_*^(2/3) · R_*⁻³ · δ^(−3/2).",
+      "Kuadratkan setiap koefisien pangkat untuk varians relatif: 1² = 1 (K), (1/3)² = 1/9 (P), (2/3)² = 4/9 (M_*), (−3)² = 9 (R_*), dan (−3/2)² = 9/4 (δ)."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus berbeda (transit δ, amplitudo Doppler K, kerapatan bola) dan (b) manipulasi ekspresi simbolik untuk mengisolasi ρ_p(K, P, M_*, R_*, δ) sebelum mengkuadratkan bobot setiap variabel.",
+    "satuan": "—"
+  },
+  {
+    "id": "f3-h8",
+    "modul": "F3",
+    "subbab": "propagasi-galat",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "isian_angka",
+    "soal": "Sebuah bintang tanpa serapan antarbintang memiliki paralaks π = 20,0 ± 1,0 mas (milidetik busur) dan magnitudo semu m = 6,00 ± 0,03 mag. Hitung total ketidakpastian magnitudo mutlak bintang σ_M dalam magnitudo hingga tiga angka di belakang koma. (satuan: mag)",
+    "jawaban": 0.113,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "d = 1 / π_arcsec (pc)",
+      "M = m − 5 log₁₀(d / 10 pc) = m + 5 + 5 log₁₀(π_arcsec)",
+      "σ_M = √(σ_m² + [(5 / ln 10)(σ_π / π)]²)"
+    ],
+    "langkah_penyelesaian": [
+      "Ubah modulus jarak ke fungsi langsung paralaks: M = m + 5 + 5 log₁₀(π_arcsec).",
+      "Hitung kontribusi ralat paralaks (σ_π/π = 1,0/20,0 = 0,050): σ_μ = (5 / ln 10) × 0,050 = 2,1715 × 0,050 = 0,10857 mag.",
+      "Gabungkan kuadratur dengan ralat fotometri σ_m = 0,03 mag: σ_M = √(0,03² + 0,10857²) = √(0,0009 + 0,01179) = √0,01269 = 0,1126 ≈ 0,113 mag."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus berbeda (paralaks-jarak, modulus jarak, propagasi logaritmik + kuadratur), (b) substitusi M langsung dalam π agar ralat π tak perlu melewati langkah perantara yang keliru, dan (c) chained reasoning σ_π → σ_μ → σ_M.",
+    "satuan": "mag"
+  },
+  {
+    "id": "f3-h9",
+    "modul": "F3",
+    "subbab": "integral-numerik",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "multi_langkah",
+    "media": {
+      "type": "data_table",
+      "params": {
+        "title": "Spektrum Diskret Permukaan Bintang (F_λ dalam 10³ W m⁻² nm⁻¹)",
+        "columns": [
+          { "key": "lam", "label": "λ", "unit": "nm", "align": "right" },
+          { "key": "flam", "label": "F_λ (×10³)", "unit": "W m⁻² nm⁻¹", "align": "right" }
+        ],
+        "rows": [
+          { "lam": 300, "flam": 10 },
+          { "lam": 500, "flam": 240 },
+          { "lam": 700, "flam": 90 },
+          { "lam": 900, "flam": 10 }
+        ],
+        "uncertaintyNote": "Gunakan σ = 5,670×10⁻⁸ W m⁻² K⁻⁴ dan konstanta Wien b = 2,898×10⁶ nm·K."
+      },
+      "caption": "Gunakan aturan trapesium dengan lebar selang Δλ = 200 nm untuk mengaproksimasi fluks bolometrik total di permukaan bintang ∫ F_λ dλ."
+    },
+    "soal": "Tabel berikut mencatat rapat fluks monokromatik permukaan bintang F_λ pada empat panjang gelombang. Ikuti tiga langkah berantai untuk menaksir fluks total permukaan, suhu efektif benda hitam, dan panjang gelombang puncak emisinya.",
+    "langkah": [
+      {
+        "instruksi": "Langkah 1: Hitung fluks bolometrik permukaan F_tot ≈ ∫₃₀₀⁹⁰⁰ F_λ dλ dengan metode trapesium (dalam W/m², boleh notasi ilmiah seperti 6,8e7). (satuan: W/m^2)",
+        "tipe": "isian_angka",
+        "jawaban": 68000000,
+        "toleransi": 0.02,
+        "satuan": "W/m^2"
+      },
+      {
+        "instruksi": "Langkah 2: Dari F_tot Langkah 1, isolasi suhu efektif bintang T_eff = (F_tot / σ)^(1/4) (pakai σ = 5,670×10⁻⁸ W m⁻² K⁻⁴). (satuan: K)",
+        "tipe": "isian_angka",
+        "jawaban": 5885,
+        "toleransi": 0.02,
+        "satuan": "K"
+      },
+      {
+        "instruksi": "Langkah 3: Dari T_eff Langkah 2, hitung panjang gelombang puncak hukum Wien λ_max = b / T_eff (b = 2,898×10⁶ nm·K). (satuan: nm)",
+        "tipe": "isian_angka",
+        "jawaban": 492.4,
+        "toleransi": 0.02,
+        "satuan": "nm"
+      }
+    ],
+    "jawaban": [68000000, 5885, 492.4],
+    "rumus_dibutuhkan": [
+      "F_tot ≈ Δλ [½ F₀ + F₁ + F₂ + ½ F₃]",
+      "F_tot = σ T_eff⁴",
+      "λ_max = b / T_eff"
+    ],
+    "langkah_penyelesaian": [
+      "Langkah 1: F_tot = 200 nm × [½(10) + 240 + 90 + ½(10)]×10³ = 200 × 340 × 10³ = 6,80×10⁷ W/m².",
+      "Langkah 2: T_eff = (6,80×10⁷ / 5,670×10⁻⁸)^(1/4) = (1,1993×10¹⁵)^(1/4) = 5.885 K.",
+      "Langkah 3: λ_max = 2,898×10⁶ / 5.885 = 492,4 nm."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus berbeda (integrasi trapesium spektral, Stefan–Boltzmann, pergeseran Wien), (b) inversi pangkat empat untuk mengisolasi T_eff, dan (c) chained reasoning 3 langkah F_tot → T_eff → λ_max.",
+    "satuan": "—"
+  },
+  {
+    "id": "f3-h10",
+    "modul": "F3",
+    "subbab": "statistika",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "esai_penalaran",
+    "soal": "Sebuah citra CCD tunggal menghasilkan fluks bintang F dengan simpangan baku derau pengukuran σ₀ sehingga ketidakpastian magnitudo satu citra adalah σ_m,1 = 0,040 mag. Turunkan rumus hubungan antara σ_m,N (untuk rata-rata N eksposur identik independen) terhadap σ₀, F, dan N, lalu jelaskan mengapa untuk memperbaiki ketelitian magnitudo 4 kali lebih baik (menjadi σ_m,N = 0,010 mag) dibutuhkan N = 16 citra, bukan 4 citra.",
+    "rubrik": [
+      { "poin": "Menurunkan galat rata-rata fluks σ_F̄ = σ₀ / √N dari statistika N pengukuran independen.", "bobot": 2 },
+      { "poin": "Menggunakan propagasi magnitudo Pogson m = m₀ − 2,5 log₁₀(F) sehingga σ_m,N = (2,5 / ln 10) · σ₀ / (F √N).", "bobot": 2 },
+      { "poin": "Menunjukkan secara aljabar σ_m,N = σ_m,1 / √N → untuk memperkecil galat faktor 4 dibutuhkan √N = 4 sehingga N = 16 citra.", "bobot": 2 },
+      { "poin": "Menyebutkan batasan asumsi: hanya berlaku untuk derau acak tak berkorelasi (tidak memperbaiki bias sistematis).", "bobot": 1 }
+    ],
+    "jawaban": "Rata-rata dari N pengukuran fluks independen memiliki galat standar σ_F̄ = σ₀/√N. Melalui hukum Pogson m = m₀ − 2,5 log₁₀(F), propagasi galat memberi σ_m,N = (2,5/ln 10)(σ_F̄/F) = (2,5/ln 10)(σ₀/(F√N)) = σ_m,1/√N. Karena skalanya 1/√N, menekan galat dari 0,040 menjadi 0,010 mag (faktor 1/4) menuntut √N = 4 sehingga N = 16 citra. Ini hanya menekan komponen derau acak, bukan galat sistematis.",
+    "jawabanTeladan": "Dari hukum Pogson m = m₀ − 2,5 log₁₀(F) = m₀ − (2,5/ln 10) ln F, turunan |dm/dF| = 2,5/(F ln 10). Untuk N eksposur identik yang deraunya saling independen (acak Gaussian), simpangan baku rata-rata fluks adalah σ_F̄ = σ₀/√N. Oleh karena itu σ_m,N = (2,5/ln 10) · σ₀ / (F √N) = σ_m,1 / √N. Agar σ_m,N / σ_m,1 = 0,010 / 0,040 = 1/4, haruslah 1/√N = 1/4 atau N = 16 eksposur. Sebanyak N = 4 hanya memperbaiki ketelitian sebesar faktor √4 = 2× menjadi 0,020 mag, dan peningkatan N tetap tidak menghilangkan bias sistematis seperti kalibrasi zeropoint.",
+    "rumus_dibutuhkan": [
+      "σ_F̄ = σ₀ / √N",
+      "m = m₀ − 2,5 log₁₀(F)",
+      "σ_m,N = (2,5 / ln 10) · (σ_F̄ / F) = σ_m,1 / √N"
+    ],
+    "langkah_penyelesaian": [
+      "Gabungkan definisi galat baku rata-rata σ_F̄ = σ₀/√N dengan propagasi turunan logaritmik magnitudo σ_m = (2,5/ln 10)(σ_F̄/F).",
+      "Isolasi N dari rasio σ_m,N / σ_m,1 = 1/√N = 1/4 → N = 16 citra.",
+      "Catat bahwa hukum 1/√N hanya berlaku untuk derau acak independen."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 konsep rumus terangkai (galat baku 1/√N, hukum Pogson, propagasi logaritmik) dan (b) manipulasi ekspresi aljabar menggabungkan propagasi magnitudo dengan penskalaan √N untuk mengisolasi N.",
+    "satuan": "—"
+  }
+]
+

@@ -1,0 +1,501 @@
+<IdentitasModul
+  kode="A1"
+  judul="Langit Malam, Paralaks & Skala Alam Semesta"
+  klaster="Klaster Inti Astronomi"
+  posisi="Bab 7 dari 19 · Gerbang pengamatan jarak & kecerlangan"
+  estimasi="65 menit"
+  tingkat="Menengah -> S1 Pengantar"
+  prasyarat={[
+    { id: 'f1', label: 'F1 · Bahasa Angka & Penskalaan' },
+    { id: 'f2', label: 'F2 · Trigonometri & Sudut Kecil' },
+    { id: 'f3', label: 'F3 · Propagasi Galat (d = 1/p)' },
+  ]}
+  lanjutan={[
+    { id: 'a2', label: 'A2 · Astronomi Bola & Koordinat' },
+    { id: 'a5', label: 'A5 · Radiasi, Magnitudo & Ekstingsi' },
+    { id: 'l1', label: 'L1 · Diagram H-R & Klasifikasi Bintang' },
+    { id: 'l5', label: 'L5 · Hukum Hubble & Skala Kosmologi' },
+  ]}
+/>
+
+<Tujuan>
+
+- Menurunkan definisi metrologis **Satuan Astronomi (`au`, IAU 2012 B2)**, **tahun cahaya (`ly`)**, dan **parsek (`pc`, IAU 2015 B2 Note 4)** dari geometri sudut kecil beserta faktor konversi $206\,264{,}806''/\text{rad}$.
+- Membuktikan rumus jarak **paralaks trigonometri tahunan** $d = 1/p$, memperhitungkan koreksi kinematik **gerak diri ($\mu$)** dan kecepatan tangensial, serta menurunkan **ketidakpastian asimetris** dan pengantar **bias Lutz–Kelker** ketika $\sigma_p/p$ besar.
+- Menganalisis **skala magnitudo Pogson** ($m_1 - m_2 = -2{,}5\log(F_1/F_2)$), membuktikan fluks gabungan bintang biner tak terurai, dan menghubungkannya dengan **magnitudo batas teleskopik** di bawah polusi cahaya (Bortle) serta kontras latar langit.
+- Membedakan definisi resmi **88 rasi IAU (1928)** vs asterisme, serta menerapkan **aproksimasi sudut kecil** (beserta batas galat orde ketiga $\theta^3/3$) untuk ukuran sudut dan magnitudo permukaan.
+- Memetakan rantai kalibrasi **Tangga Jarak Kosmik (*Cosmic Distance Ladder*)** beserta perambatan galat berantainya dari radar Tata Surya hingga supernova Ia dan hukum Hubble.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'metrologi',
+      judul: 'Metrologi Jarak IAU',
+      ringkas: '1 au eksak -> 1 ly (tahun Julian) -> 1 pc = 206 264,8 au.',
+      peran: 'Mengikat seluruh jarak astronomis ke standar meter SI tanpa bergantung massa Matahari.',
+      terkait: ['paralaks', 'sudut-kecil'],
+    },
+    {
+      id: 'paralaks',
+      judul: 'Paralaks & Galat Non-Linear',
+      ringkas: 'd = 1/p valid untuk d >> 1 au; sigma_d tidak simetris bila sigma_p/p > 10%.',
+      peran: 'Anak tangga primer astrometri (Hipparcos/Gaia) hingga puluhan kiloparsek.',
+      terkait: ['metrologi', 'tangga-jarak'],
+    },
+    {
+      id: 'sudut-kecil',
+      judul: 'Sudut Kecil & Resolusi',
+      ringkas: 'D = d theta dengan galat relatif (tan theta - theta)/theta ~ theta^2/3.',
+      peran: 'Menentukan diameter fisik Bulan, Matahari, planet, hingga fotosfer bintang interferometri.',
+      terkait: ['metrologi', 'paralaks'],
+    },
+    {
+      id: 'pogson',
+      judul: 'Skala Pogson & Limit Deteksi',
+      ringkas: 'm_1 - m_2 = -2,5 log(F_1/F_2); fluks menjumlah secara linear, magnitudo logaritmik.',
+      peran: 'Menghitung kecerlangan gabungan, rasio fluks, serta penguatan magnitudo batas teleskop.',
+      terkait: ['tangga-jarak'],
+    },
+    {
+      id: 'tangga-jarak',
+      judul: 'Tangga Jarak Kosmik',
+      ringkas: 'Radar -> Paralaks -> MS Fitting -> Cepheid -> SN Ia -> Hukum Hubble.',
+      peran: 'Setiap anak tangga mengalibrasi lilin standar tangga berikutnya; galat kalibrasi merambat ke H_0.',
+      terkait: ['paralaks', 'pogson'],
+    },
+  ]}
+/>
+
+<Bagian id="satuan-paralaks" judul="1. Metrologi Jarak IAU, Paralaks & Bias Astrometri" tag="Prinsip Pertama">
+
+<Epistemik jenis="fakta">
+Dalam resolusi **IAU 2012 B2**, Satuan Astronomi ($1\ \text{au}$) tidak lagi ditentukan dari orbit dinamis Bumi yang terikat pada $GM_\odot$, melainkan ditetapkan sebagai **bilangan eksak**: $1\ \text{au} \equiv 149\,597\,870\,700\ \text{m}$. Sementara itu **IAU 2015 B2 (Note 4)** mendefinisikan **parsek** secara eksak dalam sudut kecil sebagai $1\ \text{pc} \equiv \frac{648\,000}{\pi}\ \text{au}$.
+</Epistemik>
+
+### Definisi Formal Tiga Satuan Jarak
+
+1. **Satuan Astronomi ($\text{au}$):**
+   $$1\ \text{au} = 1{,}495978707 \times 10^{11}\ \text{m}.$$
+2. **Tahun Cahaya ($\text{ly}$, berbasis tahun Julian $1\ \text{yr}_J = 365{,}25\ \text{hari} = 31\,557\,600\ \text{s}$):**
+   $$1\ \text{ly} = c \cdot t_J = 299\,792\,458 \times 31\,557\,600 = 9{,}46073047 \times 10^{15}\ \text{m} \approx 63\,241{,}08\ \text{au}.$$
+3. **Parsek ($\text{pc}$):** Jarak $d$ di mana segmen alas $1\ \text{au}$ tegak lurus garis pandang membentangkan sudut tepat $p = 1''$. Karena $1\ \text{rad} = \frac{180}{\pi}\times 3\,600'' = \frac{648\,000}{\pi}'' \approx 206\,264{,}806''$:
+   $$1\ \text{pc} = \frac{1\ \text{au}}{\tan(1'')} \approx \frac{1\ \text{au}}{1''\ \text{[rad]}} = \frac{648\,000}{\pi}\ \text{au} \approx 206\,264{,}81\ \text{au} \approx 3{,}08567758 \times 10^{16}\ \text{m} \approx 3{,}26156\ \text{ly}.$$
+
+<Gambar id="paralaks-tahunan" />
+
+### Penurunan Geometri Paralaks Tahunan & Ketidakpastian Asimetris
+
+Tinjau segitiga siku-siku antara Matahari, posisi Bumi saat kuadratur ($a = 1\ \text{au}$ tegak lurus terhadap vektor posisi bintang), dan bintang pada jarak $d$:
+
+$$\sin p = \frac{1\ \text{au}}{d} \implies d = \frac{1\ \text{au}}{\sin p}.$$
+
+Karena bahkan untuk bintang terdekat (Proxima Centauri, $p = 0{,}76807''$) nilai sudut dalam radian sangat kecil ($p \approx 3{,}72 \times 10^{-6}\ \text{rad}$), ekspansi Maclaurin $\sin p = p - p^3/6 + \cdots$ memberi suku koreksi relatif orde $p^2/6 \sim 2\times 10^{-12}$, jauh melampaui batas instrumen apa pun. Maka dalam satuan detik busur ($p''$) dan parsek ($d_{\text{pc}}$):
+
+$$d\ [\text{pc}] = \frac{1}{p''}.$$
+
+<Epistemik jenis="aproksimasi">
+**Jebakan Statistik Astrometri (Ketidakpastian Non-Linear & Bias Lutz–Kelker):** Instrumen astrometri (seperti *Gaia* atau *Hipparcos*) mengukur **paralaks** $p \pm \sigma_p$ secara langsung dengan distribusi galat mendekati Gaussian, **bukan** jarak $d$. Akibat transformasi tak-linear $d = 1/p$:
+</Epistemik>
+
+1. **Asimetri Interval Kepercayaan:** Batas bawah dan atas jarak adalah $d_{\min} = \frac{1}{p + \sigma_p}$ dan $d_{\max} = \frac{1}{p - \sigma_p}$. Ekspansi Taylor di sekitar $p$:
+   $$d_{\pm} = \frac{1}{p \mp \sigma_p} = \frac{1}{p}\left(1 \mp \frac{\sigma_p}{p}\right)^{-1} = \frac{1}{p}\left[1 \pm \frac{\sigma_p}{p} + \left(\frac{\sigma_p}{p}\right)^2 \pm \cdots\right].$$
+   Saat $\sigma_p/p \ll 1$, cukup linearisasi $\sigma_d / d \approx \sigma_p / p$. Namun bila $\sigma_p/p \ge 0{,}15$, ekor atas $d_{\max}$ meluas jauh lebih besar daripada $d_{\min}$, dan bila $\sigma_p/p > 0{,}2$, nilai $1/p$ berbias sistematis meremehkan jarak rata-rata sampel bintang (*bias Lutz–Kelker* akibat volume kulit bola $dV = 4\pi r^2 dr$ tumbuh cepat ke jarak jauh!).
+
+<BatasValiditas
+  judul="Validitas d = 1/p dan Inversi Paralaks Langsung"
+  syarat={[
+    'Jarak objek $d \\gg 1\\ \\text{au}$ (selalu terpenuhi untuk bintang, $p < 1^{\\prime\\prime}$).',
+    'Galat relatif paralaks kecil ($\\sigma_p / p < 0{,}10$) agar inversi $d \\approx 1/p$ hampir tak berbias.',
+    'Gerak diri bintang ($\\mu$) sudah dipisahkan dari ayunan elips paralaks lewat pengamatan multi-epok $> 1$ tahun.',
+  ]}
+  gagalJika="Paralaks memiliki rasio sinyal-derau rendah ($\\sigma_p/p \\gtrsim 0{,}20$ atau bahkan $p_{\\text{terukur}} \\le 0$ akibat fluktuasi statistik)."
+  akibat="Inversi mentah $d = 1/p$ menghasilkan jarak tak terhingga/negatif atau jarak rata-rata berbias terlalu dekat; wajib memakai inferensi Bayesian dengan prior distribusi ruang galaksi."
+/>
+
+</Bagian>
+
+<Bagian id="pogson-limit" judul="2. Skala Pogson, Penjumlahan Fluks & Magnitudo Batas" tag="Fotometri Dasar">
+
+Pada abad ke-2 SM, Hipparchus membagi bintang tampak ke dalam 6 kelas kecerlangan. Respons biologis mata manusia (hukum Fechner–Weber) bersifat logaritmik terhadap intensitas cahaya. Pada tahun 1856, **Norman Pogson** menetapkan konvensi matematis eksak bahwa selisih tepat **5 magnitudo** ($\Delta m = 5$) didefinisikan sebagai rasio fluks tepat **100 kali lipat**:
+
+$$\frac{F_1}{F_2} = 100^{-(m_1 - m_2)/5} = 10^{-0{,}4(m_1 - m_2)}.$$
+
+Mengambil $\log_{10}$ di kedua ruas menghasilkan **Persamaan Pogson**:
+
+$$m_1 - m_2 = -2{,}5\log_{10}\!\left(\frac{F_1}{F_2}\right).$$
+
+Nilai dasar untuk selisih $1\ \text{mag}$ adalah $10^{0{,}4} = \sqrt[5]{100} \approx 2{,}5118864$.
+
+<Gambar id="tangga-magnitudo" />
+
+<Interaktif jenis="magnitudo" />
+
+### Penggabungan Fluks Sistem Tak Terurai (*Unresolved Binaries/Clusters*)
+
+Cahaya dari dua sumber tak terpisah di langit malam atau di dalam satu piksel/apertur fotometri menjumlah secara **linear dalam fluks**, bukan dalam magnitudo:
+
+$$F_{\text{tot}} = F_1 + F_2 = F_1\left(1 + \frac{F_2}{F_1}\right) = F_1\left(1 + 10^{-0{,}4(m_2 - m_1)}\right).$$
+
+Substitusi kembali ke persamaan Pogson terhadap $F_1$:
+
+$$m_{\text{tot}} - m_1 = -2{,}5\log_{10}\!\left(\frac{F_{\text{tot}}}{F_1}\right) \implies m_{\text{tot}} = m_1 - 2{,}5\log_{10}\!\left(1 + 10^{-0{,}4(m_2 - m_1)}\right).$$
+
+Untuk $N$ bintang kembar identik masing-masing bermagnitudo $m_0$, fluks totalnya $N F_0$, sehingga $m_{\text{tot}} = m_0 - 2{,}5\log_{10} N$. Jika $N = 100$ bintang bermagnitudo $+10$ membentuk gugus tak terurai, magnitudo total gugusnya adalah $10 - 2{,}5(2) = +5{,}0$ (tampak oleh mata!).
+
+### Penurunan Magnitudo Batas Teleskopik & Efek Polusi Cahaya
+
+Sebuah teleskop dengan diameter apertur bersih $D$ (dikoreksi bila ada halangan cermin sekunder fraksi luas $\epsilon$) mengumpulkan foton sebanding dengan luas bukaannya $A = \frac{\pi}{4}D^2$ (mata beradaptasi gelap memiliki diameter pupil $D_{\text{pupil}} \approx 6\text{--}7\ \text{mm}$).
+
+Jika ambang deteksi sinyal-terhadap-derau mata untuk sumber titik mensyaratkan jumlah foton minimum tertentu pada latar langit gelap murni, penguatan daya kumpul cahaya $F_{\text{teleskop}} / F_{\text{mata}} = (D/D_{\text{pupil}})^2$ memungkinkan objek lebih redup sebesar $\Delta m$ terlihat:
+
+$$\Delta m_{\text{limit}} = 2{,}5\log_{10}\!\left(\frac{D}{D_{\text{pupil}}}\right)^2 = 5\log_{10}\!\left(\frac{D}{D_{\text{pupil}}}\right).$$
+
+Sehingga **magnitudo batas ideal** adalah:
+
+$$m_{\text{limit}} \approx m_{\text{mata}} + 5\log_{10}\!\left(\frac{D}{D_{\text{pupil}}}\right).$$
+
+<Epistemik jenis="interpretasi">
+**Mengapa Polusi Cahaya Memangkas Bintang Redup?** Kecerahan langit malam (*sky brightness* $\mu_{\text{sky}}$ dalam $\text{mag/arcsec}^2$, misal $\approx 21{,}8\ \text{mag/arcsec}^2$ di Bortle 1 vs $\approx 17{,}5\ \text{mag/arcsec}^2$ di Bortle 9) menentukan derau foton latar belakang $N_{\text{sky}}$ di dalam cakram *seeing*. Memperbesar apertur $D$ mengumpulkan foton bintang sekaligus foton langit latar secara proporsional; batas sinyal-terhadap-derau akhirnya dibatasi kontras terhadap polusi cahaya, bukan semata pengumpulan foton absolut. Pada pengamatan visual berdiameter $D$, memperbesar perbesaran membuat latar langit meredup di retina sementara bintang (sumber titik) tetap tajam sehingga kontras membaik sampai batas *seeing*.
+</Epistemik>
+
+</Bagian>
+
+<Bagian id="rasi-sudut-kecil" judul="3. Rasi IAU, Peta Langit & Aproksimasi Sudut Kecil" tag="Geometri Langit">
+
+### Rasi Resmi IAU (1928) vs Asterisme
+
+Pada tahun 1928–1930, komisi IAU yang dipimpin **Eugène Delporte** membagi seluruh permukaan bola langit ($4\pi\ \text{sr} = 41\,252{,}96\ \text{deg}^2$) menjadi tepat **88 rasi resmi** dengan batas garis-garis asensio rekta dan deklinasi konstan pada epok B1875.0 (sekarang tampak sedikit miring akibat presesi ekuinoks ke J2000.0).
+- **Rasi bintang** adalah *wilayah* dua dimensi pada bola langit, bukan gugus fisik tiga dimensi. Dua bintang bertetangga dalam rasi Orion bisa berjarak ratusan tahun cahaya satu sama lain di kedalaman ruang.
+- **Asterisme** adalah pola geometris bintang terang (seperti *Biduk Besar / Big Dipper* di Ursa Major, *Sabuk Orion*, atau *Segitiga Musim Panas* Vega–Deneb–Altair lintas tiga rasi).
+
+### Aproksimasi Sudut Kecil & Batas Galatnya
+
+Sebuah objek berdiameter fisik $D$ tegak lurus garis pandang pada jarak $d$ membelah sudut penuh $\theta$:
+
+$$\tan\!\left(\frac{\theta}{2}\right) = \frac{D/2}{d} \implies D = 2d\tan\!\left(\frac{\theta}{2}\right).$$
+
+Untuk $\theta \ll 1\ \text{rad}$, deret Maclaurin $\tan x = x + \frac{x^3}{3} + \frac{2x^5}{15} + \cdots$ memberi:
+
+$$D \approx d\theta_{\text{rad}} = d \cdot \frac{\theta''}{206\,264{,}8},$$
+
+dengan **galat relatif pemotongan** sekitar $\frac{(\theta/2)^2}{3} = \frac{\theta^2}{12}$ (untuk formula chord penuh $D = 2d\sin(\theta/2)$ galat relatifnya $\approx \frac{\theta^2}{24}$; untuk formula tangen $D = d\tan\theta$ galat relatifnya $\approx \frac{\theta^2}{3}$). Pada $\theta = 0{,}1\ \text{rad} \approx 5{,}7^\circ$, galatnya hanya $\sim 0{,}3\%$!
+
+</Bagian>
+
+<Bagian id="tangga-jarak" judul="4. Arsitektur Tangga Jarak Kosmik (*Cosmic Distance Ladder*)" tag="Kosmografi">
+
+<Epistemik jenis="model">
+Setiap anak tangga dalam *Cosmic Distance Ladder* hanya berlaku pada rentang jarak tertentu dan harus **dikalibrasi ulang oleh anak tangga di bawahnya**. Kesalahan kalibrasi sistematis $1\%$ pada jarak Hyades atau paralaks Cepheid akan merembet langsung ke seluruh perkiraan usia dan laju ekspansi alam semesta ($H_0$).
+</Epistemik>
+
+| Anak Tangga | Metode & Dasar Fisika | Jangkauan Tipikal | Sumber Galat Dominan |
+|---|---|---|---|
+| **1. Tata Surya** | *Radar ranging* ($\Delta t = 2d/c$), telemetri pesawat | $0{,}001\text{--}50\ \text{au}$ | Koreksi relativistik (*Shapiro delay*) |
+| **2. Lingkungan Lokal** | **Paralaks trigonometri** ($d = 1/p$, *Gaia* $\sigma_p \sim 20\ \mu\text{as}$) | $1\text{--}10^4\ \text{pc}$ | Ekstingsi, batas resolusi astrometri |
+| **3. Gugus & Halo Galaksi** | *Main-Sequence Fitting*, paralaks sekuler/bergerak, RR Lyrae | $10^2\text{--}10^5\ \text{pc}$ | Koreksi metalisitas & pemredihan $A_V$ |
+| **4. Galaksi Dekat** | **Variabel Cepheid** (relasi Leavitt $M_V = a\log P + b$), TRGB | $0{,}1\text{--}40\ \text{Mpc}$ | *Crowding* citra, ketergantungan metalisitas |
+| **5. Ekstragalaksi Menengah** | **Supernova Tipe Ia** ($M_B \approx -19{,}3$ terkoreksi Phillips), Tully–Fisher | $20\text{--}2\,000\ \text{Mpc}$ | Evolusi debu galaksi induk, kurva cahaya |
+| **6. Skala Kosmologi** | **Hukum Hubble–Lemaître** ($z \approx H_0 d/c$ di $z \ll 1$) | $> 100\ \text{Mpc}$ | Kecepatan pekulier lokal ($v_{\text{pec}}$) & parameter $(\Omega_m,\Omega_\Lambda)$ |
+
+</Bagian>
+
+<Bagian id="worked-examples" judul="5. Contoh Hitung Lengkap (Notebook Hitung)" tag="Worked Examples">
+
+<Contoh judul="Contoh 1 (Fundamental): Paralaks, Kecepatan Ruang, & Ketidakpastian Non-Linear">
+
+<Langkah>
+
+**Data Observasi:** Bintang Barnard (*Barnard's Star*) memiliki paralaks tahunan *Gaia* DR3 $p = 0{,}54698 \pm 0{,}00004''$, kecepatan radial $v_r = -110{,}51\ \text{km/s}$, dan gerak diri total $\mu = 10{,}358''/\text{yr}$. Hitung:\
+(a) Jarak dalam $\text{pc}$, $\text{ly}$, dan $\text{au}$ lengkap dengan batas ketidakpastian $\pm \sigma_d$.\
+(b) Kelajuan ruang tiga dimensinya terhadap Matahari ($v_{\text{tot}}$).
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Jarak dan Propagasi Galat:**
+$$d = \frac{1}{p} = \frac{1}{0{,}54698''} \approx 1{,}82822\ \text{pc}.$$
+Karena $\sigma_p / p = 0{,}00004 / 0{,}54698 \approx 7{,}3 \times 10^{-5} \ll 1$, asimetri galat dapat diabaikan sepenuhnya ($\sigma_d = \frac{\sigma_p}{p}d = 1{,}34 \times 10^{-4}\ \text{pc}$):
+$$d = 1{,}82822 \pm 0{,}00013\ \text{pc} = 5{,}9628 \pm 0{,}0004\ \text{ly} = 3{,}77097 \times 10^5\ \text{au}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Kelajuan Tangensial & Kelajuan Ruang:**
+Kecepatan tangensial untuk $\mu$ dalam $''/\text{yr}$ dan $d$ dalam $\text{pc}$:
+$$v_t = \frac{\text{au}}{\text{tahun Julian}} \cdot \mu\, d = 4{,}74047 \times 10{,}358 \times 1{,}82822 \approx 89{,}77\ \text{km/s}.$$
+Karena $\vec{v}_r \perp \vec{v}_t$:
+$$v_{\text{tot}} = \sqrt{v_r^2 + v_t^2} = \sqrt{(-110{,}51)^2 + (89{,}77)^2} = \sqrt{12\,212{,}5 + 8\,058{,}7} \approx 142{,}38\ \text{km/s}.$$
+*(Cek kewajaran: Bintang Barnard adalah salah satu bintang berkecepatan tinggi halo yang melintas dekat Matahari, sekitar $\sim 5\times$ kecepatan orbit Bumi $29{,}78\ \text{km/s}$).*
+
+</Langkah>
+
+</Contoh>
+
+<Contoh judul="Contoh 2 (Rantai Olimpiade): Bintang Ganda Tak Terurai, Sudut Kecil, & Diameter Fisik">
+
+<Langkah>
+
+**Data:** Sebuah sistem bintang biner optik pada jarak sejati yang diketahui $d = 80{,}0\ \text{pc}$ tampak sebagai satu sumber titik tak terurai di mata dengan magnitudo tampak gabungan $m_{\text{tot}} = 5{,}00\ \text{mag}$ (abaikan ekstingsi). Spektroskopi mengungkap kedua komponen identik secara fisis (kembar sempurna) dengan suhu efektif $T_{\text{eff}} = 5\,778\ \text{K}$, dan interferometri mengukur diameter sudut masing-masing komponen sebesar $\theta = 1{,}80\ \text{mas}$.\
+(a) Berapa magnitudo tampak $m_1$ dan absolut $M_1$ tiap bintang?\
+(b) Hitung diameter fisik $D$ satu bintang (dalam $D_\odot$), lalu bandingkan luminositasnya dengan $L = 4\pi R^2\sigma T_{\text{eff}}^4$ (konsistensi silang!).
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Dekomposisi Fluks Biner Identik:**
+Karena dua bintang identik ($F_1 = F_2$), fluks gabungan adalah $F_{\text{tot}} = 2 F_1$:
+$$m_{\text{tot}} = m_1 - 2{,}5\log_{10}(2) \implies m_1 = 5{,}00 + 2{,}5(0{,}30103) = 5{,}753\ \text{mag}.$$
+Modulus jarak pada $d = 80{,}0\ \text{pc}$:
+$$\mu = 5\log_{10}(80{,}0) - 5 = 5(1{,}90309) - 5 = 4{,}515\ \text{mag}.$$
+Magnitudo absolut tiap bintang:
+$$M_1 = m_1 - \mu = 5{,}753 - 4{,}515 = 1{,}238\ \text{mag}.$$
+*(Untuk bintang sekelas suhu Matahari $T = 5\,778\ \text{K}$, $BC \approx -0{,}08$ mirip Matahari, sehingga $M_{\text{bol},1} \approx 1{,}16\ \text{mag}$ dan $L_1 / L_\odot = 10^{-0{,}4(1{,}16 - 4{,}74)} = 10^{1{,}432} \approx 27{,}0\ L_\odot$).*
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Diameter Fisik & Pemeriksaan Silang Stefan–Boltzmann:**
+Sudut $\theta = 1{,}80\times 10^{-3}''$ pada $d = 80{,}0\ \text{pc}$ memberi radius fisik dalam satuan astronomi secara amat bersih ($1\ \text{pc} \cdot 1'' = 1\ \text{au}$):
+$$D = d_{\text{pc}} \cdot \theta''\ [\text{au}] = 80{,}0 \times (1{,}80\times 10^{-3})\ \text{au} = 0{,}144\ \text{au}.$$
+Konversi ke diameter Matahari ($1\ \text{au} = 149{,}60\times 10^6\ \text{km}$, $D_\odot = 1{,}3927\times 10^6\ \text{km} \implies 1\ \text{au} \approx 107{,}42\,D_\odot$):
+$$D = 0{,}144 \times 107{,}42\,D_\odot \approx 15{,}47\,D_\odot \implies R_1 \approx 15{,}47\,R_\odot.$$
+**Cek silang konsistensi:** Karena $T = T_\odot$, Stefan–Boltzmann memprediksi $L_1/L_\odot = (R_1/R_\odot)^2 \approx (15{,}47)^2 \approx 239\,L_\odot$ (bukan $27\,L_\odot$!). Mengapa berbeda $9\times$? Karena bintang dengan $R \approx 15\,R_\odot$ pada $T = 5\,778\ \text{K}$ adalah **raksasa kuning luminositas $239\,L_\odot$** yang semestinya memiliki $M_{\text{bol}} \approx 4{,}74 - 2{,}5\log(239) \approx -1{,}21\ \text{mag}$ — artinya $m_{\text{tot}} = 5{,}00$ hanya mungkin jika ada **ekstingsi debu $A_V \approx 2{,}4\ \text{mag}$** pada jarak $80\ \text{pc}$, ATAU jaraknya sebenarnya lebih jauh! Pemeriksaan silang dimensi & fisis seperti inilah yang membedakan perhitung matang dari penebak rumus.
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  items={[
+    {
+      salah: 'Menghitung paralaks bintang pada jarak jauh langsung memakai baseline diameter Bumi (2 R_⊕), atau mengira paralaks p diukur sepanjang seluruh ayunan puncak-ke-puncak orbit Bumi (2 au).',
+      kenapaKeliru: 'Paralaks trigonometri tahunan (p) didefinisikan sebagai SETENGAH sudut pergeseran total selama 6 bulan, sehingga alas segitiganya tepat 1 au (jari-jari orbit Bumi), bukan diameter orbit 2 au dan bukan radius Bumi (itu paralaks diurnal untuk Bulan/planet dekat!).',
+      caraDeteksi: 'Cek konversi 1 pc: jika alasnya 2 au pada p = 1 detik busur, maka 1 pc semestinya 412 530 au. Kenyataannya 1 pc = 206 264,8 au — membuktikan alas definisinya persis 1 au.',
+      benar: 'd [pc] = 1 / p [arcsec] selalu menggunakan jari-jari rata-rata orbit Bumi a = 1 au sebagai baseline setengah-ayunan.',
+    },
+    {
+      salah: 'Jika dua bintang terpisah sudut kecil tampak menyatu masing-masing bermagnitudo +4,0, maka magnitudo gabungannya menjadi +8,0 (menjumlah) atau +2,0 (membagi dua).',
+      kenapaKeliru: 'Magnitudo adalah skala logaritmik yang terbalik; cahaya fisik yang dijumlahkan oleh mata dan detektor CCD adalah fluks energi F, bukan nilai magnitudo m.',
+      caraDeteksi: 'Uji nalar fisis: menggabungkan dua lampu identik membuat sistem 2 kali lebih terang, artinya angka magnitudo HARUS turun (lebih terang), tepat sebesar 2,5 log₁₀(2) ≈ 0,753 mag (menjadi +3,247 mag), bukan +8,0 ataupun +2,0.',
+      benar: 'F_tot = F₁ + F₂, sehingga m_tot = m₁ − 2,5 log₁₀(1 + 10^(−0,4(m₂ − m₁))).',
+    },
+    {
+      salah: 'Semua bintang dalam satu rasi IAU (misalnya Sabuk Orion) berdekatan satu sama lain secara fisik di ruang 3 dimensi.',
+      kenapaKeliru: 'Bola langit memproyeksikan arah sudut (α, δ) tanpa informasi kedalaman jarak radial d.',
+      caraDeteksi: 'Periksa paralaks Gaia bintang-bintang penyusun rasi: di Sabuk Orion, Alnilam berjarak ~600 pc sementara Mintaka dan Alnitak sekitar ~250–380 pc — berjarak ratusan tahun cahaya di kedalaman ruang!',
+      benar: 'Rasi bintang adalah wilayah koordinat 2D resmi di bola langit yang memuat objek-objek pada jarak radial sangat beragam.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="evaluasi" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mandiri">
+
+<CekPaham
+  id="a1-cek-1"
+  pertanyaan="Bintang terdekat dengan Bumi memiliki paralaks trigonometri p = 0,768 detik busur. Berapakah jaraknya dalam satuan parsek?"
+  opsi={['1,30 pc', '0,77 pc', '3,26 pc', '4,24 pc']}
+  jawaban={0}
+  penjelasan="d = 1 / p = 1 / 0,768\u2033 ≈ 1,302 pc (setara dengan 1,302 × 3,2616 ly ≈ 4,246 tahun cahaya)."
+/>
+
+<CekPaham
+  id="a1-cek-2"
+  pertanyaan="Sebuah bintang A memiliki magnitudo tampak m_A = 2,0 dan bintang B memiliki magnitudo tampak m_B = 4,5. Berapakah rasio perbandingan fluks cahaya F_A / F_B?"
+  opsi={['10 kali', '2,5 kali', '100 kali', '6,25 kali']}
+  jawaban={0}
+  penjelasan="Selisih magnitudo m_B − m_A = 4,5 − 2,0 = 2,5 magnitudo. Rasio fluks F_A / F_B = 10^(0,4 × 2,5) = 10^1 = 10 kali lipat."
+/>
+
+<CekPaham
+  id="a1-cek-3"
+  pertanyaan="Dua bintang yang tidak terpisahkan oleh mata masing-masing memiliki magnitudo tampak 5,00. Berapakah magnitudo gabungan sistem tersebut?"
+  opsi={['4,25', '10,00', '2,50', '5,75']}
+  jawaban={0}
+  penjelasan="Fluks total F_tot = 2 F₁, sehingga m_tot = 5,00 − 2,5 log₁₀(2) = 5,00 − 0,7526 ≈ 4,25 magnitudo."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'a1-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Sebuah pengamat di Mars (jarak rata-rata dari Matahari $a_{\\text{Mars}} = 1{,}524\\ \\text{au}$) mendefinisikan satuan "mars-parsek" ($\\text{mpc}^*$) sebagai jarak di mana jari-jari orbit Mars membentangkan sudut $1^{\\prime\\prime}$. Berapa nilai $1\\ \\text{mpc}^*$ dinyatakan dalam satuan parsek standar Bumi?',
+      petunjuk: 'Gunakan proporsionalitas langsung baseline sudut kecil: $d \\propto a_{\\text{baseline}}$ untuk sudut $p = 1^{\\prime\\prime}$ yang sama.',
+      langkahKunci: [
+        'Dari definisi paralaks sudut kecil, pada jarak $d$, sudut yang dibentangkan alas sepanjang $a$ adalah $p = a/d$.',
+        'Untuk $p = 1^{\\prime\\prime}$ yang tetap, $1\\ \\text{mpc}^* = \\frac{1{,}524\\ \\text{au}}{\\tan(1^{\\prime\\prime})} = 1{,}524 \\times \\left(\\frac{1\\ \\text{au}}{\\tan(1^{\\prime\\prime})}\\right) = 1{,}524\\ \\text{pc}$.',
+        'Jadi baseline orbit lebih lebar membuat jangkauan jarak untuk resolusi sudut yang sama meningkat $1{,}524\\times$ lipat — itulah keuntungan menempatkan teleskop astrometri di orbit lebih jauh (atau observasi interferometri)!',
+      ],
+      rubrik: [
+        'Menghubungkan baseline $a$ secara linear ke definisi parsek pada sudut tetap $1^{\\prime\\prime}$.',
+        'Memperoleh $1{,}524\\ \\text{pc}$ beserta implikasi astrometrinya.',
+      ],
+    },
+    {
+      id: 'a1-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Diketahui dua bintang tak terurai memiliki magnitudo berbeda $m_1$ dan $m_2$ dengan $m_2 - m_1 = \\Delta m \\ge 0$ (bintang 1 lebih terang). Turunkan pendekatan Taylor orde pertama untuk penurunan magnitudo gabungan $(m_1 - m_{\\text{tot}})$ ketika bintang pengganggu jauh lebih redup ($\\Delta m \\gg 1$, misal kontaminasi bintang latar pada fotometri)!',
+      petunjuk: 'Tulis $\\varepsilon = 10^{-0{,}4\\,\\Delta m} \\ll 1$, lalu gunakan $\\ln(1 + \\varepsilon) \\approx \\varepsilon$.',
+      langkahKunci: [
+        'Mulai dari $m_{\\text{tot}} = m_1 - 2{,}5\\log_{10}(1 + 10^{-0{,}4\\,\\Delta m}) = m_1 - \\frac{2{,}5}{\\ln 10}\\ln(1 + \\varepsilon)$, dengan $\\varepsilon = 10^{-0{,}4\\,\\Delta m}$.',
+        'Untuk $\\varepsilon \\ll 1$, ekspansi Maclaurin $\\ln(1 + \\varepsilon) = \\varepsilon - \\frac{1}{2}\\varepsilon^2 + \\cdots$, sehingga pengurangan magnitudo $\\Delta m_{\\text{kont}} = m_1 - m_{\\text{tot}} \\approx \\frac{2{,}5}{2{,}302585}\\,10^{-0{,}4\\,\\Delta m} \\approx 1{,}0857 \\cdot 10^{-0{,}4\\,\\Delta m}$.',
+        'Contoh cek: jika bintang pengganggu lebih redup $\\Delta m = 5\\ \\text{mag}$ ($\\varepsilon = 0{,}01$), kontaminasinya menggeser magnitudo hanya sebesar $\\approx 0{,}0109\\ \\text{mag}$!',
+      ],
+      rubrik: [
+        'Mengubah $\\log_{10}(1+\\varepsilon)$ menjadi $\\ln(1+\\varepsilon)/\\ln 10$.',
+        'Memperoleh faktor pre-eksponensial $2{,}5/\\ln 10 \\approx 1{,}0857$ kali $10^{-0{,}4\\Delta m}$.',
+      ],
+    },
+    {
+      id: 'a1-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah teleskop amatir berdiameter $D = 200\\ \\text{mm}$ mengamati gugus bintang bola M13 yang memiliki sekitar $N \\approx 3\\times 10^5$ bintang identik berjarak $d \\approx 7\\ \\text{kpc}$ dengan kecerlangan tiap bintang rata-rata mirip Matahari ($M_V \\approx +4{,}8$). Perkirakan apakah M13 tampak oleh mata telanjang dari lokasi gelap sempurna (Bortle 1, $m_{\\text{mata}} \\approx 7{,}0$), dan kira-kira berapa faktor penguatan jangkauan ruang volume pengamatannya dengan teleskop $200\\ \\text{mm}$ ($D_{\\text{pupil}} = 7\\ \\text{mm}$)?',
+      petunjuk: 'Hitung $m_V$ satu bintang pada $7\\ \\text{kpc}$, kurangi $2{,}5\\log_{10}(3\\times 10^5)$ untuk gugus utuh, lalu hitung $m_{\\text{limit}}$ teleskop dan rasio volume $(d_{\\max,\\text{tel}}/d_{\\max,\\text{mata}})^3$.',
+      langkahKunci: [
+        'Satu bintang mirip Matahari di $7\\,000\\ \\text{pc}$: $m_1 = 4{,}8 + 5\\log_{10}(7\\,000) - 5 = 4{,}8 + 5(3{,}845) - 5 \\approx 19{,}0\\ \\text{mag}$.',
+        'Total $3\\times 10^5$ bintang: $m_{\\text{M13}} \\approx 19{,}0 - 2{,}5\\log_{10}(3\\times 10^5) = 19{,}0 - 2{,}5(5{,}477) \\approx 5{,}3\\ \\text{mag}$. Karena $5{,}3 < 7{,}0$, M13 teramati sebagai bercak samar oleh mata telanjang!',
+        'Batas magnitudo teleskop $200\\ \\text{mm}$: $\\Delta m = 5\\log_{10}(200/7) \\approx 5(1{,}456) \\approx 7{,}3\\ \\text{mag}$ (jangkau sampai $m_{\\text{limit}} \\approx 14{,}3\\ \\text{mag}$).',
+        'Rasio jarak jangkauan maksimum adalah $D/D_{\\text{pupil}} = 200/7 \\approx 28{,}6\\times$, sehingga **volume ruang sampel** membesar $(28{,}6)^3 \\approx 2{,}3\\times 10^4$ kali lipat!',
+      ],
+      rubrik: [
+        'Menghitung magnitudo terpadu gugus dari $m_1 - 2{,}5\\log_{10} N \\approx 5{,}3\\ \\text{mag}$.',
+        'Menghitung penguatan magnitudo teleskop $+7{,}3\\ \\text{mag}$ dan penskalaan volume ruang $(D/D_{\\text{pupil}})^3$.',
+      ],
+    },
+    {
+      id: 'a1-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Dua misi astrometri mencatat paralaks sebuah bintang samar halo: Hipparcos memberi $p_H = 10{,}0 \\pm 3{,}0\\ \\text{mas}$, sedangkan Gaia DR3 memberi $p_G = 8{,}20 \\pm 0{,}08\\ \\text{mas}$. Hitung rentang jarak [$d_{\\min}, d_{\\max}$] dari masing-masing katalog dan tunjukkan berapa besar asimetri jarak pada pengukuran Hipparcos yang ber-SNR rendah!',
+      petunjuk: 'Evaluasi $d_{\\min} = 1000/(p + \\sigma_p)$ dan $d_{\\max} = 1000/(p - \\sigma_p)$ dalam $\\text{pc}$ (karena $p$ dalam mas).',
+      langkahKunci: [
+        '**Hipparcos ($p = 10{,}0 \\pm 3{,}0\\ \\text{mas}$, $\\sigma_p/p = 30\\%$):** nilai nominal $d_0 = 1000/10{,}0 = 100{,}0\\ \\text{pc}$. Batas bawah $d_{\\min} = 1000/13{,}0 = 76{,}9\\ \\text{pc}$ ($-23{,}1\\ \\text{pc}$), sedangkan batas atas $d_{\\max} = 1000/7{,}0 = 142{,}9\\ \\text{pc}$ ($+42{,}9\\ \\text{pc}$)! Ketidakpastian ke atas hampir **2 kali lebih lebar** daripada ke bawah.',
+        '**Gaia DR3 ($p = 8{,}20 \\pm 0{,}08\\ \\text{mas}$, $\\sigma_p/p \\approx 0{,}98\\%$):** $d_0 = 1000/8{,}20 = 121{,}95\\ \\text{pc}$; $d_{\\min} = 120{,}77\\ \\text{pc}$ ($-1{,}18\\ \\text{pc}$) dan $d_{\\max} = 123{,}15\\ \\text{pc}$ ($+1{,}20\\ \\text{pc}$) — praktis simetris!',
+        'Catatan astronomis: nilai Gaia ($122\\ \\text{pc}$) masih berada dalam $1\\sigma$ Hipparcos ($[76{,}9,\\ 142{,}9]\\ \\text{pc}$), membuktikan kedua instrumen konsisten secara statistik.',
+      ],
+      rubrik: [
+        'Menghitung interval $[1/(p+\\sigma_p),\\ 1/(p-\\sigma_p)]$ dalam parsek dengan benar.',
+        'Menunjukkan asimetri kuat ($+42{,}9$ vs $-23{,}1\\ \\text{pc}$) saat $\\sigma_p/p = 30\\%$ dibandingkan simetri Gaia.',
+      ],
+    },
+    {
+      id: 'a1-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Jika sebuah katalog survei seluruh langit menyaring bintang-bintang hanya dengan syarat paralaks terukur memiliki $p_{\\text{obs}} > 0$ tanpa menyaring rasio sinyal-derau $\\sigma_p/p$, mengapa rata-rata luminositas intrinsik yang dihitung dengan $d = 1/p_{\\text{obs}}$ untuk bintang-bintang terjauh menjadi berbias sistematis? Jelaskan mekanisme *bias Lutz–Kelker* secara geometris dan statistik!',
+      petunjuk: 'Bandingkan jumlah bintang nyata di cangkang ruang lebih jauh ($r + \\Delta r$, volume $\\propto r^2 dr$) yang bisa terlempar galatnya ke $p_{\\text{obs}}$ besar vs jumlah bintang di dalam ($r - \\Delta r$) yang terlempar ke $p_{\\text{obs}}$ kecil.',
+      langkahKunci: [
+        'Untuk kerapatan bintang homogen di sekitar Matahari, jumlah bintang di antara jarak $r$ dan $r+dr$ bertambah sebanding volume cangkang bola $dN \\propto 4\\pi r^2\\,dr \\propto p^{-4}\\,dp$.',
+        'Artinya terdapat **jauh lebih banyak** bintang berparalaks sejati lebih kecil (lebih jauh) daripada yang berparalaks sejati lebih besar (lebih dekat).',
+        'Ketika galat pengukuran $\\sigma_p$ bersifat simetris, lebih banyak bintang jauh yang kebetulan terukur dengan $p_{\\text{obs}}$ membesar masuk ke sampel dibandingkan bintang dekat yang $p_{\\text{obs}}$-nya mengecil. Akibatnya, $1/p_{\\text{obs}}$ meremehkan jarak sejati rata-rata dan membuat luminositas absolut tampak lebih redup daripada nilai sejatinya!',
+      ],
+      rubrik: [
+        'Menggunakan pertumbuhan volume ruang $dV \\propto r^2 dr$ untuk menunjukkan populasi bintang jauh lebih besar.',
+        'Menjelaskan asimetri limpahan galat simetris dari luar ke dalam sampel $p_{\\text{obs}}$ sehingga jarak terestimasi terlalu dekat.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'a1-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa di dalam tangga jarak kosmik, kalibrasi ulang anak tangga ke-2 (paralaks trigonometri) pada gugus bintang Pleiades atau bintang variabel Cepheid sangat krusial — bahkan selisih $10\\%$ pada jarak kalibrasi lokal langsung menggeser penentuan konstanta Hubble $H_0$ di alam semesta berjarak ratusan megaparsek?',
+      petunjuk: 'Lacak rantai hubungan $d_{\\text{lokal}} \\to M_{\\text{lilin standar}} \\to d_{\\text{SN Ia}} \\to H_0 = v / d$.',
+      rubrik: [
+        'Menunjukkan bahwa kalibrasi luminositas mutlak ($M$) Cepheid bergantung pada jarak referensi lokal ($M = m - 5\\log d + 5$).',
+        'Menjelaskan bagaimana $M_{\\text{Cepheid}}$ meneruskan skala absolut ke supernova Tipe Ia di galaksi inang yang sama.',
+        'Menyimpulkan bahwa kesalahan faktor skala $(1 + \\epsilon)$ pada semua jarak kosmologis membalik menjadi kesalahan $(1 + \\epsilon)^{-1}$ pada $H_0 = cz/d$.',
+      ],
+      jawabanKunci:
+        'Tangga jarak kosmik bersifat berangkai multiplikatif: bila jarak kalibrasi paralaks lokal berbias $+10\\%$ ($d\' = 1{,}10\\,d$), maka Cepheid dan SN Ia dikalibrasi menjadi $1{,}10^2 = 1{,}21\\times$ lebih terang ($\\Delta M \\approx -0{,}21\\ \\text{mag}$). Konsekuensinya seluruh jarak galaksi jauh ikut memanjang $10\\%$, sehingga dengan kecepatan resesi $cz$ yang sama, konstanta Hubble $H_0 = v/d$ otomatis menyusut sebesar $\\approx 9{,}1\\%$!',
+    },
+    {
+      id: 'a1-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang peserta OSN membaca pernyataan: "Pada bulan purnama, Bulan merentangkan sudut $0{,}52^\\circ$ di langit. Karena $\\sin(0{,}52^\\circ) \\approx 0{,}00908$ dan $\\tan(0{,}52^\\circ) \\approx 0{,}00908$, berarti kesalahan memakai sudut kecil sudah kurang dari $0{,}01\\%$ — jadi saya boleh memakai rumus sudut kecil $\\theta \\approx D/d$ untuk mengukur panjang busur cakrawala selebar $120^\\circ$ di peta langit!" Temukan kesalahan logikanya!',
+      petunjuk: 'Menguji validitas suatu aproksimasi pada $\\theta = 0{,}52^\\circ$ ($0{,}009\\ \\text{rad}$) sama sekali tidak menjamin validitasnya pada $\\theta = 120^\\circ$ ($2{,}09\\ \\text{rad}$)!',
+      rubrik: [
+        'Mengidentifikasi bahaya ekstrapolasi batas domain ($\\theta = 0{,}009\\ \\text{rad} \\ll 1$ vs $\\theta = 2{,}09\\ \\text{rad} > 1$).',
+        'Menunjukkan secara numerik bahwa pada $\\theta = 120^\\circ$, $\\theta/2 = 60^\\circ = \\pi/3 \\approx 1{,}047\\ \\text{rad}$, sementara $\\sin(60^\\circ) = 0{,}866$ dan $\\tan(60^\\circ) = 1{,}732$ — galatnya mencapai $20\\%$ hingga $65\\%$!',
+      ],
+      jawabanKunci:
+        'Kesalahannya adalah mengeneralisasi validitas aproksimasi lokal ke domain di luar syarat $\\theta \\ll 1\\ \\text{rad}$. Galat relatif $\\sin x \\approx x$ tumbuh secara kuadratik ($\\sim x^2/6$), dan $\\tan x \\approx x$ tumbuh $\\sim x^2/3$. Pada $\\theta = 120^\\circ$ ($\\theta/2 = 60^\\circ$), nilai $\\sin 60^\\circ = 0{,}866$ vs $1{,}047\\ \\text{rad}$ meleset $21\\%$, sedangkan jarak garis lurus di peta datar memakai proyeksi tangen atau proyeksi bola yang sama sekali tak lagi linear.',
+    },
+    {
+      id: 'a1-log-3',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Misalkan peradaban astronom masa depan menyepakati ulang skala Pogson sehingga selisih 5 magnitudo didefinisikan bukan faktor fluks $100$, melainkan faktor fluks $10^3 = 1\\,000$. Apa yang berubah pada konstanta pengali di depan $\\log_{10}(F_1/F_2)$ serta pada rumus modulus jarak $m - M$?',
+      petunjuk: 'Tulis ulang $F_1 / F_2 = (1\\,000)^{-(m_1 - m_2)/5} = 10^{-3(m_1 - m_2)/5}$, lalu isolasi $(m_1 - m_2)$!',
+      rubrik: [
+        'Menurunkan $(m_1 - m_2) = -\\frac{5}{3}\\log_{10}(F_1/F_2) \\approx -1{,}667\\log_{10}(F_1/F_2)$.',
+        'Mensubstitusikan $F(d)/F(10) = (10/d)^2$ untuk mendapat modulus jarak baru $m - M = \\frac{10}{3}\\log_{10} d - \\frac{10}{3} \\approx 3{,}333\\log_{10}(d/10\\ \\text{pc})$.',
+      ],
+      jawabanKunci:
+        'Jika $\\Delta m = 5$ setara $F_1/F_2 = 10^3$, maka $1\\ \\text{mag}$ setara $10^{3/5} = 10^{0{,}6} \\approx 3{,}981\\times$ perubahan fluks. Rumus Pogson berubah dari faktor $-2{,}5$ menjadi $-\\frac{5}{3} \\approx -1{,}667$: $m_1 - m_2 = -\\frac{5}{3}\\log_{10}(F_1/F_2)$. Akibatnya, karena $F \\propto d^{-2}$, koefisien di depan $\\log d$ pada modulus jarak ikut terkompresi dari $5$ menjadi $\\frac{10}{3} \\approx 3{,}333$: $m - M = \\frac{10}{3}\\log_{10} d - \\frac{10}{3}$.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="a1-refleksi-1"
+  pertanyaan="Mengapa misi astrometri luar angkasa seperti wahana antariksa Gaia mampu mengukur paralaks dengan ketelitian mencapai mikro-detik busur, sementara teleskop berbasis darat di permukaan Bumi terhambat pada batas milidetik busur? Jelaskan pengaruh turbulensi atmosfer (seeing) dan stabilitas termal instrumen terhadap pusat centroid bayangan bintang."
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'a1-m1', gerbang: 'derivasi', teks: 'Menurunkan hubungan 1 pc = 206 264,8 au dari definisi sudut kecil IAU 2015 B2 dan 1 au eksak IAU 2012.' },
+    { id: 'a1-m2', gerbang: 'derivasi', teks: 'Membuktikan asimetri galat jarak sigma_d saat sigma_p/p besar serta menurunkan magnitudo gabungan biner tak terurai.' },
+    { id: 'a1-m3', gerbang: 'fermi', teks: 'Mengestimasi magnitudo terpadu gugus bintang dan penguatan volume pengamatan (D/D_pupil)^3 teleskop.' },
+    { id: 'a1-m4', gerbang: 'logika', teks: 'Menjelaskan mengapa bias Lutz-Kelker muncul akibat dV ~ r^2 dr dan bagaimana kesalahan kalibrasi lokal merembet ke H_0.' },
+    { id: 'a1-m5', gerbang: 'observasi', teks: 'Membedakan 88 rasi resmi IAU vs asterisme serta batas magnitudo visual skala Bortle.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul A1">
+
+<Konstanta
+  data={[
+    { simbol: '1 au (IAU 2012 B2, eksak)', nilai: '1,495978707 × 10¹¹', satuan: 'm' },
+    { simbol: '1 ly (tahun Julian 365,25 d)', nilai: '9,46073 × 10¹⁵', satuan: 'm' },
+    { simbol: '1 pc (IAU 2015 B2 Note 4)', nilai: '3,08568 × 10¹⁶', satuan: 'm' },
+    { simbol: '1 pc dalam au & ly', nilai: '206 264,81 au · 3,26156 ly', satuan: '—' },
+    { simbol: '1 rad dalam detik busur', nilai: '206 264,806', satuan: 'arcsec' },
+    { simbol: 'v_t = K · μ · d', nilai: 'K = 4,74047', satuan: 'km·s⁻¹ / (″·yr⁻¹·pc)' },
+    { simbol: 'M_bol,☉ (IAU 2015 B2)', nilai: '+4,74', satuan: 'mag' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-05', 'SRC-07', 'SRC-09', 'SRC-17']}
+  pemetaan={[
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al. (6e), Bab 1, 2, 4: definisi satuan jarak, paralaks trigonometri, magnitudo Pogson, dan tangga jarak.' },
+    { sumberId: 'SRC-07', rujukan: 'Ryden & Peterson, Bab 1 & 13: gerak diri, kecepatan tangensial, dan ketidakpastian astrometri.' },
+    { sumberId: 'SRC-09', rujukan: 'OpenStax Astronomy 2e, Bab 1–2 & 18–19: peta langit 88 rasi, magnitudo batas, dan arsitektur tangga jarak kosmik.' },
+    { sumberId: 'SRC-17', rujukan: 'IAU Resolutions 2012 B2 (definisi eksak 1 au) & 2015 B2 (titik nol M_bol dan catatan definisi parsek).' },
+  ]}
+/>
+
+</Bagian>

@@ -1,0 +1,480 @@
+<IdentitasModul
+  kode="L6"
+  tier="Klaster Lanjutan · Modul 6 dari 6"
+  posisi="Reduksi Citra CCD, Fotometri Diferensial & Airmass, Pelipatan Fase, WLS & Rantai IOAA"
+  estimasi="85 menit studi mendalam"
+  tingkat="S1 Astrofisika Pengantar & IOAA Penuh"
+  prasyarat={[
+    { id: 'f3', label: 'F3 · Kalkulus & Analisis Data' },
+    { id: 'a5', label: 'A5 · Radiasi, Magnitudo & Fotometri' },
+    { id: 'a7', label: 'A7 · Instrumen & Observasi' },
+  ]}
+  koneksi={[
+    { id: 'l3', label: 'L3 · Bintang Ganda, Gugus & Eksoplanet', peran: 'Mengekstrak periode biner & kerapatan eksoplanet beserta galat kuadratur' },
+    { id: 'l5', label: 'L5 · Kosmologi Dasar', peran: 'Menentukan H₀ dan galatnya dari regresi kuadrat terkecil terbobot (WLS)' },
+  ]}
+  sumberUtama={['SRC-01', 'SRC-03', 'SRC-08', 'SRC-15']}
+/>
+
+<Tujuan>
+
+- Menuliskan dan menerapkan rantai lengkap **kalibrasi citra CCD astronomi** (*master bias*, penskalaan *dark current* terhadap waktu eksposur, normalisasi *flat field*), serta memisahkan **fotometri apertur** (bintang vs anulus latar langit) dan **persamaan SNR lengkap** ($\sigma_{\text{ron}}$, $N_{\text{sky}}$, $N_{\text{dark}}$).
+- Melakukan **fotometri diferensial** dan mereduksi magnitudo ke atas atmosfer bumi melalui **garis ekstingsi Bouguer** ($m_{\text{inst}}(X) = m_0 + kX$, pendekatan paralaks atmosfer $X \approx \sec z$).
+- Mengekstrak **periode intrinsik** bintang variabel atau transit eksoplanet menggunakan teknik **pelipatan fase (*phase folding*)** dan menurunkan parameter fisik ($\delta, T_{14}, T_{23}, b, a/R_*, \bar{\rho}_*$).
+- Melakukan **linearisasi hukum pangkat/eksponensial** dan **Regresi Kuadrat Terkecil Terbobot (WLS)** dengan bobot $w_i = 1/\sigma_i^2$, menghitung ketidakpastian gradien & intersep ($\sigma_m, \sigma_c$), serta menguji kualitas model memakai **chi-kuadrat tereduksi ($\chi^2_\nu$)**.
+- Menyelesaikan soal analisis data berantai ala **Data Analysis IOAA**: menggabungkan pembacaan grafik, regresi terbobot, **propagasi galat kuadratur Gauss** berantai, hingga pelaporan angka penting akhir yang sahih secara statistik.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'reduksi-ccd',
+      label: 'Reduksi CCD, Apertur & SNR',
+      peran: 'Mengubah frame mentah (Bias, Dark, Flat) menjadi fluks bersih N_* ber-ketidakpastian σ_N.',
+      ke: ['bouguer', 'phase-fold'],
+    },
+    {
+      id: 'bouguer',
+      label: 'Fotometri Diferensial & Garis Bouguer',
+      peran: 'Mengoreksi ekstingsi atmosfer (X = sec z) untuk memperoleh magnitudo baku m₀.',
+      ke: ['regresi-wls'],
+    },
+    {
+      id: 'phase-fold',
+      label: 'Pelipatan Fase & Kurva Cahaya',
+      peran: 'Menggabungkan ratusan pengamatan terpotong menjadi satu profil siklus ber-SNR tinggi.',
+      ke: ['rantai-ioaa'],
+    },
+    {
+      id: 'regresi-wls',
+      label: 'Linearisasi, Regresi WLS & χ²_ν',
+      peran: 'Menentukan slope/intercept beserta galat (σ_m, σ_c) dan menguji kesesuaian model.',
+      ke: ['rantai-ioaa'],
+    },
+    {
+      id: 'rantai-ioaa',
+      label: 'Rantai Propagasi Galat IOAA',
+      peran: 'Merambatkan ketidakpastian langkah demi langkah hingga kerapatan planet/usia gugus/H₀.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Di seluruh kompetisi OSN Tingkat Nasional hingga **IOAA (*International Olympiad on Astronomy and Astrophysics*)**, separuh nilai eksperimental ditentukan di bagian **Analisis Data & Observasi**. Teori astrofisika hanya sahih bila dapat diuji terhadap data deret waktu nyata yang penuh *gap*, derau Poisson, ekstingsi atmosfer, serta bar galat yang tidak seragam — dan inilah laboratorium pamungkas tempat <Sorot>reduksi CCD, garis Bouguer, pelipatan fase, regresi terbobot WLS ($\chi^2_\nu$), dan propagasi galat kuadratur</Sorot> berpadu (`SRC-01`, `SRC-03`, `SRC-15`).
+</div>
+
+<Bagian id="reduksi-ccd-snr" judul="1. Kalibrasi Citra CCD, Fotometri Apertur & Persamaan SNR" tag="Reduksi Data Primer">
+
+Setiap piksel detektor CCD melaporkan nilai digital **ADU** (*Analog-to-Digital Units*) yang diubah ke jumlah elektron fisik lewat faktor penguatan kamera **gain** $g$ ($\text{e}^-/\text{ADU}$). Sebelum mengukur kecerahan bintang, seluruh artefak elektronik dan optik wajib dibersihkan dari citra mentah (*raw science frame*, $R$, berdurasi eksposur $t_{\text{exp}}$):
+
+<Rumus judul="Persamaan Reduksi Standar Citra CCD">
+
+$$C(x, y) = \frac{R(x, y) - \text{MasterBias}(x, y) - \left(\frac{t_{\text{exp}}}{t_{\text{dark}}}\right)\text{MasterDark}_{\text{net}}(x, y)}{\text{MasterFlat}_{\text{norm}}(x, y)}$$
+
+</Rumus>
+
+1. **Master Bias ($B$):** Rata-rata/median puluhan eksposur $0\ \text{s}$ ber-*shutter* tertutup untuk menghilangkan tegangan *offset* ADC ($B$ **tidak** dikalikan waktu eksposur!).
+2. **Master Dark ($D$):** Arus elektron termal akibat agitasi panas kisi silikon (*dark current* $\propto t_{\text{exp}}$). Frame *dark* terlebih dahulu dikurangi *Master Bias* agar menjadi *MasterDark_net*, lalu diskalakan sebanding $t_{\text{exp}}/t_{\text{dark}}$ sebelum dikurangkan dari $R$.
+3. **Master Flat Field ($F_{\text{norm}}$):** Citra layar kubah atau langit senja seragam (setelah dikurangi *bias* & *dark*-nya sendiri) dibagi oleh nilai median/rata-ratanya sehingga $\langle F_{\text{norm}} \rangle = 1{,}0$. Pembagian dengan $F_{\text{norm}}$ langsung mengoreksi **vignetting** (penurunan cahaya ke tepi optik), bayangan debu (*dust donuts*) di filter, serta variasi sensitivitas piksel-ke-piksel (*PRNU*).
+
+### Fotometri Apertur & Persamaan CCD SNR Lengkap
+
+Untuk mengukur sinyal bersih bintang $N_*$ (dalam **elektron**, bukan ADU!), letakkan lingkaran **apertur sumber** beradius $r_{\text{ap}}$ mencakup $n_{\text{pix}}$ piksel di sekitar bintang (total cacah di dalam apertur $S_{\text{tot}}$) dan sebuah **anulus langit** di sekelilingnya mencakup $n_{\text{sky}}$ piksel untuk menaksir rata-rata elektron latar langit per piksel $N_{\text{sky}}$:
+
+$$N_* = S_{\text{tot}} - n_{\text{pix}}\,N_{\text{sky}}.$$
+
+Dengan menggabungkan derau statistik Poisson dari foton bintang ($\sigma_*^2 = N_*$), derau Poisson langit dan arus gelap di dalam apertur ($n_{\text{pix}}(N_{\text{sky}} + N_{\text{dark}})$), derau pengurangan rata-rata anulus langit ($n_{\text{pix}}^2 N_{\text{sky}} / n_{\text{sky}}$), serta **derau baca (*readout noise*, $\sigma_{\text{ron}}$)** per piksel, kita memperoleh **Persamaan CCD SNR** lengkap (`SRC-08`):
+
+<Rumus judul="Persamaan Signal-to-Noise Ratio (SNR) Fotometri CCD">
+
+$$\text{SNR} = \frac{N_*}{\sqrt{N_* + n_{\text{pix}}\left(1 + \frac{n_{\text{pix}}}{n_{\text{sky}}}\right)\left(N_{\text{sky}} + N_{\text{dark}} + \sigma_{\text{ron}}^2\right)}}$$
+
+</Rumus>
+
+*(Dalam konversi ke ketidakpastian magnitudo fotometri via turunan $m = -2{,}5\log_{10} N_* + C = -\frac{2{,}5}{\ln 10}\ln N_* + C$, perhatikan hubungan luar biasa ini: $\sigma_m = \left|\frac{dm}{dN_*}\right|\sigma_{N_*} = \frac{2{,}5}{\ln 10}\frac{\sigma_{N_*}}{N_*} \approx \mathbf{\frac{1{,}0857}{\text{SNR}}}$! Maka $\text{SNR} = 100 \implies \sigma_m \approx 0{,}0109\ \text{mag}$!)*
+
+</Bagian>
+
+<Bagian id="bouguer-phasefold" judul="2. Fotometri Diferensial, Garis Bouguer (Airmass) & Pelipatan Fase" tag="Ekstraksi Sinyal Waktu">
+
+### A. Koreksi Ekstingsi Atmosfer (Garis Bouguer)
+
+Cahaya bintang sebelum menyentuh teleskop melemah melintasi atmosfer Bumi. Untuk sudut zenit $z \lesssim 60^\circ$ (atmosfer datar paralel), ketebalan massa udara relatif terhadap zenit adalah **airmass**:
+
+$$X \approx \sec z = \frac{1}{\cos z} = \frac{1}{\sin a},$$
+
+di mana $a = 90^\circ - z$ adalah ketinggian (*altitude*) bintang. Dengan meninjau hukum atenuasi $m_{\text{inst}} = m_0 + k' X$ (di mana $k' \approx 1{,}0857\,\tau_{\text{zenit}}$ adalah **koefisien ekstingsi atmosfer** dalam $\text{mag/airmass}$ untuk filter tertentu), pengamatan berulang satu bintang standar tak berubah sepanjang malam pada berbagai nilai $X$ menghasilkan garis lurus **Plot Bouguer**:
+- **Gradien ($k'$):** Mengukur tingkat kejernihan/ekstingsi langit malam itu (misal $k'_V \approx 0{,}15\text{--}0{,}30\ \text{mag/airmass}$, jauh lebih besar di pita biru $B$ akibat hamburan Rayleigh $\propto \lambda^{-4}$!).
+- **Intersep di $X = 0$ ($m_0$):** Magnitudo instrumen **di luar atmosfer Bumi** (ekstrapolasi ke vakum ruang angkasa!).
+
+Untuk pengamatan **kurva cahaya cepat** (seperti transit eksoplanet atau biner gerhana di pita yang sama), kita cukup menerapkan **Fotometri Diferensial** — membandingkan magnitudo target terhadap satu atau beberapa bintang pembanding stabil di bingkai citra yang sama: $\Delta m(t) = m_{\text{target}}(t) - m_{\text{ref}}(t)$. Karena kedua bintang berada pada $X$ nyaris identik dan melewati awan tipis yang sama, gangguan atmosfer langsung saling meniadakan secara otomatis!
+
+### B. Kurva Cahaya Transit & Pelipatan Fase (*Phase Folding*)
+
+<Gambar id="kurva-transit-data" judul="Kurva Cahaya Transit dengan Batas Galat" caption="Fluks terstandar menunjukkan kedalaman transit delta dan titik kontak t1 hingga t4 dengan bilah ketidakpastian pengukuran (error bar)." />
+
+Untuk transit eksoplanet berorbit lingkaran melintas depan bintang ($R_p \ll R_*$):
+$$\delta = \frac{F_{\text{out}} - F_{\text{in}}}{F_{\text{out}}} = \left(\frac{R_p}{R_*}\right)^2, \qquad T_{14} \approx \frac{P}{\pi}\frac{R_*}{a}\sqrt{\left(1 + \frac{R_p}{R_*}\right)^2 - b^2}, \qquad T_{23} \approx \frac{P}{\pi}\frac{R_*}{a}\sqrt{\left(1 - \frac{R_p}{R_*}\right)^2 - b^2}.$$
+*(Lihat A6 untuk penurunan lengkap parameter impak $b$ dan kerapatan rata-rata bintang induk $\bar{\rho}_*$!)*
+
+<Gambar id="kurva-cahaya-variabel" judul="Kurva Cahaya Bintang Variabel" caption="Variasi magnitudo terhadap waktu menunjukkan kenaikan tajam dan penurunan landai yang khas dari denyut pulsasi Cepheid." />
+
+Saat data pengamatan variabel (Cepheid, RR Lyrae, atau biner gerhana) terpecah-pecah selama berbulan-bulan oleh siklus siang-malam dan cuaca, teknik **pelipatan fase (*phase folding*)** memetakan setiap waktu pengamatan $t_i$ ke fase tunggal $\phi_i \in [0, 1)$ untuk periode uji $P$ dan epok acuan $T_0$ (biasanya saat maksimum terang atau minimum primer):
+
+$$\phi_i = \frac{t_i - T_0}{P} - \left\lfloor \frac{t_i - T_0}{P} \right\rfloor.$$
+
+Periode sejati $P$ ditemukan dengan menguji berbagai $P$ dan memilih yang meminimalkan panjang tali kurva berurut (*Lafler–Kinman string length* $\sum (m_{i+1} - m_i)^2$) atau memaksimalkan daya spektral **periodogram Lomb–Scargle** (untuk pencuplikan tak merata *unevenly spaced*).
+
+</Bagian>
+
+<Bagian id="linearisasi-wls" judul="3. Linearisasi, Regresi Kuadrat Terkecil Terbobot (WLS) & Uji χ²_ν" tag="Statistika & Regresi">
+
+<Gambar id="skala-log" judul="Linearisasi Skala Logaritmik" caption="Hubungan eksponensial dan hukum pangkat berubah menjadi garis lurus pada kertas grafik log-log." />
+
+Untuk menghubungkan model non-linier $y = k\,x^n$ (misal Hukum III Kepler, Stefan–Boltzmann, Massa–Luminositas, maupun $y = A e^{-\alpha x}$), transformasikan menjadi garis lurus $Y = m X + c$:
+- Hukum pangkat $y = k x^n \implies \log y = n\log x + \log k$ (gradien $m = n$, intersep $c = \log k$, propagasi galat transformasi $\sigma_{\log y} = \frac{1}{\ln 10}\frac{\sigma_y}{y}$ untuk log basis $10$ atau $\sigma_{\ln y} = \frac{\sigma_y}{y}$ untuk $\ln$).
+- Eksponensial $y = A e^{-x/\tau} \implies \ln y = -\frac{1}{\tau} x + \ln A$ (gradien $m = -1/\tau$, intersep $c = \ln A$).
+
+### Regresi Kuadrat Terkecil Terbobot (*Weighted Least Squares*, WLS)
+
+Dalam data observasi astronomi nyata, setiap titik $(x_i, y_i \pm \sigma_i)$ mempunyai bar galat $\sigma_i$ berbeda! Titik data yang galatnya kecil harus diberi suara lebih besar daripada titik yang berisik. Dengan mendefinisikan **bobot statistik $w_i = 1/\sigma_i^2$**, kita meminimalkan fungsi **chi-kuadrat** $\chi^2 = \sum_{i=1}^N \left(\frac{y_i - (m x_i + c)}{\sigma_i}\right)^2 = \sum w_i (y_i - m x_i - c)^2$ lewat turunan parsial $\frac{\partial \chi^2}{\partial m} = 0$ dan $\frac{\partial \chi^2}{\partial c} = 0$ (`SRC-15`):
+
+<Rumus judul="Parameter WLS, Ketidakpastiannya (σ_m, σ_c) & Uji Chi-Kuadrat Tereduksi">
+
+$$\Delta \equiv \left(\sum w_i\right)\left(\sum w_i x_i^2\right) - \left(\sum w_i x_i\right)^2$$
+$$m = \frac{\left(\sum w_i\right)\left(\sum w_i x_i y_i\right) - \left(\sum w_i x_i\right)\left(\sum w_i y_i\right)}{\Delta}, \qquad c = \frac{\left(\sum w_i x_i^2\right)\left(\sum w_i y_i\right) - \left(\sum w_i x_i\right)\left(\sum w_i x_i y_i\right)}{\Delta}$$
+$$\sigma_m = \sqrt{\frac{\sum w_i}{\Delta}}, \qquad \sigma_c = \sqrt{\frac{\sum w_i x_i^2}{\Delta}}, \qquad \chi^2_\nu \equiv \frac{\chi^2}{\nu} = \frac{1}{N - 2}\sum_{i=1}^N \left(\frac{y_i - m x_i - c}{\sigma_i}\right)^2$$
+
+</Rumus>
+
+*(Kasus khusus **OLS tak terbobot** diperoleh bila semua $\sigma_i$ sama, di mana $w_i$ dapat dicoret dan diganti $1$ serta jumlah bobot $\sum w_i$ menjadi $N$!)*
+
+**Cara Mengaudit Model lewat $\chi^2_\nu$ ($\nu = N - p$ adalah derajat kebebasan, $p=2$ untuk garis lurus):**
+- **$\chi^2_\nu \approx 1$:** Model garis lurus **konsisten baik** dengan data dan estimasi bar galat $\sigma_i$ realistis!
+- **$\chi^2_\nu \gg 1$:** Model **buruk** (hubungan fisik sebenarnya non-linier / butuh parameter tambahan) ATAU peneliti meremehkan ukuran galat $\sigma_i$!
+- **$\chi^2_\nu \ll 1$:** Tidak otomatis "lebih bagus"! Justru menandakan bar galat $\sigma_i$ ditaksir **terlalu besar** (overestimasi galat) atau model melakukan *overfitting* terhadap derau!
+
+</Bagian>
+
+<Bagian id="propagasi-galat" judul="4. Hukum Propagasi Galat Gauss & Standar Pelaporan Ilmiah" tag="Ketidakpastian Berantai">
+
+Untuk besaran turunan $f(x_1, x_2, \dots, x_k)$ dari variabel-variabel pengukuran independen dengan ketidakpastian $\sigma_{x_i}$:
+
+$$\sigma_f^2 = \sum_{i=1}^k \left(\frac{\partial f}{\partial x_i}\right)^2 \sigma_{x_i}^2.$$
+
+Tiga aturan kilat wajib hafal (yang seluruhnya berasal dari turunan parsial di atas):
+1. Penjumlahan/Pengurangan ($f = a x \pm b y$): $\sigma_f = \sqrt{a^2 \sigma_x^2 + b^2 \sigma_y^2}$ (galat mutlak dijumlah kuadratur).
+2. Perkalian/Pembagian/Pangkat ($f = k\,x^a y^b z^{-c}$): $\left(\frac{\sigma_f}{f}\right)^2 = a^2\left(\frac{\sigma_x}{x}\right)^2 + b^2\left(\frac{\sigma_y}{y}\right)^2 + c^2\left(\frac{\sigma_z}{z}\right)^2$ (galat fraksional berkuadratur!).
+3. Fungsi Logaritma/Eksponensial: jika $y = \ln x \implies \sigma_y = \frac{\sigma_x}{x}$; jika $y = \log_{10} x \implies \sigma_y = \frac{1}{\ln 10}\frac{\sigma_x}{x} \approx 0{,}4343\frac{\sigma_x}{x}$.
+
+**Aturan Angka Penting Pelaporan Akhir:** Bulatkan ketidakpastian $\sigma_f$ ke **1 angka penting** (atau **2 angka penting** jika digit terdepannya `1` atau `2`, misal `0,14` atau `0,023`), lalu sesuaikan tempat desimal nilai rata-rata $f$ persis sejajar dengan digit terakhir $\sigma_f$ (misal $\rho_p = 1{,}08 \pm 0{,}11\ \text{g/cm}^3$, bukan `1,0753 ± 0,1065`)!
+
+</Bagian>
+
+<Bagian id="contoh-l6" judul="5. Worked Example Praktikum IOAA: Bouguer Airmass, WLS & Kerapatan Eksoplanet" tag="Notebook Data Analysis">
+
+<Contoh judul="Simulasi Soal Analisis Data IOAA: Kalibrasi Airmass WLS hingga Kerapatan Planet">
+
+<Langkah>
+
+**Bagian A — Regresi Terbobot (WLS) Garis Bouguer & Uji $\chi^2_\nu$:**
+Bintang standar diamati tiga kali dalam filter V pada airmass $X = \{1{,}00,\ 2{,}00,\ 3{,}00\}$, menghasilkan magnitudo instrumen terukur $m_i = \{10{,}22 \pm 0{,}02,\ 10{,}40 \pm 0{,}02,\ 10{,}65 \pm 0{,}04\}$. Tentukan koefisien ekstingsi $k' \pm \sigma_{k'}$, magnitudo luar atmosfer $m_0 \pm \sigma_{m_0}$, dan $\chi^2_\nu$ model linear $m = k' X + m_0$!
+
+1. **Hitung bobot $w_i = 1/\sigma_i^2$:**
+   $w_1 = 1/(0{,}02)^2 = 2\,500$; $w_2 = 2\,500$; $w_3 = 1/(0{,}04)^2 = 625$.
+   *(Titik ketiga pada airmass tinggi $X=3{,}0$ memiliki galat $2\times$ lebih besar sehingga bobotnya hanya $1/4$ titik pertama & kedua!)*
+2. **Jumlah berbobot:**
+   - $\sum w_i = 2\,500 + 2\,500 + 625 = 5\,625$
+   - $\sum w_i X_i = 2\,500(1) + 2\,500(2) + 625(3) = 9\,375$
+   - $\sum w_i X_i^2 = 2\,500(1) + 2\,500(4) + 625(9) = 18\,125$
+   - $\sum w_i m_i = 2\,500(10{,}22) + 2\,500(10{,}40) + 625(10{,}65) = 58\,206{,}25$
+   - $\sum w_i X_i m_i = 2\,500(10{,}22) + 2\,500(20{,}80) + 625(31{,}95) = 97\,518{,}75$
+3. **Determinan $\Delta$, gradien ($k'$), dan intersep ($m_0$):**
+   $$\Delta = (5\,625)(18\,125) - (9\,375)^2 = 101\,953\,125 - 87\,890\,625 = 14\,062\,500.$$
+   $$k' = \frac{(5\,625)(97\,518{,}75) - (9\,375)(58\,206{,}25)}{14\,062\,500} = \frac{548\,542\,968{,}75 - 545\,683\,593{,}75}{14\,062\,500} \approx \mathbf{0{,}2033\ \text{mag/airmass}},$$
+   $$m_0 = \frac{(18\,125)(58\,206{,}25) - (9\,375)(97\,518{,}75)}{14\,062\,500} = \frac{140\,749\,218{,}75}{14\,062\,500} \approx \mathbf{10{,}009\ \text{mag}}.$$
+4. **Ketidakpastian parameter & uji $\chi^2_\nu$ ($\nu = 3 - 2 = 1$):**
+   $$\sigma_{k'} = \sqrt{\frac{5\,625}{14\,062\,500}} = \mathbf{0{,}020\ \text{mag/airmass}}, \qquad \sigma_{m_0} = \sqrt{\frac{18\,125}{14\,062\,500}} \approx \mathbf{0{,}036\ \text{mag}}.$$
+   Nilai prediksi model $\hat{m}_i = 0{,}2033 X_i + 10{,}009$: $\{10{,}212,\ 10{,}416,\ 10{,}619\}$.
+   $$\chi^2 = \left(\frac{10{,}22 - 10{,}212}{0{,}02}\right)^2 + \left(\frac{10{,}40 - 10{,}416}{0{,}02}\right)^2 + \left(\frac{10{,}65 - 10{,}619}{0{,}04}\right)^2 \approx 0{,}16 + 0{,}64 + 0{,}60 = \mathbf{1{,}40}.$$
+   Maka $\chi^2_\nu = 1{,}40 / 1 = \mathbf{1{,}40 \sim 1}$ $\implies$ model garis Bouguer linear cocok sangat baik dengan data! Dilaporkan: $k' = 0{,}203 \pm 0{,}020\ \text{mag/airmass}$ dan $m_0 = 10{,}01 \pm 0{,}04\ \text{mag}$.
+
+</Langkah>
+
+<Langkah>
+
+**Bagian B — Rantai Propagasi Galat Eksoplanet:**
+Diketahui radius bintang induk $R_* = (1{,}00 \pm 0{,}02)\,R_\odot$, kedalaman transit $\delta = 0{,}0100 \pm 0{,}0004$, dan massa planet dari RV $M_p = (0{,}80 \pm 0{,}04)\,M_J$. Hitung kerapatan rata-rata planet $\rho_p \pm \sigma_{\rho_p}$!
+1. **Radius planet:** $R_p = R_* \delta^{1/2} = 1{,}00\sqrt{0{,}0100} = 0{,}100\,R_\odot = 6{,}957\times 10^7\ \text{m} \approx 0{,}995\,R_J$ ($R_J = 6{,}991\times 10^7\ \text{m}$).
+   Galat relatif radius:
+   $$\frac{\sigma_{R_p}}{R_p} = \sqrt{\left(\frac{0{,}02}{1{,}00}\right)^2 + \left(\frac{1}{2}\cdot\frac{0{,}0004}{0{,}0100}\right)^2} = \sqrt{0{,}02^2 + 0{,}02^2} \approx 0{,}02828 \quad (2{,}83\%).$$
+2. **Kerapatan rata-rata:** $M_p = 0{,}80 \times 1{,}898\times 10^{27} = 1{,}518\times 10^{27}\ \text{kg}$; $V_p = \frac{4}{3}\pi (6{,}957\times 10^7)^3 = 1{,}410\times 10^{24}\ \text{m}^3$:
+   $$\rho_p = \frac{1{,}518\times 10^{27}}{1{,}410\times 10^{24}} \approx 1\,077\ \text{kg/m}^3 = 1{,}077\ \text{g/cm}^3.$$
+3. **Propagasi galat ke kerapatan ($\rho_p \propto M_p R_p^{-3}$):**
+   $$\frac{\sigma_{\rho_p}}{\rho_p} = \sqrt{\left(\frac{0{,}04}{0{,}80}\right)^2 + \left(3 \times 0{,}02828\right)^2} = \sqrt{0{,}05^2 + 0{,}08485^2} \approx 0{,}0985 \quad (9{,}85\%).$$
+   $$\sigma_{\rho_p} = 0{,}0985 \times 1{,}077 \approx 0{,}106\ \text{g/cm}^3 \implies \mathbf{\rho_p = 1{,}08 \pm 0{,}11\ \text{g/cm}^3}.$$
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Saat menyebarkan galat dari dua pengukuran atau beberapa variabel seperti ρ = M / V, galat fraksional cukup dijumlahkan langsung secara linear (σ_ρ/ρ = σ_M/M + 3 σ_R/R).',
+      kenapaKeliru: 'Mencampuradukkan batas terburuk deterministik (worst-case upper bound) dengan ketidakpastian statistik acak Gauss independen (1-sigma).',
+      caraDeteksi: 'Cek apakah galat pada M dan R berasal dari instrumen independen (RV vs transit): peluang kedua galat jatuh tepat di ekstrem +1σ pada saat bersamaan hanya ~16%, sementara deviasi baku kombinasi independen menjumlahkan VARIANSI (σ²), bukan simpangan baku!',
+      benar: 'Variabel acak independen wajib dijumlahkan dalam KUADRATUR: (σ_ρ/ρ)² = (σ_M/M)² + (3 σ_R/R)², bukan penjumlahan aljabar biasa.',
+    },
+    {
+      salah: 'Jika nilai chi-kuadrat tereduksi χ²_ν = 0,05 pada hasil pencocokan kurva, artinya pencocokan model tersebut 20× lebih akurat dan sempurna dibanding χ²_ν = 1,0.',
+      kenapaKeliru: 'Mengira χ²_ν makin mendekati nol selalu berarti kecocokan lebih baik tanpa melihat arti definisi statistiknya.',
+      caraDeteksi: 'Ingat bahwa tiap residu acak yang sesungguhnya memiliki ekspektasi ⟨(y_i - ŷ_i)²⟩ = σ_i², sehingga ekspektasi statistik χ²_ν untuk model benar ADALAH 1,0! Nilai χ²_ν = 0,05 berarti titik data jauh lebih mulus dari bar galatnya sendiri → bar galat σ_i hampir pasti dilebih-lebihkan ~4,5×!',
+      benar: 'Model sahih yang memiliki estimasi galat jujur memberikan χ²_ν ≈ 1; χ²_ν << 1 mengindikasikan overestimasi galat σ_i atau overfitting.',
+    },
+    {
+      salah: 'Dalam reduksi citra CCD, frame Master Bias boleh diabaikan jika frame Master Dark yang berdurasi sama sudah dikurangkan dari Raw science frame.',
+      kenapaKeliru: 'Sebenarnya untuk eksposur sains berdurasi SAMA PERSIS dengan frame Dark (dan jika tidak ada penskalaan waktu), Bias + Dark(net) memang sudah terkurangkan sekaligus; TETAPI jebakan muncul seketika bila durasi Dark berbeda dengan sains, ATAU untuk Flat Field yang durasinya beda!',
+      caraDeteksi: 'Uji penskalaan waktu: jika Master Dark berdurasi 300 s berisi (Bias + 300×i_dark), sedangkan citra sains hanya 60 s, mengalikan seluruh Master Dark dengan (60/300) tanpa memisahkan Bias terlebih dahulu akan memotong tegangan Bias secara keliru hingga 80%!',
+      benar: 'Master Bias wajib dipisahkan terlebih dahulu dari Master Dark sebelum dark frame diskalakan terhadap waktu eksposur, maupun saat mereduksi Flat Field!',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="l6-cek-1"
+  pertanyaan="Sebuah bintang diamati sebanyak 25 kali secara independen dengan simpangan baku pengukuran 0,50 magnitudo. Berapakah simpangan baku nilai rata-rata (standar error) dari magnitudo bintang tersebut?"
+  opsi={[
+    '0,10 magnitudo',
+    '0,02 magnitudo',
+    '0,25 magnitudo',
+    '0,50 magnitudo'
+  ]}
+  jawaban={0}
+  penjelasan="Standar error rata-rata diberikan oleh sigma_mean = sigma / sqrt(N). Substitusi sigma = 0,50 dan N = 25 memberikan 0,50 / sqrt(25) = 0,50 / 5 = 0,10 magnitudo."
+/>
+
+<CekPaham
+  id="l6-cek-2"
+  pertanyaan="Pada plot regresi logaritma log(L) terhadap log(M) untuk bintang deret utama, kemiringan garis lurus terbaik yang diperoleh secara empiris adalah sekitar..."
+  opsi={[
+    '3,5 hingga 4,0',
+    '1,5',
+    '2,0',
+    '0,5'
+  ]}
+  jawaban={0}
+  penjelasan="Hubungan massa-luminositas bintang deret utama bermassa menengah adalah L ∝ M^(3,5-4,0). Dalam grafik log-log, log L = alpha log M + c, sehingga gradien garis lurus tepat sama dengan eksponen pangkatnya yaitu 3,5 hingga 4,0."
+/>
+
+<CekPaham
+  id="l6-cek-3"
+  pertanyaan="Tahapan kalibrasi citra CCD yang bertujuan menghilangkan variasi sensitivitas pixel-ke-pixel dan vignetting optik teleskop adalah..."
+  opsi={[
+    'Pembagian dengan Flat Field yang telah dinormalisasi',
+    'Pengurangan dengan Bias frame',
+    'Pengurangan dengan Dark frame',
+    'Penerapan filter median kosmik'
+  ]}
+  jawaban={0}
+  penjelasan="Flat field merekam respons detektor terhadap penyinaran seragam. Mengalikan atau membagi citra dengan master flat menormalkan efisiensi kuantum tiap pixel dan mengoreksi penurunan intensitas di tepi bidang pandang (vignetting)."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'l6-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Dalam proses reduksi CCD, mengapa *Master Bias* dan *Master Dark* harus **dikurangkan**, sedangkan *Master Flat Field* ternormalisasi justru digunakan sebagai **pembagi**, dan mengapa rata-rata lebih dari $10$ frame kalibrasi digabungkan memakai metode *median combine* daripada rata-rata aritmetika biasa?',
+      petunjuk: 'Bedakan antara sumber derau **aditif** (offset elektronik & arus termal independen cahaya) vs efek **multiplikatif** (transmisi optik & QE tiap piksel), serta efek sinar kosmik acak (*cosmic ray hits*)!',
+      langkahKunci: [
+        'Bias dan *dark current* adalah sinyal **aditif** yang tetap muncul bahkan tanpa foton dari langit ($N_{\\text{tot}} = \\text{Bias} + \\text{Dark} + \\text{QE}\\cdot\\text{Transmisi}\\cdot\\text{Foton}$), sehingga harus **dikurangkan**.',
+        'Sebaliknya, respons kuantum piksel ($\\text{QE}$) dan *vignetting* cermin/filter mengalikan fluks cahaya masuk secara **multiplikatif**, sehingga citra sains harus **dibagi** oleh $F_{\\text{norm}}$.',
+        'Penggabungan beberapa frame kalibrasi dilakukan dengan **median** (bukan rata-rata biasa) untuk menolak secara otomatis piksel ekstrem tercemar tabrakan **sinar kosmik** pada satu atau dua frame.',
+      ],
+      rubrik: [
+        'Membedakan galat aditif (Bias/Dark → dikurangi) dan multiplikatif (Flat → dibagi).',
+        'Menjelaskan *median combine* untuk menolak pencilan sinar kosmik.',
+      ],
+    },
+    {
+      id: 'l6-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari fungsi chi-kuadrat terbobot $\\chi^2(m, c) = \\sum_{i=1}^N w_i (y_i - m x_i - c)^2$ ($w_i = 1/\\sigma_i^2$), turunkan secara kalkulus ($\\frac{\\partial \\chi^2}{\\partial m} = 0, \\frac{\\partial \\chi^2}{\\partial c} = 0$) persamaan normal kuadrat terkecil untuk $m$ dan $c$, lalu turunkan pula variansi gradien $\\sigma_m^2 = \\sum \\left(\\frac{\\partial m}{\\partial y_i}\\right)^2 \\sigma_i^2 = \\frac{\\sum w_i}{\\Delta}$!',
+      petunjuk: 'Tulis $m = \\frac{1}{\\Delta}\\sum_{i=1}^N w_i\\left(x_i\\sum w_j - \\sum w_j x_j\\right) y_i$, lalu hitung $\\sum \\left(\\frac{\\partial m}{\\partial y_i}\\right)^2 \\frac{1}{w_i}$.',
+      langkahKunci: [
+        'Dari $\\frac{\\partial \\chi^2}{\\partial c} = -2\\sum w_i (y_i - m x_i - c) = 0 \\implies c\\sum w_i + m\\sum w_i x_i = \\sum w_i y_i$.',
+        'Dari $\\frac{\\partial \\chi^2}{\\partial m} = -2\\sum w_i x_i (y_i - m x_i - c) = 0 \\implies c\\sum w_i x_i + m\\sum w_i x_i^2 = \\sum w_i x_i y_i$.',
+        'Aturan Cramer memecahkan sistem $2\\times 2$ ini langsung menghasilkan rumus $m$ dan $c$ dengan penyebut $\\Delta = (\\sum w_i)(\\sum w_i x_i^2) - (\\sum w_i x_i)^2$.',
+        'Untuk propagasi galat $y_i$ terhadap $m$: $\\frac{\\partial m}{\\partial y_i} = \\frac{w_i (S_w x_i - S_{wx})}{\\Delta}$ (dengan $S_w = \\sum w_j$, $S_{wx} = \\sum w_j x_j$). Kuadratkan dan kalikan $\\sigma_i^2 = 1/w_i$ lalu jumlahkan atas $i$:',
+        '$$\\sigma_m^2 = \\sum_{i=1}^N \\frac{w_i^2 (S_w x_i - S_{wx})^2}{\\Delta^2}\\cdot\\frac{1}{w_i} = \\frac{1}{\\Delta^2}\\left(S_w^2 \\sum w_i x_i^2 - 2 S_w S_{wx}^2 + S_w S_{wx}^2\\right) = \\frac{S_w\\left(S_w\\sum w_i x_i^2 - S_{wx}^2\\right)}{\\Delta^2} = \\frac{S_w}{\\Delta}!$$',
+      ],
+      rubrik: [
+        'Menurunkan sistem persamaan normal dari turunan parsial $\\partial\\chi^2/\\partial c = 0$ dan $\\partial\\chi^2/\\partial m = 0$.',
+        'Membuktikan penyederhanaan aljabar $\\sum (\\partial m/\\partial y_i)^2 \\sigma_i^2 = (\\sum w_i)/\\Delta$ dengan rapi.',
+      ],
+    },
+    {
+      id: 'l6-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah pengamatan transit eksoplanet menggunakan CCD dengan $n_{\\text{pix}} = 50$ piksel apertur bintang, $n_{\\text{sky}} = 400$ piksel anulus langit, latar langit $N_{\\text{sky}} = 300\\ \\text{e}^-/\\text{piksel}$, arus gelap diabaikan, dan derau baca $\\sigma_{\\text{ron}} = 8\\ \\text{e}^-$. Jika sebuah eksposur menangkap $N_* = 2{,}5\\times 10^5$ elektron dari bintang, hitung **SNR satu frame** dan **galat magnitudo** $\\sigma_m$. Berapa frame identik yang harus dirata-ratakan (*binned*) untuk menaikkan presisi fotometri hingga mencapai **$\\sigma_m = 0{,}0010\\ \\text{mag}$** ($1\\ \\text{mmag}$)?',
+      petunjuk: 'Gunakan persamaan CCD SNR lengkap dan penskalaan $\\sigma_{\\text{mean}} = \\sigma_m / \\sqrt{N_{\\text{frame}}}$.',
+      langkahKunci: [
+        'Variansi derau total di dalam apertur: $N_* + n_{\\text{pix}}(1 + n_{\\text{pix}}/n_{\\text{sky}})(N_{\\text{sky}} + \\sigma_{\\text{ron}}^2) = 250\,000 + 50(1 + 50/400)(300 + 64) = 250\,000 + 20\,475 = 270\,475$.',
+        'Akar kuadratnya $\\sigma_{\\text{tot}} \\approx 520{,}1\\ \\text{e}^-$, sehingga $\\text{SNR}_{1} = \\frac{250\,000}{520{,}1} \\approx \\mathbf{480{,}7}$.',
+        'Galat magnitudo satu frame: $\\sigma_{m,1} = \\frac{1{,}0857}{480{,}7} \\approx 0{,}00226\\ \\text{mag}$ ($2{,}26\\ \\text{mmag}$).',
+        'Untuk menekan galat menjadi $\\sigma_{\\text{target}} = 0{,}0010\\ \\text{mag}$: $N_{\\text{frame}} = \\left(\\frac{0{,}00226}{0{,}0010}\\right)^2 \\approx 5{,}1 \\implies$ minimal **$6$ frame**!',
+      ],
+      rubrik: [
+        'Memasukkan faktor $(1 + n_{\\text{pix}}/n_{\\text{sky}})$ dan $\\sigma_{\\text{ron}}^2$ untuk memperoleh $\\text{SNR}_1 \\approx 481$.',
+        'Menghitung $\\sigma_{m,1} \\approx 2{,}26\\ \\text{mmag}$ dan jumlah frame $\\lceil(2{,}26/1{,}0)^2\\rceil = 6$.',
+      ],
+    },
+    {
+      id: 'l6-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Empat titik pengamatan kurva minimum primer sebuah bintang biner gerhana dicatat dalam *Heliocentric Julian Date* (HJD) pada siklus-siklus berikut (nomor epok $E$, waktu minimum $T_E$): $E = 0: T_0 = 2459000{,}500 \\pm 0{,}002$; $E = 10: T_{10} = 2459025{,}510 \\pm 0{,}002$; $E = 25: T_{25} = 2459063{,}026 \\pm 0{,}002$; $E = 40: T_{40} = 2459100{,}540 \\pm 0{,}002$. Gunakan regresi linier terhadap persamaan epok $T_E = T_{\\text{ref}} + P\\cdot E$ untuk menentukan **periode $P \\pm \\sigma_P$** paling presisi (dalam hari)!',
+      petunjuk: 'Semua $\\sigma_i = 0{,}002\\ \\text{hari}$ sama (OLS berlaku!): hitung $\\bar{E} = 18{,}75$, $\\sum(E_i - \\bar{E})^2$, $P = \\frac{\\sum (E_i - \\bar{E})(T_i - \\bar{T})}{\\sum (E_i - \\bar{E})^2}$, dan $\\sigma_P = \\frac{\\sigma}{\\sqrt{\\sum (E_i - \\bar{E})^2}}$.',
+      langkahKunci: [
+        'Rata-rata epok: $\\bar{E} = (0 + 10 + 25 + 40)/4 = 18{,}75$. Kurangkan konstanta besar $2459000{,}500$ agar angka kecil: $y_i = \\{0{,}000,\\ 25{,}010,\\ 62{,}526,\\ 100{,}040\\}$, rata-rata $\\bar{y} = 46{,}894$.',
+        'Simpangan $E_i - \\bar{E} = \\{-18{,}75,\\ -8{,}75,\\ +6{,}25,\\ +21{,}25\\} \\implies \\sum (E_i - \\bar{E})^2 = 351{,}5625 + 76{,}5625 + 39{,}0625 + 451{,}5625 = 918{,}75$.',
+        'Simpangan $y_i - \\bar{y} = \\{-46{,}894,\\ -21{,}884,\\ +15{,}632,\\ +53{,}146\\} \\implies \\sum (E_i - \\bar{E})(y_i - \\bar{y}) = 879{,}2625 + 191{,}485 + 97{,}700 + 1129{,}3525 = 2\,297{,}800$.',
+        'Periode terbaik: $P = \\frac{2\,297{,}800}{918{,}75} \\approx \\mathbf{2{,}501007\\ \\text{hari}}$.',
+        'Ketidakpastian periode: $\\sigma_P = \\frac{0{,}002}{\\sqrt{918{,}75}} = \\frac{0{,}002}{30{,}31} \\approx \\mathbf{0{,}000066\\ \\text{hari}}$! Maka dilaporkan **$P = 2{,}50101 \\pm 0{,}00007\\ \\text{hari}$** (baseline $40$ siklus meningkatkan presisi periode $30\\times$ lebih tajam daripada galat satu minimum!).',
+      ],
+      rubrik: [
+        'Menuliskan model $T_E = T_{\\text{ref}} + P\\cdot E$ dan menghitung $\\sum (E_i - \\bar{E})^2 = 918{,}75$.',
+        'Memperoleh $P \\approx 2{,}50101 \\pm 0{,}00007\\ \\text{hari}$ beserta aturan pembulatan angka penting yang tepat.',
+      ],
+    },
+    {
+      id: 'l6-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Seorang peserta IOAA menghitung kemiringan kurva regresi linier data log-log $\\log L = m\\log M + c$ tetapi melupakan fakta bahwa **setiap titik massa dan luminositas bintang di tabel asli memiliki galat sistematis kalibrasi jarak bersama ($\\Delta d / d = +5\\%$ di semua bintang)**. Jelaskan perbedaan dampak galat kalibrasi jarak sistematis itu terhadap **kemiringan ($m$)** vs **intersep ($c$)**, dan mengapa **mengambil lebih banyak bintang** tidak mampu mengecilkan galat pada $c$!',
+      petunjuk: 'Jika jarak $d$ semua bintang salah sebesar faktor $1{,}05$, bagaimana pergeseran $L = 4\\pi d^2 F$ pada skala $\\log L$?',
+      langkahKunci: [
+        'Jika jarak semua bintang bergeser oleh faktor konstan $f = 1{,}05$, maka luminositas semua bintang bergeser oleh faktor $f^2 = 1{,}1025$, yang berarti pada sumbu vertikal $\\log L$ seluruh titik bergeser **vertikal secara seragam** sebesar $+2\\log_{10}(1{,}05) \\approx +0{,}0424\\ \\text{dex}$!',
+        'Pergeseran vertikal seragam di semua nilai $x = \\log M$ **tidak mengubah gradien/kemiringan garis ($m$)** sama sekali (kemiringan kebal terhadap bias skala global)! Namun **intersep $c$** langsung meleset sebesar $+0{,}0424$.',
+        'Karena bias ini bersifat **sistematis** (berkorelasi identik di setiap pengamatan alih-alih acak independen), faktor $1/\\sqrt{N}$ tidak berlaku: menambah $N = 10\\,000$ bintang tidak memperbaiki intersep $c$ sampai sumber galat nol jarak (paralaks) dikalibrasi ulang.',
+      ],
+      rubrik: [
+        'Menunjukkan pergeseran $\\Delta\\log L = +2\\log(d_{\\text{baru}}/d)$ menggeser intersep $c$ tanpa mengubah gradien $m$.',
+        'Menjelaskan mengapa galat sistematis berkorelasi tidak menyusut sebesar $1/\\sqrt{N}$.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'l6-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Dalam pengamatan fotometri seri-waktu untuk mendeteksi transit planet kecil (kedalaman $0{,}1\\%$), mengapa astronom selalu melakukan **fotometri diferensial** terhadap bintang pembanding di citra CCD yang sama alih-alih mengukur satu per satu bintang standar terpisah di langit dan menggambar garis Bouguer di jam yang berbeda?',
+      petunjuk: 'Tinjau variasi transparansi atmosfer ber-skala waktu menit (awan tipis *cirrus*, perubahan *seeing*) terhadap target vs bintang pembanding simultan!',
+      rubrik: [
+        'Garis Bouguer mengasumsikan atmosfer konstan sepanjang malam ($k\'$ tetap). Jika awan tipis lewat selama $5\\ \\text{menit}$ (persis durasi transit!), magnitudo bintang target merosot seolah terjadi transit palsu!',
+        'Pada fotometri diferensial simultan ($m_{\\text{target}} - m_{\\text{ref}}$), awan tipis dan perubahan airmass $X(t)$ meredupkan target dan bintang pembanding di medan pandang CCD yang sama dengan faktor hampir identik pada milidetik yang sama, sehingga keduanya langsung saling meniadakan (asalkan indeks warna kedua bintang cukup mirip agar ekstingsi orde dua juga minim)!',
+      ],
+      jawabanKunci:
+        'Garis Bouguer hanya mampu mengoreksi tren ekstingsi atmosfer rata-rata jangka panjang dengan asumsi langit bersih konstan; ia tidak dapat menangkap fluktuasi transparansi berjangka menit akibat awan *cirrus* atau perubahan kelembapan yang persis meniru sinyal transit $0{,}1\\%$. Dengan fotometri diferensial simultan pada satu bingkai CCD, bintang target dan bintang pembanding melewati kolom atmosfer yang hampir sama pada detik yang sama: rasio fluks $F_{\\text{target}}(t) / F_{\\text{ref}}(t)$ meniadakan perubahan transparansi maupun airmass secara *real-time*, menyisakan variasi intrinsik bintang target sejati.',
+    },
+    {
+      id: 'l6-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Untuk mencari periode $P$ bintang variabel Cepheid yang diamati setiap malam tepat pukul 22:00 waktu lokal ($\\Delta t = 1{,}000\\ \\text{hari}$), seorang analis melakukan *phase folding* dan menemukan puncak kuat baik di $P_1 = 4{,}00\\ \\text{hari}$ maupun di $P_2 = 0{,}800\\ \\text{hari}$ serta $P_3 = 1{,}333\\ \\text{hari}$! Ia bingung memilih yang benar atau mengira bintang itu punya tiga mode pulsasi sekaligus. Apa yang sebenarnya terjadi?',
+      petunjuk: 'Hitung frekuensi pencuplikan $f_s = 1 / \\Delta t = 1\\ \\text{siklus/hari}$, lalu cek hubungan **frekuensi alias** $f_{\\text{alias}} = |f_1 \\pm k\\,f_s|$ antara $1/4{,}00$, $1/0{,}800$, dan $1/1{,}333$!',
+      rubrik: [
+        'Menghitung frekuensi: $f_1 = 1/4{,}00 = 0{,}25\\ \\text{siklus/hari}$, sedangkan $f_2 = 1/0{,}800 = 1{,}25 = 1 + f_1$ dan $f_3 = 1/1{,}333 = 0{,}75 = 1 - f_1$!',
+        'Menjelaskan fenomena **aliasing** akibat pencuplikan periodik oleh rotasi Bumi ($\\Delta t = 1\\ \\text{hari}$, frekuensi Nyquist/pencuplikan $1\\ \\text{hari}^{-1}$): ketiga puncak tersebut berasal dari satu periode fisik tunggal (biasanya $4{,}00\\ \\text{hari}$ untuk Cepheid klasik, bukan pulsasi $<1\\ \\text{hari}$) beserta dua cermin alias $1\\text{-hari}$-nya!',
+      ],
+      jawabanKunci:
+        'Munculnya tiga puncak bukan tiga periode pulsasi fisis, melainkan **efek *aliasing* akibat jendela pencuplikan periodik setiap $1{,}00\\ \\text{hari}$** ($f_s = 1\\ \\text{siklus/hari}$)! Dalam domain frekuensi, frekuensi sejati $f_1 = 0{,}25\\ \\text{hari}^{-1}$ ($P = 4{,}00\\ \\text{hari}$) otomatis menghasilkan frekuensi alias pada $|f_1 \\pm 1| = 1{,}25\\ \\text{hari}^{-1}$ ($P = 0{,}800\\ \\text{hari}$) dan $0{,}75\\ \\text{hari}^{-1}$ ($P = 1{,}333\\ \\text{hari}$), karena pada saat $t = 0, 1, 2, 3, \\dots$ ketiganya mengambil titik fasa yang persis identik! Cara mengatasinya adalah mengamati pada waktu tidak seragam sepanjang malam atau memakai jaringan teleskop lintas bujur.',
+    },
+    {
+      id: 'l6-log-3',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Jika dalam suatu pengamatan CCD apertur, fotografer memperbesar **jari-jari apertur fotometri** $r_{\\text{ap}}$ dari $2{,}0\\times$ menjadi $4{,}0\\times$ radius citra bintang (*seeing*) dengan harapan menangkap $100\\%$ foton bintang di sayap terluar, apa dampak langsungnya terhadap **SNR** bagi: (a) **bintang amat terang** ($N_* = 10^7\\ \\text{e}^- \\gg n_{\\text{pix}} N_{\\text{sky}}$) vs (b) **galaksi sangat redup** ($N_* = 500\\ \\text{e}^- \\ll n_{\\text{pix}} N_{\\text{sky}}$)?',
+      petunjuk: 'Jika $r_{\\text{ap}}$ naik $2\\times$, jumlah piksel $n_{\\text{pix}} = \\pi r_{\\text{ap}}^2$ di dalam apertur melonjak **$4\\times$**, sementara $N_*$ bertambah hanya $\\sim 1\\%$ di sayap luar PSF!',
+      rubrik: [
+        'Pada bintang terang (*photon-noise limited*), suku derau utama $\\sqrt{N_*}$ hampir tak berubah oleh kenaikan $n_{\\text{pix}}$ — sedikit tambahan foton di sayap bahkan menjaga SNR tetap hampir maksimal (dan menghindari galat pemotongan *aperture loss*).',
+        'Sebaliknya pada sumber redup (*sky-background limited*), derau total $\\propto \\sqrt{n_{\\text{pix}} N_{\\text{sky}}}$ melonjak **$2\\times$** saat $n_{\\text{pix}}$ naik $4\\times$, sementara sinyal $N_*$ nyaris tidak naik — menyebabkan **SNR anjlok separuhnya**! (Itulah sebabnya sumber redup wajib memakai apertur optimal sempit $\\sim 1{,}0\\text{--}1{,}4\\times$ FWHM atau *PSF fitting*!)',
+      ],
+      jawabanKunci:
+        'Menggandakan radius apertur melipatgandakan luas piksel $n_{\\text{pix}}$ sebesar **$4\\times$** sementara sayap luar profil *seeing* hanya menambah $< 1\\text{--}2\%$ foton bintang: (a) untuk **bintang amat terang** ($N_* \\gg n_{\\text{pix}} N_{\\text{sky}}$), derau masih didominasi $\\sqrt{N_*}$ sehingga SNR nyaris tak terganggu dan akurasi fluks total terjaga; (b) untuk **galaksi redup** ($N_* \\ll n_{\\text{pix}} N_{\\text{sky}}$), variansi derau latar langit tumbuh $4\\times$ membuat $\\text{SNR} \\approx N_* / \\sqrt{n_{\\text{pix}} N_{\\text{sky}}}$ **anjlok separuhnya**! Oleh karena itu fotometri sumber redup memakai apertur optimal beradius dekat FWHM atau teknik *PSF-fitting photometry*.',
+    },
+    {
+      id: 'l6-log-4',
+      tipe: 'prediksi_akibat',
+      pertanyaan:
+        'Seorang peneliti ingin mengukur massa bintang ganda dari rumus $M_{\\text{tot}} = \\frac{4\\pi^2 a^3}{G P^2}$ dengan data observasi $a$ berketidakpastian relatif $4\\%$ ($\\sigma_a / a = 0{,}04$) dan $P$ berketidakpastian relatif $1\\%$ ($\\sigma_P / P = 0{,}01$). Di anggaran proyek terbatas, alat baru bisa menekan **SALAH SATU** galat saja menjadi nol ($0\\%$), sementara yang satunya tetap. Mana yang jauh lebih berharga untuk di-upgrade ($a$ atau $P$), dan berapa penurunan $\\sigma_M / M$ masing-masing skenario?',
+      petunjuk: 'Evaluasi $(\\sigma_M / M)^2 = (3\\,\\sigma_a/a)^2 + (2\\,\\sigma_P/P)^2$ sebelum dan sesudah masing-masing upgrade!',
+      rubrik: [
+        'Saat awal: $\\frac{\\sigma_M}{M} = \\sqrt{(3\\times 4\\%)^2 + (2\\times 1\\%)^2} = \\sqrt{12\\%^2 + 2\\%^2} = \\sqrt{148}\\% \\approx 12{,}17\\%$.',
+        'Menghilangkan galat periode ($\\sigma_P \\to 0$) nyaris sia-sia: galat massa tetap **$12{,}00\\%$**! Sebaliknya menghilangkan galat jarak/semi-mayor ($\\sigma_a \\to 0$) langsung memangkas galat massa $6\\times$ menjadi hanya **$2{,}00\\%$** — karena kuadrat eksponen $3^2 = 9$ pada $a$ mendominasi mutlak anggaran galat!',
+      ],
+      jawabanKunci:
+        'Dari propagasi kuadratur $\\frac{\\sigma_M}{M} = \\sqrt{(3\\,\\sigma_a/a)^2 + (2\\,\\sigma_P/P)^2}$, galat awal massa adalah $\\sqrt{12^2 + 2^2}\\% = 12{,}17\\%$. Jika periode $P$ diperbaiki sempurna ($\\sigma_P = 0$), galat massa hanya turun tipis menjadi **$12{,}00\\%$** (hampir tak ada perbaikan berarti!). Sebaliknya jika pengukuran sumbu semi-mayor $a$ (misal via astrometri/paralaks Gaia) ditingkatkan hingga $\\sigma_a \\approx 0$, galat massa langsung merosot enam kali lipat menjadi **$2{,}00\\%$**. Prinsip emas eksperimen: selalu fokus memperbaiki variabel dengan kontribusi $(n_i\\,\\sigma_{x_i}/x_i)$ terbesar!',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="l6-refleksi-1"
+  pertanyaan="Mengapa dalam sains astronomi, angka hasil pengukuran yang dilaporkan tanpa batas ketidakpastian (misalnya 'R = 1,2 R_J' tanpa '± 0,1 R_J') dan tanpa informasi metode reduksi/kalibrasi tidak dapat dipakai untuk menguji apakah dua pengamatan berbeda bertentangan secara fisis?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'l6-m1', gerbang: 'observasi', teks: 'Menuliskan alur reduksi CCD C = (R − Bias − Dark_skala)/Flat_norm serta menghitung SNR fotometri apertur & σ_m ≈ 1,0857/SNR.' },
+    { id: 'l6-m2', gerbang: 'observasi', teks: 'Menerapkan fotometri diferensial dan garis ekstingsi Bouguer m = m₀ + k′X (X = sec z) untuk mengoreksi atmosfer.' },
+    { id: 'l6-m3', gerbang: 'observasi', teks: 'Melakukan pelipatan fase (phase folding), menghindari jebakan aliasing pencuplikan, dan mengekstrak δ, T₁₄, T₂₃ transit.' },
+    { id: 'l6-m4', gerbang: 'derivasi', teks: 'Menghitung regresi kuadrat terkecil terbobot (WLS), galat parameter (σ_m, σ_c), dan menginterpretasikan χ²_ν.' },
+    { id: 'l6-m5', gerbang: 'derivasi', teks: 'Melakukan propagasi galat kuadratur Gauss berantai hingga pembulatan angka penting yang tepat pada hasil akhir.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul L6">
+
+<Konstanta
+  data={[
+    { simbol: 'Reduksi CCD', nilai: '(R − Bias − Dark_skala) / Flat_norm', satuan: 'ADU / e⁻' },
+    { simbol: 'Konversi galat mag', nilai: 'σ_m ≈ (2,5 / ln 10) / SNR ≈ 1,0857 / SNR', satuan: 'mag' },
+    { simbol: 'Garis Bouguer', nilai: 'm_inst = m₀ + k′ sec z', satuan: 'mag' },
+    { simbol: 'Pelipatan fase', nilai: 'φ = (t − T₀)/P − floor((t − T₀)/P)', satuan: '∈ [0, 1)' },
+    { simbol: 'Bobot WLS', nilai: 'w_i = 1 / σ_i²', satuan: '[satuan y]⁻²' },
+    { simbol: 'Chi-kuadrat tereduksi', nilai: 'χ²_ν = χ² / (N − p)', satuan: 'harapan ≈ 1' },
+    { simbol: 'Galat kuadratur', nilai: 'σ_f² = Σ (∂f/∂x_i)² σ_xi²', satuan: '[satuan f]²' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-01', 'SRC-03', 'SRC-08', 'SRC-15']}
+  pemetaan={[
+    { sumberId: 'SRC-01', rujukan: 'Official IOAA Syllabus (Data Analysis & Observational Parts): analisis deret waktu, linearisasi, propagasi galat & praktikum astronomi.' },
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS4103 & AS5002 (Astronomi Observasi & Analisis Data): reduksi CCD, fotometri diferensial & airmass Bouguer.' },
+    { sumberId: 'SRC-08', rujukan: 'Roy & Clarke, Astronomy: Principles and Practice (4e), Ch. 18: fotometri apertur, SNR detektor CCD & kalibrasi atmosfer.' },
+    { sumberId: 'SRC-15', rujukan: 'Taylor (An Introduction to Error Analysis) & Bevington–Robinson (Data Reduction): regresi terbobot WLS, σ_m, σ_c, uji χ²_ν & propagasi kuadratur.' },
+  ]}
+/>
+
+</Bagian>

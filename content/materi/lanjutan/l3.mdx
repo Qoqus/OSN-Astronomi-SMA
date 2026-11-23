@@ -1,0 +1,481 @@
+<IdentitasModul
+  kode="L3"
+  tier="Klaster Lanjutan · Modul 3 dari 6"
+  posisi="Dinamika Bintang Ganda, Gugus Bintang & Sinergi Deteksi Eksoplanet"
+  estimasi="85 menit studi mendalam"
+  tingkat="S1 Astrofisika Pengantar & IOAA Penuh"
+  prasyarat={[
+    { id: 'a4', label: 'A4 · Mekanika Langit & Orbit' },
+    { id: 'l1', label: 'L1 · Bintang: Karakteristik & Spektrum' },
+    { id: 'l2', label: 'L2 · Interior & Evolusi Bintang' },
+  ]}
+  koneksi={[
+    { id: 'l4', label: 'L4 · Galaksi & Materi Antarbintang', peran: 'Gugus bola di halo sebagai fosil kinematik & kimia pembentukan Bima Sakti' },
+    { id: 'l6', label: 'L6 · Analisis Data & Praktikum Observasi', peran: 'Ekstraksi kurva cahaya gerhana/transit & penentuan periode lewat phase folding' },
+  ]}
+  sumberUtama={['SRC-03', 'SRC-05', 'SRC-06', 'SRC-07']}
+/>
+
+<Tujuan>
+
+- Menentukan massa individu $M_1, M_2$ dari **bintang ganda visual dan astrometrik** (Hukum III Kepler bermassa total & perbandingan posisi pusat massa, termasuk koreksi jarak $a = \alpha'' d$ dan inklinasi bidang orbit).
+- Menurunkan **fungsi massa biner ($f(m)$)** pada **bintang ganda spektroskopik garis tunggal (SB1)** dan rasio massa pada **SB2**, serta menjelaskan mengapa $f(m)$ memberi **batas bawah absolut** bagi massa komponen tak tampak (deteksi lubang hitam & eksoplanet).
+- Menganalisis kurva cahaya **bintang ganda gerhana (*eclipsing binaries*)** lewat waktu kontak $t_1, t_2, t_3, t_4$ untuk menurunkan radius fisik $(R_1, R_2)$ serta **rasio temperatur efektif ($T_1/T_2$)** dari perbandingan kedalaman minimum primer dan sekunder.
+- Menjelaskan geometri **Lobus Roche** dan mekanisme transfer massa pada biner rapat (biner terpisah, semi-terpisah/*Algol paradox*, kontak, nova, dan SN Ia).
+- Membedakan **gugus terbuka dan gugus bola**, menentukan usia dan jarak gugus lewat **Main-Sequence Turn-Off (MSTO)** dan *isochrone fitting* pada CMD, serta menyintesiskan **5 metode deteksi eksoplanet**.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'biner-visual',
+      label: 'Biner Visual & Astrometrik',
+      peran: 'Mengukur a₁, a₂ di langit + paralaks d → kalibrasi langsung massa bintang M₁, M₂.',
+      ke: ['sb1-sb2', 'eksoplanet'],
+    },
+    {
+      id: 'sb1-sb2',
+      label: 'Biner Spektroskopik (SB1/SB2)',
+      peran: 'Kurva Doppler memberi K₁, K₂ → rasio M₁/M₂ = K₂/K₁ (SB2) atau fungsi massa f(m) (SB1).',
+      ke: ['gerhana'],
+    },
+    {
+      id: 'gerhana',
+      label: 'Biner Gerhana & Lobus Roche',
+      peran: 'Waktu kontak t₁..t₄ memberi R₁, R₂ dan kedalaman memberi T₁/T₂; L₁ memicu transfer massa.',
+      ke: ['gugus', 'eksoplanet'],
+    },
+    {
+      id: 'gugus',
+      label: 'Gugus Bintang & MSTO',
+      peran: 'Populasi tunggal ber-usia sama → Main-Sequence Turn-Off menjadi jam kosmik alam semesta.',
+    },
+    {
+      id: 'eksoplanet',
+      label: 'Sinergi Metode Eksoplanet',
+      peran: 'Transit (R_p/R_*) + RV (M_p sin i) + mikrolensing + pencitraan langsung → kerapatan ρ_p.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Satu bintang tunggal yang berdiri sendiri di angkasa nyaris mustahil ditimbang secara langsung — gravitasi baru menampakkan dirinya ketika ada benda kedua yang mengitarinya. Lebih dari separuh bintang di cakram Bima Sakti hidup berpasangan atau berganda! Modul ini menyatukan mekanika orbit A4 dan spektroskopi L1 untuk <Sorot>menurunkan fungsi massa biner, geometri gerhana kontak $t_1$–$t_4$, transfer massa lobus Roche, penanggalan gugus MSTO, hingga sinergi eksoplanet modern</Sorot> (`SRC-03`, `SRC-05`, `SRC-06`).
+</div>
+
+<Bagian id="visual-astrometri" judul="1. Bintang Ganda Visual, Astrometrik & Penentuan Massa Total" tag="Astrometri Orbit">
+
+Dalam sistem dua benda bermassa $M_1$ dan $M_2$ yang saling mengorbit pusat massa bersama (barisentrum) dengan periode $P$, jarak relatif rata-rata (sumbu semi-mayor relatif) adalah $a = a_1 + a_2$. Hukum III Kepler bentuk lengkap Newton (dari A4) menyatakan:
+
+<Rumus judul="Hukum III Kepler Dua-Benda & Rasio Barisentrik">
+
+$$\frac{a^3}{P^2} = \frac{G}{4\pi^2}(M_1 + M_2) \quad \Longleftrightarrow \quad \left(\frac{a}{\text{AU}}\right)^3 \left(\frac{\text{tahun}}{P}\right)^2 = \frac{M_1 + M_2}{M_\odot}, \qquad \frac{M_1}{M_2} = \frac{a_2}{a_1}$$
+
+</Rumus>
+
+Di langit, kita membedakan dua kategori pengamatan posisional:
+- **Biner Visual:** Kedua bintang terpisah jelas di teleskop ($a'' \gtrsim$ batas *seeing*/difraksi) sehingga orbit masing-masing terhadap latar bintang jauh dapat dipetakan. Jika separasi sudut semi-mayor sebenarnya adalah $\alpha'' = \alpha_1'' + \alpha_2''$ pada jarak paralaks $d$ ($\text{pc}$, di mana $a\,[\text{AU}] = \alpha''\, d\,[\text{pc}]$), maka:
+  $$M_1 + M_2 = \left(\frac{\alpha''}{p''}\right)^3 \frac{1}{P_{\text{th}}^2}\ M_\odot = \frac{(\alpha'' d)^3}{P_{\text{th}}^2}\ M_\odot.$$
+  Perhatikan betapa sensitifnya hasil massa terhadap ketidakpastian paralaks/sudut ($M_{\text{tot}} \propto \alpha^3 / p^3$, galat $5\%$ pada $p$ menghasilkan galat $15\%$ pada massa)! Jika bidang orbit miring dengan inklinasi $i$ terhadap bidang langit, elips terproyeksi menyebabkan pusat elips tidak lagi memproyeksikan fokus sejati secara lurus tanpa analisis elemen orbit Thiele–Innes.
+- **Biner Astrometrik:** Salah satu komponen terlalu redup (misalnya **Sirius B**, katai putih, atau planet raksasa) sehingga hanya gerak "bergoyang" (*wobble*) periodik komponen primer terang yang terukur melintasi langit. Dari amplitudo $\alpha_1''$ saja, $M_1 + M_2$ tak dapat langsung dihitung tanpa memperkirakan $M_1$ terlebih dahulu dari kelas spektrumnya!
+
+</Bagian>
+
+<Bagian id="spektroskopik-fungsi-massa" judul="2. Biner Spektroskopik (SB1 & SB2) dan Penurunan Fungsi Massa Biner" tag="Spektroskopi Doppler">
+
+Ketika jarak pasangan terlalu dekat untuk diurai secara visual, pergeseran Doppler periodik garis spektrum mengungkap orbitnya:
+- **SB2 (*Double-Lined Spectroscopic Binary*):** Kedua bintang cukup terang sehingga dua perangkat garis bergeser berlawanan fasa. Dari kelajuan orbit rata-rata pada orbit lingkaran ($v_1 = 2\pi a_1/P, v_2 = 2\pi a_2/P$) dan amplitudo proyeksi yang terukur sepanjang garis pandang $K_1 = v_1 \sin i$, $K_2 = v_2 \sin i$ (dengan faktor umum $\frac{1}{\sqrt{1-e^2}}$ untuk orbit elips):
+
+<Rumus judul="Rasio Massa & Massa Proyeksi pada Biner SB2">
+
+$$\frac{M_1}{M_2} = \frac{a_2}{a_1} = \frac{K_2}{K_1}, \qquad (M_1 + M_2)\sin^3 i = \frac{P}{2\pi G}\left(K_1 + K_2\right)^3 (1 - e^2)^{3/2}$$
+
+</Rumus>
+
+Perhatikan keistimewaan SB2: **rasio massa $M_1/M_2 = K_2/K_1$ bersifat bebas-inklinasi** karena faktor $\sin i$ saling meniadakan! Tetapi massa absolut masing-masing masih mengandung faktor tak diketahui $\sin^3 i$, kecuali sistem itu juga mengalami gerhana atau terurai interferometri.
+
+### Penurunan Fungsi Massa Biner $f(m)$ pada Sistem SB1
+
+Pada **SB1 (*Single-Lined Spectroscopic Binary*)**, hanya spektrum bintang primer ($M_1$) yang terlihat — misalnya ketika pasangannya ($M_2$) adalah bintang katai sangat redup, **eksoplanet**, bintang neutron, atau **lubang hitam**! Karena hanya $K_1, P,$ dan $e$ yang terukur, kita eliminasi $a_1, a_2,$ dan $K_2$ memakai $a_1 \sin i = \frac{K_1 P \sqrt{1-e^2}}{2\pi}$ dan $a = a_1(1 + M_1/M_2)$:
+
+$$a^3 = a_1^3 \frac{(M_1 + M_2)^3}{M_2^3} = \frac{G (M_1 + M_2) P^2}{4\pi^2}.$$
+
+Kalikan kedua ruas dengan $\sin^3 i$, ganti $a_1 \sin i = \frac{P K_1 \sqrt{1-e^2}}{2\pi}$, dan sederhanakan $(M_1 + M_2)$:
+
+<Rumus judul="Fungsi Massa Biner (SB1)">
+
+$$f(M_1, M_2, i) \equiv \frac{M_2^3 \sin^3 i}{(M_1 + M_2)^2} = \frac{P\,K_1^3}{2\pi G}\left(1 - e^2\right)^{3/2}$$
+
+</Rumus>
+
+Mengapa rumus **fungsi massa biner** ini sangat ampuh secara ilmiah (`SRC-06`)? Karena $M_1 > 0$ dan $\sin i \le 1$, maka selalu berlaku ketaksamaan mutlak:
+
+$$M_2 = f(m)\,\frac{(1 + M_1/M_2)^2}{\sin^3 i} \ge f(m)!$$
+
+Artinya, nilai $f(m)$ yang dihitung murni dari observasi ($P, K_1, e$) merupakan **batas bawah absolut bagi massa komponen tak tampak $M_2$**! Apabila $f(m)$ saja sudah bernilai $\sim 6\,M_\odot$ (seperti pada sistem sinar-X **Cygnus X-1** atau V404 Cygni), tidak peduli seberapa besar massa $M_1$ atau berapa pun sudut $i$, massa objek gelap $M_2$ wajib jauh melampaui batas Tolman–Oppenheimer–Volkoff ($\sim 3\,M_\odot$) — membuktikan bahwa komponen tak tampak tersebut pasti sebuah **lubang hitam**!
+
+</Bagian>
+
+<Bagian id="gerhana-roche" judul="3. Biner Gerhana (t₁–t₄) & Dinamika Transfer Massa Lobus Roche" tag="Fotometri & Evolusi Biner">
+
+Jika bidang orbit biner hampir sejajar garis pandang ($i \approx 90^\circ$), kedua bintang saling menutupi menimbulkan **kurva cahaya biner gerhana** dengan dua penurunan periodik per orbit:
+- **Minimum Primer (lebih dalam):** Terjadi ketika bintang yang **lebih dingin ($T_c$)** melintas di depan bintang yang **lebih panas ($T_h$)**! Mengapa? Karena pada gerhana total (atau area tertutup sama $\pi R_s^2$), fluks yang hilang per satuan luas sebanding kecerahan permukaan ($\propto T^4$ bolometrik): **bintang lebih panas memiliki kecerahan permukaan jauh lebih tinggi**, sehingga saat sebagian piringannya tertutup, cahaya total merosot paling dalam!
+- **Minimum Sekunder (lebih dangkal):** Terjadi setengah periode kemudian (bila $e=0$) saat bintang panas menutupi bintang dingin.
+
+<Gambar id="kurva-gerhana" />
+
+<Interaktif jenis="orbit" />
+
+### Ekstraksi Radius ($R_s, R_l$) & Rasio Suhu Efektif ($T_h/T_c$)
+
+Tinjau biner gerhana total dengan orbit lingkaran berkecepatan relatif $v = v_1 + v_2 = \frac{2\pi a}{P}$ dan $i = 90^\circ$ (diameter melintas sentral). Empat momen kontak diamati:
+- $t_1$: kontak eksternal pertama (awal *ingress*);
+- $t_2$: kontak internal pertama (awal fase dasar datar);
+- $t_3$: kontak internal kedua (akhir fase dasar datar);
+- $t_4$: kontak eksternal kedua (akhir *egress*).
+
+Selama interval *ingress* $(t_2 - t_1)$, bintang kecil berdiameter $2 R_s$ bergeser menempuh tepi bintang besar, sehingga $2R_s = v(t_2 - t_1)$. Dari kontak pertama hingga akhir kontak internal kedua $(t_3 - t_1)$ — atau seluruh durasi $(t_4 - t_1) = \frac{2(R_l + R_s)}{v}$ — jarak pusat-ke-pusat bergerak melintasi diameter bintang besar $2 R_l = v(t_3 - t_1) = v\frac{(t_4-t_1) + (t_3-t_2)}{2}$!
+
+<Rumus judul="Radius Komponen & Rasio Kecerahan Permukaan Biner Gerhana">
+
+$$R_s = \frac{\pi a}{P}(t_2 - t_1), \qquad R_l = \frac{\pi a}{P}(t_3 - t_1), \qquad \frac{\Delta F_{\text{primer}}}{\Delta F_{\text{sekunder}}} = \left(\frac{T_{\text{panas}}}{T_{\text{dingin}}}\right)^4 \quad (\text{gerhana total bolometrik})$$
+
+</Rumus>
+
+*(Bukti rasio kedalaman: misal tanpa gerhana fluks total $F_0 = \pi R_h^2 \sigma T_h^4 + \pi R_c^2 \sigma T_c^4$. Saat gerhana total menutup piringan kecil beradius $R_s$, luas yang hilang di primer maupun sekunder tepat sama $\pi R_s^2$! Maka fluks yang hilang di primer adalah $\Delta F_p = \pi R_s^2 \sigma T_h^4$ dan di sekunder $\Delta F_s = \pi R_s^2 \sigma T_c^4$, sehingga rasionya langsung memberi $(T_h/T_c)^4$!)*
+
+### Lobus Roche, Titik $L_1$ & Paradoks Algol
+
+Dalam biner rapat, permukaan ekipotensial gravitasi–sentrifugal di sekitar kedua bintang membentuk **Lobus Roche** yang bersentuhan seperti angka 8 di titik Lagrange dalam **$L_1$**. Berdasarkan derajat pengisian lobusnya, sistem biner diklasifikasikan menjadi:
+1. **Biner Terpisah (*Detached*):** Kedua bintang berada jauh di dalam Lobus Roche masing-masing (berevolusi seperti bintang tunggal).
+2. **Biner Semi-Terpisah (*Semi-detached*):** Salah satu bintang mengembang menjadi raksasa hingga memenuhi Lobus Roche-nya dan mengalirkan materi melewati **titik pelana $L_1$** menuju pasangannya. Mekanisme ini memecahkan **Paradoks Algol** ($\beta$ Persei): mengapa komponen yang kurang masif ($0{,}8\,M_\odot$) di Algol justru sudah menjadi subraksasa tua sementara pasangannya yang lebih masif ($3{,}2\,M_\odot$) masih di deret utama! Jawabannya: bintang $0{,}8\,M_\odot$ tersebut *awalnya jauh lebih masif*, berevolusi lebih cepat, lalu meluapkan sebagian besar massanya ke pasangannya melewati $L_1$! Jika pasangan penerimanya adalah **katai putih / bintang neutron / lubang hitam**, aliran materi membentuk **cakram akresi** panas pemancar sinar-X, ledakan **nova** (fusi H di permukaan katai putih), atau **Supernova Tipe Ia** (saat massa katai putih menembus $1{,}44\,M_\odot$).
+3. **Biner Kontak (*Contact*, tipe W UMa):** Kedua bintang mengisi penuh Lobus Roche dan berbagi selubung konvektif bersama.
+
+</Bagian>
+
+<Bagian id="gugus-eksoplanet" judul="4. Gugus Bintang (MSTO) & Sinergi Multi-Metode Eksoplanet" tag="Populasi & Eksoplanet">
+
+### Gugus Bintang Terbuka vs Gugus Bola & Penanggalan MSTO
+
+Semua anggota suatu gugus bintang lahir hampir bersamaan dari satu awan molekul ($\Delta t$ kelahiran sempit) dengan komposisi kimia awal ($Z$) yang seragam dan berada pada **jarak yang sama** dari Bumi. Variabel tunggal yang membedakan posisi bintang di Diagram Warna–Magnitudo (CMD) gugus hanyalah **massa awalnya**!
+
+| Karakteristik | Gugus Terbuka (*Open Cluster*) | Gugus Bola (*Globular Cluster*) |
+|---|---|---|
+| Jumlah anggota | Puluhan hingga beberapa ribu bintang | $10^4$ hingga $> 10^6$ bintang (terikat kuat) |
+| Lokasi di Galaksi | **Cakram tipis** (terutama lengan spiral) | **Halo sferoidal** dan *bulge* galaksi |
+| Usia khas | Muda ($10^6\text{--}10^9$ tahun, mis. Pleiades $\sim 100$ Myr) | Sangat tua ($\mathbf{10\text{--}13\ \text{miliar tahun}}$, mis. M13, $\omega$ Cen) |
+| Metalitas ($[\text{Fe/H}]$) | Kaya logam (Populasi I, dekat Matahari) | Miskin logam (Populasi II, $1/10\text{--}1/100$ Matahari) |
+
+Karena bintang masif berevolusi lebih cepat ($\tau_{\text{MS}} \propto M^{-2{,}5}$), seiring bertambahnya usia gugus, deret utama teratas perlahan "terkikis" ke kanan menuju cabang raksasa. Titik tepat di mana bintang mulai membelok meninggalkan deret utama disebut **Main-Sequence Turn-Off (MSTO)**. Karena usia gugus persis sama dengan masa hidup deret utama bintang di titik MSTO ($\tau_{\text{gugus}} = \tau_{\text{MS}}(M_{\text{MSTO}})$), mencocokkan kurva CMD gugus dengan model teoretis (**isokron**, *isochrone fitting*) memberikan sekaligus **usia gugus** dan **jarak bebas bias** melalui geseran vertikal magnitudo (*main-sequence fitting*)!
+
+### Sinergi Lima Metode Deteksi Eksoplanet
+
+Setiap metode deteksi eksoplanet hanya mengungkap sepotong parameter fisis; menggabungkannya membangun gambaran utuh dunia asing (`SRC-05`):
+1. **Kecepatan Radial (Efek Doppler Refleks):** Mengukur periode $P$, eksentrisitas $e$, dan batas bawah massa **$M_p \sin i$** dari semi-amplitudo refleks bintang induk:
+   $$K_* = \left(\frac{2\pi G}{P}\right)^{1/3}\frac{M_p \sin i}{(M_* + M_p)^{2/3}}\frac{1}{\sqrt{1 - e^2}} \approx 28{,}4\ \text{m/s}\left(\frac{P}{1\ \text{th}}\right)^{-1/3}\left(\frac{M_p \sin i}{M_J}\right)\left(\frac{M_*}{M_\odot}\right)^{-2/3}.$$
+2. **Fotometri Transit:** Saat planet melintasi cakram bintang ($i \approx 90^\circ$, peluang geometris $p_{\text{tr}} \approx R_*/a$), kedalaman transit mengukur rasio radius **$\delta = (R_p/R_*)^2$**, sementara durasi $T_{14}, T_{23}$ memberi rasio jarak $(a/R_*)$ dan inklinasi eksak ($b = a\cos i/R_*$). **Sinergi Transit + RV:** Menggabungkan $\sin i$ dari transit ke nilai $M_p\sin i$ dari RV langsung menghasilkan massa sejati $M_p$, radius sejati $R_p$, dan **kerapatan rata-rata planet $\bar{\rho}_p = \frac{3 M_p}{4\pi R_p^3}$** (membedakan planet berbatu $\sim 5\ \text{g/cm}^3$ vs raksasa gas $\sim 1\ \text{g/cm}^3$ vs dunia es/laut)!
+3. **Astrometri:** Mengukur simpangan sudut $\alpha_* = \frac{M_p}{M_*}\frac{a}{d}$ (paling sensitif untuk planet masif berorbit *luas/periode panjang* di bintang dekat — kebalikan RV dan transit!).
+4. **Mikrolensa Gravitasi (*Gravitational Microlensing*):** Medan gravitasi bintang latar depan membelokkan cahaya bintang latar belakang saat melintas sejajar pada skala **radius sudut Einstein** $\theta_E = \sqrt{\frac{4GM}{c^2}\left(\frac{D_S - D_L}{D_L D_S}\right)}$, dan planet pengiring menimbulkan "duri" amplifikasi tajam singkat yang peka bahkan terhadap planet bermassa Bumi di jarak beberapa AU.
+5. **Pencitraan Langsung (*Direct Imaging*):** Memotret foton planet muda yang masih panas di pita inframerah menggunakan koronagraf dan optik adaptif (A7), mengatasi kontras bintang/planet $\sim 10^6\text{--}10^{10}$.
+
+<BatasValiditas
+  aturan={[
+    {
+      rumus: 'Rasio kedalaman gerhana total $\\Delta F_{\\text{prim}} / \\Delta F_{\\text{sek}} = (T_h / T_c)^4$',
+      berlakuJika: 'Gerhana bersifat **total** (seluruh piringan kecil $\\pi R_s^2$ tertutup saat primer maupun sekunder), bintang memancar sebagai benda hitam bolometrik seragam (tanpa *limb darkening* ekstrem atau cahaya kontaminasi ketiga), dan orbit lingkaran.',
+      gagalJika: 'Gerhana hanya **parsial** pada orbit eksentrik (luas tertutup pada primer berbeda dengan sekunder), atau pengamatan di pita sempit (seperti $V$) di mana rasio kecerahan mengikuti fungsi Planck $B_\\lambda(T)$ bukan $T^4$!',
+      akibat: 'Menggunakan pangkat $4$ pada pengamatan filter $B$ atau $V$ ketika suhu bintang jauh dari puncak pita V dapat membiaskan perkiraan rasio suhu beberapa puluh persen.',
+    },
+    {
+      rumus: 'Penanggalan gugus $\\tau_{\\text{gugus}} \\approx 10^{10}\\,(M_{\\text{MSTO}}/M_\\odot)^{-2{,}5}$ tahun',
+      berlakuJika: 'Gugus adalah populasi ko-eval tunggal tanpa kontaminasi bintang latar/depan, dan titik *turn-off* dikoreksi efek *blue stragglers* (hasil tabrakan/transfer massa biner) serta ekstingsi $A_V$.',
+      gagalJika: 'Memakai bintang *blue straggler* yang tetap biru di atas MSTO sebagai acuan *turn-off*, atau tidak mengenali *main-sequence binary sequence* yang bergeser $0{,}753\\ \\text{mag}$ lebih terang.',
+      akibat: 'Usia gugus tampak jauh lebih muda daripada usia aslinya jika *blue stragglers* dikira bintang deret utama biasa.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="contoh-l3" judul="5. Worked Example: Fungsi Massa SB1 & Parameter Biner Gerhana" tag="Notebook Hitung">
+
+<Contoh judul="Membuktikan kandidat lubang hitam SB1 & membedah kurva gerhana SB2">
+
+<Langkah>
+
+**Bagian A — Bukti Lubang Hitam dari Fungsi Massa Biner SB1:**
+Sebuah sumber sinar-X transien memiliki bintang pendamping deret utama kelas K0V ($M_1 \approx 0{,}8\,M_\odot$) yang garis spektrumnya bergeser sinusoidal ($e \approx 0$) dengan periode $P = 0{,}323\ \text{hari} = 2{,}79\times 10^4\ \text{s}$ dan semi-amplitudo kecepatan radial $K_1 = 457\ \text{km/s} = 4{,}57\times 10^5\ \text{m/s}$. Hitung fungsi massa biner $f(m)$ dan taksir batas bawah massa objek gelap $M_2$!
+
+$$f(m) = \frac{P\,K_1^3}{2\pi G} = \frac{(2{,}79\times 10^4)(4{,}57\times 10^5)^3}{2\pi (6{,}674\times 10^{-11})} = \frac{2{,}66\times 10^{21}}{4{,}19\times 10^{-10}} \approx 6{,}35\times 10^{30}\ \text{kg} \approx 3{,}19\,M_\odot.$$
+
+Ini berarti **batas bawah mutlak** (bahkan seandainya $M_1 = 0$ dan $i = 90^\circ$) sudah $3{,}19\,M_\odot$! Karena $M_1 = 0{,}8\,M_\odot > 0$, solusi $M_2^3 / (0{,}8 + M_2)^2 \ge 3{,}19$ memberi **$M_2 \ge 4{,}5\,M_\odot$** — jauh melampaui batas maksimum bintang neutron ($\sim 2{,}2\,M_\odot$) sehingga komponen gelap itu pasti **lubang hitam bermassa bintang**!
+
+</Langkah>
+
+<Langkah>
+
+**Bagian B — Analisis Lengkap Biner Gerhana SB2:**
+Suatu biner gerhana orbit lingkaran ($i = 90^\circ$) memiliki periode $P = 4{,}00\ \text{hari} = 3{,}456\times 10^5\ \text{s}$. Spektroskopi SB2 menghasilkan $K_1 = 60\ \text{km/s}$ dan $K_2 = 120\ \text{km/s}$. Kurva cahaya bolometrik memberi $t_2 - t_1 = 0{,}80\ \text{jam}$, $t_4 - t_1 = 6{,}40\ \text{jam}$, dan saat minimum primer fluks total turun menjadi $68\%$ sedangkan saat sekunder turun menjadi $92\%$. Tentukan $(M_1, M_2, R_1, R_2, T_1/T_2)$!
+
+1. **Massa Kedua Bintang:**
+   Rasio massa $M_1 / M_2 = K_2 / K_1 = 120 / 60 = 2{,}0 \implies M_1 = 2 M_2$.
+   Kelajuan relatif total $v = K_1 + K_2 = 180\ \text{km/s} = 1{,}80\times 10^5\ \text{m/s}$, maka jarak separasi orbit:
+   $$a = \frac{v P}{2\pi} = \frac{(1{,}80\times 10^5)(3{,}456\times 10^5)}{2\pi} \approx 9{,}90\times 10^9\ \text{m} \approx 0{,}0662\ \text{AU}.$$
+   Dari Hukum III Kepler ($\sin i = 1$):
+   $$M_1 + M_2 = \frac{4\pi^2 a^3}{G P^2} = \frac{P(K_1+K_2)^3}{2\pi G} = \frac{(3{,}456\times 10^5)(1{,}80\times 10^5)^3}{2\pi (6{,}674\times 10^{-11})} \approx 4{,}81\times 10^{30}\ \text{kg} \approx 2{,}42\,M_\odot.$$
+   Maka **$M_2 = 0{,}81\,M_\odot$** dan **$M_1 = 1{,}61\,M_\odot$**.
+
+</Langkah>
+
+<Langkah>
+
+2. **Radius Kedua Bintang:**
+   Karena $t_4 - t_1 = 6{,}40\ \text{jam}$ dan $t_2 - t_1 = 0{,}80\ \text{jam}$, maka durasi datar dasar gerhana adalah $t_3 - t_2 = (t_4 - t_1) - 2(t_2 - t_1) = 4{,}80\ \text{jam} \implies t_3 - t_1 = 5{,}60\ \text{jam}$!
+   $$R_s = \frac{v (t_2 - t_1)}{2} = \frac{(1{,}80\times 10^5)(0{,}80 \times 3\,600)}{2} \approx 2{,}59\times 10^8\ \text{m} \approx 0{,}37\,R_\odot,$$
+   $$R_l = \frac{v (t_3 - t_1)}{2} = \frac{(1{,}80\times 10^5)(5{,}60 \times 3\,600)}{2} \approx 1{,}81\times 10^9\ \text{m} \approx 2{,}61\,R_\odot.$$
+
+</Langkah>
+
+<Langkah>
+
+3. **Rasio Temperatur Efektif:**
+   Kedalaman primer $\Delta F_{\text{prim}} = 1 - 0{,}68 = 0{,}32$ ($32\%$); kedalaman sekunder $\Delta F_{\text{sek}} = 1 - 0{,}92 = 0{,}08$ ($8\%$). Karena dasar gerhana datar (gerhana total!), maka:
+   $$\frac{T_{\text{panas}}}{T_{\text{dingin}}} = \left(\frac{\Delta F_{\text{prim}}}{\Delta F_{\text{sek}}}\right)^{1/4} = \left(\frac{0{,}32}{0{,}08}\right)^{1/4} = 4^{1/4} = \sqrt{2} \approx 1{,}414!$$
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Minimum primer pada kurva cahaya biner gerhana terjadi ketika bintang yang lebih BESAR menghalangi bintang yang lebih kecil.',
+      kenapaKeliru: 'Mengira luas fisik yang tertutup adalah satu-satunya penentu kedalaman gerhana, melupakan hukum Stefan–Boltzmann I ∝ T⁴.',
+      caraDeteksi: 'Bandingkan jumlah fluks yang hilang pada gerhana sentral: baik saat bintang kecil berada di depan maupun di belakang bintang besar, luas piringan yang terhalang PERSIS SAMA (π R_s²)! Yang berbeda hanyalah kecerahan permukaan T⁴ bintang mana yang tertutup.',
+      benar: 'Minimum primer (paling dalam) SELALU terjadi ketika bintang yang lebih DINGIN melintasi di depan dan menutupi bintang yang lebih PANAS!',
+    },
+    {
+      salah: 'Dalam metode kecepatan radial eksoplanet, bintang hanya diam sementara planet mengorbit mengelilingi pusat bintang, sehingga kelajuan bintang tidak bergantung pada massa planet.',
+      kenapaKeliru: 'Menggunakan batas M_* >> M_p secara ekstrem sehingga mengira barisentrum berimpit persis dengan pusat bintang.',
+      caraDeteksi: 'Terapkan kekekalan momentum sudut/barisentrum M_* a_* = M_p a_p: Matahari pun mengayun mengelilingi barisentrum Tata Surya dengan laju ~12,5 m/s akibat tarikan Jupiter!',
+      benar: 'Keduanya mengorbit pusat massa bersama; semi-amplitudo refleks bintang K_* berbanding lurus dengan massa proyeksi M_p sin i.',
+    },
+    {
+      salah: 'Jumlah planet yang ditemukan oleh teleskop transit (seperti Kepler) menunjukkan hampir semua bintang di Bima Sakti hanya memiliki planet periode pendek (Hot Jupiter).',
+      kenapaKeliru: 'Mengabaikan bias seleksi observasional (geometric transit probability p ~ R_*/a dan peluang pengulangan transit selama misi).',
+      caraDeteksi: 'Hitung peluang transit geometris Bumi pada Matahari: R_☉ / 1 AU = 6,96×10⁸ / 1,496×10¹¹ ≈ 0,46% — 99,5% planet mirip Bumi tidak pernah transit dari garis pandang kita!',
+      benar: 'Metode transit dan RV sangat bias mendeteksi planet besar berorbit sempit; koreksi bias seleksi membuktikan planet berbatu kecil jauh lebih melimpah daripada Hot Jupiter.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="l3-cek-1"
+  pertanyaan="Bintang ganda dengan a = 1 AU dan P = 1 tahun memiliki massa total..."
+  opsi={['1 M☉', '2 M☉', '0,5 M☉', '4 M☉']}
+  jawaban={0}
+  penjelasan="M₁+M₂ = a³/P² = 1/1 = 1 M☉. Nilai ini sama dengan kasus Matahari–Bumi jika Bumi bermassa seperti bintang."
+/>
+
+<CekPaham
+  id="l3-cek-2"
+  pertanyaan="Jika radius planet 0,1 kali radius bintangnya, berapa kedalaman transitnya?"
+  opsi={['10%', '1%', '0,1%', '0,01%']}
+  jawaban={1}
+  penjelasan="δ = (Rp/R*)² = 0,1² = 0,01 = 1%. Kedalaman bergantung pada kuadrat rasio radius."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'l3-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Mengapa kurva cahaya sebuah **biner gerhana ber-eksentrisitas tinggi** ($e = 0{,}5$, $\\omega \\ne 90^\\circ$) memiliki jarak waktu antara minimum primer dan minimum sekunder yang **tidak tepat $\\frac{1}{2}P$**, serta mengapa **durasi** gerhana primer dan sekundernya dapat sangat berbeda?',
+      petunjuk: 'Ingat Hukum II Kepler (kecepatan sudut $\\dot{\\theta} \\propto 1/r^2$): bandingkan waktu tempuh melintasi paruh orbit sisi periapsis vs apoapsis, serta laju $v_{\\perp}$ saat berpapasan!',
+      langkahKunci: [
+        'Dari Hukum II Kepler ($r^2 \\dot{\\theta} = \\text{konstan}$), separuh lintasan orbit di sisi **periapsis** ditempuh jauh lebih cepat dan jaraknya lebih pendek secara sudut-waktu ($\\Delta t < P/2$), sedangkan sisi **apoapsis** ditempuh lebih lama ($\\Delta t > P/2$). Akibatnya fase sekunder bergeser menjauh dari $\\phi = 0{,}5$.',
+        'Selain itu, durasi gerhana $\\Delta t_{\\text{ecl}} \\propto (R_1 + R_2) / v_{\\text{rel}}$: jika satu gerhana terjadi dekat periapsis ($v$ sangat tinggi) durasinya **singkat**, sementara gerhana setengah orbit kemudian terjadi dekat apoapsis ($v$ lambat) sehingga durasinya **jauh lebih lebar**!',
+      ],
+      rubrik: [
+        'Menerapkan Hukum II Kepler untuk menjelaskan pergeseran fase minimum sekunder dari $0{,}5$.',
+        'Menjelaskan beda kecepatan orbital di periapsis vs apoapsis sebagai sebab perbedaan durasi gerhana.',
+      ],
+    },
+    {
+      id: 'l3-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari definisi barisentrum ($M_1 a_1 = M_2 a_2$), Hukum III Kepler dua benda ($a^3/P^2 = G(M_1+M_2)/4\\pi^2$), dan hubungan kecepatan orbit lingkaran ($K_1 = \\frac{2\\pi a_1}{P}\\sin i$), turunkan persamaan **fungsi massa biner** $f(M_1, M_2, i) = \\frac{M_2^3 \\sin^3 i}{(M_1 + M_2)^2} = \\frac{P K_1^3}{2\\pi G}$ langkah demi langkah!',
+      petunjuk: 'Nyatakan $a = a_1 + a_2 = a_1\\frac{M_1 + M_2}{M_2}$, substitusikan ke $a^3$, lalu eliminasi $a_1$ memakai $a_1 = \\frac{P K_1}{2\\pi \\sin i}$.',
+      langkahKunci: [
+        'Dari $M_1 a_1 = M_2 a_2$, diperoleh $a = a_1 + a_2 = a_1\\left(1 + \\frac{M_1}{M_2}\\right) = a_1\\frac{M_1 + M_2}{M_2}$.',
+        'Substitusikan ke Hukum III Kepler $a^3 = \\frac{G(M_1 + M_2) P^2}{4\\pi^2}$:',
+        '$$a_1^3 \\frac{(M_1 + M_2)^3}{M_2^3} = \\frac{G(M_1 + M_2) P^2}{4\\pi^2} \\implies a_1^3 = \\frac{G P^2}{4\\pi^2}\\frac{M_2^3}{(M_1 + M_2)^2}.$$',
+        'Kalikan kedua ruas dengan $\\sin^3 i$ dan gunakan $(a_1 \\sin i)^3 = \\frac{P^3 K_1^3}{8\\pi^3}$:',
+        '$$\\frac{P^3 K_1^3}{8\\pi^3} = \\frac{G P^2}{4\\pi^2}\\frac{M_2^3 \\sin^3 i}{(M_1 + M_2)^2} \\implies \\frac{M_2^3 \\sin^3 i}{(M_1 + M_2)^2} = \\frac{P K_1^3}{2\\pi G}.$$',
+      ],
+      rubrik: [
+        'Menghubungkan $a = a_1 (M_1+M_2)/M_2$ dari definisi pusat massa.',
+        'Substitusi aljabar bersih hingga menghasilkan $P K_1^3 / (2\\pi G)$ dengan satuan tepat ($\\text{kg}$).',
+      ],
+    },
+    {
+      id: 'l3-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah bintang induk beradius $R_* = 1{,}0\\,R_\\odot$ dan bermassa $M_* = 1{,}0\\,M_\\odot$ diorbit oleh sebuah planet beradius $R_p = 1{,}0\\,R_\\oplus$ pada jarak $a = 1{,}0\\ \\text{AU}$. (a) Hitung peluang geometris planet tersebut tampak **transit** dari pengamat acak di luar Tata Surya ($p_{\\text{tr}} \\approx R_*/a$). (b) Jika $100\\,000$ bintang mirip Matahari memiliki masing-masing satu planet persis seperti Bumi pada $1\\ \\text{AU}$ dan diamati terus-menerus, kira-kira berapa sistem yang benar-benar akan menunjukkan transit?',
+      petunjuk: 'Sebuah planet tampak transit hanya jika vektor normal orbitnya jatuh dalam pita sudut $|\\cos i| \\le R_* / a$ (atau lebih presisi $(R_* + R_p)/a$).',
+      langkahKunci: [
+        'Karena distribusi orientasi isotropik di bola langit memberi kepadatan peluang seragam terhadap $\\cos i \\in [-1, 1]$, peluang transit adalah $p_{\\text{tr}} = \\frac{R_* + R_p}{a} \\approx \\frac{R_\\odot}{1\\ \\text{AU}}$.',
+        'Hitung $p_{\\text{tr}} = \\frac{6{,}957\\times 10^8\\ \\text{m}}{1{,}496\\times 10^{11}\\ \\text{m}} \\approx 0{,}00465$ ($0{,}465\\%$, atau $\\approx 1$ dari $215$ sistem!).',
+        'Dari $100\\,000$ sistem serupa Bumi, hanya sekitar $100\\,000 \\times 0{,}00465 \\approx 465$ bintang yang menampakkan gerhana transit — sisanya $> 99\\,500$ Bumi tersembunyi karena inklinasinya sedikit melenceng dari $90^\\circ$!',
+      ],
+      rubrik: [
+        'Menghitung $p_{\\text{tr}} = R_\\odot / (1\\ \\text{AU}) \\approx 4{,}65\\times 10^{-3}$.',
+        'Memperoleh $\\approx 465$ sistem yang terdeteksi dari $100\\,000$ target.',
+      ],
+    },
+    {
+      id: 'l3-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Pada suatu gugus bintang terbuka teramati bahwa bintang deret utama terpanas dan paling terang yang masih tersisa berada pada kelas **A0V** ($M_{\\text{MSTO}} \\approx 2{,}5\\,M_\\odot$, $M_V = +0{,}60\\ \\text{mag}$). Pada pengamatan fotometri bintang A0V di gugus tersebut, magnitudo tampaknya terukur rata-rata $m_V = 11{,}60\\ \\text{mag}$ dan ekstingsi debu diketahui $A_V = 1{,}00\\ \\text{mag}$. Tentukan: (a) jarak gugus dalam parsek, dan (b) taksiran usia gugus menggunakan $\\tau_{\\text{MS}} \\approx 10^{10}\\,(M/M_\\odot)^{-2{,}5}$ tahun!',
+      petunjuk: 'Gunakan modulus jarak terkoreksi ekstingsi $m_V - M_V = 5\\log d - 5 + A_V$.',
+      langkahKunci: [
+        'Modulus jarak sejati: $m_V - M_V - A_V = 11{,}60 - 0{,}60 - 1{,}00 = 10{,}00\\ \\text{mag}$.',
+        'Jarak gugus: $5\\log_{10} d - 5 = 10{,}00 \\implies \\log_{10} d = 3{,}00 \\implies d = 1\\,000\\ \\text{pc} = 1{,}0\\ \\text{kpc}$.',
+        'Usia gugus dari MSTO ($M = 2{,}5\\,M_\\odot$): $\\tau_{\\text{gugus}} \\approx 10^{10} \\times (2{,}5)^{-2{,}5} = 10^{10} / 9{,}88 \\approx 1{,}01\\times 10^9\\ \\text{tahun}$ ($\\sim 1\\ \\text{miliar tahun}$ — usia khas gugus terbuka tua!).',
+      ],
+      rubrik: [
+        'Memasukkan ekstingsi $A_V = 1{,}00$ dengan tanda benar untuk memperoleh $d = 1\\,000\\ \\text{pc}$.',
+        'Menghitung usia gugus $\\sim 1{,}0\\times 10^9\\ \\text{tahun}$ dari $M_{\\text{MSTO}} = 2{,}5\\,M_\\odot$.',
+      ],
+    },
+    {
+      id: 'l3-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Sebuah eksoplanet ditemukan mengelilingi bintang mirip Matahari ($M_* = 1{,}00\\,M_\\odot, R_* = 1{,}00\\,R_\\odot$) melalui dua metode sekaligus: transit memberikan kedalaman $\\delta = 0{,}0100$ dan durasi total $T_{14} = 2{,}80\\ \\text{jam}$, sementara kecepatan radial memberikan $P = 3{,}50\\ \\text{hari}$ ($e=0$) dan $K_* = 140\\ \\text{m/s}$. Buktikan apakah planet ini termasuk kelas **Hot Jupiter (gas raksasa terinflasi)** atau **planet besi/batuan superpadat** dengan menghitung radius $R_p$, massa $M_p$, dan kerapatan rata-ratanya $\\bar{\\rho}_p$!',
+      petunjuk: 'Karena ia transit, dekati $\\sin i \\approx 1$; cari $M_p$ dari $K_* = (2\\pi G / P)^{1/3} M_p / M_*^{2/3}$, lalu $R_p = R_*\\sqrt{\\delta}$.',
+      langkahKunci: [
+        'Radius planet: $R_p = R_\\odot \\sqrt{0{,}0100} = 0{,}100\\,R_\\odot \\approx 6{,}957\\times 10^7\\ \\text{m} \\approx 0{,}974\\,R_J$ (seukuran Jupiter!).',
+        'Untuk $P = 3{,}50\\ \\text{hari} = 3{,}024\\times 10^5\\ \\text{s}$ dan $M_* = 1{,}989\\times 10^{30}\\ \\text{kg}$: $\\left(\\frac{2\\pi G}{P}\\right)^{1/3} M_*^{-2/3} \\approx 6{,}47\\times 10^{-26}\\ \\text{m s}^{-1}\\text{kg}^{-1}$, sehingga $M_p \\approx \\frac{140}{6{,}47\\times 10^{-26}} \\approx 2{,}16\\times 10^{27}\\ \\text{kg} \\approx 1{,}14\\,M_J$.',
+        'Volume $V_p = \\frac{4}{3}\\pi (6{,}957\\times 10^7)^3 \\approx 1{,}41\\times 10^{24}\\ \\text{m}^3 \\implies \\bar{\\rho}_p = \\frac{2{,}16\\times 10^{27}}{1{,}41\\times 10^{24}} \\approx 1\\,530\\ \\text{kg/m}^3 = 1{,}53\\ \\text{g/cm}^3$. Kerapatan $\\sim 1{,}5\\ \\text{g/cm}^3$ dekat dengan Jupiter ($1{,}33\\ \\text{g/cm}^3$): ini pasti **Hot Jupiter** raksasa gas H/He, bukan planet batuan!',
+      ],
+      rubrik: [
+        'Menghitung $R_p \\approx 6{,}96\\times 10^7\\ \\text{m}$ ($\\sim 1\\,R_J$).',
+        'Menghitung $M_p \\approx 2{,}16\\times 10^{27}\\ \\text{kg}$ ($\\sim 1{,}14\\,M_J$).',
+        'Menyimpulkan kerapatan $\\bar{\\rho}_p \\approx 1{,}5\\ \\text{g/cm}^3$ khas raksasa gas Hot Jupiter.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'l3-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa di sebuah biner gerhana berjarak tetap $a$, **dua minimum** dapat memiliki kedalaman berbeda tetapi **jumlah total cahaya yang hilang** pada gerhana total primer tetap ditentukan oleh komponen ber-suhu permukaan lebih tinggi — bahkan seandainya komponen itu jauh lebih KECIL secara radius daripada pasangannya?',
+      petunjuk: 'Uji kasus sebuah bintang katai putih super panas ($R_1 = 0{,}01\\,R_\\odot, T_1 = 30\\,000\\ \\text{K}$) dan raksasa dingin ($R_2 = 10\\,R_\\odot, T_2 = 3\\,000\\ \\text{K}$): mana gerhana yang lebih dalam?',
+      rubrik: [
+        'Pada kedua gerhana (baik katai putih lewat di depan raksasa, maupun raksasa menutupi penuh katai putih), luas piringan yang saling menutupi tepat sama: $\\pi R_{\\text{kecil}}^2 = \\pi R_{\\text{WD}}^2$.',
+        'Saat raksasa dingin lewat di depan katai putih, seluruh cahaya dari luas $\\pi R_{\\text{WD}}^2$ bertemperatur $30\\,000\\ \\text{K}$ ($\\propto 30\\,000^4$) hilang total! Saat katai putih lewat di depan raksasa, hanya area kecil $\\pi R_{\\text{WD}}^2$ bertemperatur $3\\,000\\ \\text{K}$ ($\\propto 3\\,000^4$) yang hilang ($10^4\\times$ lebih dangkal)!',
+      ],
+      jawabanKunci:
+        'Kedalaman gerhana sebanding dengan **fluks yang hilang**, yakni hasil kali *(luas piringan yang terhalang) $\\times$ (kecerahan permukaan bintang di belakang)*. Pada sistem gerhana total, luas piringan yang terhalang pada kedua gerhana identik ($\\pi R_{\\text{kecil}}^2$), sehingga rasio kedalaman $\\Delta F_{\\text{prim}} / \\Delta F_{\\text{sek}} = (T_{\\text{belakang,1}}/T_{\\text{belakang,2}})^4$ semata bergantung pada suhu permukaan bintang yang sedang ditutupi. Oleh karena itu, minimum primer **selalu** terjadi ketika bintang yang lebih panas berada di belakang — terlepas apakah ukurannya lebih besar atau lebih kecil!',
+    },
+    {
+      id: 'l3-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang astronom mengukur biner spektroskopik SB1 dengan fungsi massa $f(m) = 0{,}50\\,M_\\odot$, lalu mengasumsikan inklinasi acak rata-rata $\\langle\\sin^3 i\\rangle \\approx 0{,}6$ sehingga langsung menyimpulkan massa bintang pasangannya pasti $M_2 = 0{,}50/0{,}6 \\approx 0{,}83\\,M_\\odot$ tanpa melihat massa bintang primer $M_1$. Jelaskan kekeliruan aljabarnya!',
+      petunjuk: 'Periksa penyebut fungsi massa $f(m) = \\frac{M_2^3 \\sin^3 i}{(M_1 + M_2)^2}$: ia bukan sama dengan $M_2 \\sin^3 i$!',
+      rubrik: [
+        'Mengakui faktor $(M_1 + M_2)^2 / M_2^2 = (1 + M_1/M_2)^2$ selalu lebih besar dari $1$ ($M_1 > 0$)!',
+        'Menunjukkan bahwa $M_2 = \\frac{f(m)}{\\sin^3 i}\\left(1 + \\frac{M_1}{M_2}\\right)^2$: jika $M_1 = 2\\,M_\\odot$, $M_2$ bukan $0{,}83\\,M_\\odot$ melainkan solusi $M_2^3/(2+M_2)^2 = 0{,}83 \\implies M_2 \\approx 2{,}1\\,M_\\odot$ (lebih dari $2{,}5\\times$ lebih besar)!',
+      ],
+      jawabanKunci:
+        'Kekeliruannya adalah memperlakukan $f(m)$ seolah sama dengan $M_2 \\sin^3 i$, melupakan faktor penyebut $(M_1 + M_2)^2$! Karena $M_2 = \\frac{f(m)}{\\sin^3 i}(1 + M_1/M_2)^2$, nilai $f(m)/\\sin^3 i$ hanya sama dengan $M_2$ apabila bintang primer tak bermassa ($M_1 \\to 0$, limit eksoplanet!). Untuk bintang ganda bermassa sebanding ($M_1 \\sim M_2$), faktor $(1 + M_1/M_2)^2 \\approx 4$ melipatgandakan $M_2$ secara dramatis; untuk memperoleh $M_2$, kita wajib memasukkan taksiran $M_1$ dari kelas spektrum bintang primer lalu menyelesaikan persamaan pangkat tiga $M_2^3 - \\frac{f(m)}{\\sin^3 i}(M_1 + M_2)^2 = 0$.',
+    },
+    {
+      id: 'l3-log-3',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Misalkan dalam sistem biner semi-terpisah konservatif (massa total $M_1 + M_2$ dan momentum sudut orbital total $J$ konstan), **bintang donor yang kini lebih ringan ($M_d < M_a$)** terus mentransfer massa ke **bintang akretor yang lebih masif ($M_a$)**. Berdasarkan hukum kekekalan momentum sudut orbit lingkaran ($J = M_d M_a \\sqrt{\\frac{G a}{M_d + M_a}}$), apakah jarak orbit $a$ dan periode $P$ akan **memendek** atau **melebar** seiring berjalannya transfer massa?',
+      petunjuk: 'Tulis $a = \\frac{J^2 (M_d + M_a)}{G M_d^2 M_a^2}$; cek bagaimana produk $M_d M_a$ berubah saat $M_d$ mengecil menjauhi $M_a$ (ingat $x(C-x)$ mencapai maksimum di $x = C/2$)!',
+      rubrik: [
+        'Menunjukkan $a \\propto (M_d M_a)^{-2}$ karena $J$ dan $(M_d+M_a)$ konstan.',
+        'Saat donor lebih ringan ($M_d < M_a$) makin kehilangan massa, selisih $|M_a - M_d|$ makin lebar sehingga produk $M_d M_a$ **turun**; akibatnya jarak orbit $a$ dan periode $P \\propto a^{3/2}$ **MELEBAR (mengembang)**! (Sebaliknya saat awal transfer ketika donor masih lebih masif $M_d > M_a$, orbit sempat menyusut cepat sampai $M_d = M_a$!).',
+      ],
+      jawabanKunci:
+        'Dari $J = M_d M_a \\sqrt{\\frac{G a}{M_{\\text{tot}}}}$, isolasi $a$ menghasilkan $a = \\frac{J^2 M_{\\text{tot}}}{G}\\frac{1}{M_d^2 M_a^2} \\propto (M_d M_a)^{-2}$. Karena jumlah $M_d + M_a = M_{\\text{tot}}$ konstan, hasil kali $M_d M_a$ mencapai nilai maksimum saat $M_d = M_a$. Ketika donor yang *lebih ringan* ($M_d < M_a$) makin banyak mentransfer massanya ke akretor yang lebih berat, produk $M_d M_a$ semakin mengecil, sehingga jarak antar bintang $a$ dan periode orbital $P$ **justru terus membesar** (transfer massa melambat stabil pada skala waktu evolusi nuklir)!',
+    },
+    {
+      id: 'l3-log-4',
+      tipe: 'bandingkan_model',
+      pertanyaan:
+        'Bandingkan keunggulan dan kebutaan masing-masing metode **Transit**, **Kecepatan Radial**, dan **Mikrolensa Gravitasi** dalam memetakan populasi eksoplanet di seluruh Bima Sakti: metode mana yang paling unggul mendeteksi planet jauh ($a \\sim 3\\text{--}10\\ \\text{AU}$) di dekat pusat galaksi ($\\sim 8\\ \\text{kpc}$), dan mengapa metode transit & RV gagal di sana?',
+      petunjuk: 'Evaluasi penskalaan amplitudo sinyal terhadap jarak bintang pengamat $d$ dan jarak orbit planet $a$.',
+      rubrik: [
+        'Transit ($p_{\\text{tr}} \\propto 1/a$, butuh banyak siklus) dan RV ($K_* \\propto a^{-1/2}$) merosot tajam untuk $a$ besar dan membutuhkan bintang sangat terang (dekat, $d < 1\\ \\text{kpc}$).',
+        'Sebaliknya **Mikrolensa Gravitasi** tidak bergantung pada cahaya bintang lensa maupun inklinasi orbit, dan justru paling sensitif ketika jarak orbit planet sebanding dengan **radius Einstein $R_E$** di jarak beberapa kpc ($\\sim 2\\text{--}5\\ \\text{AU}$), meski sifat peristiwanya hanya sekali lewat (tidak berulang)!',
+      ],
+      jawabanKunci:
+        'Untuk planet berorbit lebar ($3\\text{--}10\\ \\text{AU}$) pada jarak antargalaksi dalam ($\\sim 8\\ \\text{kpc}$ menuju *bulge*), **Mikrolensa Gravitasi** adalah pemenang mutlak: metode transit memiliki peluang geometris $< 0{,}1\\%$ dan membutuhkan observasi puluhan tahun untuk mengulang dua transit, sementara metode RV membutuhkan spektroskopi SNR sangat tinggi yang mustahil pada bintang redup jarak $8\\ \\text{kpc}$. Mikrolensa mendeteksi pembelokan gravitasi bintang sumber latar tanpa perlu menerima sefoton pun dari planet maupun bintang lensa, dengan puncak sensitivitas jatuh persis di zona salju ($R_E \\sim 2\\text{--}5\\ \\text{AU}$) — komprominya adalah peristiwa lensa terjadi sekali seumur hidup dan tak dapat diamati ulang.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="l3-refleksi-1"
+  pertanyaan="Mengapa bintang ganda gerhana yang sekaligus spektroskopik garis-ganda (SB2) dianggap sebagai 'standar emas' pengkalibrasi seluruh teori struktur dan evolusi bintang?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'l3-m1', gerbang: 'derivasi', teks: 'Menghitung massa M₁, M₂ dari biner visual/astrometri serta membedakan informasi SB1 vs SB2 (rasio K₂/K₁).' },
+    { id: 'l3-m2', gerbang: 'derivasi', teks: 'Menurunkan fungsi massa biner f(m) = P K₁³(1-e²)^(3/2)/(2πG) dan memakainya sebagai batas bawah absolut massa objek gelap.' },
+    { id: 'l3-m3', gerbang: 'derivasi', teks: 'Mengekstraksi radius R_s, R_l dari titik kontak t₁–t₄ dan rasio temperatur T_h/T_c dari kedalaman minimum gerhana total.' },
+    { id: 'l3-m4', gerbang: 'konsep', teks: 'Menjelaskan transfer massa lobus Roche (Paradoks Algol), penentuan usia gugus via MSTO, dan beda gugus terbuka vs bola.' },
+    { id: 'l3-m5', gerbang: 'observasi', teks: 'Menghitung kerapatan rata-rata eksoplanet ρ_p dari sinergi fotometri transit (R_p/R_*) dan kecepatan radial (M_p sin i).' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul L3">
+
+<Konstanta
+  data={[
+    { simbol: 'Kepler III Biner', nilai: 'a³/P² = M₁ + M₂', satuan: 'AU, tahun, M_☉' },
+    { simbol: 'Fungsi massa f(m)', nilai: 'P K₁³ (1−e²)^(3/2) / (2πG)', satuan: 'kg (M_2 ≥ f(m))' },
+    { simbol: 'Kedalaman transit', nilai: 'δ = (R_p / R_*)²', satuan: 'tak berdimensi' },
+    { simbol: 'R_Jupiter', nilai: '6,991 × 10⁷ (0,1005 R_☉)', satuan: 'm' },
+    { simbol: 'M_Jupiter', nilai: '1,898 × 10²⁷ (9,546 × 10⁻⁴ M_☉)', satuan: 'kg' },
+    { simbol: 'R_Bumi', nilai: '6,371 × 10⁶ (0,00916 R_☉)', satuan: 'm' },
+    { simbol: '1 tahun Julian', nilai: '3,15576 × 10⁷', satuan: 's' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-03', 'SRC-05', 'SRC-06', 'SRC-07']}
+  pemetaan={[
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS3104: dinamika bintang ganda, fungsi massa, biner gerhana & transfer massa lobus Roche.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al., Fundamental Astronomy (6e), Ch. 9, 16, 21: bintang ganda, gugus bintang MSTO & deteksi eksoplanet.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Ch. 7 & 18: penurunan lengkap SB1/SB2, gerhana kontak t₁–t₄ & biner berinteraksi dekat.' },
+    { sumberId: 'SRC-07', rujukan: 'Ryden & Peterson, Foundations of Astrophysics, Ch. 13 & 17: pengukuran massa bintang & populasi gugus bintang.' },
+  ]}
+/>
+
+</Bagian>

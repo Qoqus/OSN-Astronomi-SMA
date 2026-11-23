@@ -1,0 +1,6 @@
+{
+  "name": "Ruang Langit — Belajar OSN Astronomi",
+  "description": "Ruang belajar OSN Astronomi untuk siswa SMA: fondasi fisika-matematika, astronomi bola, mekanika langit, dan latihan penalaran.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

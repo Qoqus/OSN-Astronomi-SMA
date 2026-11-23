@@ -1,0 +1,468 @@
+<IdentitasModul
+  kode="L5"
+  tier="Klaster Lanjutan · Modul 5 dari 6"
+  posisi="Kinematika Ekspansi, Penurunan Persamaan Friedmann, Sejarah Termal & CMB"
+  estimasi="90 menit studi mendalam"
+  tingkat="S1 Astrofisika Pengantar & IOAA Penuh"
+  prasyarat={[
+    { id: 'f4', label: 'F4 · Mekanika' },
+    { id: 'a5', label: 'A5 · Radiasi, Magnitudo & Fotometri' },
+    { id: 'l4', label: 'L4 · Galaksi & Materi Antarbintang' },
+  ]}
+  koneksi={[
+    { id: 'l6', label: 'L6 · Analisis Data & Praktikum Observasi', peran: 'Linearisasi Diagram Hubble untuk menentukan H₀ dan estimasi usia kosmik' },
+  ]}
+  sumberUtama={['SRC-03', 'SRC-04', 'SRC-05', 'SRC-06']}
+/>
+
+<Tujuan>
+
+- Memahami **Prinsip Kosmologis** (homogenitas dan isotropi skala besar) serta menurunkan hukum ekspansi **Hubble–Lemaître** $v = H(t)\,d$ dari perubahan faktor skala $a(t)$.
+- Membedakan **redshift kosmologis ($1 + z = a_0 / a$)** akibat peregangan metrik ruang vs efek Doppler relativistik khusus, serta menjelaskan mengapa laju resesi $v > c$ di luar bola Hubble tidak melanggar Relativitas Khusus.
+- Menurunkan **Persamaan Friedmann**, **Persamaan Fluida Kosmologis**, dan **Persamaan Percepatan $\ddot{a}/a$** secara langkah demi langkah dari mekanika Newtonian + Hukum I Termodinamika, sambil membatasi peran **Relativitas Umum (metrik FLRW)** untuk geometri kelengkungan $k$.
+- Menghitung **densitas kritis ($\rho_{c,0}$)**, menuliskan evolusi parameter Hubble $H(z)$ terhadap parameter densitas ($\Omega_{r,0}, \Omega_{m,0}, \Omega_{\Lambda,0}, \Omega_{k,0}$), dan mengintegrasikan $a(t)$ beserta usia alam semesta $t_0$ untuk rezim radiasi, materi, dan energi gelap.
+- Menganalisis sejarah termal alam semesta awal (**Nukleosintesis Big Bang / BBN**, rekombinasi, **permukaan hamburan terakhir CMB** dengan $T(z) = T_0(1+z)$), dan menjelaskan **masalah horizon & masalah kerataan** sebagai motivasi inflasi kosmik.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'hubble-redshift',
+      label: 'Prinsip Kosmologis, H₀ & Redshift',
+      peran: 'v = H₀ d dan 1 + z = a₀/a: peregangan panjang gelombang bersama ruang mengembang.',
+      ke: ['friedmann', 'termal-cmb'],
+    },
+    {
+      id: 'friedmann',
+      label: 'Persamaan Friedmann, Fluida & ä/a',
+      peran: 'Dinamika faktor skala a(t) ditentukan oleh isi rapat energi (materi, radiasi, Λ) & k.',
+      ke: ['omega-umur'],
+    },
+    {
+      id: 'omega-umur',
+      label: 'Parameter Ω & Solusi a(t)',
+      peran: 'ρ_c = 3H₀²/(8πG): a ∝ t^1/2 (radiasi), t^2/3 (materi), e^Ht (Λ) → usia 13,8 Gyr.',
+      ke: ['termal-cmb'],
+    },
+    {
+      id: 'termal-cmb',
+      label: 'Sejarah Termal, BBN & CMB',
+      peran: 'T(z) = T₀(1+z) membawa kita ke rekombinasi (z ≈ 1100) dan pembentukan H/He/D di menit ke-3.',
+      ke: ['inflasi'],
+    },
+    {
+      id: 'inflasi',
+      label: 'Masalah Horizon, Kerataan & Inflasi',
+      peran: 'Mengapa CMB amat seragam (10⁻⁵) dan Ω_tot begitu dekat dengan 1,000?',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Kosmologi mengangkat seluruh instrumen fisika dan astronomi ke panggung terbesar: evolusi ruang-waktu itu sendiri. Dengan menautkan lilin standar A5, garis spektrum L1, dan gugus galaksi L4, kita dapat melacak balik ekspansi alam semesta melalui <Sorot>Persamaan Friedmann, parameter densitas $\Omega$, dan fosil radiasi benda hitam Cosmic Microwave Background ($T_0 = 2{,}725\ \text{K}$)</Sorot> hingga detik-detik awal Big Bang (`SRC-03`, `SRC-04`, `SRC-06`).
+</div>
+
+<Bagian id="prinsip-hubble-redshift" judul="1. Prinsip Kosmologis, Hukum Hubble–Lemaître & Redshift Kosmologis" tag="Kinematika Ekspansi">
+
+Seluruh model kosmologi standar (**$\Lambda$CDM**) dibangun di atas **Prinsip Kosmologis**: pada skala yang cukup besar ($\gtrsim 100\ \text{Mpc}$, jauh melampaui gugus dan filamen galaksi), alam semesta bersifat **homogen** (seragam di setiap lokasi) dan **isotrop** (sama ke segala arah pandang). Satu-satunya gerak global yang konsisten dengan homogenitas dan isotropi adalah ekspansi/kontraksi seragam jarak fisik antar-galaksi mengikuti satu fungsi waktu tunggal tak berdimensi, **faktor skala kosmik $a(t)$** (dinormalisasi saat ini $t = t_0$ sebagai $a(t_0) \equiv a_0 = 1$):
+
+$$r(t) = a(t)\,\chi,$$
+
+di mana $\chi$ adalah **jarak komoving (*comoving distance*)** tetap bagi galaksi yang ikut mengalir (*Hubble flow*) tanpa kecepatan lokal (*peculiar velocity*). Turunkan terhadap waktu $t$:
+
+$$v(t) = \dot{r}(t) = \dot{a}(t)\,\chi = \left(\frac{\dot{a}(t)}{a(t)}\right) r(t) \equiv H(t)\,r(t).$$
+
+Di masa kini ($t = t_0$), **$H_0 \equiv \frac{\dot{a}(t_0)}{a(t_0)}$** adalah **Konstanta Hubble** ($H_0 \approx 67{,}4\text{--}73\ \text{km s}^{-1}\text{Mpc}^{-1}$; nilai khas soal OSN $70\ \text{km s}^{-1}\text{Mpc}^{-1}$). Ini menghasilkan **Hukum Hubble–Lemaître**: $v = H_0 d$, dengan **Waktu Hubble** $t_H \equiv \frac{1}{H_0} \approx 14{,}0\ \text{miliar tahun}$ (untuk $H_0 = 70$) dan **Radius Hubble** $R_H \equiv c / H_0 \approx 4\,280\ \text{Mpc} \approx 14{,}0\ \text{miliar tahun cahaya}$.
+
+### Redshift Kosmologis ($1 + z = a_0/a$) vs Efek Doppler
+
+<Gambar id="ekspansi-redshift" />
+
+Saat foton berpanjang gelombang $\lambda_e$ dipancarkan pada faktor skala $a(t_e)$ dan diterima hari ini ($a_0 = 1$), peregangan metrik ruang sepanjang perjalanannya ikut meregangkan panjang gelombang secara proporsional tepat sama dengan faktor skala (`SRC-04`, `SRC-06`):
+
+<Rumus judul="Redshift Kosmologis & Faktor Skala">
+
+$$1 + z \equiv \frac{\lambda_{\text{obs}}}{\lambda_e} = \frac{a(t_0)}{a(t_e)} = \frac{1}{a(t_e)}$$
+
+</Rumus>
+
+- Pada galaksi dengan $z = 1$, cahaya merambat sejak alam semesta berukuran $a = \frac{1}{1+1} = 0{,}5$ ukuran sekarang; pada $z = 9$, faktor skalanya baru $10\%$ sekarang!
+- **Perbedaan Konseptual Kritis:** Untuk $z \ll 1$, hukum Hubble memberi $z \approx \frac{v}{c} = \frac{H_0 d}{c}$ (identik bentuk dengan Doppler $v/c$). Namun pada $z > 1$, *redshift* kosmologis **bukan efek Doppler gerak menembus ruang statis**! Dalam Relativitas Umum, jarak fisik ke galaksi jauh dapat bertumbuh dengan laju $\dot{r} = H_0 d > c$ di luar Bola Hubble ($d > c/H_0$) **tanpa melanggar Relativitas Khusus**, karena tidak ada partikel/informasi yang bergerak melebihi $c$ secara lokal menembus ruang — ruangnyalah yang bertambah di antara galaksi-galaksi!
+
+</Bagian>
+
+<Bagian id="friedmann-newtonian" judul="2. Penurunan Persamaan Friedmann, Fluida & Percepatan Kosmologis" tag="Dinamika Kosmologi">
+
+Keajaiban kosmologi matematis (Milne & McCrea, 1934; MIT `8.286`, `SRC-04`, `SRC-06`) adalah **Persamaan Friedmann** beserta dinamikanya dapat diturunkan secara eksak dari gravitasi Newton + Hukum I Termodinamika dengan meninjau sebuah galaksi uji bermassa $m$ di tepi bola komoving beradius $r(t) = a(t)\chi$ di dalam fluida kosmik seragam berkerapatan massa $\rho(t)$:
+
+1. **Penurunan Persamaan Friedmann I (Energi Mekanik Bola Kosmik):**
+   Berdasarkan **Teorema Kulit Newton** (dan Teorema Birkhoff di Relativitas Umum!), distribusi homogen di luar radius $r$ memberikan gaya neto nol di dalam bola, sedangkan massa di dalam bola adalah $M = \frac{4}{3}\pi r^3 \rho = \frac{4}{3}\pi a^3 \chi^3 \rho$. Kekekalan energi mekanik total partikel uji $m$ ($K + U = E_{\text{konst}}$):
+   $$\frac{1}{2}m\dot{r}^2 - \frac{G M m}{r} = E = -\frac{1}{2}m k c^2 \chi^2,$$
+   di mana konstanta integrasi $E$ (energi ikat spesifik awal partikel komoving) ditulis sebagai $-\frac{1}{2}m k c^2 \chi^2$ dengan $k \in \{+1, 0, -1\}$ kelengkungan ruang. Substitusi $r = a\chi$, $\dot{r} = \dot{a}\chi$, dan $M = \frac{4}{3}\pi a^3 \chi^3 \rho$, bagi kedua ruas dengan $\frac{1}{2}m a^2 \chi^2$ ($\chi^2$ lenyap sempurna!), lalu tambahkan suku konstanta kosmologis $\Lambda$ sebagai energi vakum:
+
+<Rumus judul="Persamaan Friedmann, Persamaan Fluida & Persamaan Percepatan">
+
+$$H^2 \equiv \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3}\rho - \frac{k c^2}{a^2} + \frac{\Lambda c^2}{3}$$
+$$\dot{\rho} + 3\frac{\dot{a}}{a}\left(\rho + \frac{P}{c^2}\right) = 0, \qquad \frac{\ddot{a}}{a} = -\frac{4\pi G}{3}\left(\rho + \frac{3P}{c^2}\right) + \frac{\Lambda c^2}{3}$$
+
+</Rumus>
+
+2. **Penurunan Persamaan Fluida Kosmologis (Termodinamika Ekspansi Adiabatik):**
+   Karena alam semesta homogen, tidak ada aliran panas bersih keluar-masuk volume komoving ($dQ = 0$). Terapkan Hukum I Termodinamika $dE = -P\,dV$ pada volume $V = \frac{4}{3}\pi a^3 \chi^3$ berisi energi total $E = \rho c^2 V$:
+   $$\frac{d}{dt}\left(\rho c^2 \cdot \frac{4}{3}\pi a^3 \chi^3\right) = -P\frac{d}{dt}\left(\frac{4}{3}\pi a^3 \chi^3\right) \implies \left(\dot{\rho}a^3 + 3\rho a^2\dot{a}\right)c^2 = -P\left(3 a^2\dot{a}\right).$$
+   Bagi seluruh ruas dengan $a^3 c^2$ langsung memberi **Persamaan Fluida** $\dot{\rho} + 3H(\rho + P/c^2) = 0$!
+3. **Penurunan Persamaan Percepatan ($\ddot{a}/a$):**
+   Diferensialkan $a^2 H^2 = \dot{a}^2 = \frac{8\pi G}{3}\rho a^2 - kc^2 + \frac{\Lambda c^2}{3}a^2$ terhadap waktu $t$:
+   $$2\dot{a}\ddot{a} = \frac{8\pi G}{3}\left(\dot{\rho}a^2 + 2\rho a \dot{a}\right) + \frac{2\Lambda c^2}{3}a\dot{a}.$$
+   Substitusikan $\dot{\rho} = -3\frac{\dot{a}}{a}(\rho + P/c^2)$ lalu bagi $2a\dot{a}$: hasilnya adalah **Persamaan Percepatan**, yang mengungkap sifat mengejutkan Relativitas Umum — **tekanan $P$ ikut berkontribusi sebagai sumber gravitasi ($3P/c^2$)**! Untuk energi gelap ($\Lambda$ atau persamaan keadaan $w = P/(\rho c^2) = -1 \implies P = -\rho c^2$), $(\rho + 3P/c^2) = -2\rho < 0$, menghasilkan **gravitasi tolak ($\ddot{a} > 0$, percepatan ekspansi kosmik)**!
+
+<Epistemik jenis="model" judul="Batas model Newtonian vs Relativitas Umum (FLRW)">
+
+Meski langkah aljabar Newtonian di atas menghasilkan Persamaan Friedmann identik hingga setiap tanda dan koefisiennya, model Newtonian mengasumsikan ruang Euklides datar mutlak dan mendefinisikan $k$ sebatas energi ikat total bola. Hanya **Relativitas Umum Einstein** (melalui **metrik Friedmann–Lemaître–Robertson–Walker / FLRW**) yang secara konsisten menafsirkan $k \in \{+1, 0, -1\}$ sebagai **geometri kelengkungan ruang-waktu 3D global** (tertutup/sferis, datar/Euklides, atau terbuka/hiperbolik) serta memasukkan suku tekanan relativistik $3P/c^2$ secara alami.
+
+</Epistemik>
+
+</Bagian>
+
+<Bagian id="omega-umur" judul="3. Densitas Kritis, Parameter Ω & Evolusi Faktor Skala a(t)" tag="Solusi Model Kosmologi">
+
+Pada alam semesta datar ($k = 0$) tanpa $\Lambda$ atau dengan memasukkan $\rho_\Lambda = \frac{\Lambda c^2}{8\pi G}$ ke dalam total kerapatan energi $\rho_{\text{tot}}$, nilai rapat massa tepat yang membuat $k = 0$ disebut **densitas kritis**:
+
+$$\rho_{c,0} = \frac{3 H_0^2}{8\pi G}.$$
+
+Untuk $H_0 = 70\ \text{km s}^{-1}\text{Mpc}^{-1} = 2{,}268\times 10^{-18}\ \text{s}^{-1}$, $\rho_{c,0} \approx \mathbf{9{,}20\times 10^{-27}\ \text{kg/m}^3}$ (setara hanya $\sim 5{,}5$ atom hidrogen per meter kubik!). Dengan mendefinisikan **parameter densitas tak berdimensi $\Omega_i \equiv \rho_{i,0} / \rho_{c,0}$**, kita integrasikan Persamaan Fluida $\dot{\rho} + 3H(1+w)\rho = 0$ untuk tiap komponen berpersamaan keadaan $P_i = w_i \rho_i c^2$:
+
+| Komponen Kosmik | Persamaan Keadaan ($w$) | Hukum Peluruhan $\rho(a)$ | Nilai Saat Ini (Planck $\Lambda$CDM) | Evolusi $a(t)$ Bila Dominan Tunggal |
+|---|---|---|---|---|
+| **Materi (Barion + Materi Gelap)** | $w = 0$ (*debu dingin*, $P \approx 0$) | $\rho_m \propto a^{-3} = (1+z)^3$ (dilusi volume 3D) | $\Omega_{m,0} \approx 0{,}315$ ($\Omega_b \approx 0{,}049$, $\Omega_c \approx 0{,}266$) | **$a(t) \propto t^{2/3}$**, usia $t_0 = \frac{2}{3}H_0^{-1}$ |
+| **Radiasi (Foton CMB + $\nu$ rel.)** | $w = +1/3$ ($P = \frac{1}{3}\rho c^2$) | $\rho_r \propto a^{-4} = (1+z)^4$ (volume $a^{-3}$ + *redshift* energi $h\nu \propto a^{-1}$!) | $\Omega_{r,0} \approx 9{,}2\times 10^{-5}$ | **$a(t) \propto t^{1/2}$**, usia $t_0 = \frac{1}{2}H_0^{-1}$ |
+| **Energi Gelap ($\Lambda$)** | $w = -1$ ($P = -\rho c^2$) | $\rho_\Lambda = \text{konstan}$ (kerapatan energi vakum tak terdilusi!) | $\Omega_{\Lambda,0} \approx 0{,}685$ | **$a(t) \propto e^{H_\Lambda t}$** (ekspansi dipercepat!) |
+| **Kelengkungan Ruang** | — | $\Omega_k \equiv -\frac{k c^2}{a_0^2 H_0^2} = 1 - \Omega_{\text{tot}}$ | $\lvert \Omega_{k,0} \rvert < 0{,}005$ ($\approx 0$, **datar**) | — |
+
+Membagi Persamaan Friedmann dengan $H_0^2$ menghasilkan persamaan laju ekspansi sepanjang sejarah kosmik:
+
+<Rumus judul="Persamaan Evolusi Parameter Hubble H(z) & Usia Alam Semesta">
+
+$$\left(\frac{H(z)}{H_0}\right)^2 = \Omega_{r,0}(1+z)^4 + \Omega_{m,0}(1+z)^3 + \Omega_{k,0}(1+z)^2 + \Omega_{\Lambda,0}$$
+$$t_0 = \int_0^{1} \frac{da}{a\,H(a)} = \frac{1}{H_0}\int_0^{\infty} \frac{dz}{(1+z)\sqrt{\Omega_{r,0}(1+z)^4 + \Omega_{m,0}(1+z)^3 + \Omega_{k,0}(1+z)^2 + \Omega_{\Lambda,0}}}$$
+
+</Rumus>
+
+*(Cek usia nyata: untuk model materi datar Einstein–de Sitter $\Omega_m = 1, \Omega_\Lambda = 0$, $t_0 = \frac{2}{3}H_0^{-1} \approx 9{,}3\ \text{Gyr}$ — lebih muda daripada gugus bola tertua $12{,}5\ \text{Gyr}$! Masuknya $\Omega_\Lambda \approx 0{,}685$ memperlambat ekspansi di masa lalu lalu mempercepatnya belakangan, sehingga integral usia di atas melonjak menjadi **$t_0 \approx 0{,}95\,H_0^{-1} \approx 13{,}8\ \text{miliar tahun}$**, konsisten sempurna dengan usia gugus bola dan CMB!)*
+
+</Bagian>
+
+<Bagian id="termal-cmb-inflasi" judul="4. Sejarah Termal, BBN, CMB & Masalah Horizon/Kerataan" tag="Alam Semesta Awal">
+
+Karena kerapatan energi benda hitam Stefan–Boltzmann memenuhi $\rho_r c^2 = a_{\text{rad}} T^4$ sekaligus terdilusi secara kosmologis sebagai $\rho_r \propto a^{-4}$, temperatur alam semesta berbanding terbalik persis dengan faktor skala:
+
+<Rumus judul="Hukum Pendinginan Temperatur Radiasi Kosmik">
+
+$$T(z) = T_0\,(1 + z) = \frac{T_0}{a(t)}, \qquad T_0 = 2{,}7255\ \text{K}\quad (\text{CMB hari ini})$$
+
+</Rumus>
+
+Melacak suhu ini mundur ke $a \to 0$ menyingkap dua tonggak empiris paling kokoh teori Big Bang panas (`SRC-04`, `SRC-06`):
+1. **Nukleosintesis Big Bang (BBN, $t \approx 1\text{ s}\text{ s.d. } 3\text{ menit}$, $T \sim 10^{10}\text{--}10^9\ \text{K}$, $z \sim 10^9$):** Pada $T > 10^{10}\ \text{K}$, reaksi lemah $n + \nu_e \leftrightarrow p + e^-$ menjaga rasio neutron/proton mengikuti keseimbangan Boltzmann $n/p = e^{-\Delta m c^2 / (k_B T)}$. Saat laju ekspansi melampaui laju interaksi lemah di $T \approx 0{,}8\ \text{MeV}$ ($n/p \approx 1/6$, turun menjadi $\sim 1/7$ akibat peluruhan bebas neutron sebelum deuteron stabil terbentuk), nyaris seluruh neutron terkunci membentuk $^4\text{He}$: fraksi massa helium primordial $Y_p = \frac{2(n/p)}{1 + (n/p)} \approx \frac{2(1/7)}{8/7} \approx \mathbf{0{,}25}$ ($25\%$ massa, $75\%$ H) disertai jejak sensitif Deuterium ($\text{D}/\text{H} \sim 2{,}5\times 10^{-5}$) yang mengunci rapat massa materi biasa **$\Omega_b \approx 0{,}049$**!
+2. **Rekombinasi & Permukaan Hamburan Terakhir CMB ($t \approx 380\,000\ \text{tahun}$, $z \approx 1\,100$, $T \approx 3\,000\ \text{K}$):** Ketika suhu turun di bawah $\sim 3\,000\ \text{K}$, ekor foton berenergi $>13{,}6\ \text{eV}$ habis dan proton menangkap elektron bebas membentuk atom H netral. Hamburan Thomson foton oleh elektron bebas mendadak berhenti; alam semesta berubah menjadi transparan seketika dan foton-foton saat itu merambat bebas hingga kini tergeser merah $1\,100\times$ ke spektrum benda hitam sempurna $T_0 = 2{,}725\ \text{K}$ (puncak $\lambda_{\max} \approx 1{,}06\ \text{mm}$ di gelombang mikro!). Fluktuasi suhu $\Delta T / T \sim 10^{-5}$ pada peta CMB merekam getaran akustik plasma purba — benih gravitasi seluruh galaksi.
+3. **Masalah Horizon, Kerataan & Motivasi Inflasi Kosmik:**
+   - **Masalah Horizon:** Tanpa inflasi ($a \propto t^{1/2}$), ukuran horizon kausal saat rekombinasi hanyalah $\sim 1{,}8^\circ$ di langit CMB sekarang! Mengapa dua sisi berlawanan langit CMB ($180^\circ$) bersuhu sama hingga $1$ bagian per $10^5$ padahal mereka belum pernah saling bertukar sinyal cahaya?
+   - **Masalah Kerataan:** Dalam Persamaan Friedmann tanpa $\Lambda$, $|\Omega(t) - 1| = \frac{|k|c^2}{\dot{a}^2}$ **tumbuh seiring waktu** ($|\Omega - 1| \propto t$ di era radiasi)! Agar hari ini $|\Omega_0 - 1| < 0{,}005$, pada zaman BBN ($t \sim 1\ \text{s}$) nilai $|\Omega - 1|$ harus disetel halus $< 10^{-16}$!
+   - **Solusi Inflasi (Guth 1981):** Fase singkat ekspansi eksponensial super-cepat ($a \propto e^{H_{\text{inf}} t}$, faktor $e^{60} \sim 10^{26}\times$ pada $t \sim 10^{-35}\ \text{s}$) merentangkan satu wilayah kecil yang sudah berkesetimbangan termal menjadi jauh lebih besar dari seluruh alam semesta teramati (memecahkan Masalah Horizon), sekaligus meratakan kelengkungan ruang hingga $\Omega \to 1{,}000000$ (memecahkan Masalah Kerataan) dan menabur fluktuasi kuantum menjadi benih galaksi!
+
+<BatasValiditas
+  aturan={[
+    {
+      rumus: 'Hukum Hubble linear $v = H_0 d$ & $z \\approx v/c$',
+      berlakuJika: 'Aliran Hubble skala besar ($d \\gtrsim 100\\ \\text{Mpc}$ agar gerak lokal/peculiar $\\sim 300\\ \\text{km/s}$ dapat diabaikan) sekaligus cukup dekat ($z \\lesssim 0{,}1$) agar lengkungan kurva Hubble dari evolusi $H(z)$ kecil.',
+      gagalJika: 'Galaksi tetangga sangat dekat (Andromeda M31 pada $0{,}78\\ \\text{Mpc}$ justru mengalami blueshift $v_r \\approx -300\\ \\text{km/s}$ akibat gravitasi Lokal!), atau pada kuasar jauh $z > 0{,}3$ di mana hubungan $d_L(z)$ dan $z(t)$ menjadi non-linear bergantung pada $\\Omega_m, \\Omega_\\Lambda$.',
+      akibat: 'Menggunakan $d = c z / H_0$ pada kuasar $z = 3$ menghasilkan $v = 3c$ dan jarak keliru: jarak cahaya tempuh sebenarnya terbatas oleh usia alam semesta ($\\sim 11{,}5\\ \\text{Gyr}$ lalu), sementara jarak sejati sekarang $\\approx 6{,}5\\ \\text{Gpc}$ ($21\\ \\text{Gly}$).',
+    },
+    {
+      rumus: 'Penentuan jarak usia dari $t_0 = 1 / H_0$ atau $\\frac{2}{3}H_0^{-1}$',
+      berlakuJika: 'Hanya sebagai orde perkiraan ($t_H = 1/H_0$) atau eksak pada model datar murni materi ($\\Omega_m = 1, \\Omega_\\Lambda = 0 \\implies t_0 = \\frac{2}{3}H_0^{-1}$).',
+      gagalJika: 'Dalam alam semesta nyata ($\\Omega_m \\approx 0{,}315, \\Omega_\\Lambda \\approx 0{,}685$), usia sebenarnya wajib diintegralkan secara numerik melalui persamaan $H(z)$.',
+      akibat: 'Kebetulan bahwa untuk $\\Omega_m = 0{,}3, \\Omega_\\Lambda = 0{,}7$, hasil integralnya $0{,}96/H_0 \\approx 13{,}8\\ \\text{Gyr}$ hampir dekat dengan $1/H_0$, tetapi untuk $\\Omega_m = 1$ meleset $33\\%$.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="contoh-l5" judul="5. Worked Example: Redshift Kesetaraan Materi–Radiasi & Integrasi a(t)" tag="Notebook Hitung">
+
+<Contoh judul="Kapan alam semesta bertransisi dari dominasi radiasi ke dominasi materi?">
+
+<Langkah>
+
+**Masalah:** Dengan parameter Planck $\Omega_{m,0} = 0{,}315$ dan $\Omega_{r,0} = 9{,}20\times 10^{-5}$, tentukan faktor skala $a_{\text{eq}}$ dan redshift $z_{\text{eq}}$ saat kerapatan energi radiasi tepat sama dengan kerapatan energi materi (**kesetaraan materi–radiasi**), serta hitung temperatur CMB dan perkiraan waktu kosmik $t_{\text{eq}}$ pada saat itu!
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Redshift & Faktor Skala Kesetaraan:**
+Karena $\rho_m(z) = \rho_{m,0}(1+z)^3$ dan $\rho_r(z) = \rho_{r,0}(1+z)^4$, syarat $\rho_m(z_{\text{eq}}) = \rho_r(z_{\text{eq}})$ memberi:
+$$\Omega_{m,0}(1+z_{\text{eq}})^3 = \Omega_{r,0}(1+z_{\text{eq}})^4 \implies 1 + z_{\text{eq}} = \frac{\Omega_{m,0}}{\Omega_{r,0}} = \frac{0{,}315}{9{,}20\times 10^{-5}} \approx 3\,424!$$
+Maka **$z_{\text{eq}} \approx 3\,423$** dan faktor skalanya $a_{\text{eq}} = 1/3\,424 \approx 2{,}92\times 10^{-4}$ (terjadi jauh *sebelum* rekombinasi CMB pada $z \approx 1\,100$!).
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Temperatur Kosmik Saat $z_{\text{eq}}$:**
+$$T(z_{\text{eq}}) = T_0(1+z_{\text{eq}}) = 2{,}7255 \times 3\,424 \approx 9\,332\ \text{K} \quad (k_B T \approx 0{,}80\ \text{eV}).$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 3 — Estimasi Umur $t_{\text{eq}}$ dari Integrasi Persamaan Friedmann:**
+Untuk $z \gg 10$, baik $\Omega_{\Lambda,0}$ maupun $\Omega_{k,0}$ terabaikan. Pada era dominasi radiasi murni ($\Omega_r(1+z)^4 \gg \Omega_m(1+z)^3$), Persamaan Friedmann menjadi:
+$$\left(\frac{\dot{a}}{a}\right)^2 \approx H_0^2 \Omega_{r,0} a^{-4} \implies a\dot{a} = H_0 \sqrt{\Omega_{r,0}} \implies \frac{1}{2}a^2 = H_0 \sqrt{\Omega_{r,0}}\,t.$$
+Dengan memasukkan koreksi transisi hingga $a_{\text{eq}}$ ($H_0 \approx 2{,}20\times 10^{-18}\ \text{s}^{-1}$), kita peroleh taksiran orde:
+$$t_{\text{eq}} \sim \frac{a_{\text{eq}}^2}{2 H_0 \sqrt{\Omega_{r,0}}} \approx \frac{(2{,}92\times 10^{-4})^2}{2(2{,}20\times 10^{-18})(9{,}59\times 10^{-3})} \approx 2{,}0\times 10^{12}\ \text{s} \approx 64\,000\ \text{tahun}!$$
+*(Integrasi penuh dengan materi+radiasi campuran tepat memberi $\sim 50\,000\ \text{tahun}$ pasca-Big Bang!)*
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Big Bang adalah ledakan materi dari satu titik pusat di ruang kosong, sehingga galaksi-galaksi terpental menjauh melintasi ruang statis menjauhi pusat ledakan itu.',
+      kenapaKeliru: 'Membayangkan ruang tiga dimensi sudah ada lebih dulu seperti ruangan kosong sebelum ledakan terjadi.',
+      caraDeteksi: 'Terapkan Hukum Hubble pada pengamat di galaksi manapun: karena r_ij(t) = a(t) χ_ij, vektor selisih r_j - r_i juga memenuhi v_ij = H₀ r_ij! Setiap pengamat di galaksi mana saja di alam semesta melihat semua galaksi lain menjauh dari dirinya secara identik — tak ada pusat ledakan istimewa!',
+      benar: 'Big Bang adalah ekspansi metrik ruang itu sendiri secara seragam di mana-mana sejak awal; tidak ada "pusat" maupun "luar" di dalam ruang 3D.',
+    },
+    {
+      salah: 'Waktu Hubble t_H = 1/H₀ adalah rumus eksak usia alam semesta untuk segala model kosmologi.',
+      kenapaKeliru: 'Mengira laju ekspansi ȧ tetap konstan sepanjang sejarah (alam semesta kosong tanpa gravitasi maupun energi gelap).',
+      caraDeteksi: 'Uji pada model datar murni materi (Einstein–de Sitter): karena gravitasi memperlambat ekspansi (ä < 0), dulu alam semesta mengembang JAUH lebih cepat sehingga waktu mencapai a₀ hanyalah 2/3 H₀⁻¹, bukan 1/H₀!',
+      benar: 't_H = 1/H₀ hanyalah skala waktu karakteristik; usia eksak t₀ wajib dihitung lewat integral Persamaan Friedmann yang mempertimbangkan perlambatan oleh materi/radiasi dan percepatan oleh Λ.',
+    },
+    {
+      salah: 'Ketika alam semesta mengembang sebesar faktor 2, panjang gelombang foton CMB bertambah 2× dan kerapatan energi radiasinya turun menjadi 1/2³ = 1/8 saja.',
+      kenapaKeliru: 'Hanya memperhitungkan pengenceran kerapatan jumlah foton n_γ ∝ a⁻³ (seperti debu/materi) dan lupa bahwa energi setiap foton hν = hc/λ juga menyusut oleh faktor a⁻¹ akibat redshift!',
+      caraDeteksi: 'Kalikan kerapatan jumlah foton (∝ a⁻³) dengan energi per foton (∝ a⁻¹): ρ_r = n_γ E_γ ∝ a⁻⁴! Konsisten sempurna dengan Persamaan Fluida untuk w = 1/3.',
+      benar: 'Kerapatan energi radiasi meluruh sebagai a⁻⁴, lebih cepat daripada materi (a⁻³), sehingga radiasi yang dulu mendominasi alam semesta awal kini hampir habis digantikan materi dan Λ.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="l5-cek-1"
+  pertanyaan="Dengan H₀ = 70 (km/s)/Mpc, berapa jarak galaksi yang menjauh dengan 2.100 km/s?"
+  opsi={['30 Mpc', '3 Mpc', '147 Mpc', '210 Mpc']}
+  jawaban={0}
+  penjelasan="d = v/H₀ = 2.100/70 = 30 Mpc. Sekitar 98 juta tahun cahaya."
+/>
+
+<CekPaham
+  id="l5-cek-2"
+  pertanyaan="Jika CMB hari ini 2,725 K, berapa suhunya saat alam semesta berukuran separuh (z = 1)?"
+  opsi={['1,36 K', '2,725 K', '5,45 K', '27,25 K']}
+  jawaban={2}
+  penjelasan="T = T₀(1+z) = 2,725 × 2 = 5,45 K. Suhu naik saat faktor skala mengecil."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'l5-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Mengapa di alam semesta nyata ($\\Lambda$CDM dengan $\\Omega_{m,0} \\approx 0{,}315$ dan $\\Omega_{\\Lambda,0} \\approx 0{,}685$), ekspansi kosmik pada $z > 1$ justru mengalami **perlambatan ($\\ddot{a} < 0$)**, namun belakangan pada $z < 0{,}6$ berubah menjadi **percepatan ($\\ddot{a} > 0$)**? Tunjukkan titik transisi redshift $z_{\\text{acc}}$ tepat ketika $\\ddot{a} = 0$!',
+      petunjuk: 'Evaluasi Persamaan Percepatan $\\frac{\\ddot{a}}{a} = -\\frac{4\\pi G}{3}\\rho_m + \\frac{\\Lambda c^2}{3} = 0$ dengan menyatakan $\\rho_m(z) = \\rho_{c,0}\\Omega_{m,0}(1+z)^3$ dan $\\frac{\\Lambda c^2}{3} = H_0^2 \\Omega_{\\Lambda,0}$.',
+      langkahKunci: [
+        'Dari $\\rho_{c,0} = \\frac{3H_0^2}{8\\pi G}$, Persamaan Percepatan menjadi: $\\frac{\\ddot{a}}{a} = H_0^2\\left[-\\frac{1}{2}\\Omega_{m,0}(1+z)^3 + \\Omega_{\\Lambda,0}\\right]$.',
+        'Di alam semesta muda ($z \\gg 1$), materi amat padat ($(1+z)^3$ besar) sehingga tarikan gravitasi materi mengalahkan $\\Lambda$ dan ekspansi **melambat** ($\\ddot{a} < 0$).',
+        'Saat ruang mengembang, $\\rho_m$ turun sebagai $a^{-3}$ sementara $\\rho_\\Lambda$ tetap konstan! Titik balik transisi $\\ddot{a} = 0$ terjadi saat:',
+        '$$(1 + z_{\\text{acc}})^3 = \\frac{2\\,\\Omega_{\\Lambda,0}}{\\Omega_{m,0}} = \\frac{2(0{,}685)}{0{,}315} \\approx 4{,}35 \\implies 1 + z_{\\text{acc}} \\approx 1{,}63 \\implies z_{\\text{acc}} \\approx 0{,}63!$$',
+        'Sejak $\\sim 6$ miliar tahun lalu ($z < 0{,}63$), energi gelap menang dan mempercepat laju perluasan semesta ($\\ddot{a} > 0$).',
+      ],
+      rubrik: [
+        'Menuliskan $\\ddot{a}/a = H_0^2[-\\frac{1}{2}\\Omega_m(1+z)^3 + \\Omega_\\Lambda]$ dengan tepat.',
+        'Menurunkan titik transisi $(1+z_{\\text{acc}})^3 = 2\\Omega_\\Lambda / \\Omega_m \\implies z_{\\text{acc}} \\approx 0{,}63$.',
+      ],
+    },
+    {
+      id: 'l5-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari Persamaan Friedmann datar ($k = 0, \\Lambda = 0$) untuk alam semesta yang didominasi oleh satu komponen fluida sempurna dengan persamaan keadaan $P = w\\rho c^2$ ($w = \\text{konst} > -1$), turunkan hukum evolusi kerapatan $\\rho(a)$ dari persamaan fluida lalu integrasikan Persamaan Friedmann untuk membuktikan evolusi faktor skala $a(t) = (t / t_0)^{\\frac{2}{3(1+w)}}$ serta rumus umum usia alam semesta $t_0 = \\frac{2}{3(1+w) H_0}$!',
+      petunjuk: 'Integrasikan $\\frac{d\\rho}{\\rho} = -3(1+w)\\frac{da}{a}$, lalu substitusikan ke $(\\dot{a}/a)^2 = H_0^2 a^{-3(1+w)}$ dan pisahkan variabel $dt = H_0^{-1} a^{\\frac{3(1+w)}{2} - 1} da$.',
+      langkahKunci: [
+        'Dari persamaan fluida $\\dot{\\rho} + 3\\frac{\\dot{a}}{a}(1+w)\\rho = 0$, bagi dengan $\\rho$ dan kalikan $dt$: $\\frac{d\\rho}{\\rho} = -3(1+w)\\frac{da}{a} \\implies \\rho(a) = \\rho_0\\,a^{-3(1+w)}$.',
+        'Masukkan ke Persamaan Friedmann datar ($\\rho_0 = \\rho_{c,0}$): $\\left(\\frac{\\dot{a}}{a}\\right)^2 = H_0^2 a^{-3(1+w)} \\implies \\frac{da}{dt} = H_0\\,a^{1 - \\frac{3}{2}(1+w)}$.',
+        'Pisahkan variabel dan integrasikan dari $t=0$ ($a=0$) hingga $t$ ($a$):',
+        '$$\\int_0^a a^{\\frac{3}{2}(1+w)-1}\\,da = H_0 \\int_0^t dt \\implies \\frac{a^{\\frac{3}{2}(1+w)}}{\\frac{3}{2}(1+w)} = H_0 t.$$',
+        'Pada $t = t_0$ ($a = 1$): **$t_0 = \\frac{2}{3(1+w) H_0}$**, dan membagi kedua persamaan memberi **$a(t) = (t/t_0)^{\\frac{2}{3(1+w)}}$**! Uji langsung: $w=0 \\implies a \\propto t^{2/3}, t_0 = \\frac{2}{3}H_0^{-1}$; $w=1/3 \\implies a \\propto t^{1/2}, t_0 = \\frac{1}{2}H_0^{-1}$!',
+      ],
+      rubrik: [
+        'Menurunkan $\\rho(a) \\propto a^{-3(1+w)}$ dari persamaan fluida.',
+        'Melakukan pemisahan variabel dan integrasi lengkap menghasilkan $a(t) = (t/t_0)^{2/(3(1+w))}$ dan $t_0$.',
+      ],
+    },
+    {
+      id: 'l5-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Hitunglah **kerapatan jumlah foton CMB** saat ini ($n_{\\gamma,0} \\approx 0{,}244\\,(k_B T_0 / \\hbar c)^3$) dalam satuan $\\text{foton/cm}^3$ untuk $T_0 = 2{,}7255\\ \\text{K}$, lalu bandingkan dengan kerapatan rata-rata proton/barion alam semesta ($\\Omega_{b,0} = 0{,}049$, $\\rho_{c,0} = 9{,}2\\times 10^{-27}\\ \\text{kg/m}^3$) untuk menentukan **rasio barion terhadap foton ($\\eta_B = n_b / n_\\gamma$)**!',
+      petunjuk: 'Gunakan $k_B T_0 / (\\hbar c) = \\frac{(1{,}381\\times 10^{-23})(2{,}7255)}{(1{,}055\\times 10^{-34})(2{,}998\\times 10^8)} \\approx 1\\,190\\ \\text{m}^{-1}$.',
+      langkahKunci: [
+        'Hitung faktor skala termal: $\\frac{k_B T_0}{\\hbar c} \\approx 1{,}190\\times 10^3\\ \\text{m}^{-1}$, sehingga $n_{\\gamma,0} \\approx 0{,}244 \\times (1{,}190\\times 10^3)^3 \\approx 4{,}11\\times 10^8\\ \\text{m}^{-3} = \\mathbf{411\\ \\text{foton/cm}^3}$!',
+        'Kerapatan massa barion saat ini: $\\rho_{b,0} = 0{,}049 \\times 9{,}2\\times 10^{-27} \\approx 4{,}51\\times 10^{-28}\\ \\text{kg/m}^3$.',
+        'Kerapatan jumlah barion: $n_{b,0} = \\rho_{b,0} / m_p \\approx 4{,}51\\times 10^{-28} / 1{,}673\\times 10^{-27} \\approx 0{,}270\\ \\text{m}^{-3}$ (hanya $\\sim 0{,}27$ atom per meter kubik!).',
+        'Maka rasio barion-terhadap-foton kosmik: $\\eta_B = n_{b,0} / n_{\\gamma,0} \\approx 0{,}270 / (4{,}11\\times 10^8) \\approx \\mathbf{6{,}6\\times 10^{-10}}$ (atau sekitar $1{,}5$ miliar foton CMB untuk setiap 1 proton materi di alam semesta)!',
+      ],
+      rubrik: [
+        'Menghitung $n_{\\gamma,0} \\approx 411\\ \\text{foton/cm}^3$ dan $n_{b,0} \\approx 0{,}25\\text{--}0{,}27\\ \\text{m}^{-3}$.',
+        'Menemukan rasio tak berdimensi $\\eta_B \\approx 6\\times 10^{-10}$ (konstanta kunci yang mengatur hasil BBN!).',
+      ],
+    },
+    {
+      id: 'l5-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Sebuah survei Supernova Tipe Ia menemukan dua objek di galaksi jauh pada $z_1 = 0{,}020$ ($m_{B,1} = 15{,}40$) dan $z_2 = 0{,}050$ ($m_{B,2} = 17{,}40$), keduanya bermagnitudo mutlak puncak terkalibrasi $M_B = -19{,}30$ tanpa ekstingsi signifikan. Taksir jarak luminositas masing-masing ($d_1, d_2$ dalam Mpc) dari modulus jarak dan cek nilai konstanta Hubble $H_0 \\approx c z / d$ dari kedua titik data tersebut!',
+      petunjuk: 'Gunakan $d = 10^{(m - M + 5)/5}\\ \\text{pc}$ lalu ubah ke Mpc dan hitung $H_0 = c z / d$.',
+      langkahKunci: [
+        'Untuk SN 1 ($z_1 = 0{,}020$): $\\mu_1 = 15{,}40 - (-19{,}30) = 34{,}70 \\implies d_1 = 10^{(34{,}70+5)/5} = 10^{7{,}94} \\approx 87{,}1\\ \\text{Mpc}$. Dari sini $H_{0,1} = \\frac{(299\\,792)(0{,}020)}{87{,}1} \\approx 68{,}8\\ \\text{km s}^{-1}\\text{Mpc}^{-1}$.',
+        'Untuk SN 2 ($z_2 = 0{,}050$): $\\mu_2 = 17{,}40 - (-19{,}30) = 36{,}70 \\implies d_2 = 10^{(36{,}70+5)/5} = 10^{8{,}34} \\approx 218{,}8\\ \\text{Mpc}$. Dari sini $H_{0,2} = \\frac{(299\\,792)(0{,}050)}{218{,}8} \\approx 68{,}5\\ \\text{km s}^{-1}\\text{Mpc}^{-1}$.',
+        'Rata-rata kedua pengukuran menghasilkan **$H_0 \\approx 68{,}7\\ \\text{km s}^{-1}\\text{Mpc}^{-1}$**, konsisten langsung dengan pengukuran kosmologi modern ($67\\text{--}73\\ \\text{km s}^{-1}\\text{Mpc}^{-1}$).',
+      ],
+      rubrik: [
+        'Menghitung $d_1 \\approx 87{,}1\\ \\text{Mpc}$ dan $d_2 \\approx 218{,}8\\ \\text{Mpc}$ dengan benar dari modulus jarak.',
+        'Menurunkan $H_0 \\approx 68{,}5\\text{--}68{,}9\\ \\text{km s}^{-1}\\text{Mpc}^{-1}$.',
+      ],
+    },
+    {
+      id: 'l5-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Pada $t \\approx 380\\,000\\ \\text{tahun}$ ($z \\approx 1\,100$), suhu alam semesta hanyalah $T \\approx 3\\,000\\ \\text{K}$ ($k_B T \\approx 0{,}26\\ \\text{eV}$) — padahal energi ionisasi atom hidrogen adalah $\\chi_{\\text{H}} = 13{,}6\\ \\text{eV}$ ($\\sim 52\\times$ lebih besar!). Mengapa hidrogen baru ber-rekombinasi menjadi netral pada suhu serendah $3\\,000\\ \\text{K}$, bukan langsung saat $k_B T$ turun sedikit di bawah $13{,}6\\ \\text{eV}$ ($T \\sim 150\\,000\\ \\text{K}$)?',
+      petunjuk: 'Tinjau **persamaan Saha kosmologis** dan peran rasio foton-per-barion raksasa $1/\\eta_B \\approx 1{,}5\\times 10^9$ pada ekor energi tinggi spektrum Planck!',
+      langkahKunci: [
+        'Dalam distribusi benda hitam Planck, masih ada **ekor foton energi tinggi** dengan energi $E > 13{,}6\\ \\text{eV}$ berfraksi sekitar $\\sim e^{-\\chi_H / (k_B T)}$.',
+        'Karena jumlah total foton CMB sekitar **$1{,}5\\times 10^9$ kali lebih banyak** daripada jumlah proton ($\\eta_B \\approx 6{,}6\\times 10^{-10}$), bahkan ketika fraksi foton $>13{,}6\\ \\text{eV}$ hanyalah $10^{-9}$, masih tetap ada satu foton pengionisasi untuk setiap satu atom hidrogen!',
+        'Dengan menyelesaikan persamaan Saha untuk fraksi ionisasi $X_e = 0{,}5$, eksponensialnya baru cukup kecil menembus angka $10^{-9}$ ketika $\\chi_H / (k_B T) \\approx 40\\text{--}50$, yakni tepat pada suhu **$T \\approx 3\\,000\\text{--}3\\,500\\ \\text{K}$**!',
+      ],
+      rubrik: [
+        'Menghubungkan rekombinasi tertunda dengan tingginya jumlah foton terhadap barion ($\\sim 10^9$ foton per proton).',
+        'Menjelaskan bagaimana ekor distribusi Planck ($h\\nu > 13{,}6\\ \\text{eV}$) tetap menjaga H terionisasi hingga $\\eta_B^{-1} e^{-13{,}6\\text{ eV}/k_B T} \\sim 1$ pada $T \\approx 3\\,000\\ \\text{K}$.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'l5-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa pengamatan bintang-bintang paling tua di gugus bola Bima Sakti (usia $\\sim 12{,}5\\text{--}13\\ \\text{miliar tahun}$) di tahun 1990-an pernah memicu "krisis usia alam semesta" yang memaksa kosmolog menerima kembali konstanta kosmologis $\\Lambda$ bahkan sebelum bukti Supernova Ia ditemukan?',
+      petunjuk: 'Bandingkan usia teoretis model datar murni materi ($\\Omega_m = 1$, $t_0 = \\frac{2}{3}H_0^{-1}$) untuk $H_0 = 70\\ \\text{km s}^{-1}\\text{Mpc}^{-1}$ dengan usia gugus bola ($12{,}5\\ \\text{Gyr}$)!',
+      rubrik: [
+        'Jika alam semesta datar ($\\Omega_{\\text{tot}} = 1$, prediksi inflasi) tetapi tanpa energi gelap ($\\Omega_m = 1$), usia alam semesta hanya $t_0 = \\frac{2}{3 H_0} \\approx 9{,}3\\ \\text{Gyr}$ ($H_0 = 70$) — **3 miliar tahun LEBIH MUDA daripada bintang-bintang di dalamnya**!',
+        'Memasukkan $\\Omega_\\Lambda \\approx 0{,}7$ mengurangi gaya pengereman gravitasi di masa lalu sehingga integral usia naik dari $\\frac{2}{3}H_0^{-1}$ menjadi $\\sim 0{,}96\\,H_0^{-1} \\approx 13{,}8\\ \\text{Gyr}$, memecahkan paradoks anak lebih tua dari induknya!',
+      ],
+      jawabanKunci:
+        'Sebelum tahun 1998, model standar kosmologi datar tanpa $\\Lambda$ ($\\Omega_m = 1$) memprediksi usia eksak alam semesta hanyalah $t_0 = \\frac{2}{3 H_0} \\approx 9{,}3\\ \\text{miliar tahun}$ (untuk $H_0 = 70\\ \\text{km s}^{-1}\\text{Mpc}^{-1}$). Angka tersebut jelas mustahil secara logika karena gugus bola di halo Bima Sakti berumur $\\sim 12{,}5\\ \\text{miliar tahun}$ — bintang tidak mungkin lebih tua daripada alam semesta tempatnya lahir! Penambahan $\\Omega_\\Lambda \\approx 0{,}7$ (dikonfirmasi oleh Supernova Ia 1998) memperlambat ekspansi awal yang lebih pelan untuk mencapai laju $H_0$ hari ini, memperpanjang usia alam semesta menjadi $13{,}8\\ \\text{miliar tahun}$.',
+    },
+    {
+      id: 'l5-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Sebuah galaksi sangat jauh teramati memiliki redshift $z = 3{,}0$. Seorang siswa menghitung kecepatannya memakai rumus linear non-relativistik $v = c z = 3c$ dan langsung menyimpulkan bahwa Teori Relativitas Khusus Einstein salah, atau data observasi $z = 3{,}0$ tersebut pasti keliru. Sebutkan **dua kekeliruan fisika** dalam kesimpulan siswa itu!',
+      petunjuk: 'Tinjau dua hal: (1) pembedaan antara rumus *redshift* kosmologis $1+z = a_0/a$ vs gerak di ruang datar lokal Relativitas Khusus, serta (2) jarak kapan rumus aproksimasi $z \\approx v/c$ gagal!',
+      rubrik: [
+        'Kesalahan 1: $z = v/c$ hanyalah aproksimasi orde pertama untuk $z \\ll 1$; bahkan secara Relativitas Khusus murni, $1 + z = \\sqrt{\\frac{1+v/c}{1-v/c}}$ untuk $z=3$ memberi $v/c = \\frac{16-1}{16+1} = 0{,}882c < c$!',
+        'Kesalahan 2: Untuk kosmologi, $z = 3{,}0$ semata bermakna faktor skala ruang ketika cahaya dipancarkan adalah $a = 1/(1+z) = 1/4$ ukuran sekarang — dan bila jarak cukup jauh ($r > c/H_0$), kecepatan ekspansi ruang $\\dot{r} = H r$ memang boleh melampaui $c$ tanpa melanggar Relativitas Khusus yang hanya membatasi kecepatan lokal partikel relatif terhadap kerangka inersia setempat!',
+      ],
+      jawabanKunci:
+        'Siswa itu melakukan dua kesalahan mendasar: Pertama, hubungan $v = cz$ hanyalah aproksimasi linear limit kecepatan rendah ($z \\ll 1$); dalam Relativitas Khusus pun $z = 3$ berkorespondensi dengan $v = 0{,}882c < c$. Kedua, pada skala kosmologis $z = 3$ adalah **redshift kosmologis**, artinya ruang telah mengembang $1 + z = 4\\times$ sejak foton itu dipancarkan ($a = 0{,}25$). Batas kecepatan cahaya $c$ dalam Relativitas Khusus hanya berlaku secara lokal bagi sinyal yang melintas menembus ruang, bukan bagi laju pertambahan jarak metrik $\\dot{r} = H(t)r$ antara dua galaksi terpisah miliaran parsek.',
+    },
+    {
+      id: 'l5-log-3',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Andaikan di alam semesta alternatif tidak ada materi gelap maupun $\\Lambda$ ($\\Omega_{\\Lambda,0} = 0$), dan seluruh energi alam semesta hanyalah materi biasa dengan kerapatan **2 kali lipat densitas kritis saat ini** ($\\Omega_{m,0} = 2{,}0$, $\\Omega_{k,0} = -1$, sehingga $k = +1$ ruang tertutup). Apa nasib akhir alam semesta ini, dan pada faktor skala maksimum $a_{\\max}$ berapakah ekspansinya berhenti berbalik mengerut?',
+      petunjuk: 'Setel $H(a) = 0$ pada Persamaan Friedmann $H^2(a) = H_0^2[\\Omega_{m,0} a^{-3} + (1 - \\Omega_{m,0}) a^{-2}] = 0$!',
+      rubrik: [
+        'Dengan $k = +1$ ($\\Omega_{\\text{tot}} = 2 > 1, \\Lambda = 0$), alam semesta bergeometri **tertutup (sferis)**; gravitasi materi pada akhirnya akan menghentikan ekspansi ($H = 0$) dan memicunya runtuh kembali (*Big Crunch*).',
+        'Menyelesaikan $2{,}0\\,a_{\\max}^{-3} - 1{,}0\\,a_{\\max}^{-2} = 0$ langsung memberikan **$a_{\\max} = 2{,}0$** (saat alam semesta mengembang $2\\times$ ukuran sekarang, ekspansi berhenti sejenak sebelum berbalik menyusut)!',
+      ],
+      jawabanKunci:
+        'Karena $\\Omega_{m,0} = 2{,}0 > 1$ dan $\\Lambda = 0$, kelengkungan ruang bernilai $k = +1$ (geometri tertutup bervolume berhingga). Dari Persamaan Friedmann $\\left(\\frac{H}{H_0}\\right)^2 = 2{,}0\\,a^{-3} - 1{,}0\\,a^{-2}$, kecepatan ekspansi jatuh ke nol ($H = 0$) tepat ketika faktor skala mencapai **$a_{\\max} = \\frac{\\Omega_{m,0}}{\\Omega_{m,0} - 1} = 2{,}0$** ($2\\times$ ukuran sekarang). Sesudah puncak itu, $\\dot{a}$ berbalik negatif dan seluruh alam semesta runtuh kembali menuju **Big Crunch** dalam jangka waktu yang sama dengan fase ekspansinya.',
+    },
+    {
+      id: 'l5-log-4',
+      tipe: 'prediksi_akibat',
+      pertanyaan:
+        'Sebuah kuasar jauh memancarkan foton dengan energi $h\\nu_0$ pada $z = 5$, dan diamati oleh pengamat di Bumi hari ini. Jika kita melacak sekumpulan foton tersebut yang terus merambat hingga masa depan ekstrem saat alam semesta telah mengembang $10\\times$ lebih besar dari hari ini ($a_{\\text{depan}} = 10$), bagaimana perbandingan panjang gelombang foton pada $(z=5) \\to (z=0) \\to (a=10)$, serta berapa temperatur CMB saat $a_{\\text{depan}} = 10$?',
+      petunjuk: 'Panjang gelombang foton selalu berbanding lurus dengan faktor skala kosmik $a(t)$ di setiap zaman: $\\lambda(t) \\propto a(t)$.',
+      rubrik: [
+        'Dari saat dipancarkan ($a_e = 1/6$) hingga hari ini ($a_0 = 1$), $\\lambda$ meregang $6\\times$; dari hari ini hingga $a = 10$, $\\lambda$ kembali meregang $10\\times$ menjadi total **$60\\times$ panjang gelombang awalnya** ($1 + z_{\\text{total}} = a_{\\text{depan}}/a_e = 60$).',
+        'Temperatur CMB pada $a = 10$ akan turun sepuluh kali lipat menjadi $T = T_0 / 10 \\approx \\mathbf{0{,}273\\ \\text{K}}$!',
+      ],
+      jawabanKunci:
+        'Karena panjang gelombang setiap foton yang merambat bebas melalui metrik FLRW berbanding lurus dengan faktor skala ($\\lambda(t) / \\lambda_e = a(t) / a_e$), foton dari kuasar $z = 5$ ($a_e = 1/6$) sudah meregang $6\\times$ saat mencapai Bumi ($a_0 = 1$), dan saat alam semesta kelak berukuran $a = 10$ foton itu telah teregang total **$10 / (1/6) = 60\\times$** panjang gelombang awalnya ($1 + z = 60$, kehilangan $98{,}3\\%$ energinya). Pada saat yang sama, temperatur CMB akan mendingin menjadi $T = 2{,}7255 / 10 \\approx 0{,}273\\ \\text{K}$.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="l5-refleksi-1"
+  pertanyaan="Mengapa pengamatan satu angka sederhana — temperatur radiasi benda hitam CMB $T_0 = 2{,}725\\ \\text{K}$ dan fluktuasinya sebesar $\\sim 10^{-5}$ di seluruh langit — sekaligus menjadi bukti terkuat Big Bang panas sekaligus menyingkap perlunya era inflasi awal dan energi gelap $\\Omega_\\Lambda$?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'l5-m1', gerbang: 'konsep', teks: 'Membedakan redshift kosmologis (1 + z = a₀/a) dari efek Doppler lokal serta menjelaskan Hukum Hubble–Lemaître.' },
+    { id: 'l5-m2', gerbang: 'derivasi', teks: 'Menurunkan Persamaan Friedmann, Fluida, dan Percepatan ä/a dari mekanika Newtonian + Hukum I Termodinamika.' },
+    { id: 'l5-m3', gerbang: 'derivasi', teks: 'Menghitung densitas kritis ρ_c = 3H₀²/(8πG) dan mengintegrasikan a(t) serta usia alam semesta t₀ untuk fluida ber-persamaan keadaan P = wρc².' },
+    { id: 'l5-m4', gerbang: 'observasi', teks: 'Menghitung epoch kesetaraan materi–radiasi z_eq, sejarah termal T(z) = T₀(1+z), BBN, dan rekombinasi CMB.' },
+    { id: 'l5-m5', gerbang: 'logika', teks: 'Menjelaskan mengapa Ω_Λ mempercepat ekspansi (ä > 0 pada z < 0,63) dan bagaimana inflasi memecahkan masalah horizon & kerataan.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul L5">
+
+<Konstanta
+  data={[
+    { simbol: 'H₀ (nilai Planck / khas)', nilai: '67,4 / ~70', satuan: '(km/s)/Mpc' },
+    { simbol: 'Waktu Hubble t_H = 1/H₀', nilai: '13,97 (H₀=70)', satuan: 'miliar tahun' },
+    { simbol: 'Densitas kritis ρ_c,0 (H₀=70)', nilai: '9,20 × 10⁻²⁷', satuan: 'kg/m³' },
+    { simbol: 'Parameter Planck ΛCDM', nilai: 'Ω_m=0,315 · Ω_Λ=0,685', satuan: 'datar (k=0)' },
+    { simbol: 'Suhu CMB T₀', nilai: '2,7255', satuan: 'K' },
+    { simbol: 'z_rekombinasi (CMB)', nilai: '~1.090–1.100', satuan: 't ≈ 380.000 th' },
+    { simbol: 'Usia alam semesta t₀', nilai: '13,80', satuan: 'miliar tahun' },
+    { simbol: 'Kerapatan foton CMB n_γ,0', nilai: '4,11 × 10⁸', satuan: 'foton/m³' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-03', 'SRC-04', 'SRC-05', 'SRC-06']}
+  pemetaan={[
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS3202 & AS4204 (Kosmologi): persamaan Friedmann, model ΛCDM, BBN & sejarah termal CMB.' },
+    { sumberId: 'SRC-04', rujukan: 'MIT OCW 8.286 (The Early Universe) & 8.902: penurunan Newtonian Friedmann, persamaan fluida, rekombinasi & inflasi.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al., Fundamental Astronomy (6e), Ch. 19: Hukum Hubble, model Friedmann, BBN & CMB.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Ch. 29–30: penurunan persamaan Friedmann/percepatan lengkap, evolusi H(z), BBN & masalah horizon/kerataan.' },
+  ]}
+/>
+
+</Bagian>

@@ -1,0 +1,511 @@
+<IdentitasModul
+  kode="A3"
+  judul="Waktu, Kalender & Dinamika Bumi–Bulan"
+  klaster="Klaster Inti Astronomi"
+  posisi="Bab 9 dari 19 · Metrologi waktu, kalender & geometri gerhana"
+  estimasi="75 menit"
+  tingkat="Menengah -> S1 Astronomi Posisi"
+  prasyarat={[
+    { id: 'a2', label: 'A2 · Astronomi Bola, LST & Sudut Jam' },
+    { id: 'f3', label: 'F3 · Trigonometri & Aproksimasi Sinusoidal' },
+  ]}
+  lanjutan={[
+    { id: 'a4', label: 'A4 · Mekanika Langit & Resonansi' },
+    { id: 'a6', label: 'A6 · Dinamika Pasang Surut & Benda Kecil' },
+    { id: 'l3', label: 'L3 · Ephemeris & Pelipatan Fase Biner' },
+  ]}
+/>
+
+<Tujuan>
+
+- Menurunkan perbedaan tepat antara **hari sideris** ($23^{\text{h}}56^{\text{m}}04{,}091^{\text{s}}$) dan **hari surya rata-rata** dari geometri revolusi Bumi serta membuktikan hubungan jumlah hari dalam satu tahun tropis ($N_{\text{sid}} = N_{\text{sol}} + 1$).
+- Menganalisis asal dua komponen **Perata Waktu (*Equation of Time*, $\text{EoT}$)**: efek **eksentrisitas orbit** ($e = 0{,}0167$) dan efek **kemiringan ekliptika** ($\varepsilon = 23{,}44^\circ$) lengkap dengan bentuk kurva **analemma**.
+- Menguasai konversi skala waktu astronomi (**UT1, UTC, TT/TDT, GMST, LST, dan Julian Date**) serta membandingkan **empat jenis tahun** (sideris, tropis, anomalistik, drakonitik) dan aturan **kalender Julian vs Gregorian**.
+- Menurunkan hubungan **periode sinodis vs sideris** Bulan ($\frac{1}{P_{\text{sin}}} = \frac{1}{P_{\text{sid}}} - \frac{1}{P_\oplus}$), fraksi iluminasi fase, dan menentukan waktu terbit–kulminasi–terbenam setiap fase.
+- Menghitung panjang **kerucut umbra Bumi & Bulan** secara geometris, batas sudut node (*eclipse limits*), serta menyusun **siklus Saros** ($6\,585{,}32\ \text{hari}$) beserta mekanisme **torsi pasang surut** yang memperlambat rotasi Bumi ($\Delta t_{\text{LOD}}$) dan menjauhkan Bulan.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'hari-sideris',
+      judul: 'Hari Sideris vs Surya',
+      ringkas: 'Δt ≈ 3m 55,91s per hari; 1 tahun mengandung N_sol + 1 hari sideris.',
+      peran: 'Mengonversi laju jam sipil ke laju rotasi bintang di teleskop (LST).',
+      terkait: ['eot', 'sistem-waktu'],
+    },
+    {
+      id: 'eot',
+      judul: 'Perata Waktu (EoT)',
+      ringkas: 'EoT = Waktu Surya Sejati − Rata-rata (~ −14m hingga +16m); gabungan eksentrisitas + kemiringan.',
+      peran: 'Menjelaskan mengapa kulminasi Matahari tidak selalu pukul 12.00 lokal dan mengapa panjang senja/fajar bergeser.',
+      terkait: ['hari-sideris', 'sistem-waktu'],
+    },
+    {
+      id: 'sistem-waktu',
+      judul: 'UT1, UTC, TT, JD & Kalender',
+      ringkas: 'JD kontinu sejak 4713 SM; leap second menjembatani rotasi Bumi tak seragam (UT1) ke jam atom (TAI/UTC).',
+      peran: 'Memastikan katalog observasi berjangka abad sinkron dengan musim (Gregorian) tanpa loncatan tanggal.',
+      terkait: ['hari-sideris', 'eot', 'bulan-fase'],
+    },
+    {
+      id: 'bulan-fase',
+      judul: 'Fase, Sinodis & Pasang Surut',
+      ringkas: 'T_sin = 29,531 d vs T_sid = 27,322 d; torsi tidal memperlambat rotasi Bumi & mendorong Bulan menjauh.',
+      peran: 'Menghitung fase iluminasi f = (1 - cos ε)/2, jadwal terbit Bulan, serta evolusi panjang hari geologis.',
+      terkait: ['sistem-waktu', 'gerhana'],
+    },
+    {
+      id: 'gerhana',
+      judul: 'Geometri Umbra & Siklus Saros',
+      ringkas: 'Umbra Bumi ~1,38 juta km > d_Bulan; umbra Bulan ~374 ribu km < apogee d_Bulan -> total vs cincin.',
+      peran: 'Menghitung durasi totalitas, batas simpul ±18,5°, dan periodisitas 223 bulan sinodis (Saros).',
+      terkait: ['bulan-fase'],
+    },
+  ]}
+/>
+
+<Bagian id="sideris-eot" judul="1. Hari Sideris, Hari Surya Rata-Rata & Perata Waktu (EoT)" tag="Kinematika Rotasi">
+
+### Asal Eksak Selisih $3^{\text{m}}55{,}91^{\text{s}}$ per Hari
+
+Rotasi Bumi berputar terhadap kerangka bintang jauh dengan periode satu **hari sideris** ($T_{\text{sid}}$). Sementara itu Bumi juga berevolusi prograde mengitari Matahari dalam satu **tahun tropis** ($T_{\text{tropis}} = 365{,}24219\ \text{hari surya}$). Karena rotasi dan revolusi sama-sama *berlawanan arah jarum jam* dilihat dari utara ekliptika, setelah Bumi berputar $360^\circ$, posisi sudut Matahari telah maju $\Delta\theta = 360^\circ / T_{\text{tropis}} \approx 0{,}9856^\circ$ ke timur, sehingga Bumi harus berputar total $360^\circ + \Delta\theta$ untuk mencapai satu **hari surya rata-rata** ($T_{\text{sol}} = 86\,400\ \text{s}$).
+
+Dalam $1$ tahun tropis ($N_{\text{sol}} = 365{,}24219$ hari surya), jumlah putaran terhadap bintang jauh bertambah tepat **satu putaran penuh** ($N_{\text{sid}} = N_{\text{sol}} + 1 = 366{,}24219$):
+
+$$N_{\text{sid}}\, T_{\text{sid}} = N_{\text{sol}}\, T_{\text{sol}} \implies T_{\text{sid}} = \frac{365{,}24219}{366{,}24219} \times 86\,400\ \text{s} = 86\,164{,}0905\ \text{s} = 23^{\text{h}}56^{\text{m}}04{,}09^{\text{s}}.$$
+
+Selisih harian $\Delta T = T_{\text{sol}} - T_{\text{sid}} = 235{,}9095\ \text{s} \approx 3^{\text{m}}56^{\text{s}}$ membuat waktu transit bintang-bintang maju lebih awal sekitar $4\ \text{menit}$ setiap hari sipil (atau $2\ \text{jam}$ setiap bulan).
+
+<Gambar id="bola-langit" />
+
+### Penurunan Analitik Perata Waktu (*Equation of Time*, EoT)
+
+<Epistemik jenis="model">
+Jam tangan dan jam dinding mengukur **Waktu Surya Rata-Rata** yang mengandaikan ada sebuah **Matahari Fiktif Rata-Rata** bergerak dengan kelajuan seragam tepat di **ekuator langit** ($\dot{\alpha}_{\text{mean}} = \text{konst}$). Sebaliknya, **Waktu Surya Sejati** (ditunjukkan jam matahari/*sundial*) mengikuti sudut jam Matahari nyata ($\alpha_\odot$). Selisih keduanya disebut **Perata Waktu ($\text{EoT}$)**:
+$$\text{EoT} \equiv t_{\text{surya sejati}} - t_{\text{surya rata-rata}} = H_\odot - H_{\text{mean}} = \alpha_{\text{mean}} - \alpha_\odot.$$
+</Epistemik>
+
+Mengapa $\alpha_\odot \ne \alpha_{\text{mean}}$? Ada dua efek fisik independen berorde serupa:
+
+1. **Efek Eksentrisitas Orbit ($e \approx 0{,}0167$):** Menurut Hukum II Kepler ($r^2 \dot{\nu} = \text{konst}$), Bumi bergerak lebih cepat di perihelion (~3 Januari) daripada di aphelion (~4 Juli). Ekspansi deret untuk anomali sejati $\nu$ terhadap anomali rata-rata $M$ adalah *persamaan pusat*:
+   $$\Delta\lambda_e \approx 2e\sin M \approx 1{,}91^\circ \sin M \iff \Delta t_e \approx -7{,}6\sin M\ \text{menit}.$$
+2. **Efek Kemiringan Ekliptika ($\varepsilon = 23{,}44^\circ$):** Matahari nyata bergerak sepanjang lingkaran miring ekliptika ($\lambda_\odot$), sedangkan asensio rekta ($\alpha_\odot$) diukur sebagai proyeksinya ke ekuator langit melalui $\tan\alpha_\odot = \cos\varepsilon\tan\lambda_\odot$. Untuk $\varepsilon$ sedang, ekspansi identitas $\tan\alpha = (1 - \frac{1-\cos\varepsilon}{1+\cos\varepsilon}\cdots)$ memberikan harmonik kedua ganda per tahun:
+   $$\alpha_\odot - \lambda_\odot \approx -\tan^2\!\left(\frac{\varepsilon}{2}\right)\sin(2\lambda_\odot) \iff \Delta t_\varepsilon \approx +9{,}9\sin(2\lambda_\odot)\ \text{menit}.$$
+
+Superposisi kedua gelombang sinus ($\text{EoT} \approx -7{,}6\sin M - 9{,}9\sin(2\lambda_\odot)\ \text{menit}$ dengan pergeseran fase perihelion ke ekuinoks $\sim 77^\circ$) menghasilkan kurva beramplitudo ekstrem sekitar **$-14{,}2\ \text{menit}$ (pertengahan Februari)** dan **$+16{,}4\ \text{menit}$ (awal November)**! Jika digambarkan bersama deklinasi $\delta_\odot$ terhadap jam 12.00 lokal sepanjang tahun, terbentuk kurva angka-8 asimetris bernama **analemma**.
+
+</Bagian>
+
+<Bagian id="waktu-kalender" judul="2. Skala Waktu Modern (UT1, UTC, TT, JD) & Empat Jenis Tahun" tag="Metrologi Waktu">
+
+### Hierarki Skala Waktu Observasional
+
+- **UT1 (*Universal Time*):** Terikat langsung ke sudut rotasi sejati Bumi relatif terhadap kuasar jauh (*VLBI*). Karena rotasi Bumi mengalami perlambatan sekuler akibat gesekan pasang surut serta fluktuasi angin/inti bumi, laju UT1 tidak konstan sempurna.
+- **TAI (*International Atomic Time*):** Berjalan seragam mutlak berdasarkan osilasi atom Sesium-133 pada permukaan geoid Bumi.
+- **UTC (*Coordinated Universal Time*):** Berjalan pada laju detik atomik TAI, tetapi dijaga agar $|\text{UT1} - \text{UTC}| < 0{,}9\ \text{s}$ melalui penyisipan **detik kabisat (*leap second*)**. (Konsekuensi: $\text{TAI} - \text{UTC}$ berupa bilangan bulat detik, misal $37\ \text{s}$).
+- **TT (*Terrestrial Time*):** Skala waktu seragam untuk ephemeris tata surya ($\text{TT} = \text{TAI} + 32{,}184\ \text{s}$). Selisih $\Delta T = \text{TT} - \text{UT1} \approx 69\ \text{s}$ penting dalam memprediksi jalur sempit gerhana matahari sejarah!
+
+### Konversi GMST, LST, dan Julian Date (JD)
+
+- **Julian Date ($\text{JD}$):** Penghitung hari desimal kontinu mulai **siang 12.00 UT tanggal 1 Januari 4713 SM** (Kalender Julian proleptik). Pada **J2000.0 (1 Januari 2000, 12:00:00 UT)**, nilainya tepat:
+  $$\text{JD}_{\text{J2000}} = 2\,451\,545{,}0.$$
+  *(Perhatikan: $\text{JD}$ berubah angka bulat tepat pada tengah hari 12:00 UT agar pengamatan malam hari di Eropa tidak berganti tanggal di tengah malam; sebaliknya **MJD = JD − 2 400 000,5** dimulai tepat pada tengah malam 00:00 UT!).*
+- **Waktu Sideris Lokal ($\text{LST}$):**
+  $$\text{GMST}\ [\text{jam}] = \big(18{,}697375 + 24{,}065709824\,(\text{JD} - 2\,451\,545{,}0)\big) \bmod 24, \qquad \text{LST} = \text{GMST} + \frac{\lambda_{\text{Timur}}}{15^\circ/\text{jam}}.$$
+
+### Empat Definisi Tahun & Evolusi Kalender
+
+| Jenis Tahun | Titik Acuan | Durasi (hari surya) | Keterangan Fisik |
+|---|---|---|---|
+| **Tahun Sideris** | Bintang jauh ($360^\circ$) | $365{,}25636$ d | Periode orbit inersia sejati Hukum Kepler III |
+| **Tahun Tropis** | Titik Aries $\Upsilon \to \Upsilon$ | $365{,}24219$ d | Mengatur musim; $20{,}4\ \text{menit}$ lebih pendek karena presesi mundur $50{,}29''/\text{yr}$ |
+| **Tahun Anomalistik** | Perihelion $\to$ Perihelion | $365{,}25964$ d | Lebih panjang karena perihelion Bumi berpresesi maju $+11{,}6''/\text{yr}$ akibat perturbasi planet |
+| **Tahun Drakonitik** | Simpul Bulan $\to$ Simpul | $346{,}62008$ d | Garis simpul orbit Bulan berpresesi mundur $-19{,}3^\circ/\text{yr}$ ($18{,}6\ \text{yr}$ penuh) |
+
+**Kalender Julian** ($365{,}25\ \text{d}$) melebihi tahun tropis sebesar $0{,}00781\ \text{hari/tahun} \approx 1\ \text{hari tiap } 128\ \text{tahun}$. Reformasi **Kalender Gregorian (1582)** menghapus 3 tahun kabisat per 400 tahun (tahun kelipatan 100 bukan kabisat kecuali habis dibagi 400), menghasilkan rata-rata $365 + \frac{97}{400} = 365{,}2425\ \text{hari}$, hanya menyimpang $27\ \text{s/tahun}$ ($1\ \text{hari}$ per $\sim 3\,200\ \text{tahun}$).
+
+</Bagian>
+
+<Bagian id="bulan-pasang" judul="3. Fase Bulan, Periode Sinodis & Dinamika Pasang Surut" tag="Sistem Bumi–Bulan">
+
+### Penurunan Periode Sinodis vs Sideris & Waktu Terbit Fase
+
+Jika Bulan mengitari Bumi searah revolusi Bumi mengitari Matahari dengan kecepatan sudut inersia $\omega_{\text{sid}} = 2\pi / P_{\text{sid}}$ ($P_{\text{sid}} = 27{,}32166\ \text{d}$) sementara vektor Matahari di bola langit bergeser ke timur sebesar $\omega_\oplus = 2\pi / P_\oplus$ ($P_\oplus = 365{,}256\ \text{d}$), maka kecepatan sudut elongasi relatif Bulan terhadap Matahari adalah $\omega_{\text{sin}} = \omega_{\text{sid}} - \omega_\oplus$:
+
+$$\frac{1}{P_{\text{sin}}} = \frac{1}{P_{\text{sid}}} - \frac{1}{P_\oplus} \implies P_{\text{sin}} = \frac{P_{\text{sid}} P_\oplus}{P_\oplus - P_{\text{sid}}} = \frac{27{,}32166 \times 365{,}256}{365{,}256 - 27{,}32166} \approx 29{,}53059\ \text{hari}.$$
+
+<Gambar id="fase-bulan" />
+
+Untuk sudut elongasi timur $\varepsilon$ (diukur dari Matahari ke Bulan, $\varepsilon \in [0^\circ, 360^\circ)$), fraksi luas cakram Bulan yang tersinari (diaproksimasi pada jarak $d_{\text{Bulan}} \ll 1\ \text{au}$ sehingga sudut fase $\alpha \approx 180^\circ - \varepsilon$) adalah:
+
+$$f_{\text{iluminasi}} = \frac{1 + \cos\alpha}{2} = \frac{1 - \cos\varepsilon}{2}.$$
+
+Setiap hari surya rata-rata, Bulan bergerak $\frac{360^\circ}{29{,}531\ \text{d}} \approx 12{,}19^\circ$ ke timur relatif terhadap Matahari, sehingga **waktu transit (dan rata-rata waktu terbit) Bulan terlambat sekitar $\frac{12{,}19^\circ}{15^\circ/\text{jam}} \approx 48{,}8\ \text{menit}$ per hari**! (Perhatikan arah berlawanan terhadap bintang jauh yang justru maju $4\ \text{menit/hari}$).
+
+| Elongasi $\varepsilon$ | Fase | Terbit | Kulminasi | Terbenam |
+|---|---|---|---|---|
+| $0^\circ$ | Bulan Baru (*Konjungsi*) | $\sim 06.00$ | $\sim 12.00$ | $\sim 18.00$ |
+| $90^\circ$ | Kuartal I (*Waxing Quarter*) | $\sim 12.00$ | $\sim 18.00$ | $\sim 00.00$ |
+| $180^\circ$ | Purnama (*Oposisi*) | $\sim 18.00$ | $\sim 00.00$ | $\sim 06.00$ |
+| $270^\circ$ | Kuartal III (*Waning Quarter*) | $\sim 00.00$ | $\sim 06.00$ | $\sim 12.00$ |
+
+### Perlambatan Rotasi Bumi oleh Torsi Pasang Surut (*Tidal Braking*)
+
+<Epistemik jenis="interpretasi">
+Bulan membangkitkan tonjolan air laut pasang surut pada Bumi. Karena Bumi berotasi lebih cepat ($24\ \text{jam}$) daripada periode orbit Bulan ($27{,}3\ \text{hari}$), gesekan samudra menyeret tonjolan pasang **mendahului** garis hubung Bumi–Bulan sejauh sudut lag kecil $\delta_{\text{tidal}} \sim 3^\circ$. Tarikan gravitasi Bulan terhadap tonjolan yang tidak simetris ini menimbulkan **torsi pengereman** pada Bumi ($dL_\oplus/dt < 0$, memanjangkan hari sebesar $\approx +1{,}7\text{--}2{,}3\ \text{ms/abad}$) sekaligus melalui kekekalan momentum sudut total sistem Bumi–Bulan ($L_{\text{tot}} = I_\oplus\omega_\oplus + m_B\sqrt{GM_\oplus a_B}$), **mentransfer momentum sudut ke orbit Bulan** — mendorong Bulan menjauh dengan laju $\approx +3{,}82\ \text{cm/tahun}$ (terukur presisi via *Lunar Laser Ranging*!).
+</Epistemik>
+
+</Bagian>
+
+<Bagian id="geometri-gerhana" judul="4. Geometri Kerucut Umbra, Batas Simpul & Siklus Saros" tag="Mekanika Gerhana">
+
+<Gambar id="gerhana-geometri" />
+
+### Penurunan Panjang Kerucut Umbra (*Similar Triangles*)
+
+Tinjau benda penghalang berjejari $R_B$ (Bumi atau Bulan) pada jarak $D$ dari pusat Matahari yang berjejari $R_\odot$. Karena garis singgung luar Matahari–penghalang membentuk dua segitiga siku-siku sebangun di puncak bayangan umbra (sejauh $L_{\text{umbra}}$ di belakang pusat penghalang):
+
+$$\frac{L_{\text{umbra}}}{R_B} = \frac{D + L_{\text{umbra}}}{R_\odot} \implies L_{\text{umbra}} = \frac{R_B\, D}{R_\odot - R_B}.$$
+
+1. **Umbra Bumi ($R_\oplus = 6\,378\ \text{km}$, $D = 1\ \text{au} = 1{,}496\times 10^8\ \text{km}$, $R_\odot = 696\,000\ \text{km}$):**
+   $$L_{\text{umbra},\oplus} \approx \frac{6\,378 \times 1{,}496\times 10^8}{696\,000 - 6\,378} \approx 1{,}384 \times 10^6\ \text{km}.$$
+   Karena jarak Bumi–Bulan ($d_M \approx 384\,400\ \text{km}$) selalu jauh lebih kecil daripada $1{,}384\times 10^6\ \text{km}$, Bumi selalu mampu menutup seluruh Bulan (gerhana bulan total) dengan diameter penampang umbra di jarak Bulan:
+   $$W_{\text{umbra}} = 2R_\oplus\left(1 - \frac{d_M}{L_{\text{umbra},\oplus}}\right) \approx 2(6\,378)(1 - 0{,}278) \approx 9\,210\ \text{km} \approx 2{,}65\,D_{\text{Bulan}}.$$
+
+2. **Umbra Bulan ($R_M = 1\,737{,}4\ \text{km}$):**
+   $$L_{\text{umbra},M} \approx \frac{1\,737{,}4 \times 1{,}496\times 10^8}{696\,000 - 1\,737{,}4} \approx 374\,400\ \text{km}\ (\text{rata-rata pada } 1\ \text{au}).$$
+   Perhatikan hasil kritis ini! Jarak pusat-ke-permukaan Bumi dari Bulan bervariasi antara **perigee** ($d_{\text{perm}} \approx 356\,400 - 6\,378 \approx 350\,000\ \text{km} < L_{\text{umbra},M}$) hingga **apogee** ($d_{\text{perm}} \approx 406\,700 - 6\,378 \approx 400\,300\ \text{km} > L_{\text{umbra},M}$). Inilah sebab geometris murni mengapa gerhana Matahari bisa **Total** (saat Bulan dekat perigee dan umbra menyentuh permukaan Bumi) sekaligus bisa **Cincin (*Annular*)** (saat Bulan dekat apogee sehingga ujung kerucut umbra berakhir di ruang angkasa dan pengamat masuk ke **antumbra**)!
+
+### Batas Simpul (*Eclipse Limits*) & Siklus Saros
+
+Bidang orbit Bulan miring $i_M = 5{,}145^\circ$ terhadap ekliptika dan berpotongan pada dua titik **simpul orbit** (*nodes*). Agar piringan Matahari dan piringan penampang bayangan Bulan/Bumi bersinggungan, sudut busur jarak Matahari dari simpul harus kurang dari **batas gerhana ekliptika**:
+- **Gerhana Matahari:** jarak sudut maksimum dari simpul $\approx \pm 18{,}5^\circ$ (maksimal) dan $\pm 15{,}4^\circ$ (pasti terjadi). Total $\approx 2$ hingga $5$ gerhana Matahari terjadi per tahun.
+- **Gerhana Bulan:** jarak sudut maksimum dari simpul terhadap bayangan Bumi $\approx \pm 12{,}2^\circ$ (maksimal umbra) dan $\pm 9{,}5^\circ$ (pasti).
+
+**Siklus Saros** menyatukan tiga jenis bulan agar fase, jarak (total vs cincin), dan kedekatan terhadap simpul hampir identik kembali:
+$$223\,P_{\text{sin}} = 6\,585{,}321\ \text{hari}, \qquad 242\,P_{\text{drak}} = 6\,585{,}357\ \text{hari}, \qquad 239\,P_{\text{anom}} = 6\,585{,}537\ \text{hari}.$$
+Selisih periode berhimpit pada **$6\,585{,}32\ \text{hari} \approx 18\ \text{tahun } 11\ \text{hari } 8\ \text{jam}$** (bila melewati 4 tahun kabisat; atau $10\ \text{hari } 8\ \text{jam}$ bila 5 tahun kabisat). Karena ada sisa $0{,}32\ \text{hari} \approx 7{,}7\ \text{jam}$, setiap gerhana berikutnya bergeser sekitar $0{,}32 \times 360^\circ \approx 115^\circ$ **ke barat** di permukaan Bumi, dan setelah **3 siklus Saros (*Exeligmos*, $\sim 54\ \text{tahun } 34\ \text{hari}$)** gerhana kembali muncul di bujur geografis yang hampir sama!
+
+</Bagian>
+
+<Bagian id="worked-examples" judul="5. Contoh Hitung Lengkap (Notebook Hitung)" tag="Worked Examples">
+
+<Contoh judul="Contoh 1 (Fundamental): Menghitung JD, GMST, LST & Sudut Jam Bintang Regulus dari Bosscha">
+
+<Langkah>
+
+**Data:** Observatorium Bosscha ($\lambda = +107{,}619^\circ\ \text{BT}$), waktu pengamatan **15 Maret 2024 pukul 21:00 WIB** (UTC+7). Target: Regulus ($\alpha = 10^{\text{h}}45^{\text{m}}00^{\text{s}}$). Diketahui $\text{JD}$ pada `2024-01-01 00:00 UT` $= 2\,460\,310{,}5$. Hitung $\text{JD}$, $\text{GMST}$, $\text{LST}$, dan perkiraan waktu kulminasi WIB!
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Julian Date:**
+$21:00\ \text{WIB} = 14:00\ \text{UT}$. Tahun 2024 adalah kabisat (Februari = 29 hari). Jumlah hari penuh sejak 1 Jan 00:00 UT hingga 15 Mar 00:00 UT $= 31\ (\text{Jan}) + 29\ (\text{Feb}) + 14\ (\text{Mar}) = 74\ \text{hari}$.
+$$\text{JD} = 2\,460\,310{,}5 + 74 + \frac{14}{24} = 2\,460\,385{,}08333.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — GMST & LST:**
+Selang hari sejak J2000.0: $d = 2\,460\,385{,}08333 - 2\,451\,545{,}0 = 8\,840{,}08333\ \text{hari}$.
+$$\text{GMST} = \big(18{,}697375 + 24{,}065709824 \times 8\,840{,}08333\big) \bmod 24 = \big(18{,}6974 + 212\,742{,}8829\big) \bmod 24$$
+$$= 212\,761{,}5803 \bmod 24 = 23{,}5803^{\text{h}} = 23^{\text{h}}34{,}8^{\text{m}}.$$
+*(Cek cepat via angka bulat hari: $24{,}0 \times 8\,840 \equiv 0 \bmod 24$, jadi cukup hitung $18{,}6974 + 0{,}065709824 \times 8\,840{,}0833 + 24\times 0{,}08333 = 18{,}6974 + 580{,}8803 + 2{,}0000 = 601{,}5777 \equiv 23{,}58^{\text{h}}$ — cocok!)*
+Tambahkan offset bujur Bosscha ($\frac{107{,}619^\circ}{15^\circ/\text{jam}} = +7{,}1746^{\text{h}}$):
+$$\text{LST} = (23{,}5803 + 7{,}1746) \bmod 24 = 6{,}7549^{\text{h}} \approx 6^{\text{h}}45{,}3^{\text{m}}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 3 — Hour Angle & Waktu Kulminasi:**
+$$H = \text{LST} - \alpha = 6^{\text{h}}45{,}3^{\text{m}} - 10^{\text{h}}45{,}0^{\text{m}} = -3^{\text{h}}59{,}7^{\text{m}}.$$
+Karena $H < 0$, Regulus masih di langit timur dan membutuhkan $+3{,}995$ jam sideris untuk transit. Konversi ke waktu surya:
+$$\Delta t_{\text{sol}} = 3{,}995 \times \frac{365{,}2422}{366{,}2422} \approx 3{,}984^{\text{h}} = 3^{\text{h}}59{,}0^{\text{m}}.$$
+Waktu kulminasi $= 21^{\text{h}}00^{\text{m}} + 3^{\text{h}}59{,}0^{\text{m}} = \mathbf{00^{\text{h}}59^{\text{m}}\ \text{WIB}}$ (dini hari 16 Maret 2024).
+
+</Langkah>
+
+</Contoh>
+
+<Contoh judul="Contoh 2 (Rantai Olimpiade): Gerhana Matahari Cincin vs Total & Durasi Maksimum di Ekuator">
+
+<Langkah>
+
+**Data:** Saat pengamatan gerhana Matahari di ekuator Bumi, jarak Bumi–Matahari tepat $D = 1{,}0167\ \text{au}$ (aphelion Bumi awal Juli, $R_\odot = 696\,000\ \text{km}$), dan Bulan berada pada jarak pusat-ke-pusat $d_M = 384\,400\ \text{km}$ ($R_M = 1\,737{,}4\ \text{km}$, $R_\oplus = 6\,378\ \text{km}$).\
+(a) Apakah gerhana yang terjadi bertipe Total atau Cincin (*Annular*) untuk pengamat tepat di bawah Matahari?\
+(b) Hitung lebar sudut cincin cahaya atau kelebihan ukuran sudut bayangan, lalu perkirakan kecepatan bayangan Bulan melintasi permukaan Bumi di ekuator jika orbit Bulan melingkar ($v_M \approx 1{,}023\ \text{km/s}$ ke timur)!
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Panjang Umbra Bulan & Cek Total vs Cincin:**
+Pada aphelion $D = 1{,}0167 \times 1{,}496\times 10^8 = 1{,}5210\times 10^8\ \text{km}$:
+$$L_{\text{umbra},M} = \frac{R_M\, D}{R_\odot - R_M} = \frac{1\,737{,}4 \times 1{,}5210\times 10^8}{696\,000 - 1\,737{,}4} \approx 380\,630\ \text{km}.$$
+Jarak pusat Bulan ke **permukaan** Bumi di titik sub-solar:
+$$d_{\text{perm}} = d_M - R_\oplus = 384\,400 - 6\,378 = 378\,022\ \text{km}.$$
+Karena $d_{\text{perm}} = 378\,022\ \text{km} < L_{\text{umbra},M} = 380\,630\ \text{km}$, ujung umbra masih mencapai **2 608 km** menembus permukaan Bumi $\implies$ **Gerhana Matahari Total**!
+*(Bandingkan bila saat perihelion $D = 0{,}9833\ \text{au}$: $L_{\text{umbra},M}$ menyusut menjadi $\approx 368\,100\ \text{km} < 378\,022\ \text{km}$, sehingga pada jarak Bulan yang persis sama $d_M = 384\,400\ \text{km}$, gerhananya berubah menjadi **Gerhana Cincin**!)*
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Lebar Jalur Totalitas & Laju Bayangan di Ekuator:**
+Diameter umbra di permukaan Bumi:
+$$W_{\text{umbra}} = 2R_M\left(1 - \frac{d_{\text{perm}}}{L_{\text{umbra},M}}\right) = 2(1\,737{,}4)\left(1 - \frac{378\,022}{380\,630}\right) \approx 23{,}8\ \text{km}.$$
+Kecepatan linier rotasi permukaan ekuator Bumi ke timur: $v_{\text{rot},\oplus} = \frac{2\pi(6\,378\ \text{km})}{86\,164\ \text{s}} \approx 0{,}465\ \text{km/s}$.
+Karena bayangan Bulan bergerak ke timur pada kecepatan $v_M \approx 1{,}023\ \text{km/s}$, kelajuan relatif bayangan terhadap permukaan ekuator adalah:
+$$v_{\text{rel}} = v_M - v_{\text{rot},\oplus} = 1{,}023 - 0{,}465 = 0{,}558\ \text{km/s} \approx 2\,010\ \text{km/jam}.$$
+Durasi totalitas: $\Delta t_{\text{tot}} \approx \frac{23{,}8\ \text{km}}{0{,}558\ \text{km/s}} \approx 42{,}7\ \text{detik}$ (totalitas singkat di dekat perbatasan cincin–total!).
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  items={[
+    {
+      salah: 'Bulan terbit selalu 50 menit lebih lambat setiap malam tanpa variasi musiman, dan waktu terbitnya selalu tepat mengikuti tabel 06.00 / 12.00 / 18.00 / 00.00.',
+      kenapaKeliru: 'Angka keterlambatan 48,8 menit dan jam 06/12/18/00 adalah RATA-RATA untuk deklinasi δ = 0° (atau pengamat ekuator). Di lintang sedang/tinggi, kemiringan ekliptika terhadap horizon berubah sepanjang musim (menyebabkan fenomena *Harvest Moon* ketika keterlambatan terbit turun hingga ~20 menit!) serta orbit elips Bulan mengubah kelajuan sudut harian.',
+      caraDeteksi: 'Bila δ_Bulan berubah dari −28° ke +28° (di luar ekuinoks), panjang busur semidiurnal cos H_0 = −tan φ tan δ berubah drastis, menggeser waktu terbit di atas atau di bawah rata-rata hingga berjam-jam di lintang tinggi.',
+      benar: 'Keterlambatan harian rata-rata kulminasi Bulan ≈ +49 menit disebabkan gerak sinodis 12,2°/hari, sedangkan waktu terbitnya dipengaruhi oleh kemiringan ekliptika dan deklinasi Bulan.',
+    },
+    {
+      salah: 'Karena kemiringan orbit Bulan hanya 5,1°, gerhana Matahari dan gerhana Bulan seharusnya mempunyai batas sudut simpul yang sama persis.',
+      kenapaKeliru: 'Ukuran penampang target yang harus mengenai Bulan/Bumi sangat berbeda! Pada gerhana Bulan, penampang umbra Bumi (~9 200 km) lebih dari dua setengah kali ukuran fisik Bulan (~3 474 km); sebaliknya pada gerhana Matahari, yang dilihat adalah kerucut bayangan Bulan menyentuh bola Bumi berukuran jauh lebih besar (~12 756 km)!',
+      caraDeteksi: 'Secara kolektif di seluruh Bumi, gerhana Matahari terjadi lebih sering (2–5 kali/tahun) dibanding gerhana Bulan umbra (0–3 kali/tahun), namun dari satu kota tertentu gerhana Bulan tampak jauh lebih sering karena separuh Bumi melihatnya sekaligus.',
+      benar: 'Batas simpul gerhana Matahari (±18,5°) lebih lebar daripada gerhana Bulan (±12,2°) karena ukuran total proyeksi kerucut Bumi + Bulan jauh lebih besar saat geometri gerhana Matahari.',
+    },
+    {
+      salah: 'Kalender Gregorian memperbaiki Kalender Julian karena memperhitungkan pergeseran bulan sinodis Bulan.',
+      kenapaKeliru: 'Kalender Gregorian adalah murni kalender SURYA (solar) yang dirancang mengunci tanggal Ekuinoks Musim Semi (~21 Maret) terhadap Tahun Tropis (365,24219 d), sama sekali tidak melacak fase Bulan.',
+      caraDeteksi: 'Tanggal Bulan Purnama terus berpindah setiap tahun pada kalender Gregorian (tidak jatuh pada tanggal yang sama), membuktikan tidak ada kaitan lunisolar di kalender sipil modern.',
+      benar: 'Reformasi Gregorian mengganti rata-rata tahun Julian (365,25 d) menjadi 365,2425 d agar tetap sinkron dengan Tahun Tropis (musim).',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="evaluasi" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mandiri">
+
+<CekPaham
+  id="a3-cek-1"
+  pertanyaan="Bintang Sirius terbit pukul 20:00 malam ini. Kira-kira pukul berapa ia terbit 45 hari kemudian?"
+  opsi={['Sekitar 17:00', 'Sekitar 20:00', 'Sekitar 23:00', 'Sekitar 18:00']}
+  jawaban={0}
+  penjelasan="Setiap hari surya bintang terbit ~3m56s (~4 menit) lebih awal. Dalam 45 hari: 45 × 3,932 menit ≈ 177 menit ≈ 2 jam 57 menit lebih awal → sekitar pukul 17:03."
+/>
+
+<CekPaham
+  id="a3-cek-2"
+  pertanyaan="Mengapa gerhana Matahari tidak terjadi pada setiap bulan baru?"
+  opsi={[
+    'Karena orbit Bulan miring ≈5,1° terhadap ekliptika; Bulan biasanya tidak berada dekat simpul',
+    'Karena Bulan terlalu kecil untuk menutupi seluruh Matahari',
+    'Karena Bumi berputar terlalu cepat sehingga bayangan Bulan tidak dapat mengejar',
+    'Karena ada 29,5 hari sinodis sehingga Bulan baru tidak tepat pada hari yang sama'
+  ]}
+  jawaban={0}
+  penjelasan="Inklinasi 5,145° terhadap ekliptika membuat Bulan baru biasanya melintas di utara atau selatan Matahari di langit; gerhana hanya terjadi dalam batas simpul ±18,5°."
+/>
+
+<CekPaham
+  id="a3-cek-3"
+  pertanyaan="Sebuah bintang memiliki RA = 6h 45m. LST saat ini 4h 30m. Berapakah Hour Angle bintang tersebut dan di mana posisinya terhadap meridian?"
+  opsi={[
+    'HA = −2h 15m; bintang berada di timur meridian (belum kulminasi)',
+    'HA = +2h 15m; bintang berada di barat meridian (sudah kulminasi)',
+    'HA = 0; bintang sedang berkulminasi',
+    'HA = −6h 45m; bintang di bawah cakrawala'
+  ]}
+  jawaban={0}
+  penjelasan="HA = LST − RA = 4h30m − 6h45m = −2h15m. Tanda negatif menunjukkan bintang masih di timur meridian dan akan berkulminasi ~2h15m sideris lagi."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'a3-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Sekitar awal Januari, Bumi mencapai perihelion dan menerima fluks surya terbesar — namun di Jakarta (6° LS) maupun belahan utara, matahari tidak terbit paling pagi di awal Januari; bahkan di belahan utara matahari justru paling sore terbitnya terjadi sekitar akhir Desember/awal Januari dan paling cepat terbenam terjadi sekitar awal Desember (bukan tepat 21 Desember)! Jelaskan fenomena tersebut menggunakan **Perata Waktu (EoT)**!',
+      petunjuk: 'Tulis waktu terbit dan terbenam dalam waktu lokal standar sebagai $t_{\\text{terbit}} = 12{,}00 - \\text{EoT} - \\frac{H_0}{15}$ dan $t_{\\text{terbenam}} = 12{,}00 - \\text{EoT} + \\frac{H_0}{15}$, lalu tinjau tanda dan turunan $\\text{EoT}$ sekitar 21 Desember!',
+      langkahKunci: [
+        'Sekitar 21 Desember (solstis selatan), panjang siang di belahan utara mencapai minimum ($d H_0 / dt = 0$), namun **laju perubahan EoT** sangat cepat menuju negatif ($d(\\text{EoT})/dt \\approx -0{,}5\\ \\text{menit/hari}$ karena Matahari sejati terlambat makin cepat terhadap jam rata-rata!).',
+        'Turunkan waktu terbenam terhadap tanggal: $\\frac{d t_{\\text{terbenam}}}{dt} = -\\frac{d(\\text{EoT})}{dt} + \\frac{1}{15}\\frac{dH_0}{dt}$. Sebelum 21 Desember, $\\frac{dH_0}{dt}$ mulai mendatar ke nol sementara $-\\frac{d(\\text{EoT})}{dt} > 0$, sehingga $t_{\\text{terbenam}}$ berbalik mulai bertambah sore sekitar 7–10 Desember (matahari terbenam paling awal)!',
+        'Sebaliknya pada $t_{\\text{terbit}}$, kedua suku menggeser waktu terbit makin pagi sehingga terbit paling pagi/paling sore bergeser beberapa minggu sesudah solstis ke awal Januari!',
+      ],
+      rubrik: [
+        'Menuliskan formula jam sipil terbit/terbenam yang memuat suku $-\\text{EoT}$.',
+        'Menghubungkan pergeseran tanggal ekstrem fajar/senja dengan turunan waktu $d(\\text{EoT})/dt \\ne 0$ saat $dH_0/dt = 0$.',
+      ],
+    },
+    {
+      id: 'a3-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Buktikan secara aljabar bahwa panjang hari pada periode antara **dua kali Bulan di meridian (hari lunar rata-rata)** kira-kira $24^{\\text{h}}50^{\\text{m}}$, dengan menurunkan $\\Delta t_{\\text{lunar}}$ langsung dari periode sideris Bulan $P_{\\text{sid}} = 27{,}3217\\ \\text{hari}$ dan hari sideris Bumi $T_{\\text{sid}} = 23{,}93447\\ \\text{jam}$!',
+      petunjuk: 'Bulan bergerak ke timur mengitari Bumi sejauh $\\omega_B = 360^\\circ/P_{\\text{sid}}$, sehingga kecepatan sudut relatif Bulan di langit terhadap rotasi Bumi adalah $\\omega_\\oplus - \\omega_B$.',
+      langkahKunci: [
+        'Kecepatan sudut rotasi sideris Bumi: $\\omega_\\oplus = \\frac{2\\pi}{T_{\\text{sid}}}$. Kecepatan sudut orbital rata-rata Bulan searah (ke timur): $\\omega_B = \\frac{2\\pi}{P_{\\text{sid}}}$.',
+        'Maka kecepatan sudut tampak Bulan relatif terhadap meridian pengamat adalah $\\omega_{\\text{rel}} = \\omega_\\oplus - \\omega_B \\implies \\frac{1}{T_{\\text{lunar}}} = \\frac{1}{T_{\\text{sid}}} - \\frac{1}{P_{\\text{sid}}}$.',
+        'Substitusikan $T_{\\text{sid}} = 0{,}9972696\\ \\text{d}$ dan $P_{\\text{sid}} = 27{,}32166\\ \\text{d}$: $T_{\\text{lunar}} = \\frac{0{,}9972696 \\times 27{,}32166}{27{,}32166 - 0{,}9972696} = 1{,}035050\\ \\text{hari surya} = 24^{\\text{h}}50{,}47^{\\text{m}}$.',
+        'Inilah mengapa dua pasang air laut tertinggi berturut-turut (*semidiurnal tide*) berjarak $12^{\\text{h}}25^{\\text{m}}$, bukan $12^{\\text{h}}00^{\\text{m}}$!',
+      ],
+      rubrik: [
+        'Menurunkan $\\frac{1}{T_{\\text{lunar}}} = \\frac{1}{T_{\\text{sid}}} - \\frac{1}{P_{\\text{sid}}}$ dari kecepatan sudut relatif rotasi–orbit.',
+        'Menghasilkan $24^{\\text{h}}50{,}5^{\\text{m}}$ dan mengaitkannya dengan siklus pasang laut $12^{\\text{h}}25^{\\text{m}}$.',
+      ],
+    },
+    {
+      id: 'a3-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Berdasarkan bukti geologis (*tidal rhythmites* dan cincin karang purba) sekitar $400\\ \\text{juta tahun}$ lalu (periode Devon), satu tahun bumi berdurasi sama ($\\approx 365{,}24\\ \\text{hari sekarang}$), tetapi berapakah perkiraan **panjang 1 hari** dan **jumlah hari dalam 1 tahun** saat itu jika laju perlambatan rotasi Bumi rata-rata dianggap konstan $\\frac{dP_{\\text{rot}}}{dt} \\approx +2{,}0\\ \\text{ms/abad}$?',
+      petunjuk: 'Hitung pertambahan total durasi hari selama $4{,}0\\times 10^8\\ \\text{tahun} = 4{,}0\\times 10^6\\ \\text{abad}$, lalu bagi panjang tahun sekarang dengan panjang hari purba!',
+      langkahKunci: [
+        'Selang waktu: $\\Delta t = 4{,}0\\times 10^8\\ \\text{tahun} = 4{,}0\\times 10^6\\ \\text{abad}$.',
+        'Total perlambatan panjang hari: $\\Delta P = (2{,}0\\times 10^{-3}\\ \\text{s/abad}) \\times (4{,}0\\times 10^6\\ \\text{abad}) = 8\\,000\\ \\text{s} \\approx 2{,}22\\ \\text{jam}$.',
+        'Panjang 1 hari purba: $P_{\\text{Devon}} \\approx 24{,}0 - 2{,}22 \\approx 21{,}8\\ \\text{jam}$.',
+        'Jumlah hari dalam 1 tahun Devon: $N \\approx \\frac{365{,}24 \\times 24{,}0}{21{,}8} \\approx 402\\ \\text{hari/tahun}$! *(Catatan: penelitian fosil karang Devon akurat menunjukkan sekitar ~400 hari/tahun — perkiraan Fermi kita tepat sasaran!)*',
+      ],
+      rubrik: [
+        'Mengonversi $400\\ \\text{Myr}$ ke $4\\times 10^6\\ \\text{abad}$ dan menghitung $\\Delta P \\approx 2{,}2\\ \\text{jam}$.',
+        'Menemukan jumlah hari sekitar $\\sim 400\\ \\text{hari/tahun}$ dari ketetapan total detik per tahun orbit.',
+      ],
+    },
+    {
+      id: 'a3-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Tabel berikut memuat data sebuah bulan hipotetis di eksoplanet: periode orbital sideris $P_{\\text{sid}} = 10{,}0\\ \\text{hari}$ (prograde), periode orbit planet mengelilingi bintangnya $P_{\\text{planet}} = 60{,}0\\ \\text{hari}$, dan pada saat awal ($t = 0$) terjadi Bulan Baru ($\\varepsilon = 0^\\circ$). Hitung periode sinodis bulan tersebut dan pada hari ke berapa sesudah $t = 0$ bulan itu mencapai fase **Kuartal Pertama** ($\\varepsilon = 90^\\circ$) untuk ke-2 kalinya?',
+      petunjuk: 'Hitung $P_{\\text{sin}}$ dari $\\frac{1}{P_{\\text{sin}}} = \\frac{1}{P_{\\text{sid}}} - \\frac{1}{P_{\\text{planet}}}$, lalu cari waktu untuk fase $90^\\circ$ ke-2 ($\\varepsilon = 360^\\circ + 90^\\circ = 450^\\circ$).',
+      langkahKunci: [
+        '$\\frac{1}{P_{\\text{sin}}} = \\frac{1}{10{,}0} - \\frac{1}{60{,}0} = \\frac{5}{60{,}0} = \\frac{1}{12{,}0} \\implies P_{\\text{sin}} = 12{,}0\\ \\text{hari}$.',
+        'Kuartal Pertama pertama ($\\varepsilon = 90^\\circ$) dicapai pada $t_1 = \\frac{1}{4} P_{\\text{sin}} = 3{,}0\\ \\text{hari}$.',
+        'Kuartal Pertama kedua tercapai tepat satu siklus sinodis kemudian: $t_2 = 12{,}0 + 3{,}0 = \\mathbf{15{,}0\\ \\text{hari}}$ setelah $t = 0$.',
+      ],
+      rubrik: [
+        'Menemukan $P_{\\text{sin}} = 12{,}0\\ \\text{hari}$ dengan tanda pengurangan prograde yang benar.',
+        'Menghitung kejadian ke-2 sebagai $1{,}25\\,P_{\\text{sin}} = 15{,}0\\ \\text{hari}$.',
+      ],
+    },
+    {
+      id: 'a3-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Secara historis, selisih $\\Delta T = \\text{TT} - \\text{UT1}$ dalam kurun beberapa ribu tahun terakhir tercatat melalui catatan gerhana Matahari total kuno (Babilonia dan Tiongkok). Jelaskan mengapa sekadar mengetahui **di kota mana** gerhana Matahari total tercatat terjadi pada tahun 136 SM langsung memungkinkan astronom modern mengukur perubahan panjang hari ($\\Delta \\text{LOD}$) Bumi sepanjang 20 abad!',
+      petunjuk: 'Ingat bahwa TT menentukan lokasi orbit Bulan di ruang 3D (dan arah kerucut bayangan), sedangkan UT1 menentukan sudut fase rotasi Bumi yang menghadap ke arah bayangan tersebut!',
+      langkahKunci: [
+        'Posisi Matahari dan Bulan pada suatu momen fisik (dalam skala waktu mekanika seragam $\\text{TT}$) ditentukan oleh gravitasi, sehingga garis lintasan bayangan umbra Bulan di ruang antariksa diketahui amat presisi.',
+        'Namun permukaan Bumi mana yang menyapu melewati garis bayangan tersebut bergantung pada sudut putaran rotasi Bumi sejati (**UT1**).',
+        'Jika rotasi Bumi tidak melambat, bayangan gerhana tahun 136 SM akan melintas ribuan kilometer di sebelah barat Babilonia; fakta bahwa pengamat Babilonia melihat totalitas membuktikan akumulasi keterlambatan rotasi Bumi $\\Delta T = \\int \\Delta\\text{LOD}\\,dt \\sim 3\\ \\text{jam}$ selama dua milenium!',
+      ],
+      rubrik: [
+        'Memisahkan peran TT (geometri orbital) vs UT1 (sudut rotasi Bumi).',
+        'Menjelaskan bagaimana pergeseran bujur geografis jalur sempit totalitas mencatat akumulasi $\\Delta T$.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'a3-log-1',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Andaikan Bulan mengorbit Bumi ke arah **retrograde** (searah jarum jam jika dilihat dari utara, berlawanan arah revolusi Bumi mengelilingi Matahari) dengan periode sideris tetap $27{,}32\\ \\text{hari}$. Bagaimana rumus dan nilai **periode sinodis** $P_{\\text{sin}}$ berubah, dan apakah Bulan kini terbit lebih lambat atau lebih awal dibanding Matahari setiap hari?',
+      petunjuk: 'Tinjau kecepatan sudut relatif dua arah berlawanan: $\\omega_{\\text{rel}} = \\omega_{\\text{sid}} + \\omega_\\oplus$!',
+      rubrik: [
+        'Karena Bulan bergerak berlawanan arah dengan gerak semu Matahari ke timur, laju pendekatan sudut keduanya menjumlah: $\\frac{1}{P_{\\text{sin}}} = \\frac{1}{P_{\\text{sid}}} + \\frac{1}{P_\\oplus}$.',
+        'Nilai $P_{\\text{sin}} = \\frac{27{,}32 \\times 365{,}25}{365{,}25 + 27{,}32} \\approx 25{,}42\\ \\text{hari}$ (lebih PENDEK dari periode siderisnya!).',
+        'Karena Bulan bergerak ke **barat** melintasi bintang sejauh $\\sim 14{,}2^\\circ/\\text{hari}$ terhadap Matahari, ia menyusul meridian lebih cepat dari Matahari — Bulan justru terbit **~57 menit lebih awal** setiap hari!',
+      ],
+      jawabanKunci:
+        'Pada orbit retrograde, arah gerak Bulan berlawanan dengan gerak tahunan Matahari di ekliptika sehingga kecepatan sudut relatifnya menjumlah: $\\frac{1}{P_{\\text{sin}}} = \\frac{1}{P_{\\text{sid}}} + \\frac{1}{P_\\oplus} \\implies P_{\\text{sin}} \\approx 25{,}42\\ \\text{hari}$ (lebih pendek dari $P_{\\text{sid}}$!). Akibatnya Bulan bergerak mundur ke barat melewati bintang-bintang lebih cepat daripada rotasi terhadap Matahari, membuat waktu transit/terbitnya justru **maju lebih awal** hampir 1 jam setiap hari (seperti perilaku satelit retrograde Triton).',
+    },
+    {
+      id: 'a3-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Sebuah soal esai menyatakan: "Di masa depan jauh nanti ketika jarak Bulan bertambah dua kali lebih jauh, karena panjang umbra Bulan konstan $374\\,400\\ \\text{km}$, tidak akan pernah lagi terjadi Gerhana Matahari Total. Dan apabila Bumi mengitari Matahari dalam orbit lingkaran sempurna ($e = 0$), Perata Waktu (EoT) pasti bernilai nol sepanjang tahun." Temukan kesalahan masing-masing pernyataan!',
+      petunjuk: 'Pernyataan 1 benar untuk kesimpulan akhirnya; fokuslah cek pernyataan kedua tentang $e = 0$ vs kemiringan ekliptika $\\varepsilon = 23{,}44^\\circ$!',
+      rubrik: [
+        'Pernyataan 1 benar secara mekanis: pada jarak $2 d_M \\approx 769\\,000\\ \\text{km} \\gg L_{\\text{umbra},M}$, umbra Bulan tidak akan pernah mencapai permukaan Bumi (semua gerhana sentral hanya akan berupa gerhana cincin).',
+        'Pernyataan 2 salah besar: bahkan bila $e = 0$ sekalipun, kemiringan ekliptika $\\varepsilon = 23{,}44^\\circ$ tetap menghasilkan selisih proyeksi $\\alpha_\\odot - \\lambda_\\odot \\propto -\\tan^2(\\varepsilon/2)\\sin(2\\lambda_\\odot)$, sehingga $\\text{EoT}$ masih berosilasi sekitar $\\pm 9{,}9\\ \\text{menit}$ sebanyak dua kali setahun (analemma menjadi bentuk angka-8 simetris)!',
+      ],
+      jawabanKunci:
+        'Klaim pertama tepat bahwa bila Bulan menjauh $2\\times$ lipat melampaui panjang kerucut umbranya ($\\approx 374\\,400\\ \\text{km}$), Gerhana Matahari Total berakhir selamanya dan hanya tersisa gerhana cincin/sebagian. Namun klaim kedua keliru total: Perata Waktu merupakan gabungan DUA efek (eksentrisitas $e$ DAN kemiringan ekliptika $\\varepsilon$). Jika $e = 0$, komponen $\\sim 7{,}6\\ \\text{menit}$ memang lenyap, tetapi komponen $\\sim 9{,}9\\ \\text{menit}$ dari proyeksi $\\tan\\alpha_\\odot = \\cos\\varepsilon\\tan\\lambda_\\odot$ tetap aktif, menghasilkan kurva analemma angka-8 yang simetris sempurna!',
+    },
+    {
+      id: 'a3-log-3',
+      tipe: 'prediksi_akibat',
+      pertanyaan:
+        'Dalam kondisi kesetimbangan sangat jauh di masa depan (sekitar puluhan miliar tahun jika Matahari tak berevolusi), proses transfer momentum sudut pasang surut Bumi–Bulan akan berhenti ketika mencapai kondisi *double tidal locking*. Seperti apa hubungan antara **panjang 1 hari Bumi**, **panjang 1 bulan sideris Bulan**, dan **sifat periode sinodis** saat itu tercapai?',
+      petunjuk: 'Kapan torsi gesekan tonjolan pasang air laut di Bumi menghilang? Ketika tonjolan pasang tidak lagi terseret mendahului Bulan — yakni ketika rotasi Bumi sinkron tepat dengan orbit Bulan!',
+      rubrik: [
+        'Pada kesetimbangan *double tidal locking*, periode rotasi Bumi sama persis dengan periode orbit sideris Bulan ($T_{\\text{rot},\\oplus} = P_{\\text{sid},B}$, estimasi keseimbangan sekitar $\\sim 47$ hari sekarang!).',
+        'Dari Bumi, Bulan akan tampak **berhenti diam tak terbit-terbenam** pada satu bujur tetap di langit (seperti Pluto–Charon!).',
+        'Meskipun demikian, karena Bumi masih mengorbit Matahari dalam 365 hari, bagi pengamat di Bumi Bulan yang diam di satu arah tetap akan melewati seluruh siklus fase dari Baru ke Purnama dengan periode $P_{\\text{sin}}$ mendekati panjang 1 tahun apabila tidak, atau berubah seiring jarak baru!',
+      ],
+      jawabanKunci:
+        'Torsi pasang surut terhenti ketika rotasi Bumi melambat sampai menyamai periode orbit sideris Bulan ($T_{\\text{rot},\\oplus} = P_{\\text{sid},B} = P_{\\text{rot},B}$, diperkirakan pada siklus sekitar $47$ hari modern). Akibatnya Bumi dan Bulan saling memperlihatkan sisi yang sama (*double tidal lock* seperti Pluto–Charon): dari satu sisi Bumi, Bulan menggantung diam abadi di bujur langit konstan, sedangkan sisi belahan Bumi lainnya tidak pernah melihat Bulan! Namun, panjang hari surya di Bumi memanjang drastis menjadi $\\sim 47$ hari modern, dan fase Bulan berganti akibat revolusi Bumi mengelilingi Matahari.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="a3-refleksi-1"
+  pertanyaan="Presesi ekuinoks menyebabkan koordinat RA dan Dec bintang berubah perlahan selama ribuan tahun. Jika epok referensi katalog bintang adalah J2000.0, mengapa kita tidak perlu mengkhawatirkan presesi untuk pengamatan visual biasa malam ini, tetapi HARUS mempertimbangkannya untuk program observasi yang membandingkan data katalog era 1950-an dengan pengukuran modern?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'a3-m1', gerbang: 'derivasi', teks: 'Menurunkan selisih 3m55,91s hari sideris vs surya dari N_sid = N_sol + 1 dan relasi T_lunar = 24h50m.' },
+    { id: 'a3-m2', gerbang: 'logika', teks: 'Menjelaskan asal dua komponen Perata Waktu (e = 0,0167 dan ε = 23,44°) dan mengapa fajar/senja ekstrem bergeser dari solstis.' },
+    { id: 'a3-m3', gerbang: 'observasi', teks: 'Mengonversi tanggal Gregorian -> JD -> GMST -> LST -> sudut jam H bintang.' },
+    { id: 'a3-m4', gerbang: 'derivasi', teks: 'Menurunkan panjang kerucut umbra Bumi & Bulan dan memprediksi gerhana total vs cincin.' },
+    { id: 'a3-m5', gerbang: 'fermi', teks: 'Mengestimasi perubahan jumlah hari per tahun di masa geologis akibat torsi pasang surut dan memprediksi siklus Saros.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul A3">
+
+<Konstanta
+  data={[
+    { simbol: '1 hari sideris (T_sid)', nilai: '23j 56m 04,091s (86 164,09 s)', satuan: 'waktu surya' },
+    { simbol: 'Tahun Tropis (J2000.0)', nilai: '365,24219', satuan: 'hari surya' },
+    { simbol: 'Tahun Sideris', nilai: '365,25636', satuan: 'hari surya' },
+    { simbol: 'Periode sideris Bulan', nilai: '27,32166', satuan: 'hari' },
+    { simbol: 'Periode sinodis Bulan', nilai: '29,53059', satuan: 'hari' },
+    { simbol: 'Periode drakonitik Bulan', nilai: '27,21222', satuan: 'hari' },
+    { simbol: 'Siklus Saros (223 bulan sinodis)', nilai: '6 585,321 (≈ 18 thn 11 hr 8 j)', satuan: 'hari' },
+    { simbol: 'JD pada J2000.0', nilai: '2 451 545,0', satuan: 'hari' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-01', 'SRC-05', 'SRC-07', 'SRC-08']}
+  pemetaan={[
+    { sumberId: 'SRC-01', rujukan: 'IOAA Syllabus: waktu sideris, Julian Date, fase Bulan, gerhana Matahari/Bulan, dan siklus Saros.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al. (6e), Bab 2, 6, 7: sistem waktu (UT1, UTC, TT, EoT), kalender, dan dinamika fase-gerhana.' },
+    { sumberId: 'SRC-07', rujukan: 'Ryden & Peterson, Bab 4: mekanika pasang surut, perlambatan rotasi Bumi, dan resesi orbit Bulan.' },
+    { sumberId: 'SRC-08', rujukan: 'Roy & Clarke (4e), Bab 9 & 12: konversi skala waktu presisi GMST-LST-UT, persamaan waktu, dan geometri umbra.' },
+  ]}
+/>
+
+</Bagian>

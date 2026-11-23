@@ -1,0 +1,147 @@
+export interface SumberEksternal {
+  id: string
+  jenis: 'Silabus Olimpiade' | 'Kurikulum Prodi' | 'Silabus Kuliah' | 'Buku Teks' | 'Standar Resmi'
+  judul: string
+  penulisInstitusi: string
+  identitas: string
+  tanggalAkses: string
+}
+
+export const SUMBER_LEDGER: Record<string, SumberEksternal> = {
+  'SRC-01': {
+    id: 'SRC-01',
+    jenis: 'Silabus Olimpiade',
+    judul: 'Official Syllabus of the International Olympiad on Astronomy and Astrophysics (IOAA)',
+    penulisInstitusi: 'Komite Akademik IOAA / USAAAO Archive',
+    identitas: 'Theoretical, Observational & Data Analysis Parts (usaaao.org, ioaa2026.vn)',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-02': {
+    id: 'SRC-02',
+    jenis: 'Silabus Olimpiade',
+    judul: 'Silabus Resmi OSN Astronomi SMA (Teori, Metode Matematika, Observasi)',
+    penulisInstitusi: 'Pusat Prestasi Nasional (Puspresnas), Kemendikdasmen RI',
+    identitas: 'kemendikdasmen.go.id',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-03': {
+    id: 'SRC-03',
+    jenis: 'Kurikulum Prodi',
+    judul: 'Kurikulum & Bahan Kajian Program Studi Sarjana Astronomi ITB',
+    penulisInstitusi: 'Institut Teknologi Bandung (FMIPA — Prodi Astronomi)',
+    identitas: 'AS2101–AS2103, AS2201–AS2205, AS3103–AS3105, AS3202–AS3203, AS4103–AS4106 (itb.ac.id)',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-04': {
+    id: 'SRC-04',
+    jenis: 'Silabus Kuliah',
+    judul: 'MIT OpenCourseWare — Fisika, Kalkulus & Astrofisika (18.01, 8.01–8.04, 8.282, 8.286, 8.901, 8.902)',
+    penulisInstitusi: 'Massachusetts Institute of Technology',
+    identitas: 'mit.edu (OCW Course Syllabi)',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-05': {
+    id: 'SRC-05',
+    jenis: 'Buku Teks',
+    judul: 'Fundamental Astronomy (6th Edition)',
+    penulisInstitusi: 'Karttunen, H., Kröger, P., Oja, H., Poutanen, M., & Donner, K. J. (Springer)',
+    identitas: 'ISBN-13: 978-3662530443',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-06': {
+    id: 'SRC-06',
+    jenis: 'Buku Teks',
+    judul: 'An Introduction to Modern Astrophysics (2nd Edition)',
+    penulisInstitusi: 'Carroll, B. W., & Ostlie, D. A. (Cambridge University Press)',
+    identitas: 'ISBN-13: 978-1108422161',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-07': {
+    id: 'SRC-07',
+    jenis: 'Buku Teks',
+    judul: 'Foundations of Astrophysics',
+    penulisInstitusi: 'Ryden, B., & Peterson, B. M. (Addison-Wesley / CUP)',
+    identitas: 'ISBN-13: 978-0321595584',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-08': {
+    id: 'SRC-08',
+    jenis: 'Buku Teks',
+    judul: 'Astronomy: Principles and Practice (4th Edition)',
+    penulisInstitusi: 'Roy, A. E., & Clarke, D. (CRC Press / IoP)',
+    identitas: 'ISBN-13: 978-0750309172',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-09': {
+    id: 'SRC-09',
+    jenis: 'Buku Teks',
+    judul: 'Astronomy 2e (OpenStax)',
+    penulisInstitusi: 'Fraknoi, A., Morrison, D., Wolff, S. C., et al. (Rice University)',
+    identitas: 'ISBN-13: 978-1-951693-50-3 (openstax.org)',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-10': {
+    id: 'SRC-10',
+    jenis: 'Buku Teks',
+    judul: 'Calculus Vol. 1–3 (OpenStax) & Calculus: Early Transcendentals (8th Ed.)',
+    penulisInstitusi: 'Herman, E., Strang, G. (OpenStax) & Stewart, J. (Cengage)',
+    identitas: 'ISBN-13: 978-1-938168-02-4, 978-1-938168-06-2, 978-1-50669-806-9, 978-1285741550',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-11': {
+    id: 'SRC-11',
+    jenis: 'Buku Teks',
+    judul: 'Algebra and Trigonometry & University Physics Vol. 1–3 (OpenStax)',
+    penulisInstitusi: 'Ling, S. J., Sanny, J., Moebs, W., et al. (Rice University)',
+    identitas: 'ISBN-13: 978-1-938168-27-7 (V1), 978-1-938168-16-1 (V2), 978-1-938168-18-5 (V3)',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-12': {
+    id: 'SRC-12',
+    jenis: 'Buku Teks',
+    judul: 'An Introduction to Mechanics (2nd Edition)',
+    penulisInstitusi: 'Kleppner, D., & Kolenkow, R. J. (Cambridge University Press)',
+    identitas: 'ISBN-13: 978-0521198110',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-13': {
+    id: 'SRC-13',
+    jenis: 'Buku Teks',
+    judul: 'Optics (5th Ed.) & An Introduction to Thermal Physics',
+    penulisInstitusi: 'Hecht, E. (Pearson) & Schroeder, D. V. (Oxford University Press)',
+    identitas: 'ISBN-13: 978-0133977226 (Hecht), 978-0192895547 (Schroeder)',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-14': {
+    id: 'SRC-14',
+    jenis: 'Buku Teks',
+    judul: 'Introduction to Electrodynamics (5th Edition)',
+    penulisInstitusi: 'Griffiths, D. J. (Cambridge University Press)',
+    identitas: 'ISBN-13: 978-1009397759',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-15': {
+    id: 'SRC-15',
+    jenis: 'Buku Teks',
+    judul: 'An Introduction to Error Analysis (2nd Ed.) & Data Reduction and Error Analysis (3rd Ed.)',
+    penulisInstitusi: 'Taylor, J. R. & Bevington, P. R., Robinson, D. K.',
+    identitas: 'ISBN-13: 978-0935702750 (Taylor), 978-0072472271 (Bevington)',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-16': {
+    id: 'SRC-16',
+    jenis: 'Buku Teks',
+    judul: 'Solar System Dynamics',
+    penulisInstitusi: 'Murray, C. D., & Dermott, S. F. (Cambridge University Press)',
+    identitas: 'ISBN-13: 978-0521572958',
+    tanggalAkses: '2026-11-22',
+  },
+  'SRC-17': {
+    id: 'SRC-17',
+    jenis: 'Standar Resmi',
+    judul: 'IAU Resolutions on Astronomical Constants, Bolometric Scale & Planet Definition',
+    penulisInstitusi: 'International Astronomical Union (IAU)',
+    identitas: 'Res. 2012 B2 (au), Res. 2015 B2 (M_bol), Res. 2015 B3 (nominal), Res. 2006 B5/B6 (iau.org)',
+    tanggalAkses: '2026-11-22',
+  },
+}

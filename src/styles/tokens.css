@@ -1,0 +1,344 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Netral gelap cool — deep space */
+  --color-canvas: #0b0a1a;
+  --color-surface: #141230;
+  --color-sunken: #0e0c24;
+  --color-overlay: #1d1a42;
+  --color-scrim: rgb(5 4 16 / 0.72);
+  --color-ink: #f1eefb;
+  --color-muted: #b7b2d6;
+  --color-faint: #8d87b3;
+  --color-line: #2b2752;
+
+  /* Keluarga dominan: nebula ungu / indigo */
+  --color-ungu: #8b5cf6;
+  --color-ungu-soft: #241b4d;
+  --color-indigo: #6366f1;
+  --color-ungu-tua: #5b21b6;
+
+  /* Aksen full-chroma */
+  --color-cyan: #22d3ee;
+  --color-cyan-soft: #0c2b33;
+  --color-magenta: #f043b4;
+  --color-magenta-soft: #331029;
+  --color-amber: #ffb224;
+  --color-amber-soft: #332609;
+  --color-hijau: #4ade80;
+  --color-hijau-soft: #0f2a1c;
+  --color-korall: #ff5d5d;
+  --color-korall-soft: #341417;
+  --color-info: #5ea8ff;
+  --color-info-soft: #10233f;
+
+  /* Alias semantik lama → kosmik (brand/aksi = ungu, salah = korall) */
+  --color-olive: #8b5cf6;
+  --color-olive-soft: #241b4d;
+  --color-clay: #ff5d5d;
+  --color-clay-soft: #341417;
+
+  --font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-math: 'KaTeX_Main', 'Times New Roman', Georgia, serif;
+
+  --radius-card: 16px;
+  --radius-control: 12px;
+
+  --bayang-kartu: 0 2px 10px rgb(0 0 0 / 0.45), 0 0 0 1px rgb(139 92 246 / 0.05);
+  --bayang-glow: 0 0 24px rgb(139 92 246 / 0.35);
+}
+
+@layer base {
+  html {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: rgb(139 92 246 / 0.4) var(--color-canvas);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-size: 17.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: rgb(139 92 246 / 0.4);
+    color: var(--color-ink);
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  input,
+  textarea {
+    font-family: inherit;
+    font-size: 17px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-canvas);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(139 92 246 / 0.4);
+    border-radius: 999px;
+    border: 2px solid var(--color-canvas);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(139 92 246 / 0.7);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Atmosfer — dipasang sebagai div fixed di Kerangka */
+.lapis-nebula {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 15% 8%, rgb(139 92 246 / 0.22), transparent 60%),
+    radial-gradient(50% 45% at 88% 18%, rgb(34 211 238 / 0.14), transparent 60%),
+    radial-gradient(55% 55% at 72% 88%, rgb(240 67 180 / 0.15), transparent 60%),
+    radial-gradient(45% 45% at 22% 82%, rgb(99 102 241 / 0.18), transparent 60%);
+  animation: nebula-drift 60s ease-in-out infinite alternate;
+}
+
+.lapis-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes nebula-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-2%, 1.5%, 0) scale(1.06);
+  }
+}
+
+@utility kartu {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--bayang-kartu);
+}
+
+.anim-masuk {
+  animation: masuk 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-pop {
+  animation: pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes masuk {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.katex {
+  font-size: 1.06em;
+}
+
+.katex-display {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.7rem 0.4rem;
+  margin: 1rem 0;
+  text-align: center;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.katex-display > .katex {
+  display: inline-block;
+  margin-inline: auto;
+  white-space: nowrap;
+  font-size: 1.15em;
+  color: #f7f6ff;
+}
+
+.katex .fbox,
+.katex .enclosing {
+  border-color: rgb(34 211 238 / 0.7) !important;
+  background: rgb(34 211 238 / 0.08);
+  border-radius: 6px;
+}
+
+/* Maskot Lumi */
+.lumi-bob {
+  animation: lumi-bob 3.2s ease-in-out infinite;
+  transform-origin: 50% 60%;
+}
+.lumi-blink {
+  animation: lumi-blink 4.5s ease-in-out infinite;
+  transform-origin: center;
+}
+.lumi-zzz {
+  animation: lumi-zzz 2.4s ease-in-out infinite;
+}
+@keyframes lumi-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes lumi-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+@keyframes lumi-zzz {
+  0% {
+    opacity: 0;
+    transform: translate(0, 4px);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(6px, -10px);
+  }
+}
+
+/* Konfeti */
+.konfeti {
+  position: absolute;
+  top: -12px;
+  border-radius: 2px;
+  animation-name: konfeti-jatuh;
+  animation-timing-function: cubic-bezier(0.3, 0.4, 0.6, 1);
+  animation-fill-mode: both;
+}
+@keyframes konfeti-jatuh {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--gx, 0px), 110vh, 0) rotate(var(--gr, 540deg));
+    opacity: 0.9;
+  }
+}
+
+/* Slider widget kosmik */
+.slider-kosmik {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.slider-kosmik::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--slider-accent, var(--color-ungu)) 0%,
+    var(--slider-accent, var(--color-ungu)) var(--slider-fill, 50%),
+    var(--color-line) var(--slider-fill, 50%),
+    var(--color-line) 100%
+  );
+}
+.slider-kosmik::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-line);
+}
+.slider-kosmik::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--slider-accent, var(--color-ungu));
+}
+.slider-kosmik::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -6px;
+  height: 18px;
+  width: 18px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  border: 3px solid var(--slider-accent, var(--color-ungu));
+  box-shadow: 0 0 10px rgb(139 92 246 / 0.5);
+  transition: transform 120ms ease;
+}
+.slider-kosmik::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  border: 3px solid var(--slider-accent, var(--color-ungu));
+  box-shadow: 0 0 10px rgb(139 92 246 / 0.5);
+}
+.slider-kosmik:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+.slider-kosmik:focus-visible {
+  outline: 2px solid var(--slider-accent, var(--color-ungu));
+  outline-offset: 4px;
+  border-radius: 999px;
+}

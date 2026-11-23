@@ -1,0 +1,542 @@
+<IdentitasModul
+  kode="A4"
+  judul="Mekanika Langit & Dinamika Orbit"
+  klaster="Klaster Inti Astronomi"
+  posisi="Bab 10 dari 19 · Penurunan analitik orbit dari prinsip pertama"
+  estimasi="95 menit"
+  tingkat="Menengah -> S1 Mekanika Langit (AS2201)"
+  prasyarat={[
+    { id: 'f3', label: 'F3 · Kalkulus Diferensial, Integral & PDB' },
+    { id: 'f4', label: 'F4 · Koordinat Polar, Gaya Sentral & Momentum Sudut' },
+  ]}
+  lanjutan={[
+    { id: 'a6', label: 'A6 · Tata Surya, Eksoplanet & Kurva RV' },
+    { id: 'l3', label: 'L3 · Bintang Ganda, Fungsi Massa & Lobus Roche' },
+    { id: 'l4', label: 'L4 · Dinamika Galaksi & Orbit Bintang S2' },
+  ]}
+/>
+
+<Tujuan>
+
+- Menurunkan secara analitik **persamaan lintasan irisan kerucut** $r(\theta) = \frac{p}{1 + e\cos\theta}$ dari hukum gravitasi Newton dalam koordinat polar (melalui substitusi Binet $u = 1/r$).
+- Membuktikan **ketiga Hukum Kepler dalam kerangka dua benda** memakai **massa tereduksi $\mu$**, energi mekanik total, dan **persamaan Vis-Viva** ($v^2 = G(M_1+M_2)(2/r - 1/a)$).
+- Menghubungkan enam **elemen orbit Keplerian 3D** ($a, e, i, \Omega, \omega, \nu$) dengan **Persamaan Transendental Kepler** ($M = E - e\sin E$) dan merancang solusi numeriknya via **Newton–Raphson**.
+- Merumuskan anggaran kecepatan ($\Delta v$) dan waktu tempuh **transfer Hohmann**, membandingkannya dengan **transfer bi-eliptik**, serta menjelaskan mekanisme **bantuan gravitasi (*gravity assist*)** di kerangka planet vs kerangka Matahari.
+- Menganalisis **Masalah Tiga Benda Terbatas Sirkular (CR3BP)**, menurunkan **potensial efektif** dalam kerangka berotasi, posisi **titik Lagrange ($L_1\text{--}L_5$)**, dan menurunkan **Batas Roche** untuk benda tegar vs benda fluida.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'binet',
+      judul: 'Persamaan Orbit Binet',
+      ringkas: 'd²u/dθ² + u = μ / L² * (-F/u²) = GM/h² -> irisan kerucut r(θ) = p/(1 + e cos θ).',
+      peran: 'Membuktikan Hukum I Kepler langsung dari gravitasi Newton tanpa asumsi bentuk elips.',
+      terkait: ['vis-viva', 'kepler-3d'],
+    },
+    {
+      id: 'vis-viva',
+      judul: 'Vis-Viva & Dua Benda',
+      ringkas: 'E/μ = -GM_tot/(2a); v² = GM_tot(2/r - 1/a); T² = 4π² a³ / [G(M₁ + M₂)].',
+      peran: 'Menghitung kecepatan di setiap posisi orbit elips (a > 0), parabola (a -> ∞), hiperbola (a < 0).',
+      terkait: ['binet', 'manuver', 'kepler-3d'],
+    },
+    {
+      id: 'kepler-3d',
+      judul: 'Elemen 3D & Persamaan Kepler',
+      ringkas: 'M = E - e sin E menghubungkan waktu t terhadap anomali eksentrik E dan anomali sejati ν.',
+      peran: 'Menghitung posisi waktu riil benda langit dalam ruang 3D.',
+      terkait: ['binet', 'vis-viva'],
+    },
+    {
+      id: 'manuver',
+      judul: 'Hohmann, Bi-Eliptik & Slingshot',
+      ringkas: 'Transfer Hohmann meminimalkan Δv untuk r₂/r₁ < 11,94; slingshot meminjam momentum planet.',
+      peran: 'Merancang lintasan antarplanet dan jendela peluncuran sinodis.',
+      terkait: ['vis-viva'],
+    },
+    {
+      id: 'cr3bp',
+      judul: 'Lagrange (L₁–L₅) & Batas Roche',
+      ringkas: 'Potensial efektif Φ_eff(r); batas pasang surut d_R ≈ 2,44 R_M (ρ_M/ρ_m)^(1/3).',
+      peran: 'Menentukan posisi teleskop JWST (L₂), asteroid Trojan (L₄, L₅), serta cincin & kehancuran komet.',
+      terkait: ['vis-viva'],
+    },
+  ]}
+/>
+
+<Bagian id="penurunan-irisan-kerucut" judul="1. Penurunan Analitik Hukum I, II & III Kepler (Substitusi Binet)" tag="Derivasi Kalkulus">
+
+<Epistemik jenis="model">
+Dalam sistem dua massa titik terisolasi ($m_1, m_2$), vektor posisi relatif $\vec{r} = \vec{r}_2 - \vec{r}_1$ memenuhi persamaan gerak identik dengan partikel tunggal bermassa tereduksi $\mu = \frac{m_1 m_2}{m_1 + m_2}$ di bawah gaya sentral gravitasi berpusat massa total $M = m_1 + m_2$:
+$$\mu \ddot{\vec{r}} = -\frac{G m_1 m_2}{r^2}\hat{r} \iff \ddot{\vec{r}} = -\frac{GM}{r^2}\hat{r}.$$
+</Epistemik>
+
+### Langkah 1: Hukum II Kepler & Reduksi ke Bidang Polar
+
+Momentum sudut spesifik relatif adalah $\vec{h} \equiv \vec{r} \times \dot{\vec{r}}$. Turunannya terhadap waktu:
+$$\frac{d\vec{h}}{dt} = \dot{\vec{r}}\times\dot{\vec{r}} + \vec{r}\times\ddot{\vec{r}} = \vec{r}\times\left(-\frac{GM}{r^2}\hat{r}\right) = \vec{0}.$$
+Karena $\vec{h}$ konstan arahnya, gerak selalu berada pada satu **bidang datar** tegak lurus $\vec{h}$. Dalam koordinat polar bidang tersebut ($r, \theta$), besar momentum sudut spesifik adalah $h = r^2\dot{\theta} = \text{konst}$, dan laju penyapuan luas sektor segitiga infinitesimal $dA = \frac{1}{2}r(r\,d\theta)$ memberikan **Hukum II Kepler eksak**:
+
+$$\frac{dA}{dt} = \frac{1}{2}r^2\dot{\theta} = \frac{h}{2} = \text{konst}.$$
+
+### Langkah 2: Persamaan Binet & Pembuktian Hukum I Kepler
+
+Dari Modul F4, komponen percepatan radial dalam koordinat polar adalah $a_r = \ddot{r} - r\dot{\theta}^2 = -\frac{GM}{r^2}$. Ganti peubah waktu $t$ menjadi sudut $\theta$ lewat **substitusi Binet** $u(\theta) \equiv \frac{1}{r(\theta)}$ dan $\dot{\theta} = h u^2$:
+
+1. Turunan pertama terhadap waktu:
+   $$\dot{r} = \frac{dr}{d\theta}\dot{\theta} = \left(-\frac{1}{u^2}\frac{du}{d\theta}\right)(h u^2) = -h\frac{du}{d\theta}.$$
+2. Turunan kedua terhadap waktu:
+   $$\ddot{r} = \frac{d}{d\theta}\left(-h\frac{du}{d\theta}\right)\dot{\theta} = -h^2 u^2 \frac{d^2 u}{d\theta^2}.$$
+3. Masukkan ke persamaan radial $\ddot{r} - r\dot{\theta}^2 = -\frac{GM}{r^2}$ (dengan $r\dot{\theta}^2 = h^2 u^3$ dan $r^{-2} = u^2$):
+   $$-h^2 u^2 \frac{d^2 u}{d\theta^2} - h^2 u^3 = -GM u^2 \implies \frac{d^2 u}{d\theta^2} + u = \frac{GM}{h^2}.$$
+
+Persamaan diferensial linear koefisien konstan tak-homogen orde-2 ini memiliki solusi umum eksak (pilih sumbu $\theta = 0$ di titik minimum $r$, yakni periapsis di mana $u$ maksimum):
+
+$$u(\theta) = \frac{GM}{h^2}\big(1 + e\cos\theta\big) \implies r(\theta) = \frac{p}{1 + e\cos\theta}, \qquad p \equiv \frac{h^2}{G(m_1 + m_2)}.$$
+
+Inilah persamaan polar **irisan kerucut** dengan **semi-latus rektum $p = a(1 - e^2)$** (untuk $0 \le e < 1$) dan **eksentrisitas $e$**! Nilai $e$ membedakan keluarga orbit:
+- $e = 0$: lingkaran ($r = a = p$)
+- $0 < e < 1$: **elips**, dengan $r_p = a(1-e)$ (di $\theta = 0$), $r_a = a(1+e)$ (di $\theta = \pi$), dan sumbu semi-minor $b = a\sqrt{1 - e^2}$
+- $e = 1$: **parabola** ($r(\theta) = \frac{p}{1+\cos\theta}$, $r_a \to \infty$)
+- $e > 1$: **hiperbola** ($r(\theta) = \frac{a(e^2-1)}{1 + e\cos\theta}$ dengan $a < 0$ berdasarkan konvensi energi, hanya terdefinisi untuk $\cos\theta > -1/e$).
+
+<Gambar id="elips-orbit" />
+
+### Langkah 3: Hukum III Kepler Bentuk Umum Newton
+
+Untuk orbit elips tertutup ($0 \le e < 1$), satu periode penuh $T$ menyapu seluruh luas elips $A = \pi a b = \pi a^2\sqrt{1 - e^2}$. Dari laju penyapuan konstan $\frac{dA}{dt} = \frac{h}{2}$ dan $h = \sqrt{G(m_1+m_2)\,a(1-e^2)}$:
+
+$$T = \frac{A}{dA/dt} = \frac{2\pi a^2\sqrt{1 - e^2}}{\sqrt{G(m_1+m_2)\,a(1 - e^2)}} \implies T^2 = \frac{4\pi^2}{G(m_1 + m_2)}\,a^3.$$
+
+<Gambar id="kepler-loglog" />
+
+<Interaktif jenis="orbit" />
+
+</Bagian>
+
+<Bagian id="vis-viva" judul="2. Energi Mekanik Orbit & Persamaan Vis-Viva" tag="Kekekalan Energi">
+
+### Penurunan Energi Spesifik ($\mathcal{E}$) dan Persamaan Vis-Viva
+
+Energi mekanik spesifik relatif (per satuan massa tereduksi $\mu$) adalah konstan di setiap titik lintasan:
+$$\mathcal{E} \equiv \frac{E}{\mu} = \frac{1}{2}v^2 - \frac{G(m_1 + m_2)}{r} = \text{konst}.$$
+Evaluasi $\mathcal{E}$ di titik periapsis ($r_p = a(1-e)$, di mana $\vec{v}_p \perp \vec{r}_p$ sehingga $v_p = h / r_p$):
+$$\mathcal{E} = \frac{1}{2}\frac{h^2}{r_p^2} - \frac{GM}{r_p} = \frac{GM a(1-e^2)}{2 a^2 (1-e)^2} - \frac{GM}{a(1-e)} = \frac{GM}{a(1-e)}\left[\frac{1+e}{2} - 1\right] = -\frac{GM}{2a}.$$
+*(Sifat luar biasa: energi orbit elips **hanya bergantung pada sumbu semimayor $a$**, sama sekali **tidak bergantung pada eksentrisitas $e$**!).*
+
+Dengan menyamakan $\frac{1}{2}v^2 - \frac{GM}{r} = -\frac{GM}{2a}$, diperoleh **Persamaan Vis-Viva**:
+
+$$v^2 = G(m_1 + m_2)\left(\frac{2}{r} - \frac{1}{a}\right).$$
+
+- **Orbit Lingkaran ($r = a$):** $v_c = \sqrt{\frac{GM}{r}}$.
+- **Parabola ($a \to \infty \iff \mathcal{E} = 0$):** $v_{\text{lepas}}(r) = \sqrt{\frac{2GM}{r}} = \sqrt{2}\,v_c$.
+- **Hiperbola ($a < 0 \iff \mathcal{E} > 0$):** Ketika $r \to \infty$, kecepatan asimtotik sisa (*hyperbolic excess speed*) adalah $v_\infty = \sqrt{\frac{GM}{|a|}} = \sqrt{v^2 - v_{\text{lepas}}^2}$.
+
+<Gambar id="orbit-lingkaran-rasio" />
+
+Di apsis (perihelion & aphelion), karena $v_p r_p = v_a r_a = h$:
+$$\frac{v_p}{v_a} = \frac{r_a}{r_p} = \frac{1+e}{1-e}, \qquad v_p = \sqrt{\frac{GM}{a}\frac{1+e}{1-e}}, \qquad v_a = \sqrt{\frac{GM}{a}\frac{1-e}{1+e}}.$$
+
+</Bagian>
+
+<Bagian id="elemen-kepler" judul="3. Elemen Orbit 3D & Solusi Persamaan Transendental Kepler" tag="Kinematika Elips">
+
+### Enam Elemen Orbit Keplerian 3D
+
+Posisi suatu benda pada ruang 3D di kerangka ekliptika (atau ekuatorial) ditetapkan unik oleh 6 parameter:
+1. $a$ (sumbu semimayor) $\to$ ukuran & energi orbit
+2. $e$ (eksentrisitas) $\to$ bentuk irisan kerucut
+3. $i$ (inklinasi) $\to$ kemiringan bidang orbit terhadap bidang acuan ($0^\circ \le i < 90^\circ$ prograde, $90^\circ < i \le 180^\circ$ retrograde)
+4. $\Omega$ (*longitude of ascending node*) $\to$ sudut di bidang acuan dari $\Upsilon$ ke titik simpul naik
+5. $\omega$ (*argument of periapsis*) $\to$ sudut di dalam bidang orbit dari simpul naik ke periapsis
+6. $\nu$ atau $f$ (*true anomaly*) $\to$ sudut posisi benda dari periapsis saat waktu $t$ (sering diganti dengan waktu lintas periapsis $t_p$).
+
+### Penurunan Persamaan Kepler ($M = E - e\sin E$)
+
+Untuk menghubungkan waktu $(t - t_p)$ dengan sudut posisi $\nu$, kita gambar lingkaran bantu berjari-jari $a$ berpusat di titik tengah elips ($C$) dan proyeksikan posisi planet ke atas lingkaran bantu sehingga mendefinisikan **Anomali Eksentrik ($E$)**. Secara geometris, koordinat elips terhadap fokus utama adalah $x = r\cos\nu = a(\cos E - e)$ dan $y = r\sin\nu = a\sqrt{1 - e^2}\sin E$, sehingga:
+
+$$r = a(1 - e\cos E), \qquad \tan\left(\frac{\nu}{2}\right) = \sqrt{\frac{1+e}{1-e}}\tan\left(\frac{E}{2}\right).$$
+
+Menurut Hukum II Kepler, luas sektor elips $A_{\text{elips}}$ yang disapu sejak periapsis memenuhi $\frac{A_{\text{elips}}}{\pi a b} = \frac{t - t_p}{T} = \frac{M}{2\pi}$, di mana **$M \equiv n(t - t_p) = \frac{2\pi}{T}(t - t_p)$** disebut **Anomali Rata-rata (*Mean Anomaly*)**. Karena pemetaan lingkaran ke elips hanya mengecilkan sumbu-$y$ dengan faktor skala konstan $b/a$, luas sektor elips tepat sama dengan $(b/a)$ kali luas daerah di dalam lingkaran bantu antara periapsis ($x=a$) dan $(a\cos E, a\sin E)$ — yaitu sektor lingkaran $\frac{1}{2}a^2 E$ dikurangi segitiga dengan alas $ae$ dan tinggi $a\sin E$:
+
+$$A_{\text{elips}} = \frac{b}{a}\left(\frac{1}{2}a^2 E - \frac{1}{2}(ae)(a\sin E)\right) = \frac{ab}{2}(E - e\sin E) \implies M = E - e\sin E.$$
+
+Persamaan transendental ini tidak memiliki solusi aljabar tertutup dalam $E$, namun mudah diselesaikan secara iteratif dalam 3–4 langkah memakai **metode Newton–Raphson** (mulai dengan tebakan awal $E_0 = M$, atau $E_0 = \pi$ bila $e > 0{,}8$):
+
+$$E_{k+1} = E_k - \frac{E_k - e\sin E_k - M}{1 - e\cos E_k}.$$
+
+</Bagian>
+
+<Bagian id="manuver-slingshot" judul="4. Manuver Orbit: Transfer Hohmann, Bi-Eliptik & Bantuan Gravitasi" tag="Astrodinamika">
+
+### Transfer Dua-Impuls Hohmann ($r_1 \to r_2$)
+
+<Gambar id="transfer-hohmann" />
+
+Untuk berpindah antar dua orbit lingkaran koplanar berjari-jari $r_1 < r_2$ dengan elips transfer bersinggungan di periapsis ($r_1$) dan apapsis ($r_2$):
+- Sumbu semimayor transfer: $a_t = \frac{r_1 + r_2}{2}$, eksentrisitas: $e_t = \frac{r_2 - r_1}{r_2 + r_1}$.
+- Impuls pertama di $r_1$: $\Delta v_1 = \sqrt{\frac{GM}{r_1}}\left(\sqrt{\frac{2r_2}{r_1 + r_2}} - 1\right)$.
+- Impuls kedua di $r_2$: $\Delta v_2 = \sqrt{\frac{GM}{r_2}}\left(1 - \sqrt{\frac{2r_1}{r_1 + r_2}}\right)$.
+- Waktu tempuh transfer: $t_{\text{Hohmann}} = \frac{1}{2}T_t = \pi\sqrt{\frac{(r_1 + r_2)^3}{8GM}}$.
+
+<Epistemik jenis="aproksimasi">
+**Kapan Hohmann TIDAK Paling Hemat? (Transfer Bi-Eliptik):** Untuk rasio jari-jari tujuan sangat ekstrem ($r_2 / r_1 > 11{,}94$, misal misi langsung dari $1\ \text{au}$ ke luar orbit Saturnus atau membalik arah orbit $i = 180^\circ$), **transfer bi-eliptik tiga-impuls** (menyundul jauh ke apapsis $r_b \gg r_2$ dulu, mengubah arah/periapsis hampir tanpa bahan bakar di $r_b$ karena $v \approx 0$, lalu mengerem di $r_2$) membutuhkan total $\Delta v$ lebih kecil daripada Hohmann — dengan bayaran waktu tempuh jauh lebih lama!
+</Epistemik>
+
+### Bantuan Gravitasi (*Gravity Assist / Slingshot*)
+
+Di kerangka acuan planet bermassa $M_p$ yang bergerak dengan kecepatan heliosentris $\vec{V}_p$, wahana datang dengan kelajuan hiperbolik $v_\infty = |\vec{v}_i - \vec{V}_p|$. Karena energi di kerangka planet kekal pada tumbukan elastis gravitasi, wahana keluar dengan **kelajuan yang sama persis $v_\infty$** terhadap planet, tetapi vektor kecepatannya berbelok sebesar sudut defleksi $\delta$ ($\sin(\delta/2) = \frac{1}{1 + r_p v_\infty^2/(GM_p)}$). Ketika diubah kembali ke kerangka Matahari ($\vec{v}_f = \vec{V}_p + \vec{v}_{\infty,\text{keluar}}$), kelajuan heliosentris wahana bisa meningkat hingga $+2V_p$ (bila dibelokkan searah $\vec{V}_p$, meminjam sedikit sekali momentum sudut dari orbit planet!).
+
+</Bagian>
+
+<Bagian id="lagrange-roche" judul="5. Titik Lagrange (CR3BP) & Penurunan Batas Roche" tag="Tiga Benda & Pasang Surut">
+
+### Masalah Tiga Benda Terbatas Sirkular & Lima Titik Lagrange
+
+Tinjau dua massa primer $M_1, M_2$ mengorbit pusat massanya pada jarak konstan $R$ dengan kecepatan sudut $\Omega = \sqrt{\frac{G(M_1 + M_2)}{R^3}}$. Dalam **kerangka berotasi** bersama kedua massa, partikel uji bermassa $m \ll M_2$ mengalami percepatan gravitasi dari $M_1, M_2$ ditambah gaya sentrifugal (diturunkan dari potensial efektif $\Phi_{\text{eff}}$; gaya Coriolis $-\,2\vec{\Omega}\times\vec{v}$ nol saat partikel diam di titik kesetimbangan!):
+
+$$\Phi_{\text{eff}}(\vec{r}) = -\frac{GM_1}{r_1} - \frac{GM_2}{r_2} - \frac{1}{2}\Omega^2(x^2 + y^2).$$
+
+Titik di mana $\nabla\Phi_{\text{eff}} = \vec{0}$ disebut **Titik Lagrange**:
+- **$L_1, L_2, L_3$ (Kolinear, sepanjang garis hubung $M_1\text{--}M_2$):** Kesetimbangan tidak stabil (pelana). Untuk $M_2 \ll M_1$, jarak $L_1$ dan $L_2$ dari massa kecil $M_2$ mendekati **Radius Hill**:
+  $$r_{L_1, L_2} \approx R_H \equiv R\left(\frac{M_2}{3 M_1}\right)^{1/3}.$$
+  *(Di Bumi–Matahari, $R_H \approx 1{,}5\times 10^6\ \text{km} \approx 0{,}01\ \text{au}$: wahana SOHO ditempatkan di $L_1$, sedangkan JWST dan Gaia di $L_2$).*
+- **$L_4, L_5$ (Segitiga Sama Sisi, $r_1 = r_2 = R$ berjarak $\pm 60^\circ$ di depan/belakang $M_2$):** Stabil secara dinamis oleh gaya Coriolis apabila rasio massa $\frac{M_2}{M_1 + M_2} < \frac{1}{2}(1 - \sqrt{23/27}) \approx 0{,}0385$ ($\frac{M_1}{M_2} \gtrsim 25$)! Di sinilah asteroid **Trojan Jupiter** terperangkap.
+
+### Penurunan Orde Pertama Batas Pasang Surut Roche
+
+Tinjau satelit bermassa $m$, berjejari $R_m$ ($\rho_m$) mengorbit planet bermassa $M$, berjejari $R_M$ ($\rho_M$) pada jarak pusat $d$. Di permukaan terluar/terdalam satelit pada arah radial planet, perbedaan percepatan gravitasi planet antara pusat satelit ($d$) dan tepinya ($d - R_m$) adalah **gaya pasang surut diferensial per satuan massa**:
+
+$$a_{\text{tidal}} = \frac{GM}{(d - R_m)^2} - \frac{GM}{d^2} \approx \frac{2GM R_m}{d^3} \quad (R_m \ll d).$$
+
+Untuk satelit benda tegar berbentuk bola, gaya pasang surut tepat mengimbangi gravitasi diri $a_{\text{self}} = \frac{Gm}{R_m^2}$ ketika:
+
+$$\frac{2GM R_m}{d^3} = \frac{Gm}{R_m^2} \implies d_{\text{Roche, tegar}} = R_m\left(\frac{2M}{m}\right)^{1/3} = 2^{1/3} R_M \left(\frac{\rho_M}{\rho_m}\right)^{1/3} \approx 1{,}26\, R_M\left(\frac{\rho_M}{\rho_m}\right)^{1/3}.$$
+
+Namun jika satelit terbuat dari **fluida atau tumpukan puing (*rubble pile*)**, gaya pasang surut meregangkan satelit menjadi elipsoid prolat (mengurangi gravitasi diri dan memperbesar $a_{\text{tidal}}$); solusi kesetimbangan fluida oleh Édouard Roche (1848) memperbesar koefisiennya hampir dua kali lipat menjadi:
+
+$$d_{\text{Roche, fluida}} \approx 2{,}44\, R_M\left(\frac{\rho_M}{\rho_m}\right)^{1/3}.$$
+
+<BatasValiditas
+  judul="Validitas Batas Roche Gravitasi Murni"
+  syarat={[
+    'Benda sekunder (satelit/komet) hanya diikat oleh gravitasi dirinya sendiri (diameter $D \\gtrsim 100\\ \\text{km}$).',
+    'Satelit fluida homogen tanpa kekuatan tarik molekuler/kristal internal.',
+  ]}
+  gagalJika="Benda berukuran kecil (misalnya satelit buatan, meteorid, atau bongkahan batuan padat berdiameter < beberapa kilometer) atau memiliki inti kohesif sangat kuat."
+  akibat="Stasiun Luar Angkasa Internasional (ISS) dan satelit buatan mengorbit JAUH di dalam batas Roche Bumi (~18 000 km) tanpa hancur sama sekali karena ikatan baut dan baja jauh lebih kuat daripada gaya pasang surut gravitasi!"
+/>
+
+</Bagian>
+
+<Bagian id="worked-examples" judul="5. Contoh Hitung Lengkap (Notebook Hitung)" tag="Worked Examples">
+
+<Contoh judul="Contoh 1 (Fundamental): Iterasi Newton–Raphson pada Persamaan Kepler & Anomali Sejati">
+
+<Langkah>
+
+**Data:** Sebuah komet mengorbit Matahari pada $a = 5{,}00\ \text{au}$, $e = 0{,}600$. Hitung jarak dari Matahari ($r$) dan sudut posisi dari perihelion ($\nu$) tepat seperenam periode setelah melewati perihelion ($t - t_p = T/6$)!
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Anomali Rata-rata ($M$):**
+$$M = \frac{2\pi}{T}\left(\frac{T}{6}\right) = \frac{\pi}{3} \approx 1{,}04720\ \text{rad}\ (60{,}0^\circ).$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Iterasi Newton–Raphson untuk $E$ ($f(E) = E - 0{,}6\sin E - 1{,}04720$):**
+Mulai dengan tebakan $E_0 = M = 1{,}04720\ \text{rad}$:
+- **Iterasi 1:** $f(E_0) = 1{,}04720 - 0{,}6(0{,}86603) - 1{,}04720 = -0{,}51962$; $f'(E_0) = 1 - 0{,}6(0{,}50000) = 0{,}70000$.
+  $$E_1 = 1{,}04720 - \frac{-0{,}51962}{0{,}70000} = 1{,}78951\ \text{rad}.$$
+- **Iterasi 2:** $f(1{,}78951) = 1{,}78951 - 0{,}6(0{,}97622) - 1{,}04720 = +0{,}15658$; $f'(1{,}78951) = 1 - 0{,}6(-0{,}21678) = 1{,}13007$.
+  $$E_2 = 1{,}78951 - \frac{0{,}15658}{1{,}13007} = 1{,}65096\ \text{rad}.$$
+- **Iterasi 3:** $f(1{,}65096) = 1{,}65096 - 0{,}6(0{,}99679) - 1{,}04720 = +0{,}00569$; $f'(1{,}65096) = 1{,}04804 \implies E_3 = 1{,}64553\ \text{rad}$.
+- **Iterasi 4:** $E_4 = \mathbf{1{,}64552\ \text{rad}}\ (94{,}28^\circ)$, konvergen hingga 5 angka desimal!
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 3 — Jarak ($r$) & Anomali Sejati ($\nu$):**
+$$r = a(1 - e\cos E) = 5{,}00\,\big(1 - 0{,}6\cos(1{,}64552)\big) = 5{,}00\,(1 + 0{,}04480) = \mathbf{5{,}224\ \text{au}}.$$
+$$\tan\left(\frac{\nu}{2}\right) = \sqrt{\frac{1 + 0{,}6}{1 - 0{,}6}}\tan\left(\frac{94{,}28^\circ}{2}\right) = 2{,}0 \times \tan(47{,}14^\circ) = 2{,}1558 \implies \frac{\nu}{2} = 65{,}12^\circ \implies \nu = \mathbf{130{,}23^\circ}.$$
+*(Cek kewajaran: Karena komet bergerak cepat di perihelion sesuai Hukum II Kepler, dalam $1/6$ periode saja komet sudah menyapu sudut sejati $130{,}2^\circ$ — lebih dari sepertiga putaran penuh!)*
+
+</Langkah>
+
+</Contoh>
+
+<Contoh judul="Contoh 2 (Rantai Olimpiade): Transfer Hohmann vs Bi-Eliptik & Jendela Peluncuran Bumi–Mars">
+
+<Langkah>
+
+**Data:** Misi transfer lingkaran dari $r_1 = 1{,}00\ \text{au}$ ke Mars $r_2 = 1{,}524\ \text{au}$ ($v_\oplus = 29{,}78\ \text{km/s}$).\
+(a) Hitung $\Delta v_1$, $\Delta v_2$, total $\Delta v_{\text{tot}}$, dan waktu tempuh transfer Hohmann.\
+(b) Tentukan sudut fase awal Mars di depan Bumi saat peluncuran ($\theta_{\text{lead}}$) dan jarak waktu antar dua jendela peluncuran (*synodic window*).
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Anggaran $\Delta v$ dan Durasi Hohmann:**
+Sumbu semimayor transfer $a_t = \frac{1{,}00 + 1{,}524}{2} = 1{,}262\ \text{au}$.
+- Waktu transfer: $t_t = \frac{1}{2}a_t^{3/2} = \frac{1}{2}(1{,}262)^{1{,}5} = 0{,}7089\ \text{tahun} \approx \mathbf{258{,}9\ \text{hari}}$.
+- Impuls di perihelion ($1{,}00\ \text{au}$):
+  $$v_{p,t} = 29{,}78\sqrt{2 - \frac{1}{1{,}262}} = 32{,}73\ \text{km/s} \implies \Delta v_1 = 32{,}73 - 29{,}78 = \mathbf{2{,}95\ \text{km/s}}.$$
+- Impuls di aphelion ($1{,}524\ \text{au}$): $v_{\text{Mars}} = 29{,}78/\sqrt{1{,}524} = 24{,}12\ \text{km/s}$; $v_{a,t} = 32{,}73/1{,}524 = 21{,}48\ \text{km/s}$:
+  $$\Delta v_2 = 24{,}12 - 21{,}48 = \mathbf{2{,}64\ \text{km/s}} \implies \Delta v_{\text{tot}} = \mathbf{5{,}59\ \text{km/s}}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Sudut Fase Peluncuran & Periode Sinodis:**
+Wahana menempuh $180^\circ$ selama $0{,}7089\ \text{tahun}$. Selama waktu tersebut, Mars ($T_{\text{Mars}} = 1{,}524^{3/2} = 1{,}8814\ \text{tahun}$) hanya bergeser sejauh:
+$$\Delta\theta_{\text{Mars}} = \frac{0{,}7089}{1{,}8814} \times 360^\circ = 135{,}65^\circ.$$
+Agar Mars tepat berada di titik aphelion ($180^\circ$ dari titik luncur) ketika wahana tiba, pada saat peluncuran Mars harus berada di **depan Bumi sebesar $\theta_{\text{lead}} = 180^\circ - 135{,}65^\circ = \mathbf{+44{,}3^\circ}$**.
+Konfigurasi sudut relatif ini berulang setiap satu periode sinodis Bumi–Mars:
+$$T_{\text{sin}} = \frac{T_\oplus\, T_{\text{Mars}}}{T_{\text{Mars}} - T_\oplus} = \frac{1{,}000 \times 1{,}8814}{1{,}8814 - 1{,}000} = 2{,}135\ \text{tahun} \approx \mathbf{780\ \text{hari}\ (\approx 26\ \text{bulan})}.$$
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  items={[
+    {
+      salah: 'Memasukkan kelajuan orbit v_c(r₁) atau Δv di elips Hohmann dengan asumsi energi hanya bergantung pada jarak perihelion, bukan sumbu semimayor a.',
+      kenapaKeliru: 'Banyak peserta menaksir bahwa orbit elips yang lebih lonjong (e besar) untuk a yang sama memiliki energi mekanik lebih besar karena v_p di perihelion sangat tinggi.',
+      caraDeteksi: 'Periksa rumus vis-viva di r_p = a(1−e): v_p memang membesar saat e -> 1, namun energi potensial −GM/(a(1−e)) juga menjadi jauh lebih negatif! Kedua suku saling meniadakan tepat menjadi E/μ = −GM/(2a), sepenuhnya bebas dari e.',
+      benar: 'Semua orbit elips ber-sumbu semimayor a sama memiliki energi mekanik total E = −GMm/(2a) dan periode T yang persis identik, berapa pun nilai eksentrisitas e-nya.',
+    },
+    {
+      salah: 'Di titik Lagrange L₁ atau L₂ (misal tempat JWST), gaya gravitasi Matahari tepat sama dengan gaya gravitasi Bumi (F_Matahari = F_Bumi) sehingga gaya totalnya nol.',
+      kenapaKeliru: 'Anggapan itu melupakan gaya sentrifugal dalam kerangka berotasi! Bila gaya gravitasi Matahari dan Bumi sekadar saling meniadakan, partikel di L₁ akan diam di ruang inersia, bukan ikut mengorbit Matahari setahun sekali bersama Bumi!',
+      caraDeteksi: 'Hitung lokasi di mana F_Matahari = F_Bumi: r_Bumi = d / (1 + √(M_☉/M_⊕)) ≈ 260 000 km (lebih dekat dari Bulan!). Padahal L₁ terletak ~1,5 juta km dari Bumi! Di L₁, gaya gravitasi Bumi ke arah Matahari membantu memperpanjang periode orbit yang semestinya lebih cepat menjadi tepat 1 tahun.',
+      benar: 'Titik Lagrange adalah titik kesetimbangan GAYA EFEKTIF (gravitasi kedua massa + gaya sentrifugal kerangka berotasi) sehingga periode orbitnya sinkron tepat 1:1 dengan kedua massa primer.',
+    },
+    {
+      salah: 'Saat satelit mendapat dorongan mundur (retrograde) di ketinggian orbit lingkaran rendah akibat hambatan atmosfer, kelajuannya terus berkurang.',
+      kenapaKeliru: 'Dalam sumur potensial gravitasi 1/r, kapasitas panas orbital bernilai negatif: kehilangan energi total (ΔE < 0) memperkecil a, yang memaksa v² = GM/a justru MENINGKAT (K = −E).',
+      caraDeteksi: 'Bandingkan kelajuan stasiun ISS (400 km, v ≈ 7,67 km/s) dengan satelit geostasioner (35 786 km, v ≈ 3,07 km/s): semakin rendah orbitnya, semakin CEPAT lajunya!',
+      benar: 'Hilangnya energi akibat hambatan menurunkan ketinggian r dan menaikkan energi kinetik K (ΔK = −ΔE > 0) sehingga satelit berakselerasi jatuh lebih cepat.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="evaluasi" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mandiri">
+
+<CekPaham
+  id="a4-cek-1"
+  pertanyaan="Sebuah komet memiliki orbit elips mengitari Matahari dengan sumbu semimayor a = 4,0 AU dan eksentrisitas e = 0,75. Berapakah perbandingan kecepatan komet di perihelion dibanding kecepatan di aphelion (v_p / v_a)?"
+  opsi={['7', '4', '1,75', '16']}
+  jawaban={0}
+  penjelasan="Kekekalan momentum sudut h = r_p v_p = r_a v_a memberi v_p / v_a = r_a / r_p = (1 + e)/(1 − e) = 1,75 / 0,25 = 7."
+/>
+
+<CekPaham
+  id="a4-cek-2"
+  pertanyaan="Sebuah satelit buatan mengorbit Bumi pada orbit lingkaran di ketinggian h dengan kelajuan orbit v_c = 7,5 km/s. Berapakah kelajuan minimum yang harus diberikan pada satelit tersebut agar ia dapat lepas sepenuhnya dari tarikan gravitasi Bumi?"
+  opsi={['10,6 km/s', '15,0 km/s', '7,5 km/s', '11,2 km/s']}
+  jawaban={0}
+  penjelasan="Kelajuan lepas di jarak r memenuhi v_esc = √2 × v_c = 1,4142 × 7,5 km/s ≈ 10,61 km/s (tidak memakai 11,2 km/s yang merupakan nilai di permukaan Bumi!)."
+/>
+
+<CekPaham
+  id="a4-cek-3"
+  pertanyaan="Dua buah bintang dalam sistem biner berputar mengitari pusat massa bersama (barycenter). Jika bintang A berada pada jarak dua kali lebih jauh dari pusat massa dibanding bintang B (r_A = 2 r_B), bagaimanakah perbandingan massa kedua bintang?"
+  opsi={[
+    'Massa bintang B adalah dua kali massa bintang A (M_B = 2 M_A)',
+    'Massa bintang A adalah dua kali massa bintang B (M_A = 2 M_B)',
+    'Kedua bintang memiliki massa yang sama',
+    'Massa bintang B adalah empat kali massa bintang A'
+  ]}
+  jawaban={0}
+  penjelasan="Pusat massa memenuhi M_A r_A = M_B r_B. Karena r_A = 2 r_B, maka M_B = 2 M_A."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'a4-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Sebuah satelit berada di orbit lingkaran berjejari $r_0$ dengan kelajuan $v_c$. Manakah cara menyalakan mesin roket agar energi yang dibutuhkan untuk mencapai jarak tak hingga ($E = 0$, lepas total) paling kecil: (A) menyalakan pendorong langsung di $r_0$ (*direct escape*), atau (B) terlebih dahulu menaikkan ketinggian ke orbit lingkaran sangat jauh $r \\gg r_0$ lalu melepaskan diri dari sana? Kaitkan dengan **Efek Oberth**!',
+      petunjuk: 'Energi kinetik yang diperoleh per satuan $\\Delta v$ adalah $\\Delta K = \\frac{1}{2}(v + \\Delta v)^2 - \\frac{1}{2}v^2 \\approx v\\,\\Delta v$. Di mana kecepatan $v$ paling besar?',
+      langkahKunci: [
+        'Melakukan pembakaran langsung dari orbit rendah ($r_0$) hanya memerlukan $\\Delta v_{\\text{A}} = (\\sqrt{2} - 1)\\,v_c(r_0) \\approx 0{,}414\\,v_c(r_0)$.',
+        'Sebaliknya, jika naik dulu ke orbit sangat tinggi ($r \\to \\infty$), dibutuhkan $\\Delta v_1 \\approx (\\sqrt{2} - 1)v_c$ plus pembakaran pembuang momentum di aphelion jauh sehingga $\\Delta v_{\\text{tot}}$ justru jauh lebih besar!',
+        'Lebih mendasar lagi, kerja mekanik roket adalah $dK = m\\vec{v}\\cdot d\\vec{v}$: membakar bahan bakar di dasar sumur potensial (periapsis, di mana $v$ maksimum) menghasilkan perubahan energi orbit paling besar per kilogram propelan (**Efek Oberth**)!',
+      ],
+      rubrik: [
+        'Membandingkan $\\Delta v = (\\sqrt{2}-1)v_c$ secara langsung vs biaya dua-impuls ke orbit tinggi.',
+        'Menjelaskan Efek Oberth melalui $\\Delta E \\propto v\\,\\Delta v$ pada kelajuan tinggi di dasar sumur gravitasi.',
+      ],
+    },
+    {
+      id: 'a4-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari kerangka tiga benda kolinear untuk $M_2 \\ll M_1$ pada jarak pisah $R$ (sehingga $\\Omega^2 = G(M_1+M_2)/R^3 \\approx GM_1/R^3$), tuliskan persamaan kesetimbangan gaya di titik $L_2$ (terletak sejauh $r = R + x$ dari $M_1$, dengan $x \\ll R$ adalah jarak dari $M_2$ menjauhi $M_1$), lalu gunakan ekspansi binomial orde pertama untuk menurunkan perkiraan **Radius Hill** $x \\approx R\\left(\\dfrac{M_2}{3M_1}\\right)^{1/3}$!',
+      petunjuk: 'Di $L_2$, tarikan gravitasi ke dalam oleh $M_1$ dan $M_2$ mengimbangi percepatan sentrifugal ke luar $\\Omega^2 (R + x)$: $\\frac{GM_1}{(R+x)^2} + \\frac{GM_2}{x^2} = \\frac{GM_1}{R^3}(R + x)$.',
+      langkahKunci: [
+        'Kesetimbangan gaya di titik kolinear luar $L_2$ ($x \\ll R$):',
+        '$$\\frac{GM_1}{R^2(1 + x/R)^2} + \\frac{GM_2}{x^2} = \\frac{GM_1}{R^2}\\left(1 + \\frac{x}{R}\\right).$$',
+        'Terapkan aproksimasi binomial $(1 + x/R)^{-2} \\approx 1 - \\frac{2x}{R}$ pada suku pertama:',
+        '$$\\frac{GM_1}{R^2}\\left(1 - \\frac{2x}{R}\\right) + \\frac{GM_2}{x^2} \\approx \\frac{GM_1}{R^2}\\left(1 + \\frac{x}{R}\\right).$$',
+        'Hilangkan $\\frac{GM_1}{R^2}$ dan kumpulkan suku $x/R$: $\\frac{GM_2}{x^2} \\approx \\frac{3GM_1 x}{R^3} \\implies x^3 \\approx R^3\\left(\\frac{M_2}{3M_1}\\right) \\implies x \\approx R\\left(\\frac{M_2}{3M_1}\\right)^{1/3}$.',
+      ],
+      rubrik: [
+        'Menuliskan persamaan gaya gravitasi + sentrifugal di $L_2$ secara tepat.',
+        'Menerapkan deret binomial $(1 + x/R)^{-2} \\approx 1 - 2x/R$ sehingga muncul faktor $3$ di penyebut.',
+      ],
+    },
+    {
+      id: 'a4-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah asteroid kecil berdiameter $D = 10\\ \\text{km}$ dan rapat massa $\\rho = 2{,}0\\ \\text{g/cm}^3$ mengorbit bintang katai putih ($M_{\\text{WD}} = 0{,}6\\,M_\\odot$, $R_{\\text{WD}} = 8\\,500\\ \\text{km}$, $\\rho_{\\text{WD}} \\approx 4{,}6\\times 10^5\\ \\text{g/cm}^3$). Pada jarak berapakah dari katai putih asteroid berstruktur *rubble pile* tersebut hancur lebur akibat gaya pasang surut membentuk cincin puing kaya logam di sekitar katai putih?',
+      petunjuk: 'Gunakan Batas Roche fluida $d_R \\approx 2{,}44\\,R_{\\text{WD}}(\\rho_{\\text{WD}}/\\rho_{\\text{ast}})^{1/3}$, lalu bandingkan dengan $1\\,R_\\odot \\approx 6{,}96\\times 10^5\\ \\text{km}$!',
+      langkahKunci: [
+        'Rasio kerapatan: $\\rho_{\\text{WD}} / \\rho_{\\text{ast}} = (4{,}6\\times 10^5) / 2{,}0 = 2{,}3\\times 10^5$.',
+        'Akar pangkat tiga: $(2{,}3\\times 10^5)^{1/3} \\approx 61{,}3$.',
+        'Batas Roche: $d_R \\approx 2{,}44 \\times 8\\,500\\ \\text{km} \\times 61{,}3 \\approx 1{,}27\\times 10^6\\ \\text{km} \\approx 1{,}8\\,R_\\odot$ ($\\sim 150\\,R_{\\text{WD}}$)!',
+        '*(Fakta astrofisika modern: ribuan katai putih "tercemar logam" pengamatan Gaia & JWST memiliki piringan puing tepat pada radius $\\sim 1\\text{--}2\\,R_\\odot$ akibat asteroid eks-planet yang hancur di Batas Roche-nya!)*',
+      ],
+      rubrik: [
+        'Menghitung rasio kerapatan dan akar kubiknya dengan benar.',
+        'Memperoleh jarak $\\sim 10^6\\ \\text{km}$ ($\\sim 1{,}8\\,R_\\odot$), jauh di luar radius fisik katai putih.',
+      ],
+    },
+    {
+      id: 'a4-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Dua bintang dalam sistem biner memiliki sumbu semimayor orbit relatif $a = 10{,}0\\ \\text{au}$ dan periode orbit $T = 20{,}0\\ \\text{tahun}$. Pengamatan astrometri terhadap pusat massa menunjukkan bintang primer (A) hanya menempuh orbit berjari-jari setengah kali bintang sekunder (B), yakni $a_A / a_B = 1/2$. Hitung masing-masing massa bintang $M_A$ dan $M_B$ dalam satuan $M_\\odot$!',
+      petunjuk: 'Dari Hukum Kepler III umum $M_A + M_B = a_{\\text{au}}^3 / T_{\\text{yr}}^2$, gabungkan dengan $M_A a_A = M_B a_B$.',
+      langkahKunci: [
+        'Massa total sistem: $M_A + M_B = \\frac{10{,}0^3}{20{,}0^2} = \\frac{1\\,000}{400} = 2{,}50\\,M_\\odot$.',
+        'Definisi pusat massa ($a_A + a_B = a$): $M_A a_A = M_B a_B \\implies M_A / M_B = a_B / a_A = 2/1 \\implies M_A = 2 M_B$.',
+        'Substitusi ke jumlah massa: $2 M_B + M_B = 2{,}50\\,M_\\odot \\implies M_B = \\mathbf{0{,}833\\,M_\\odot}$ dan $M_A = \\mathbf{1{,}67\\,M_\\odot}$.',
+      ],
+      rubrik: [
+        'Menentukan $M_A + M_B = 2{,}50\\,M_\\odot$ dalam satuan astronomi–tahun–$M_\\odot$.',
+        'Membalik rasio jarak pusat massa menjadi rasio massa $M_A/M_B = a_B/a_A = 2$.',
+      ],
+    },
+    {
+      id: 'a4-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Sebuah wahana ruang angkasa melintas di belakang planet Jupiter (di sisi arah keluar menjauhi jalur gerak Jupiter) sehingga mengalami *gravity assist* yang mempercepat laju heliosentrisnya menuju Saturnus. Jika di kerangka Matahari wahana bertambah energi kinetiknya $\\Delta K > 0$, dari manakah energi tersebut berasal? Apakah melanggar hukum kekekalan energi?',
+      petunjuk: 'Tinjau hukum kekekalan momentum dan energi **sistem total {wahana + Jupiter}**! Jika wahana terlempar maju di belakang Jupiter, apakah laju orbit Jupiter sedikit berubah?',
+      langkahKunci: [
+        'Tidak ada pelanggaran kekekalan energi: interaksi murni gravitasi bersifat konservatif.',
+        'Di kerangka Matahari, tarikan gravitasi wahana bermassa $m$ sedikit menarik Jupiter ke arah berlawanan geraknya ($\\Delta \\vec{p}_J = -\\Delta \\vec{p}_w$).',
+        'Karena $M_J \\sim 10^{24} m_w$, perubahan kelajuan Jupiter hanya $\\Delta V_J \\sim 10^{-21}\\ \\text{km/s}$ (tak terukur), namun penurunan energi orbital Jupiter sebesar $\\Delta E_J \\approx M_J V_J \\Delta V_J$ **tepat sama besar dan berlawanan tanda** dengan tambahan energi kinetik wahana $+\\Delta E_w$!',
+      ],
+      rubrik: [
+        'Mengidentifikasi sumber energi berasal dari energi orbital planet (tumbukan gravitasi elastis dua benda).',
+        'Menunjukkan kekekalan momentum total ($m\\Delta v \\sim -M_J\\Delta V_J$) menjelaskan mengapa efeknya tak tampak pada orbit planet.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'a4-log-1',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Andaikan hukum gravitasi di alam semesta lain berbanding terbalik dengan **pangkat tiga** jarak ($F(r) = -\\frac{k}{r^3}$, bukan $1/r^2$). Gunakan persamaan orbit Binet ($\\frac{d^2 u}{d\\theta^2} + u = -\\frac{F(1/u)}{m h^2 u^2}$) untuk memeriksa apakah masih mungkin terbentuk **orbit lingkaran yang stabil** jika partikel uji diberi gangguan radial kecil!',
+      petunjuk: 'Substitusikan $F = -k u^3$ ke ruas kanan persamaan Binet: $\\frac{d^2 u}{d\\theta^2} + u = \\frac{k u}{m h^2} \\implies \\frac{d^2 u}{d\\theta^2} + \\left(1 - \\frac{k}{m h^2}\\right)u = 0$!',
+      rubrik: [
+        'Memperoleh $\\frac{d^2 u}{d\\theta^2} + \\left(1 - \\frac{k}{m h^2}\\right)u = 0$.',
+        'Melihat bahwa untuk orbit lingkaran, gaya sentripetal tepat mengharuskan $k = m h^2$ (karena $m v^2/r = k/r^3 \\implies m r^2 v^2 = m h^2 = k$), sehingga koefisien $u$ menjadi **nol** ($\\frac{d^2 u}{d\\theta^2} = 0$)!',
+        'Menyimpulkan: jika $h$ berkurang sedikit saja ($1 - k/(mh^2) < 0$), $u(\\theta)$ tumbuh eksponensial ($r \\to 0$ jatuh ke pusat); jika bertambah sedikit ($> 0$), $r \\to \\infty$ lepas bebas! Tidak ada orbit terikat elips stabil pada gaya $1/r^3$ (Teorema Bertrand)!',
+      ],
+      jawabanKunci:
+        'Persamaan Binet untuk $F = -k/r^3 = -k u^3$ menghasilkan $\\frac{d^2 u}{d\\theta^2} + \\left(1 - \\frac{k}{m h^2}\\right)u = 0$. Agar lingkaran ($u = \\text{konst} \\ne 0$) ada, diperlukan tepat $mh^2 = k$. Begitu diberi gangguan sekecil apa pun terhadap energi/momentum sudut, solusi bukan lagi osilasi tertutup melainkan kurva spiral (*Cotes spiral*): jatuh langsung ke pusat bila $mh^2 < k$, atau melarikan diri ke tak hingga bila $mh^2 > k$. Alam semesta dengan gravitasi $1/r^3$ (atau ruang berdimensi $D \\ge 4$) tidak bisa menopang sistem planet yang stabil!',
+    },
+    {
+      id: 'a4-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Dua planet mengorbit bintang bermassa $M$: Planet P berorbit lingkaran pada $r = 4\\ \\text{au}$, sedangkan Komet K berorbit elips sangat lonjong dengan $r_p = 1\\ \\text{au}$ dan $r_a = 7\\ \\text{au}$. Seorang mahasiswa menyimpulkan: "Karena komet jauh lebih dekat ke bintang di perihelion ($1\\ \\text{au}$ vs $4\\ \\text{au}$), energi mekanik total per kg Komet K pasti jauh lebih negatif daripada Planet P, dan periode orbit K juga jauh lebih pendek." Tunjukkan kekeliruannya!',
+      petunjuk: 'Hitung sumbu semimayor $a_K = (r_p + r_a)/2$ komet K dan bandingkan dengan $a_P$!',
+      rubrik: [
+        'Menghitung $a_K = (1 + 7)/2 = 4{,}0\\ \\text{au} = a_P$.',
+        'Karena $\\mathcal{E} = -GM/(2a)$ dan $T^2 \\propto a^3$ hanya bergantung pada $a$, Komet K dan Planet P memiliki **energi spesifik yang sama persis** DAN **periode orbit yang sama persis** ($T_K = T_P$)!',
+      ],
+      jawabanKunci:
+        'Klaim mahasiswa salah total karena tidak menghitung sumbu semimayor komet $a_K = (r_p + r_a)/2 = (1 + 7)/2 = 4{,}0\\ \\text{au}$. Baik energi mekanik spesifik $\\mathcal{E} = -GM/(2a)$ maupun periode orbit $T = 2\\pi\\sqrt{a^3/(GM)}$ HANYA bergantung pada $a$, bukan pada eksentrisitas $e$ maupun $r_p$ semata. Dengan $a_K = a_P = 4\\ \\text{au}$, Komet K dan Planet P memiliki periode tahun orbit dan energi per satuan massa yang identik sempurna!',
+    },
+    {
+      id: 'a4-log-3',
+      tipe: 'bandingkan_model',
+      pertanyaan:
+        'Dalam desain misi pemindahan satelit antar dua orbit lingkaran koplanar dari radius $r_1$ ke $r_2 = 20\\,r_1$, bandingkan efisiensi bahan bakar total $\\Delta v_{\\text{tot}}$ antara **Transfer Hohmann (2 impuls)** dengan **Transfer Bi-Eliptik (3 impuls)** yang menggunakan jarak apapsis perantara $r_b \\to \\infty$. Mengapa metode 3-impuls yang tampak memutar jauh justru bisa lebih hemat?',
+      petunjuk: 'Di jarak sangat jauh $r_b \\to \\infty$, kecepatan orbital nyaris nol ($v \\propto 1/\\sqrt{r_b}$), sehingga impuls penambah periapsis dari $r_1$ ke $r_2$ di apapsis harganya mendekati nol! Bandingkan batas eksak: Hohmann membutuhkan kenaikan $v$ dari $v_c(r_1)$ ke lepas, sedangkan Bi-Eliptik cuma butuh $\\Delta v = (\\sqrt{2}-1)(v_1 + v_2)$!',
+      rubrik: [
+        'Pada bi-eliptik dengan $r_b \\to \\infty$: $\\Delta v_1 = (\\sqrt{2}-1)v_1$, $\\Delta v_2 \\to 0$ (impuls gratis menaikkan periapsis dari $r_1$ ke $r_2$!), dan $\\Delta v_3 = (\\sqrt{2}-1)v_2$.',
+        'Untuk $r_2 = 20\\,r_1$: Hohmann $\\Delta v_{\\text{tot}}/v_1 = (\\sqrt{40/21} - 1) + \\frac{1}{\\sqrt{20}}(1 - \\sqrt{2/21}) \\approx 0{,}380 + 0{,}155 = 0{,}535$, sedangkan Bi-Eliptik $(\\sqrt{2}-1)(1 + 1/\\sqrt{20}) \\approx 0{,}4142(1{,}2236) = 0{,}507 < 0{,}535$!',
+      ],
+      jawabanKunci:
+        'Secara intuitif menakjubkan, karena kecepatan di titik terjauh ($r_b \\to \\infty$) mendekati nol, mengubah periapsis dari $r_1$ ke $r_2$ di $r_b$ memakan biaya $\\Delta v_2 \\to 0$! Untuk rasio $r_2/r_1 > 11{,}94$ (seperti $r_2/r_1 = 20$), total impuls bi-eliptik limit ($\\Delta v/v_1 \\approx 0{,}507$) benar-benar mengalahkan Hohmann ($0{,}535$) karena impuls kedua Hohmann di $r_2$ dilakukan ketika energi kinetik awal belum dimanfaatkan lewat Efek Oberth secara penuh.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="a4-refleksi-1"
+  pertanyaan="Mengapa transfer Hohmann hanya dapat diluncurkan pada jendela peluncuran (launch window) waktu tertentu yang berjarak sekitar 26 bulan untuk misi Bumi ke Mars? Jelaskan peran periode sinodis dan bagaimana kompromi antara hemat Δv vs durasi penerbangan memengaruhi desain misi manusia vs kargo."
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'a4-m1', gerbang: 'derivasi', teks: 'Menurunkan persamaan irisan kerucut r(θ) = p/(1 + e cos θ) lewat substitusi Binet u = 1/r serta Hukum Kepler II & III bermassa tereduksi μ.' },
+    { id: 'a4-m2', gerbang: 'derivasi', teks: 'Menurunkan persamaan Vis-Viva v² = GM(2/r - 1/a), Radius Hill (M₂ / 3M₁)^(1/3), dan Batas Roche d_R ∝ R_M (ρ_M/ρ_m)^(1/3).' },
+    { id: 'a4-m3', gerbang: 'observasi', teks: 'Menyelesaikan M = E - e sin E secara numerik (Newton-Raphson) dan menghitung r, ν serta anggaran Δv transfer Hohmann.' },
+    { id: 'a4-m4', gerbang: 'logika', teks: 'Menjelaskan mengapa titik Lagrange melibatkan gaya sentrifugal, kapan transfer bi-eliptik mengalahkan Hohmann (>11,94), dan sumber energi slingshot.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul A4">
+
+<Konstanta
+  data={[
+    { simbol: 'G (konstanta gravitasi)', nilai: '6,67430 × 10⁻¹¹', satuan: 'm³ kg⁻¹ s⁻²' },
+    { simbol: 'GM☉ (IAU 2015 B3 nominal)', nilai: '1,3271244 × 10²⁰', satuan: 'm³ s⁻²' },
+    { simbol: 'GM⊕ (IAU 2015 B3 nominal)', nilai: '3,986004 × 10¹⁴', satuan: 'm³ s⁻²' },
+    { simbol: 'v_⊕ rata-rata (1 au)', nilai: '29,785', satuan: 'km s⁻¹' },
+    { simbol: 'Ambang Bi-Eliptik vs Hohmann', nilai: 'r₂ / r₁ = 11,94', satuan: 'rasio' },
+    { simbol: 'Koefisien Batas Roche (fluida)', nilai: '2,44', satuan: '—' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-03', 'SRC-05', 'SRC-06', 'SRC-16']}
+  pemetaan={[
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS2201 (Mekanika Benda Langit): masalah dua benda, persamaan Kepler, elemen orbit, dan CR3BP.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al. (6e), Bab 5: penurunan elips dari gravitasi Newton, Vis-Viva, dan anomali eksentrik.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Bab 2: dinamika orbital dua-benda, massa tereduksi, dan teorema virial.' },
+    { sumberId: 'SRC-16', rujukan: 'Murray & Dermott (Solar System Dynamics), Bab 2–4: masalah tiga benda terbatas, titik Lagrange, batas Hill/Roche, dan perturbasi.' },
+  ]}
+/>
+
+</Bagian>

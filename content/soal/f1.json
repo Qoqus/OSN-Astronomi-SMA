@@ -1,0 +1,1102 @@
+[
+  {
+    "id": "f1-01",
+    "topik": "matematika",
+    "level": "fondasi",
+    "tipe": "pilihan-ganda",
+    "soal": "Satu parsek sama dengan 3,086 × 10¹⁶ m, sedangkan 1 AU = 1,496 × 10¹¹ m. Berapa besar 1 parsek dalam satuan AU?",
+    "opsi": [
+      "2,06 × 10⁵ AU",
+      "2,06 × 10⁴ AU",
+      "4,85 × 10³ AU",
+      "6,32 × 10⁵ AU"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Tulis perbandingan dalam meter: 1 pc / 1 AU = (3,086 × 10¹⁶) / (1,496 × 10¹¹).",
+      "Bagi bagian depan: 3,086 / 1,496 ≈ 2,06. Kurangkan eksponen: 10¹⁶ / 10¹¹ = 10⁵.",
+      "Hasilnya 2,06 × 10⁵ AU, yaitu sekitar 206.000 AU. Ini masuk akal: Bumi–Matahari hanya 1 AU, sedangkan bintang terdekat berjarak ratusan ribu AU."
+    ]
+  },
+  {
+    "id": "f1-02",
+    "topik": "matematika",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Bintang P memiliki fluks 2.500 kali fluks bintang Q pada pita yang sama. Berapa selisih magnitudonya, m_P − m_Q?",
+    "opsi": [
+      "−8,5",
+      "+8,5",
+      "−3,4",
+      "−10,0"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Gunakan definisi magnitudo: m_P − m_Q = −2,5 log₁₀(F_P / F_Q).",
+      "log₁₀(2.500) = log₁₀(2,5 × 10³) = 0,398 + 3 ≈ 3,40.",
+      "Kalikan dengan −2,5: −2,5 × 3,40 = −8,5. Tanda negatif berarti P lebih terang, sesuai fluksnya yang jauh lebih besar.",
+      "Periksa kewajaran: setiap selisih 5 magnitudo berarti faktor 100. Faktor 2.500 sedikit lebih besar dari 100 × 10, jadi selisihnya sedikit di atas 7,5 — hasil 8,5 konsisten."
+    ]
+  },
+  {
+    "id": "f1-03",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Untuk bintang dengan suhu efektif tetap, luminositas memenuhi L = 4πR²σT⁴. Jika data L dan R diplot pada grafik log–log (log L terhadap log R), berapa kemiringan garis yang diharapkan?",
+    "opsi": [
+      "2",
+      "4",
+      "1",
+      "0,5"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Ambil logaritma kedua ruas: log L = log(4πσT⁴) + 2 log R.",
+      "Karena T tetap, suku pertama konstan. Bentuknya menjadi y = c + n·x dengan y = log L, x = log R, dan n = 2.",
+      "Kemiringan grafik adalah pangkat R, yaitu 2. Ini contoh linearisasi: hubungan pangkat berubah menjadi garis lurus di ruang log–log."
+    ]
+  },
+  {
+    "id": "f1-04",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "soal": "Dua bintang memiliki luminositas identik. Bintang A berjarak 10 pc dan bintang B berjarak 40 pc. Pernyataan mana yang benar tentang penampakan keduanya dari Bumi?",
+    "opsi": [
+      "B tampak 16 kali lebih redup, dengan selisih magnitudo sekitar 3,0",
+      "B tampak 4 kali lebih redup, dengan selisih magnitudo sekitar 1,5",
+      "B tampak 16 kali lebih redup, dengan selisih magnitudo sekitar 1,2",
+      "Keduanya sama terang karena luminositasnya sama"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Fluks berbanding terbalik dengan kuadrat jarak: F ∝ L/d². Dengan L sama, F_A/F_B = (d_B/d_A)² = (40/10)² = 16.",
+      "Jadi A tampak 16 kali lebih terang, atau B 16 kali lebih redup. Jarak empat kali lipat bukan berarti empat kali lebih redup — kuadratnya yang bekerja.",
+      "Selisih magnitudo: m_B − m_A = 2,5 log₁₀(16) ≈ 2,5 × 1,204 ≈ 3,0.",
+      "Tafsir fisis: bintang B yang sama persis tetap bisa tampak tiga magnitudo lebih redup semata-mata karena posisinya. Magnitudo selalu menggabungkan luminositas intrinsic dan jarak."
+    ]
+  },
+  {
+    "id": "f1-05",
+    "topik": "matematika",
+    "level": "fondasi",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan yang benar tentang satuan jarak astronomi.",
+    "opsi": [
+      "1 tahun cahaya ≈ 9,46 × 10¹² km",
+      "1 parsek ≈ 3,26 tahun cahaya",
+      "1 AU ≈ 1,5 × 10⁸ km",
+      "1 parsek lebih kecil daripada 1 tahun cahaya",
+      "Tahun cahaya adalah satuan waktu"
+    ],
+    "jawaban": [0, 1, 2],
+    "pembahasan": [
+      "Tahun cahaya adalah jarak, bukan waktu — namanya menyesatkan. Cahaya menempuh 9,46 × 10¹⁵ m dalam setahun, setara 9,46 × 10¹² km.",
+      "Parsek berasal dari paralaks: 1 pc ≈ 3,26 ly ≈ 206.265 AU, jadi parsek justru lebih besar.",
+      "Satu AU adalah jarak rata-rata Bumi–Matahari, sekitar 1,496 × 10¹¹ m atau 1,5 × 10⁸ km.",
+      "Pernyataan yang benar hanya tiga yang pertama; dua sisanya salah karena tertukar definisi."
+    ]
+  },
+  {
+    "id": "f1-06",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan yang benar tentang skala logaritmik dan grafik log–log.",
+    "opsi": [
+      "Pada skala log, jarak dari 1 ke 10 sama panjangnya dengan jarak dari 10 ke 100",
+      "log(A × B) = log A + log B",
+      "Jika grafik log y terhadap log x berupa garis lurus dengan kemiringan 3, maka y sebanding dengan x³",
+      "Skala logaritmik tidak dapat menampilkan nilai yang lebih kecil dari 1"
+    ],
+    "jawaban": [0, 1, 2],
+    "pembahasan": [
+      "Skala log memberi ruang sama untuk setiap faktor sepuluh, sehingga 1→10, 10→100, dan 100→1000 tampak berjarak sama.",
+      "Sifat perkalian menjadi penjumlahan adalah alasan utama skala log dipakai: rentang besar menjadi ringkas dan perbandingan menjadi mudah.",
+      "Kemiringan pada grafik log–log adalah eksponen: log y = c + n log x berarti y = 10ᶜ xⁿ.",
+      "Nilai antara 0 dan 1 tetap bisa ditampilkan — logaritmanya negatif, dan sumbu cukup diperpanjang ke kiri. Jadi pernyataan terakhir salah."
+    ]
+  },
+  {
+    "id": "f1-07",
+    "topik": "matematika",
+    "level": "fondasi",
+    "tipe": "isian",
+    "soal": "Diameter Matahari 1,392 × 10⁶ km dan jaraknya dari Bumi 1,496 × 10⁸ km. Berapa diameter sudut Matahari, dalam radian? Gunakan pendekatan sudut kecil.",
+    "jawaban": 0.0093,
+    "toleransiRel": 0.02,
+    "satuan": "rad",
+    "pembahasan": [
+      "Untuk sudut kecil, θ = s/d dengan s diameter linier objek.",
+      "θ = (1,392 × 10⁶ km) / (1,496 × 10⁸ km) = 9,30 × 10⁻³ rad.",
+      "Periksa dengan konversi: 9,30 × 10⁻³ rad × (180/π) ≈ 0,533°, sekitar setengah derajat — sepadan dengan ukuran Matahari di langit.",
+      "Kesalahan umum: memakai jari-jari alih-alih diameter. Diameter sudut memang dihitung dari diameter linier."
+    ]
+  },
+  {
+    "id": "f1-08",
+    "topik": "matematika",
+    "level": "menengah",
+    "tipe": "isian",
+    "soal": "Sebuah bintang memiliki magnitudo semu m = 11 dan magnitudo mutlak M = 6. Berapa jarak bintang itu dari Bumi, dalam parsek?",
+    "jawaban": 100,
+    "toleransiRel": 0.01,
+    "satuan": "pc",
+    "pembahasan": [
+      "Mulai dari modulus jarak: m − M = 5 log₁₀(d / 10 pc).",
+      "Hitung selisihnya: 11 − 6 = 5, sehingga 5 = 5 log₁₀(d/10).",
+      "Bagi dengan 5: log₁₀(d/10) = 1, maka d/10 = 10¹ = 10.",
+      "Jadi d = 100 pc. Selisih 5 magnitudo tepat berarti jarak 10 kali lipat dari 10 pc — cocok dengan fakta bahwa faktor 100 pada fluks setara 5 magnitudo."
+    ]
+  },
+  {
+    "id": "f1-09",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "isian",
+    "soal": "Dua bintang dalam sistem ganda terpisah 2 AU secara fisik dan berada pada jarak 40 pc dari Bumi. Berapa pemisahan sudutnya di langit, dalam detik busur? (Tulis \"detik busur\" pada kolom satuan.)",
+    "jawaban": 0.05,
+    "toleransiRel": 0.02,
+    "satuan": "detik busur",
+    "pembahasan": [
+      "Gunakan definisi parsek: benda berukuran 1 AU pada jarak 1 pc tampak bersudut 1 detik busur.",
+      "Sudut berskala linear: θ = (ukuran linier dalam AU) / (jarak dalam pc) detik busur.",
+      "θ = 2 / 40 = 0,05 detik busur, atau 50 milidetik busur.",
+      "Tafsir: pemisahan fisik 2 AU baru terlihat sebagai 0,05″ karena sistemnya sangat jauh. Inilah sebabnya bintang ganda visual sulit dipisahkan — resolusi teleskop dan turbulensi atmosfer menjadi penentu."
+    ]
+  },
+  {
+    "id": "f1-10",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "esai",
+    "soal": "Astronom menggunakan skala logaritmik untuk magnitudo dan untuk diagram HR (log luminositas terhadap log suhu). Jelaskan dua alasan fisis atau praktis mengapa pilihan ini masuk akal, dan berikan satu contoh angka untuk masing-masing alasan.",
+    "rubrik": [
+      {
+        "poin": "Menyebut rentang besaran yang sangat lebar (misalnya fluks atau luminositas bintang berbeda jutaan kali) sehingga skala linear tidak praktis.",
+        "bobot": 2
+      },
+      {
+        "poin": "Menjelaskan bahwa logaritma mengubah perkalian/pangkat menjadi penjumlahan atau garis lurus, sehingga hubungan pangkat mudah dibaca dari kemiringan grafik.",
+        "bobot": 2
+      },
+      {
+        "poin": "Memberi contoh angka yang benar, misalnya selisih 5 magnitudo = faktor 100 pada fluks, atau L ∝ T⁴ menjadi garis lurus pada grafik log–log.",
+        "bobot": 1
+      },
+      {
+        "poin": "Mengaitkan pilihan skala dengan cara mata merespons cahaya secara hampir logaritmik (persepsi terang bersifat relatif, bukan absolut).",
+        "bobot": 1
+      }
+    ],
+    "jawabanTeladan": "Pertama, rentang luminositas bintang sangat lebar: bintang paling redup yang terdeteksi bisa puluhan juta kali lebih lemah daripada bintang paling terang, sehingga sumbu linear akan memampatkan hampir semua data di dekat nol. Dengan skala log, setiap faktor sepuluh mendapat ruang yang sama. Kedua, hubungan fisis sering berbentuk pangkat. Luminositas sebanding dengan T⁴; pada grafik log L terhadap log T, hubungan itu menjadi garis lurus dengan kemiringan 4, sehingga penyimpangan dari garis mudah terlihat dan kemiringan langsung memberi eksponen. Contoh angka: selisih 5 magnitudo berarti rasio fluks 100, dan rentang magnitudo 0 sampai 15 hanya mencakup 15 satuan padahal fluksnya berbeda sekitar sejuta kali. Selain itu, mata kita sendiri menilai terang secara relatif, mirip logaritma, sehingga magnitudo lebih dekat dengan pengalaman pengamatan.",
+    "pembahasan": [
+      "Inti jawaban ada dua: (1) pemampatan rentang yang sangat lebar, dan (2) linearisasi hubungan pangkat. Keduanya harus disertai alasan, bukan hanya menyebut 'karena angkanya besar'.",
+      "Contoh angka yang kuat: selisih 5 magnitudo = faktor 100 pada fluks, atau 1 mag ≈ 2,512. Untuk HR diagram, log L terhadap log T membuat L ∝ T⁴ tampak sebagai garis lurus berkemiringan 4.",
+      "Nilai tambah: mengaitkan skala log dengan cara persepsi terang manusia yang bersifat relatif. Ini menunjukkan pemahaman bahwa pilihan skala bukan sekadar kenyamanan matematis, tetapi mencerminkan cara cahaya diterima dan diukur."
+    ]
+  },
+  {
+    "id": "f1-11",
+    "topik": "matematika",
+    "level": "fondasi",
+    "tipe": "pilihan-ganda",
+    "soal": "Sebuah awan antarbintang berjarak 6,0 × 10¹⁶ m. Jika 1 pc = 3,0 × 10¹⁶ m, berapa jaraknya dalam parsek?",
+    "opsi": ["2,0 pc", "0,50 pc", "18 pc", "0,20 pc"],
+    "jawaban": 0,
+    "pembahasan": ["Jarak dalam parsek diperoleh dengan membagi jarak dalam meter dengan meter per parsek.", "d = (6,0 × 10¹⁶)/(3,0 × 10¹⁶) = 2,0 pc; pangkat sepuluh saling meniadakan.", "Pemeriksaan: awan berada pada jarak dua kali satu parsek."]
+  },
+  {
+    "id": "f1-12",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada grafik log₁₀ y terhadap log₁₀ x, garis melalui titik (0, 1) dan (2, 5). Jika y = kxⁿ, berapakah nilai n?",
+    "opsi": ["2", "4", "1/2", "5"],
+    "jawaban": 0,
+    "pembahasan": ["Kemiringan garis adalah (5−1)/(2−0)=2.", "Karena kemiringan grafik log y terhadap log x adalah eksponen n, maka n=2.", "Jadi pilihan pertama benar; titik potong menentukan k, bukan n."],
+    "gambar": "skala-log"
+  },
+  {
+    "id": "f1-13",
+    "topik": "matematika",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Sebuah objek berdiameter 1,0 × 10⁶ km berada pada jarak 2,0 × 10⁸ km. Dengan pendekatan sudut kecil dan 1 rad = 57,3°, berapa diameter sudutnya?",
+    "opsi": ["0,286°", "0,0286°", "2,86°", "0,0050°"],
+    "jawaban": 0,
+    "pembahasan": ["Sudut kecil dalam radian adalah θ ≈ D/d = (1,0 × 10⁶)/(2,0 × 10⁸) = 5,0 × 10⁻³ rad.", "Konversi ke derajat memberi θ ≈ 5,0 × 10⁻³ × 57,3° = 0,2865°.", "Satuan panjang pada pembilang dan penyebut saling menghapus; hasilnya sekitar 0,29°."]
+  },
+  {
+    "id": "f1-14",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada grafik modulus jarak μ terhadap log₁₀ d, sebuah bintang berpindah dari d=10 pc ke d=100 pc. Menurut μ=5 log₁₀(d/10 pc), berapa perubahan μ?",
+    "opsi": ["5 mag", "2,5 mag", "10 mag", "1 mag"],
+    "jawaban": 0,
+    "pembahasan": ["Untuk 10 pc, μ=5 log₁₀1=0 mag; untuk 100 pc, μ=5 log₁₀10=5 mag.", "Perubahan modulus jarak adalah 5−0=5 mag.", "Jarak sepuluh kali lebih besar membuat fluks seratus kali lebih kecil, setara lima magnitudo."],
+    "gambar": "modulus-jarak-grafik"
+  },
+  {
+    "id": "f1-15",
+    "topik": "matematika",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada diagram HR garis radius tetap, luminositas bintang A adalah 16 kali bintang B. Jika radius keduanya sama, berapa rasio T_A/T_B menurut L ∝ R²T⁴?",
+    "opsi": ["2", "4", "16", "1/2"],
+    "jawaban": 0,
+    "pembahasan": ["Dengan radius sama, L_A/L_B=(T_A/T_B)⁴.", "Maka (T_A/T_B)⁴=16=2⁴, sehingga T_A/T_B=2.", "Rasio suhu bukan 16 karena suhu berpangkat empat dalam hubungan luminositas."],
+    "gambar": "hr-iso-radius"
+  },
+  {
+    "id": "f1-16",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada grafik modulus jarak terhadap log d, sebuah bintang memiliki μ=10 mag dan tidak mengalami ekstingsi. Berdasarkan μ=5 log₁₀(d/10 pc), berapa jaraknya?",
+    "opsi": ["1.000 pc", "100 pc", "10.000 pc", "10 pc"],
+    "jawaban": 0,
+    "pembahasan": ["Susun persamaan: log₁₀(d/10)=10/5=2.", "Jadi d/10=10²=100 dan d=1.000 pc. Pada grafik, μ=10 berkorespondensi dengan log₁₀d=3.", "Substitusi balik menghasilkan 5 log₁₀(1.000/10)=5×2=10 mag."],
+    "gambar": "modulus-jarak-grafik"
+  },
+  {
+    "id": "f1-17",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada garis radius tetap di diagram HR, dua bintang memiliki suhu dengan T₂/T₁=2. Berdasarkan L ∝ T⁴ untuk radius tetap, berapa rasio luminositas L₂/L₁?",
+    "opsi": ["16", "8", "4", "2"],
+    "jawaban": 0,
+    "pembahasan": ["Pada radius tetap, luminositas berbanding dengan suhu pangkat empat.", "L₂/L₁=(T₂/T₁)⁴=2⁴=16.", "Jadi bintang yang dua kali lebih panas memiliki luminositas 16 kali pada radius yang sama."],
+    "gambar": "hr-iso-radius"
+  },
+  {
+    "id": "f1-18",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "pilihan-ganda",
+    "soal": "Pada tangga magnitudo, objek A bermagnitudo 2 dan B bermagnitudo 7. Berapa rasio fluks F_A/F_B?",
+    "opsi": ["100", "10", "2,512", "0,01"],
+    "jawaban": 0,
+    "pembahasan": ["Selisih magnitudo m_A−m_B=−5; hukum Pogson memberi −5=−2,5 log₁₀(F_A/F_B).", "Maka log₁₀(F_A/F_B)=2 dan rasio fluksnya 10²=100.", "Magnitudo A lebih kecil, sehingga A lebih terang; arah rasio sesuai."],
+    "gambar": "tangga-magnitudo"
+  },
+  {
+    "id": "f1-19",
+    "topik": "matematika",
+    "level": "fondasi",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan yang benar tentang notasi ilmiah dan satuan astronomi.",
+    "opsi": ["(3 × 10⁸)(2 × 10⁻³) = 6 × 10⁵", "4,5 × 10⁻² lebih besar daripada 3,9 × 10⁻¹", "1 pc ≈ 3,26 ly", "Jika panjang dibagi panjang, hasilnya bersatuan meter"],
+    "jawaban": [0, 2],
+    "pembahasan": ["Pada perkalian notasi ilmiah, koefisien dikalikan dan eksponen dijumlahkan: 6×10⁵.", "4,5×10⁻²=0,045 lebih kecil daripada 0,39, sehingga pernyataan kedua salah.", "Parsek setara sekitar 3,26 tahun cahaya; rasio dua panjang tidak memiliki satuan karena satuannya saling menghapus."]
+  },
+  {
+    "id": "f1-20",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan benar tentang grafik log–log untuk y=kxⁿ dengan x,y positif.",
+    "opsi": ["Kemiringan grafik log y terhadap log x adalah n", "Mengalikan semua y dengan 10 menggeser grafik ke atas satu satuan log", "Jika x naik sepuluh kali dan n=2, y naik seratus kali", "log(a+b)=log a+log b secara umum"],
+    "jawaban": [0, 1, 2],
+    "pembahasan": ["Transformasi memberi log y=log k+n log x; kemiringannya n.", "Pengalian y dengan 10 menambah log y sebesar log 10=1.", "Untuk n=2, perubahan x sebesar 10 memberi faktor y=10²=100; logaritma jumlah tidak sama dengan jumlah logaritma secara umum."],
+    "gambar": "skala-log"
+  },
+  {
+    "id": "f1-21",
+    "topik": "matematika",
+    "level": "fondasi",
+    "tipe": "isian",
+    "soal": "Tuliskan 0,000072 dalam notasi ilmiah.",
+    "jawaban": 0.000072,
+    "toleransiRel": 0.001,
+    "satuan": "tanpa satuan",
+    "pembahasan": ["Geser koma lima tempat ke kanan agar koefisien berada antara 1 dan 10.", "Karena nilai asal kurang dari satu, pangkat sepuluh bernilai negatif: 0,000072=7,2×10⁻⁵.", "Perkalian 7,2 dengan 10⁻⁵ mengembalikan koma lima tempat ke kiri."]
+  },
+  {
+    "id": "f1-22",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "isian",
+    "soal": "Sebuah bintang memiliki m=12 dan M=2. Dengan μ=m−M=5 log₁₀(d/10 pc), hitung jaraknya.",
+    "jawaban": 1000,
+    "toleransiRel": 0.01,
+    "satuan": "pc",
+    "pembahasan": ["Modulus jarak μ=12−2=10 mag.", "10=5 log₁₀(d/10), sehingga log₁₀(d/10)=2 dan d/10=100.", "Maka d=1.000 pc; substitusi balik menghasilkan modulus 10 mag."]
+  },
+  {
+    "id": "f1-23",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "tipe": "isian",
+    "soal": "Fluks bintang A adalah 40 kali fluks bintang B. Hitung m_A−m_B menggunakan hukum Pogson.",
+    "jawaban": -4.005,
+    "toleransiRel": 0.02,
+    "satuan": "mag",
+    "pembahasan": ["Gunakan m_A−m_B=−2,5 log₁₀(F_A/F_B).", "Dengan rasio 40, hasilnya −2,5 log₁₀40=−2,5×1,6021≈−4,005 mag.", "Tanda negatif berarti A lebih terang, sesuai fluksnya yang lebih besar."]
+  },
+  {
+    "id": "f1-24",
+    "topik": "matematika",
+    "level": "penalaran",
+    "tipe": "isian",
+    "soal": "Luminositas sebuah bintang 9 L☉ dan suhunya 1,5 T☉. Tentukan radiusnya dalam R☉ dari L/L☉=(R/R☉)²(T/T☉)⁴.",
+    "jawaban": 1.333,
+    "toleransiRel": 0.02,
+    "satuan": "R☉",
+    "pembahasan": ["Susun R/R☉=√[(L/L☉)/(T/T☉)⁴].", "(1,5)⁴=5,0625, sehingga R/R☉=√(9/5,0625)=√1,7778≈1,333.", "Substitusi balik: (1,333)²(1,5)⁴≈9, konsisten dengan luminositas yang diberikan."]
+  },
+  {
+    "id": "f1-25",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "isian",
+    "soal": "Dua bintang berjari-jari sama memiliki rasio luminositas L₂/L₁=81. Berapa faktor rasio suhu T₂/T₁?",
+    "jawaban": 3,
+    "toleransiRel": 0.01,
+    "satuan": "kali",
+    "pembahasan": ["Untuk radius sama, L₂/L₁=(T₂/T₁)⁴.", "Akar pangkat empat 81 adalah 3, sehingga T₂/T₁=3.", "Pemeriksaan: 3⁴=81."]
+  },
+  {
+    "id": "f1-26",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "isian",
+    "soal": "Dari grafik modulus jarak diperoleh μ=5,0 mag. Dengan μ=5 log₁₀(d/10 pc), berapa jarak bintang?",
+    "jawaban": 100,
+    "toleransiRel": 0.01,
+    "satuan": "pc",
+    "pembahasan": ["Bagi persamaan dengan 5: log₁₀(d/10)=1.", "Maka d/10=10 dan d=100 pc.", "Jarak 100 pc memberi μ=5 log₁₀(10)=5 mag."],
+    "gambar": "modulus-jarak-grafik"
+  },
+  {
+    "id": "f1-27",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "isian",
+    "soal": "Pada grafik log L terhadap log R untuk suhu tetap, log R bertambah 0,30. Berdasarkan L∝R², berapa faktor kenaikan luminositas L₂/L₁?",
+    "jawaban": 3.981,
+    "toleransiRel": 0.02,
+    "satuan": "kali",
+    "pembahasan": ["Pada garis suhu tetap, Δlog L=2Δlog R=2×0,30=0,60.", "Jadi L₂/L₁=10^0,60≈3,981.", "Pemeriksaan melalui rasio radius 10^0,30≈2; kuadratnya sekitar 4."],
+    "gambar": "hr-iso-radius"
+  },
+  {
+    "id": "f1-28",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "esai",
+    "soal": "Sebuah bintang memiliki paralaks 0,020″ dan magnitudo semu 8,0. Uraikan cara memperoleh jarak dan magnitudo absolutnya, lalu bandingkan luminositasnya dengan Matahari yang bermagnitudo absolut 4,83.",
+    "rubrik": [{"poin":"Menggunakan d(pc)=1/p(″) dan memperoleh 50 pc.","bobot":2},{"poin":"Menghitung μ=5 log₁₀(d/10)=5 log₁₀5≈3,495 mag.","bobot":2},{"poin":"Memperoleh M=m−μ≈4,51 mag.","bobot":1},{"poin":"Menyimpulkan magnitudo absolut lebih kecil dari 4,83 berarti luminositas lebih besar, karena skala magnitudo terbalik.","bobot":1}],
+    "jawabanTeladan":"Paralaks 0,020″ memberi d=1/0,020=50 pc. Modulus jaraknya μ=5 log₁₀(50/10)=5 log₁₀5≈3,495 mag. Maka M=8,0−3,495≈4,51 mag. Nilai ini lebih kecil daripada M☉=4,83, sehingga bintang sedikit lebih luminos daripada Matahari; magnitudo absolut yang lebih kecil berarti luminositas lebih besar.",
+    "pembahasan": ["Konversi paralaks memberi jarak parsek; jangan menyamakan nilai paralaks dengan jarak.", "Modulus jarak menghubungkan magnitudo tampak dan mutlak, lalu nilai M dibandingkan dengan Matahari menggunakan arah skala magnitudo yang benar."]
+  },
+  {
+    "id": "f1-29",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "tipe": "esai",
+    "soal": "Pada grafik log L terhadap log T, data bintang berjari-jari tetap membentuk garis dengan kemiringan sekitar 4. Jelaskan bagaimana grafik ini menguji hukum Stefan–Boltzmann dan prediksi perubahan luminositas bila suhu menjadi 1,2 kali semula.",
+    "rubrik": [{"poin":"Mengambil log dari L=4πR²σT⁴ dan menunjukkan log L=konstanta+4 log T untuk radius tetap.","bobot":2},{"poin":"Menafsirkan kemiringan 4 sebagai eksponen suhu dan sebagai dukungan bagi hukum Stefan–Boltzmann.","bobot":2},{"poin":"Menghitung L₂/L₁=(1,2)⁴≈2,07.","bobot":1},{"poin":"Menyebut radius tidak tetap atau galat/model dapat menjelaskan penyimpangan sistematis dari garis ideal.","bobot":1}],
+    "jawabanTeladan":"Hukum Stefan–Boltzmann adalah L=4πR²σT⁴. Jika R tetap, faktor 4πR²σ konstan dan log L=konstanta+4 log T. Maka kemiringan grafik log L terhadap log T adalah 4; data dengan kemiringan itu mendukung hukum tersebut. Jika T₂=1,2T₁, L₂/L₁=(1,2)⁴≈2,07 sehingga luminositas kira-kira menjadi dua kali. Penyimpangan dapat terjadi jika radius tidak benar-benar tetap atau terdapat ketidakpastian pengukuran.",
+    "pembahasan": ["Hubungkan transformasi logaritmik dengan kemiringan, bukan hanya menyebut nilai pangkat.", "Gunakan rasio agar konstanta saling meniadakan, lalu tafsirkan perubahan luminositas secara fisis."]
+  },
+  {
+    "id": "f1-30",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "tipe": "esai",
+    "soal": "Pada grafik skala log fluks sebuah survei mencakup nilai 10⁻¹⁶ hingga 10⁻⁸ W m⁻². Tafsirkan rentang yang terlihat, bandingkan dengan sumbu linear, dan jelaskan arti jarak yang sama antara tanda-tanda dekade.",
+    "rubrik": [{"poin":"Menghitung rentang sebagai rasio 10⁸ atau delapan orde magnitudo.","bobot":2},{"poin":"Menjelaskan bahwa sumbu linear akan memampatkan nilai kecil dekat nol sehingga sulit dibedakan.","bobot":2},{"poin":"Menjelaskan bahwa interval sama pada sumbu log mewakili rasio yang sama, khususnya faktor 10 per dekade.","bobot":1},{"poin":"Memberi contoh tanda 10⁻¹⁶, 10⁻¹⁵, dan 10⁻¹⁴ yang berjarak sama meski selisih absolutnya berbeda.","bobot":1}],
+    "jawabanTeladan":"Rasio fluks terbesar terhadap terkecil adalah 10⁻⁸/10⁻¹⁶=10⁸, yaitu delapan orde magnitudo. Pada sumbu linear, nilai rendah akan menumpuk dekat nol karena sangat kecil dibandingkan nilai maksimum. Pada sumbu log, jarak sama berarti rasio sama: 10⁻¹⁶ ke 10⁻¹⁵ berjarak sama dengan 10⁻¹⁵ ke 10⁻¹⁴, karena masing-masing naik dengan faktor sepuluh. Karena itu rentang luas dapat dibaca sekaligus.",
+    "pembahasan": ["Sebutkan rentang numerik sebagai faktor, bukan selisih saja.", "Bedakan jarak seragam pada skala linear yang bermakna selisih sama dan skala log yang bermakna rasio sama."],
+    "gambar": "skala-log"
+  },
+  {
+    "id": "f1-v1",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "matematika",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_grafik",
+    "soal": "Amati penggaris skala logaritmik panjang di atas. Berdasarkan penanda eksponen pada sumbu, berapa kali lipat panjang radius galaksi Bima Sakti dibandingkan jari-jari rata-rata Bumi?",
+    "media": {
+      "type": "log_scale_bar",
+      "params": {
+        "axisLabel": "Orde besar panjang kosmik",
+        "unit": "m",
+        "minExp": -15,
+        "maxExp": 22,
+        "markers": [
+          { "label": "Proton", "exp": -15, "valueText": "10⁻¹⁵ m" },
+          { "label": "Jari-jari Bumi", "exp": 7, "valueText": "10⁷ m" },
+          { "label": "Sabuk Kuiper", "exp": 13, "valueText": "10¹³ m" },
+          { "label": "Bima Sakti", "exp": 21, "valueText": "10²¹ m", "highlight": true }
+        ]
+      },
+      "caption": "Kurangkan nilai eksponen kedua penanda untuk memperoleh selisih orde besarnya."
+    },
+    "rumus_dibutuhkan": ["Rasio = 10^(n_2 - n_1)"],
+    "langkah_penyelesaian": [
+      "Baca eksponen Bima Sakti pada skala log: n_2 = 21 (yakni 10²¹ m).",
+      "Baca eksponen jari-jari Bumi: n_1 = 7 (yakni 10⁷ m).",
+      "Hitung rasio: 10²¹ / 10⁷ = 10^(21 − 7) = 10¹⁴ kali lipat."
+    ],
+    "jawaban": 1e14,
+    "toleransi": 0.02,
+    "satuan": "—"
+  },
+  {
+    "id": "f1-v2",
+    "modul": "F1",
+    "subbab": "notasi-satuan",
+    "topik": "matematika",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_tabel",
+    "soal": "Berdasarkan tabel pengamatan astrometri berikut, hitung jarak bintang Kastor-C dalam satuan AU (gunakan 1 pc = 206.265 AU).",
+    "media": {
+      "type": "data_table",
+      "params": {
+        "title": "Katalog Paralaks Bintang Dekat",
+        "columns": [
+          { "key": "nama", "label": "Bintang", "align": "left" },
+          { "key": "p", "label": "Paralaks p", "unit": "arcsec", "align": "right" },
+          { "key": "m", "label": "Mag. semu m", "unit": "mag", "align": "right" }
+        ],
+        "rows": [
+          { "nama": "Vega-A", "p": 0.125, "m": 0.0 },
+          { "nama": "Sirius-B", "p": 0.4, "m": 8.5 },
+          { "nama": "Kastor-C", "p": 0.05, "m": 2.0 },
+          { "nama": "Deneb-D", "p": 0.002, "m": 1.25 }
+        ],
+        "highlightRow": 2
+      },
+      "caption": "Gunakan paralaks baris Kastor-C untuk mengubah jarak parsek ke AU."
+    },
+    "rumus_dibutuhkan": ["d[pc] = 1 / p''", "1 pc = 206.265 AU"],
+    "langkah_penyelesaian": [
+      "Dari baris Kastor-C terbaca paralaks p = 0,05 arcsec.",
+      "Hitung jarak dalam parsek: d = 1 / 0,05 = 20 pc.",
+      "Konversi ke AU: 20 × 206.265 AU = 4.125.300 AU (atau 4,13 × 10⁶ AU)."
+    ],
+    "jawaban": 4125300,
+    "toleransi": 0.02,
+    "satuan": "AU"
+  },
+  {
+    "id": "f1-v3",
+    "modul": "F1",
+    "subbab": "aljabar",
+    "topik": "matematika",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_grafik",
+    "soal": "Pada skema hukum kuadrat terbalik di atas, detektor pada jarak r₀ menerima fluks F₀ = 810 W/m². Berapa fluks yang diterima detektor pada jarak r = 3 r₀?",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "inverse_square",
+        "sourceLabel": "Sumber L",
+        "baseFluxLabel": "F₀",
+        "radii": [1, 3, 5]
+      },
+      "caption": "Energi radiasi menyebar pada luas permukaan bola A = 4πr², sehingga luas kotak penerima tumbuh sebagai r²."
+    },
+    "opsi": ["270 W/m²", "90 W/m²", "162 W/m²", "32,4 W/m²"],
+    "jawaban": 1,
+    "rumus_dibutuhkan": ["F = L / (4πr²)"],
+    "langkah_penyelesaian": [
+      "Fluks radiasi mengikuti hukum kuadrat terbalik F ∝ 1/r².",
+      "Pada r = 3 r₀, luas penampang berkas melebar menjadi 3² = 9 kali lipat.",
+      "Fluks menjadi F = 810 / 9 = 90 W/m²."
+    ],
+    "satuan": "W/m²"
+  },
+  {
+    "id": "f1-v4",
+    "modul": "F1",
+    "subbab": "notasi-satuan",
+    "topik": "matematika",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "ranking_urutan",
+    "kriteriaUrut": "dari jarak terkecil (atas) ke jarak terbesar (bawah)",
+    "soal": "Urutkan keempat jarak astronomis berikut dari yang PALING KECIL ke yang PALING BESAR berdasarkan konversi satuan pada skala logaritmik.",
+    "media": {
+      "type": "log_scale_bar",
+      "params": {
+        "axisLabel": "Referensi skala jarak dalam meter",
+        "unit": "m",
+        "minExp": 10,
+        "maxExp": 17,
+        "markers": [
+          { "label": "1 AU", "exp": 11.17, "valueText": "1,50×10¹¹ m" },
+          { "label": "10³ AU", "exp": 14.17, "valueText": "1,50×10¹⁴ m" },
+          { "label": "1 ly", "exp": 15.98, "valueText": "9,46×10¹⁵ m" },
+          { "label": "1 pc", "exp": 16.49, "valueText": "3,09×10¹⁶ m" }
+        ]
+      },
+      "caption": "Gunakan 1 pc ≈ 3,26 ly ≈ 206.265 AU agar keempat nilai berada pada satuan pembanding yang sama."
+    },
+    "opsi": ["0,04 pc", "1,5 AU", "8.000 AU", "0,08 ly"],
+    "jawaban": [1, 3, 2, 0],
+    "rumus_dibutuhkan": ["1 pc = 206.265 AU = 3,26 ly", "1 ly ≈ 63.241 AU"],
+    "langkah_penyelesaian": [
+      "Nyatakan semua jarak dalam satuan AU agar sebanding.",
+      "1,5 AU = 1,5 AU; 0,08 ly = 0,08 × 63.241 ≈ 5.059 AU; 8.000 AU = 8.000 AU; 0,04 pc = 0,04 × 206.265 ≈ 8.251 AU.",
+      "Urutan dari terkecil ke terbesar adalah: 1,5 AU → 0,08 ly → 8.000 AU → 0,04 pc."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f1-v5",
+    "modul": "F1",
+    "subbab": "aljabar",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "interpretasi_grafik",
+    "soal": "Dari diagram H–R parametrik berikut, Bintang P berada pada T = 11.556 K (2 T☉) dan L = 16 L☉, sedangkan Bintang Q berada pada T = 2.889 K (0,5 T☉) dan L = 1 L☉. Hitung rasio jari-jari R_Q / R_P.",
+    "media": {
+      "type": "hr_diagram",
+      "params": {
+        "showIsoRadius": true,
+        "stars": [
+          { "name": "Matahari", "teff": 5778, "lum": 1 },
+          { "name": "Bintang P", "teff": 11556, "lum": 16, "highlight": true },
+          { "name": "Bintang Q", "teff": 2889, "lum": 1, "highlight": true }
+        ]
+      },
+      "caption": "Bandingkan posisi bintang terhadap garis iso-radius: bintang yang sama terangnya tetapi lebih dingin harus memiliki radius jauh lebih besar."
+    },
+    "rumus_dibutuhkan": ["L = 4πR²σT⁴", "R/R☉ = √(L/L☉) / (T/T☉)²"],
+    "langkah_penyelesaian": [
+      "Isolasi radius dari hukum Stefan–Boltzmann: R/R☉ = √(L/L☉) / (T/T☉)².",
+      "Untuk Bintang P: R_P/R☉ = √16 / 2² = 4 / 4 = 1.",
+      "Untuk Bintang Q: R_Q/R☉ = √1 / (0,5)² = 1 / 0,25 = 4.",
+      "Maka rasio jari-jari R_Q / R_P = 4 / 1 = 4."
+    ],
+    "jawaban": 4,
+    "toleransi": 0.03,
+    "satuan": "—"
+  },
+  {
+    "id": "f1-v6",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "matematika",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "interpretasi_tabel",
+    "soal": "Dari tabel pengamatan berikut, bintang manakah yang memiliki luminositas intrinsik tepat 10 kali luminositas Matahari (gunakan M☉ = 4,83)?",
+    "media": {
+      "type": "data_table",
+      "params": {
+        "title": "Data Paralaks dan Magnitudo Empat Bintang",
+        "columns": [
+          { "key": "nama", "label": "Bintang", "align": "left" },
+          { "key": "p", "label": "Paralaks p", "unit": "arcsec", "align": "right" },
+          { "key": "m", "label": "Mag. semu m", "unit": "mag", "align": "right" }
+        ],
+        "rows": [
+          { "nama": "S-A", "p": 0.1, "m": 4.83 },
+          { "nama": "S-B", "p": 0.01, "m": 7.33 },
+          { "nama": "S-C", "p": 0.05, "m": 6.33 },
+          { "nama": "S-D", "p": 0.02, "m": 8.33 }
+        ]
+      },
+      "caption": "Ubah paralaks menjadi jarak pc, hitung magnitudo absolut M = m − (5 log d − 5), lalu bandingkan M dengan M☉ = 4,83."
+    },
+    "opsi": ["Bintang S-A", "Bintang S-B", "Bintang S-C", "Bintang S-D"],
+    "jawaban": 1,
+    "rumus_dibutuhkan": ["d = 1/p", "m − M = 5 log d − 5", "M − M☉ = −2,5 log(L/L☉)"],
+    "langkah_penyelesaian": [
+      "Luminositas 10 L☉ berarti M = M☉ − 2,5 log(10) = 4,83 − 2,50 = 2,33 mag.",
+      "Cek S-B: p = 0,01'' memberi d = 100 pc, sehingga modulus jarak μ = 5 log(100) − 5 = 5,00 mag.",
+      "Magnitudo absolut S-B adalah M = 7,33 − 5,00 = 2,33 mag, tepat sama dengan target 10 L☉."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f1-v7",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "temukan_kesalahan",
+    "soal": "Grafik log(L/L☉) terhadap log(T/T☉) untuk bintang berjari-jari 1 R☉ membentuk garis lurus bergradien 4. Seorang siswa menulis: 'Karena gradiennya 4, jika suhu menjadi 2 kali lipat maka luminositas naik 4 × 2 = 8 kali lipat.' Di mana letak kesalahan penalarannya?",
+    "media": {
+      "type": "linearization_plot",
+      "params": {
+        "title": "Hubungan Stefan–Boltzmann pada Sumbu Log–Log (R = R☉)",
+        "xLabel": "log(T / T☉)",
+        "yLabel": "log(L / L☉)",
+        "xMin": -0.1,
+        "xMax": 0.6,
+        "yMin": -0.2,
+        "yMax": 2.2,
+        "showSlopeTriangle": true,
+        "points": [
+          { "x": 0.0, "y": 0.0, "label": "1 T☉" },
+          { "x": 0.301, "y": 1.204, "label": "2 T☉" },
+          { "x": 0.477, "y": 1.908, "label": "3 T☉" }
+        ],
+        "fitLine": { "slope": 4, "intercept": 0, "label": "gradien n = 4" }
+      },
+      "caption": "Kenaikan x sebesar log 2 = 0,301 menghasilkan kenaikan y sebesar 4 × 0,301 = 1,204 pada sumbu log L."
+    },
+    "opsi": [
+      "Gradien pada grafik log–log merupakan eksponen pangkat (L ∝ T⁴), sehingga T menjadi 2× menghasilkan L naik 2⁴ = 16 kali, bukan dikalikan 4 × 2.",
+      "Gradien grafik log L terhadap log T seharusnya 2, bukan 4.",
+      "Suhu tidak memengaruhi luminositas jika jari-jari bintang tetap.",
+      "Pada skala log–log, faktor pengali 2 menyebabkan perubahan konstan +2 pada L."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": ["log L = log(4πR²σ) + 4 log T", "L₂/L₁ = (T₂/T₁)⁴"],
+    "langkah_penyelesaian": [
+      "Pada grafik log y = c + m log x, kemiringan m = 4 menyatakan hubungan pangkat y ∝ x⁴, bukan hubungan linear y = 4x.",
+      "Jika T naik 2 kali lipat, log(T/T☉) bertambah 0,301 sehingga log(L/L☉) bertambah 4 × 0,301 = 1,204.",
+      "Karena 10^1,204 = 2⁴ = 16, luminositas meningkat 16 kali lipat, bukan 8 kali."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f1-v8",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "matematika",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "pilihan_jamak",
+    "soal": "Berdasarkan skala logaritmik luminositas bintang di bawah ini, pilih DUA pernyataan yang benar (gunakan M☉ = 4,83 mag dan hukum Pogson).",
+    "media": {
+      "type": "log_scale_bar",
+      "params": {
+        "axisLabel": "Luminositas bintang relatif terhadap Matahari (log L/L☉)",
+        "unit": "L☉",
+        "minExp": -4,
+        "maxExp": 6,
+        "markers": [
+          { "label": "Katai Merah", "exp": -2, "valueText": "10⁻² L☉" },
+          { "label": "Matahari", "exp": 0, "valueText": "1 L☉", "highlight": true },
+          { "label": "Bintang A", "exp": 2, "valueText": "10² L☉" },
+          { "label": "Maharaksasa", "exp": 5, "valueText": "10⁵ L☉" }
+        ]
+      },
+      "caption": "Setiap selisih eksponen Δ = 2 pada luminositas berarti faktor 100, yang setara selisih 5 magnitudo absolut."
+    },
+    "opsi": [
+      "Selisih magnitudo absolut antara Bintang A dan Matahari adalah −5,0 mag.",
+      "Bintang Katai Merah pada penanda 10⁻² L☉ memiliki magnitudo absolut M = −0,17 mag.",
+      "Jika ditempatkan pada jarak yang sama, Maharaksasa (10⁵ L☉) berjarak 12,5 magnitudo lebih terang daripada Matahari.",
+      "Rasio luminositas antara Maharaksasa dan Katai Merah adalah 10³."
+    ],
+    "jawaban": [0, 2],
+    "rumus_dibutuhkan": ["M − M☉ = −2,5 log(L/L☉)", "L_max / L_min = 10^(exp₂ − exp₁)"],
+    "langkah_penyelesaian": [
+      "Untuk Bintang A (10² L☉): ΔM = −2,5 log(100) = −5,0 mag → Opsi A benar.",
+      "Untuk Katai Merah (10⁻² L☉): M = 4,83 − 2,5(−2) = 9,83 mag (bukan −0,17) → Opsi B salah.",
+      "Untuk Maharaksasa (10⁵ L☉): ΔM = −2,5 × 5 = −12,5 mag (lebih terang 12,5 mag) → Opsi C benar.",
+      "Rasio Maharaksasa terhadap Katai Merah adalah 10^(5 − (−2)) = 10⁷ → Opsi D salah."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f1-v9",
+    "modul": "F1",
+    "subbab": "geometri",
+    "topik": "matematika",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "cek_dimensi",
+    "soal": "Sebuah bintang berjari-jari R dan suhu T berada pada jarak D sehingga tampak memiliki sudut jari-jari θ = R/D (radian, tak berdimensi) seperti pada skema. Dengan mengetahui dimensi konstanta Stefan–Boltzmann σ adalah W·m⁻²·K⁻⁴, ekspresi manakah yang memiliki dimensi fluks energi yang diterima di Bumi (W·m⁻²)?",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "small_angle",
+        "angleDeg": 4,
+        "sizeLabel": "2R",
+        "distLabel": "D",
+        "angleLabel": "2θ"
+      },
+      "caption": "Aproksimasi sudut kecil mengaitkan jari-jari linear R dengan sudut tampak θ melalui θ = R/D."
+    },
+    "opsi": [
+      "F = σ θ² T⁴",
+      "F = σ θ T⁴ / D²",
+      "F = 4π σ θ² D² T⁴",
+      "F = σ T⁴ / θ²"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": ["θ = R/D", "L = 4πR²σT⁴", "F = L / (4πD²)"],
+    "langkah_penyelesaian": [
+      "Cek dimensi ruas kanan: [σ] = W·m⁻²·K⁻⁴, [T⁴] = K⁴, dan sudut θ dalam radian tak berdimensi.",
+      "Maka [σ θ² T⁴] = (W·m⁻²·K⁻⁴)(1)(K⁴) = W·m⁻², tepat berdimensi fluks!",
+      "Secara aljabar memang benar: F = (4πR²σT⁴)/(4πD²) = σ(R/D)²T⁴ = σθ²T⁴. Opsi lain berdimensi daya (Opsi C) atau salah faktor panjang (Opsi B)."
+    ],
+    "satuan": "W/m²"
+  },
+  {
+    "id": "f1-v10",
+    "modul": "F1",
+    "subbab": "aljabar",
+    "topik": "analisis-data",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "data_tidak_lengkap",
+    "soal": "Dari tabel pengamatan dua bintang berikut, seorang astronom ingin menghitung rasio luminositas intrinsik kedua bintang (L₁ / L₂). Informasi tambahan minimum apakah yang MASIH DIPERLUKAN agar rasio L₁ / L₂ dapat ditentukan?",
+    "media": {
+      "type": "data_table",
+      "params": {
+        "title": "Hasil Pengukuran Fotometri & Interferometri",
+        "columns": [
+          { "key": "bintang", "label": "Objek", "align": "left" },
+          { "key": "m", "label": "Mag. semu m", "unit": "mag", "align": "right" },
+          { "key": "theta", "label": "Diameter sudut θ", "unit": "mas", "align": "right" },
+          { "key": "T", "label": "Suhu efektif T", "unit": "K", "align": "right" }
+        ],
+        "rows": [
+          { "bintang": "Bintang 1", "m": "4,20", "theta": "2,10", "T": 6000 },
+          { "bintang": "Bintang 2", "m": "4,20", "theta": "1,05", "T": 8485 }
+        ]
+      },
+      "caption": "Perhatikan besaran yang ada di tabel hanya besaran tampak di langit (m, θ) dan suhu (T), belum ada satu pun besaran jarak."
+    },
+    "opsi": [
+      "Rasio jarak atau paralaks kedua bintang (d₁ / d₂ atau p₁ / p₂)",
+      "Massa masing-masing bintang dalam satuan M☉",
+      "Kecepatan radial Doppler kedua bintang",
+      "Tidak ada data tambahan yang diperlukan karena θ dan T sudah cukup menentukan L₁ / L₂"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": ["F = L / (4πd²)", "m₁ − m₂ = −2,5 log(F₁/F₂)"],
+    "langkah_penyelesaian": [
+      "Dari magnitudo semu m₁ = m₂, kita hanya mengetahui bahwa fluks tampak F₁ = F₂ di Bumi.",
+      "Karena F = L/(4πd²), kesamaan fluks hanya memberi L₁/L₂ = (d₁/d₂)².",
+      "Sedangkan diameter sudut θ = 2R/d hanya mengaitkan R dan d tanpa menentukan skala jarak absolut maupun rasio jarak. Tanpa rasio d₁/d₂ (atau paralaks p₁/p₂), L₁/L₂ tak dapat ditentukan."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f1-h1",
+    "modul": "F1",
+    "subbab": "notasi-satuan",
+    "topik": "matematika",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "pilihan_ganda",
+    "soal": "Luminositas Matahari L☉ ≈ 3,83 × 10²⁶ W dengan energi rata-rata satu foton tampak E_γ ≈ 3,5 × 10⁻¹⁹ J. Jika jumlah proton di Matahari sekitar N_p ≈ 9,0 × 10⁵⁶, kira-kira berapa tahun waktu yang diperlukan Matahari untuk memancarkan foton sejumlah N_p?",
+    "opsi": [
+      "Sekitar 2,6 × 10⁴ tahun",
+      "Sekitar 8,2 × 10¹¹ tahun",
+      "Sekitar 2,6 × 10⁷ tahun",
+      "Sekitar 3,1 × 10² tahun"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": ["N_dot = L☉ / E_γ", "t = N_p / N_dot", "1 tahun ≈ 3,156 × 10⁷ s"],
+    "langkah_penyelesaian": [
+      "Laju pancaran foton: N_dot = (3,83 × 10²⁶ J/s) / (3,5 × 10⁻¹⁹ J) ≈ 1,09 × 10⁴⁵ foton/s.",
+      "Waktu dalam detik: t = (9,0 × 10⁵⁶) / (1,09 × 10⁴⁵) ≈ 8,22 × 10¹¹ s.",
+      "Konversi ke tahun: t ≈ 8,22 × 10¹¹ / (3,156 × 10⁷) ≈ 2,6 × 10⁴ tahun."
+    ],
+    "satuan": "tahun"
+  },
+  {
+    "id": "f1-h2",
+    "modul": "F1",
+    "subbab": "aljabar",
+    "topik": "matematika",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "cek_dimensi",
+    "soal": "Skala waktu keruntuhan gravitasi sebuah awan gas homogen berkerapatan ρ bergantung pada konstanta gravitasi G dan kerapatan ρ melalui bentuk pangkat t_dyn ∝ Gᵃ ρᵇ. Dengan analisis dimensi, berapa nilai pasangan eksponen (a, b)?",
+    "opsi": [
+      "(a = −1/2, b = −1/2)",
+      "(a = 1/2, b = −1/2)",
+      "(a = −1, b = −1/2)",
+      "(a = −1/2, b = 1/2)"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": ["[G] = M⁻¹ L³ T⁻²", "[ρ] = M L⁻³", "[t] = [G]ᵃ [ρ]ᵇ = T¹"],
+    "langkah_penyelesaian": [
+      "Susun dimensi: [G]ᵃ [ρ]ᵇ = (M⁻¹ L³ T⁻²)ᵃ (M L⁻³)ᵇ = M^(−a+b) L^(3a−3b) T^(−2a).",
+      "Samakan dengan T¹: pangkat T memberi −2a = 1 ⇒ a = −1/2.",
+      "Pangkat massa M memberi −a + b = 0 ⇒ b = a = −1/2 (otomatis memenuhi pangkat L: 3a − 3b = 0). Jadi t_dyn ∝ (Gρ)^(−1/2)."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f1-h3",
+    "modul": "F1",
+    "subbab": "aljabar",
+    "topik": "matematika",
+    "level": "penalaran",
+    "difficulty": "sedang",
+    "tipe": "isian_angka",
+    "soal": "Bintang A dan bintang B memiliki magnitudo semu yang sama persis. Suhu B adalah setengah suhu A (T_B = 0,5 T_A), sedangkan jari-jari B adalah delapan kali jari-jari A (R_B = 8 R_A). Hitung rasio jarak B terhadap A (d_B / d_A).",
+    "rumus_dibutuhkan": ["L = 4πR²σT⁴", "F = L / (4πd²)", "m_A = m_B ⇒ F_A = F_B"],
+    "langkah_penyelesaian": [
+      "Hitung rasio luminositas: L_B / L_A = (R_B/R_A)² (T_B/T_A)⁴ = 8² × (0,5)⁴ = 64 × (1/16) = 4.",
+      "Karena magnitudo semu sama, fluks tampak sama: L_A / d_A² = L_B / d_B².",
+      "Isolasi rasio jarak: d_B / d_A = √(L_B / L_A) = √4 = 2."
+    ],
+    "jawaban": 2,
+    "toleransi": 0.02,
+    "satuan": "—"
+  },
+  {
+    "id": "f1-h4",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "analisis-data",
+    "level": "penalaran",
+    "difficulty": "sedang",
+    "tipe": "temukan_kesalahan",
+    "soal": "Untuk mencari jari-jari bintang dari magnitudo absolut M = 2,33 (M☉ = 4,83) dan suhu T = 2 T☉, seorang peserta menulis: (1) L/L☉ = 10^((4,83−2,33)/2,5) = 10; (2) karena L ∝ R²T⁴, maka R/R☉ = √(10 / 2⁴) = √(10/16); lalu di langkah (3) ia menyimpulkan R/R☉ = 10 / 16 = 0,625. Bagian manakah yang keliru dalam aljabar tersebut?",
+    "opsi": [
+      "Langkah (3) keliru menghilangkan tanda akar kuadrat saat menghitung √(10/16) ≈ 0,791.",
+      "Langkah (1) terbalik tandanya; seharusnya L/L☉ = 0,1.",
+      "Langkah (2) salah pangkat; seharusnya T pangkat 2 dan R pangkat 4.",
+      "Tidak ada kesalahan; hasil 0,625 sudah tepat."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": ["M − M☉ = −2,5 log(L/L☉)", "L/L☉ = (R/R☉)²(T/T☉)⁴"],
+    "langkah_penyelesaian": [
+      "Langkah (1) benar: ΔM = −2,5 memberi L/L☉ = 10¹ = 10.",
+      "Langkah (2) benar: (R/R☉)² = 10 / 2⁴ = 10/16 = 0,625.",
+      "Kesalahan fatal ada pada Langkah (3): peserta lupa menarik akar kuadrat dari 0,625; nilai benar adalah R/R☉ = √0,625 ≈ 0,791."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f1-h5",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "multi_langkah",
+    "soal": "Sebuah bintang teramati memiliki paralaks tahunan p = 0,020 arcsec, magnitudo semu m = 6,50 mag, dan suhu efektif T = 2 T☉ (gunakan M☉ = 4,83 mag). Selesaikan rantai karakterisasi bintang ini secara berurutan.",
+    "langkah": [
+      {
+        "instruksi": "Tentukan jarak bintang dalam parsek (d = 1/p).",
+        "tipe": "isian_angka",
+        "jawaban": 50,
+        "toleransi": 0.02,
+        "satuan": "pc"
+      },
+      {
+        "instruksi": "Gunakan jarak tersebut untuk menghitung magnitudo absolut M bintang (dalam mag).",
+        "tipe": "isian_angka",
+        "jawaban": 3.005,
+        "toleransi": 0.02,
+        "satuan": "mag"
+      },
+      {
+        "instruksi": "Dari M dan suhu T = 2 T☉, hitung rasio jari-jari bintang terhadap Matahari (R / R☉, tanpa satuan).",
+        "tipe": "isian_angka",
+        "jawaban": 0.579,
+        "toleransi": 0.03,
+        "satuan": "—"
+      }
+    ],
+    "jawaban": [50, 3.005, 0.579],
+    "toleransi": 0.03,
+    "satuan": "—",
+    "rumus_dibutuhkan": [
+      "d[pc] = 1/p''",
+      "m − M = 5 log d − 5",
+      "M − M☉ = −2,5 log(L/L☉)",
+      "L/L☉ = (R/R☉)² (T/T☉)⁴"
+    ],
+    "langkah_penyelesaian": [
+      "Langkah 1: d = 1 / 0,020 = 50 pc.",
+      "Langkah 2: μ = 5 log(50) − 5 = 5(1,6990) − 5 = 3,495 mag, sehingga M = 6,50 − 3,495 = 3,005 mag.",
+      "Langkah 3: log(L/L☉) = (4,83 − 3,005)/2,5 = 0,730 ⇒ L/L☉ = 5,370. Kemudian R/R☉ = √(5,370) / 2² = 2,317 / 4 ≈ 0,579."
+    ],
+    "alasan_sulit": "Memenuhi (a) 4 rumus dirangkai (paralaks, modulus jarak, Pogson, Stefan–Boltzmann), (b) manipulasi ekspresi mengisolasi R/R☉ dari L dan T, serta (c) chained reasoning 3 langkah berurutan."
+  },
+  {
+    "id": "f1-h6",
+    "modul": "F1",
+    "subbab": "geometri",
+    "topik": "matematika",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "isian_angka",
+    "soal": "Sebuah bintang memiliki luminositas intrinsik L = 100 L☉, suhu permukaan T = 2 T☉, dan diameter sudut terukur θ = 0,010 arcsec. Dengan menggabungkan hukum radiasi dan geometri sudut kecil (1 pc = 206.265 AU; R☉ = 6,957 × 10⁸ m; 1 AU = 1,496 × 10¹¹ m), tentukan jarak bintang dalam parsek.",
+    "rumus_dibutuhkan": [
+      "L/L☉ = (R/R☉)² (T/T☉)⁴",
+      "θ[rad] = 2R / d",
+      "1 pc = 3,086 × 10¹⁶ m",
+      "1 rad = 206.265 arcsec"
+    ],
+    "langkah_penyelesaian": [
+      "Isolasi R dari Stefan–Boltzmann: R/R☉ = √(L/L☉) / (T/T☉)² = √100 / 2² = 10 / 4 = 2,5.",
+      "Hitung diameter bintang: 2R = 2 × 2,5 × 6,957 × 10⁸ m = 3,4785 × 10⁹ m (atau 0,02325 AU).",
+      "Substitusi ke hubungan sudut kecil d[pc] = (2R[AU]) / θ'' = 0,02325 / 0,010 = 2,325 pc."
+    ],
+    "jawaban": 2.33,
+    "toleransi": 0.02,
+    "satuan": "pc",
+    "alasan_sulit": "Memenuhi (a) 4 rumus dirangkai, (b) manipulasi ekspresi mengisolasi d yang terkubur melalui substitusi R(L,T) ke θ = 2R/d, serta (c) chained reasoning 3 tahap."
+  },
+  {
+    "id": "f1-h7",
+    "modul": "F1",
+    "subbab": "aljabar",
+    "topik": "matematika",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "pilihan_ganda",
+    "soal": "Dua bintang memiliki magnitudo semu yang sama persis (m₁ = m₂). Jika rasio suhu efektifnya T₁/T₂ = k dan rasio jari-jarinya R₁/R₂ = r, nyatakan rasio jarak d₁/d₂ dalam variabel k dan r.",
+    "opsi": [
+      "d₁/d₂ = r k²",
+      "d₁/d₂ = r² k⁴",
+      "d₁/d₂ = r / k²",
+      "d₁/d₂ = √r · k"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "m − M = 5 log(d/10)",
+      "M₁ − M₂ = −2,5 log(L₁/L₂)",
+      "L = 4πR²σT⁴"
+    ],
+    "langkah_penyelesaian": [
+      "Dari m₁ = m₂ diperoleh M₁ − M₂ = 5 log(d₂/d₁).",
+      "Gabungkan dengan Pogson: −2,5 log(L₁/L₂) = 5 log(d₂/d₁) ⇒ log(d₁/d₂) = 0,5 log(L₁/L₂).",
+      "Substitusi L₁/L₂ = r² k⁴ sehingga d₁/d₂ = (r² k⁴)^(1/2) = r k²."
+    ],
+    "satuan": "—",
+    "alasan_sulit": "Memenuhi (a) 3 rumus dirangkai (modulus jarak, Pogson, Stefan–Boltzmann), (b) manipulasi ekspresi simbolik mengeliminasi L dan M untuk mengisolasi d₁/d₂, serta (c) chained reasoning."
+  },
+  {
+    "id": "f1-h8",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "multi_langkah",
+    "soal": "Grafik berikut menunjukkan hubungan log₁₀ F (W/m²) terhadap log₁₀ d (pc) untuk sebuah bintang standar dengan kemiringan −2 dan intersep −6. Gunakan L☉ = 3,828 × 10²⁶ W, 1 pc = 3,086 × 10¹⁶ m, dan M☉ = 4,83 mag untuk mengekstrak magnitudo absolut bintang.",
+    "media": {
+      "type": "linearization_plot",
+      "params": {
+        "title": "Kalibrasi Fluks Tampak terhadap Jarak pada Skala Log–Log",
+        "xLabel": "log₁₀(d / pc)",
+        "yLabel": "log₁₀(F / W m⁻²)",
+        "xMin": 0.5,
+        "xMax": 2.5,
+        "yMin": -11.2,
+        "yMax": -6.8,
+        "showSlopeTriangle": true,
+        "points": [
+          { "x": 1.0, "y": -8.0, "dy": 0.05, "label": "10 pc" },
+          { "x": 1.5, "y": -9.0, "dy": 0.05, "label": "31,6 pc" },
+          { "x": 2.0, "y": -10.0, "dy": 0.05, "label": "100 pc" }
+        ],
+        "fitLine": { "slope": -2.0, "intercept": -6.0, "label": "y = −2x − 6" }
+      },
+      "caption": "Pada log₁₀ d = 1 (d = 10 pc), nilai garis tepat di log₁₀ F = −8,0."
+    },
+    "langkah": [
+      {
+        "instruksi": "Dari garis regresi, berapa fluks F (W/m²) pada jarak d = 10 pc?",
+        "tipe": "isian_angka",
+        "jawaban": 1e-8,
+        "toleransi": 0.02,
+        "satuan": "W/m^2"
+      },
+      {
+        "instruksi": "Hitung rasio luminositas bintang terhadap Matahari (L / L☉, tanpa satuan) dari fluks pada d = 10 pc tersebut.",
+        "tipe": "isian_angka",
+        "jawaban": 31.26,
+        "toleransi": 0.03,
+        "satuan": "—"
+      },
+      {
+        "instruksi": "Dari nilai L / L☉ tersebut, hitung magnitudo absolut M bintang (dalam mag).",
+        "tipe": "isian_angka",
+        "jawaban": 1.09,
+        "toleransi": 0.04,
+        "satuan": "mag"
+      }
+    ],
+    "jawaban": [1e-8, 31.26, 1.09],
+    "toleransi": 0.04,
+    "satuan": "mag",
+    "rumus_dibutuhkan": [
+      "log F = −2 log d + c",
+      "L = 4πd²F",
+      "M − M☉ = −2,5 log(L/L☉)"
+    ],
+    "langkah_penyelesaian": [
+      "Langkah 1: Saat d = 10 pc (log₁₀ d = 1), log₁₀ F = −2(1) − 6 = −8 ⇒ F = 10⁻⁸ W/m².",
+      "Langkah 2: Pada d = 10 pc = 3,086 × 10¹⁷ m, L = 4π(3,086 × 10¹⁷)²(10⁻⁸) = 1,197 × 10²⁸ W, sehingga L/L☉ = 1,197×10²⁸ / 3,828×10²⁶ = 31,26.",
+      "Langkah 3: M = 4,83 − 2,5 log₁₀(31,26) = 4,83 − 3,738 ≈ 1,09 mag."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus dirangkai (persamaan grafik log-log, fluks bola, Pogson), (b) ekstraksi konstanta F dari garis y = −2x − 6 ke L, serta (c) chained reasoning 3 langkah."
+  },
+  {
+    "id": "f1-h9",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "matematika",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "isian_angka",
+    "soal": "Bintang A teramati memiliki paralaks p_A = 0,050 arcsec, magnitudo semu m_A = 4,00 mag, dan suhu T_A = T☉. Bintang B memiliki magnitudo semu m_B = 9,00 mag, suhu efektif T_B = 2 T_A, serta jari-jari linear R_B = 2 R_A. Berapa jarak bintang B dalam parsek (abaikan ekstingsi)?",
+    "rumus_dibutuhkan": [
+      "d_A = 1/p_A",
+      "m_B − m_A = −2,5 log(F_B/F_A)",
+      "L = 4πR²σT⁴",
+      "F = L / (4πd²)"
+    ],
+    "langkah_penyelesaian": [
+      "Hitung d_A = 1 / 0,050 = 20 pc.",
+      "Dari selisih magnitudo semu m_B − m_A = +5,00 mag, diperoleh rasio fluks F_B / F_A = 10⁻² = 0,01.",
+      "Rasio luminositas dari Stefan–Boltzmann: L_B / L_A = (2)²(2)⁴ = 4 × 16 = 64.",
+      "Gabungkan F ∝ L/d²: d_B / d_A = √[(L_B/L_A)/(F_B/F_A)] = √(64 / 0,01) = √6400 = 80, sehingga d_B = 80 × 20 = 1.600 pc."
+    ],
+    "jawaban": 1600,
+    "toleransi": 0.02,
+    "satuan": "pc",
+    "alasan_sulit": "Memenuhi (a) 4 rumus dirangkai (paralaks, Pogson, Stefan–Boltzmann, hukum kuadrat terbalik), (b) manipulasi ekspresi menggabungkan rasio L dan rasio F untuk mengisolasi d_B/d_A, serta (c) chained reasoning."
+  },
+  {
+    "id": "f1-h10",
+    "modul": "F1",
+    "subbab": "logaritma",
+    "topik": "analisis-data",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "esai_penalaran",
+    "soal": "Sebuah gugus bola terdiri atas N = 10⁵ bintang identik bermagnitudo absolut masing-masing M₁ = M☉ = 4,83 mag, terletak pada jarak d = 10 kpc di balik awan debu yang melemahkan fluks optik dengan faktor 10^(−0,4 A_V) untuk A_V = 2,50 mag. Turunkan rumus magnitudo semu terintegrasi gugus (m_tot), jelaskan mengapa kecerahan dijumlahkan dalam fluks (bukan magnitudo), dan hitung nilai m_tot.",
+    "rubrik": [
+      { "poin": "Menjelaskan bahwa magnitudo bersifat logaritmik sehingga energi cahaya total menjumlah secara aditif pada fluks/luminositas (L_tot = N L₁), bukan pada magnitudo.", "bobot": 2 },
+      { "poin": "Menurunkan magnitudo absolut total gugus M_tot = M₁ − 2,5 log(N) = 4,83 − 12,5 = −7,67 mag.", "bobot": 2 },
+      { "poin": "Menghitung modulus jarak μ = 5 log(10.000) − 5 = 15,00 mag.", "bobot": 2 },
+      { "poin": "Menggabungkan ekstingsi ke dalam persamaan akhir m_tot = M_tot + μ + A_V = −7,67 + 15,00 + 2,50 = 9,83 mag.", "bobot": 2 }
+    ],
+    "jawaban": "Kecerahan total berasal dari penjumlahan fluks (L_tot = N L₁). Dengan Pogson, M_tot = 4,83 − 2,5 log(10⁵) = −7,67 mag. Pada d = 10.000 pc, μ = 5 log(10⁴) − 5 = 15,00 mag. Dengan ekstingsi A_V = 2,50 mag, magnitudo semu terintegrasi menjadi m_tot = −7,67 + 15,00 + 2,50 = 9,83 mag.",
+    "rumus_dibutuhkan": [
+      "L_tot = N L₁",
+      "M_tot − M₁ = −2,5 log N",
+      "m_tot = M_tot + 5 log d − 5 + A_V"
+    ],
+    "langkah_penyelesaian": [
+      "Karena skala magnitudo adalah logaritmik, menjumlahkan magnitudo secara langsung setara dengan mengalikan fluks, yang salah secara fisis.",
+      "Fluks/luminositas total adalah L_tot = 10⁵ L☉, sehingga M_tot = 4,83 − 2,5 log(10⁵) = −7,67 mag.",
+      "Modulus jarak pada d = 10⁴ pc adalah μ = 5(4) − 5 = 15,00 mag.",
+      "Tambahkan pelemahan debu A_V = 2,50 mag: m_tot = M_tot + μ + A_V = 9,83 mag."
+    ],
+    "satuan": "mag",
+    "alasan_sulit": "Memenuhi (a) 3 rumus dirangkai (aditivitas luminositas, Pogson, modulus jarak berekstingsi), (b) manipulasi ekspresi gabungan m_tot(N, d, A_V), serta (c) chained reasoning."
+  }
+]
+

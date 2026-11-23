@@ -1,0 +1,390 @@
+.prose-materi {
+  color: #ebe7fb;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.78;
+  max-width: 72ch;
+}
+
+.prose-materi > * + * {
+  margin-top: 1.05rem;
+}
+
+.prose-materi [data-toc-bagian],
+.prose-materi h2 {
+  scroll-margin-top: 5.25rem;
+}
+
+.prose-materi .lead {
+  border: 1px solid rgb(139 92 246 / 0.24);
+  background: linear-gradient(135deg, rgb(24 21 56 / 0.82), rgb(16 14 40 / 0.9));
+  border-radius: 14px;
+  padding: 1.1rem 1.3rem;
+  font-size: 1.06rem;
+  line-height: 1.78;
+  color: #f4f1ff;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+.prose-materi h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  margin-top: 2.5rem;
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(139 92 246 / 0.24);
+}
+
+.prose-materi h2::before {
+  content: '◆';
+  font-size: 0.72em;
+  color: var(--color-cyan);
+  transform: translateY(-0.08em);
+  flex-shrink: 0;
+}
+
+.prose-materi h3 {
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  line-height: 1.35;
+  color: #bae6fd;
+  margin-top: 1.85rem;
+  margin-bottom: 0.45rem;
+}
+
+.prose-materi p {
+  margin: 0;
+}
+
+.prose-materi ul,
+.prose-materi ol {
+  padding-left: 1.4rem;
+  margin: 0.45rem 0;
+}
+
+.prose-materi ul {
+  list-style: disc;
+}
+
+.prose-materi ol {
+  list-style: decimal;
+}
+
+.prose-materi li + li {
+  margin-top: 0.42rem;
+}
+
+.prose-materi li::marker {
+  color: var(--color-cyan);
+  font-weight: 600;
+}
+
+/* =========================================================
+   STABILO / HIGHLIGHTER — menandai konsep & kata kunci penting
+   ========================================================= */
+.stabilo,
+.prose-materi mark,
+.prose-materi p strong,
+.prose-materi li strong,
+.prose-materi td strong {
+  font-weight: 600;
+  color: #fff7d6;
+  background: linear-gradient(
+    102deg,
+    transparent 0%,
+    rgb(255 184 36 / 0.25) 2%,
+    rgb(255 184 36 / 0.16) 98%,
+    transparent 100%
+  );
+  box-shadow: inset 0 -0.2em 0 rgb(255 184 36 / 0.34);
+  padding: 0.03em 0.28em;
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.stabilo strong,
+.prose-materi mark strong,
+.prose-materi strong .katex {
+  color: inherit;
+}
+
+.stabilo--cyan {
+  color: #dffaff;
+  background: linear-gradient(
+    102deg,
+    transparent 0%,
+    rgb(34 211 238 / 0.24) 2%,
+    rgb(34 211 238 / 0.15) 98%,
+    transparent 100%
+  );
+  box-shadow: inset 0 -0.2em 0 rgb(34 211 238 / 0.36);
+}
+
+.stabilo--hijau {
+  color: #dcfce7;
+  background: linear-gradient(
+    102deg,
+    transparent 0%,
+    rgb(74 222 128 / 0.24) 2%,
+    rgb(74 222 128 / 0.15) 98%,
+    transparent 100%
+  );
+  box-shadow: inset 0 -0.2em 0 rgb(74 222 128 / 0.35);
+}
+
+.stabilo--magenta {
+  color: #fce7f3;
+  background: linear-gradient(
+    102deg,
+    transparent 0%,
+    rgb(240 67 180 / 0.24) 2%,
+    rgb(240 67 180 / 0.15) 98%,
+    transparent 100%
+  );
+  box-shadow: inset 0 -0.2em 0 rgb(240 67 180 / 0.36);
+}
+
+/* Paragraf yang hanya berisi satu sub-judul bold tetap rapi sebagai sub-penanda, bukan blok stabilo penuh */
+.prose-materi p:has(> strong:only-child) {
+  margin-top: 1.25rem;
+}
+
+.prose-materi p:has(> strong:only-child) > strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #67e8f9;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.prose-materi p:has(> strong:only-child) > strong::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-cyan);
+  box-shadow: 0 0 8px rgb(34 211 238 / 0.7);
+}
+
+.prose-materi em {
+  font-style: italic;
+  color: #d6d0f5;
+}
+
+/* =========================================================
+   PERSAMAAN & RUMUS — terpusat dengan panggung math-serif kontras tinggi
+   ========================================================= */
+.prose-materi .katex-display {
+  display: block;
+  text-align: center;
+  margin: 1.35rem 0;
+  padding: 1.05rem 1.35rem;
+  border-radius: 14px;
+  border: 1px solid rgb(139 92 246 / 0.3);
+  background: linear-gradient(180deg, rgb(22 20 54 / 0.9), rgb(12 11 32 / 0.96));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 8px 24px rgb(4 3 16 / 0.36);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose-materi .katex-display > .katex {
+  display: inline-block;
+  margin-inline: auto;
+  font-family: var(--font-math);
+  font-size: 1.22em;
+  color: #f8f7ff;
+  letter-spacing: 0.01em;
+}
+
+.rumus-stage {
+  margin: 1.35rem 0;
+  border-radius: 14px;
+  border: 1px solid rgb(34 211 238 / 0.32);
+  background: linear-gradient(180deg, rgb(18 22 52 / 0.94), rgb(11 12 34 / 0.98));
+  padding: 0.95rem 1.35rem 1.15rem;
+  text-align: center;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 8px 24px rgb(4 3 16 / 0.4);
+  overflow-x: auto;
+}
+
+.rumus-stage .katex-display {
+  margin: 0;
+  padding: 0.35rem 0 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.rumus-stage .katex {
+  font-family: var(--font-math);
+  font-size: 1.24em;
+  color: #f8fbff;
+}
+
+/* =========================================================
+   PROSES PENGERJAAN — gaya buku hitung ilmiah (IBM Plex Mono)
+   ========================================================= */
+.proses-pengerjaan {
+  background-image: radial-gradient(rgb(34 211 238 / 0.09) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.langkah-isi {
+  font-family: var(--font-mono);
+  font-size: 14.25px;
+  line-height: 1.76;
+  color: #e4efff;
+  font-variant-numeric: tabular-nums;
+}
+
+.langkah-isi > * + * {
+  margin-top: 0.75rem;
+}
+
+.langkah-isi p {
+  margin: 0;
+}
+
+.langkah-isi strong {
+  font-weight: 600;
+  color: #d9fbff;
+  background: linear-gradient(
+    102deg,
+    transparent 0%,
+    rgb(34 211 238 / 0.2) 2%,
+    rgb(34 211 238 / 0.13) 98%,
+    transparent 100%
+  );
+  box-shadow: inset 0 -0.18em 0 rgb(34 211 238 / 0.34);
+  padding: 0.02em 0.26em;
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.langkah-isi .katex {
+  font-family: var(--font-math);
+  font-size: 1.12em;
+  color: #ffffff;
+}
+
+.langkah-isi .katex-display {
+  display: block;
+  text-align: center;
+  margin: 0.85rem 0;
+  padding: 0.8rem 1.05rem;
+  border-radius: 10px;
+  border: 1px solid rgb(34 211 238 / 0.24);
+  background: rgb(8 11 28 / 0.82);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  overflow-x: auto;
+}
+
+.langkah-isi .katex-display > .katex {
+  display: inline-block;
+  margin-inline: auto;
+  font-family: var(--font-math);
+  font-size: 1.18em;
+}
+
+.langkah-isi ul,
+.langkah-isi ol {
+  padding-left: 1.3rem;
+  margin: 0.35rem 0;
+}
+
+.langkah-isi li + li {
+  margin-top: 0.3rem;
+}
+
+/* =========================================================
+   KUTIPAN, TABEL & ELEMEN LAIN
+   ========================================================= */
+.prose-materi blockquote {
+  border: 1px solid rgb(139 92 246 / 0.28);
+  border-radius: 12px;
+  background: rgb(25 22 58 / 0.55);
+  padding: 0.95rem 1.2rem;
+  color: #dcd6f7;
+  margin: 1.2rem 0;
+}
+
+.prose-materi table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+  font-variant-numeric: tabular-nums;
+  margin: 1.1rem 0;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  overflow: hidden;
+  display: table;
+}
+
+.prose-materi th,
+.prose-materi td {
+  border-bottom: 1px solid var(--color-line);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose-materi tbody tr:nth-child(even) {
+  background: rgb(14 12 36 / 0.45);
+}
+
+.prose-materi tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.prose-materi th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: #a5f3fc;
+  background: rgb(14 12 36 / 0.75);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prose-materi code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: rgb(29 26 66 / 0.85);
+  border: 1px solid rgb(139 92 246 / 0.22);
+  padding: 0.1em 0.36em;
+  border-radius: 5px;
+  color: #a5f3fc;
+}
+
+.prose-materi a {
+  color: var(--color-cyan);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-materi hr {
+  border: none;
+  border-top: 1px solid rgb(139 92 246 / 0.2);
+  margin: 2rem 0;
+}

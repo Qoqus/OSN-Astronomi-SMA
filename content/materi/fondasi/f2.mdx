@@ -1,0 +1,546 @@
+<IdentitasModul
+  kode="F2"
+  tier="Klaster Fondasi · Modul 2 dari 19"
+  posisi="Geometri Datar, Aljabar Vektor 3D & Jembatan Segitiga Bola"
+  estimasi="60 menit studi mendalam"
+  tingkat="S1 Pengantar & Pra-IOAA"
+  prasyarat={[{ id: 'f1', label: 'F1 · Bahasa Angka Astronom' }]}
+  koneksi={[
+    { id: 'f3', label: 'F3 · Kalkulus & Analisis Data', peran: 'Ekspansi Taylor sin/cos dan diferensiasi vektor gerak' },
+    { id: 'f4', label: 'F4 · Mekanika', peran: 'Kinematika vektor polar r̂, θ̂ dan perkalian silang momentum sudut' },
+    { id: 'a2', label: 'A2 · Astronomi Bola & Koordinat', peran: 'Penerapan langsung segitiga bola P–Z–S dan transformasi Alt-Az ↔ Ekuatorial' },
+    { id: 'a4', label: 'A4 · Mekanika Langit & Orbit', peran: 'Orientasi bidang orbit 3D (inklinasi i, bujur nodal Ω, argumen perihelion ω)' },
+  ]}
+  sumberUtama={['SRC-01', 'SRC-05', 'SRC-08', 'SRC-11']}
+/>
+
+<Tujuan>
+
+- Menghubungkan fungsi trigonometri lingkaran satuan ($R = 1$), invers $\operatorname{atan2}(y, x)$ bebas kuadran, serta identitas penjumlahan dan sudut rangkap untuk manipulasi koordinat langit.
+- Menguraikan vektor 3D ke dalam koordinat Kartesian $(x, y, z)$ dan sferis $(r, \theta, \phi)$, serta menghitung **perkalian titik** ($\vec{A}\cdot\vec{B}$) dan **perkalian silang** ($\vec{A}\times\vec{B}$) untuk menentukan sudut pisah dan vektor normal bidang orbit.
+- **Menurunkan Hukum Kosinus dan Hukum Sinus Segitiga Bola** secara langsung dari perkalian titik vektor satuan posisi di bola berjari-jari 1 (tanpa sekadar menghafal).
+- Mengevaluasi batas validitas aproksimasi sudut kecil dengan suku sisa deret Taylor orde ke-3 ($\theta^3/6$ dan $\theta^3/3$).
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'radian',
+      label: 'Lingkaran Satuan & atan2',
+      peran: 'Definisi sudut tak berdimensi s/R dan resolusi kuadran 0°–360° tanpa ambigu.',
+      ke: ['identitas', 'taylor'],
+    },
+    {
+      id: 'identitas',
+      label: 'Identitas Sudut & Segitiga Datar',
+      peran: 'Aturan sinus, kosinus, dan rumus penjumlahan sudut sebagai batas limit kelengkungan nol.',
+      ke: ['vektor3d'],
+    },
+    {
+      id: 'vektor3d',
+      label: 'Aljabar Vektor 3D (Dot & Cross)',
+      peran: 'Proyeksi garis pandang (v_r vs v_t), normal bidang orbit, dan sudut pisah dua vektor.',
+      ke: ['bola'],
+    },
+    {
+      id: 'bola',
+      label: 'Penurunan Segitiga Bola',
+      peran: 'Mengubah perkalian titik dua vektor posisi bola satuan menjadi aturan kosinus bola.',
+      ke: ['pzs'],
+    },
+    {
+      id: 'taylor',
+      label: 'Taylor Sudut Kecil & Batas Galat',
+      peran: 'Menaksir penyimpangan sin θ, tan θ, cos θ hingga orde θ³.',
+      ke: ['pzs'],
+    },
+    {
+      id: 'pzs',
+      label: 'Jembatan ke Astronomi Bola (A2)',
+      peran: 'Mengubah lintang φ, deklinasi δ, dan sudut jam H menjadi ketinggian a dan azimut A.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Alam semesta tidak terbentang pada selembar kertas datar. Arah dua bintang di langit membentuk busur **lingkaran besar** pada permukaan bola satuan, sedangkan kecepatan ruang bintang dan bidang orbit planet adalah objek vektor dalam ruang tiga dimensi. Di modul ini kita tidak hanya mengulang trigonometri sekolah, tetapi <Sorot>membangun aljabar vektor 3D dan menurunkan langsung hukum segitiga bola</Sorot> yang menjadi mesin utama di Astronomi Bola (A2) dan Mekanika Langit (A4).
+</div>
+
+<Bagian id="lingkaran-satuan" judul="1. Lingkaran Satuan, Radian & Ambiguitas Invers atan2" tag="Geometri Sudut">
+
+Definisi sudut dalam radian $\theta \equiv s/R$ muncul secara alami karena perbandingan dua panjang bersatuan sama menghasilkan besaran murni tak berdimensi, sehingga turunan $\dfrac{d}{d\theta}(\sin\theta) = \cos\theta$ berlaku bersih tanpa faktor pengali $\pi/180$.
+
+Pada lingkaran satuan ($x^2 + y^2 = 1$), titik pada sudut $\theta$ berkoordinat $(\cos\theta, \sin\theta)$. Dari sini, proyeksi rotasi sumbu dengan sudut $\alpha$ segera melahirkan identitas penjumlahan dan pengurangan yang kerap muncul saat mengubah koordinat astronomi:
+
+$$\sin(\alpha \pm \beta) = \sin\alpha\cos\beta \pm \cos\alpha\sin\beta,$$
+$$\cos(\alpha \pm \beta) = \cos\alpha\cos\beta \mp \sin\alpha\sin\beta.$$
+
+### Jebakan Kuadran pada $\arcsin$ dan $\arctan$ ($\operatorname{atan2}$)
+
+Dalam astronomi bola, hampir selalu kita harus memulihkan sudut azimut $A \in [0^\circ, 360^\circ)$ atau asensio rekta $\alpha \in [0^\text{h}, 24^\text{h})$ dari nilai sinus dan kosinusnya. Fungsi kalkulator standar $\arcsin$ hanya mengembalikan nilai di $[-90^\circ, +90^\circ]$, sedangkan $\arccos$ hanya di $[0^\circ, 180^\circ]$, dan $\arctan(y/x)$ mengabaikan tanda kuadran ketika $(x, y)$ sama-sama negatif!
+
+<Epistemik jenis="model" judul="Resolusi kuadran tunggal dengan atan2(y, x)">
+
+Jika sebuah titik atau arah memiliki proyeksi proporsional $x = r\cos\theta$ dan $y = r\sin\theta$ dengan $r > 0$, jangan hanya membagi $y/x$ lalu menekan $\tan^{-1}$. Gunakan fungsi dua-argumen $\operatorname{atan2}(y, x) \in (-\pi, \pi]$ (yang lalu digeser $+2\pi$ bila negatif):
+
+$$\theta = \begin{cases} \arctan(y/x), & x > 0 \\ \arctan(y/x) + 180^\circ, & x < 0 \\ +90^\circ \text{ atau } -90^\circ, & x = 0,\ y \neq 0. \end{cases}$$
+
+**Aturan praktis astronomi:** Selalu periksa tanda **sinus dan kosinus secara bersamaan** sebelum menetapkan sudut di langit.
+
+</Epistemik>
+
+<VisualParametrik
+  type="schematic"
+  judul="Lingkaran Satuan Interaktif: Proyeksi Sinus, Kosinus, dan Kuadran"
+  params={{
+    variant: 'unit_circle',
+    angleDeg: 35,
+    interactive: true,
+  }}
+  caption="Geser sudut θ melintasi kuadran I–IV dan amati bagaimana tanda cos θ (horizontal cyan) dan sin θ (vertikal korall) berubah, sementara panjang jari-jari selalu tetap 1."
+/>
+
+<Contoh judul="Panjang busur 1 derajat & pembuktian cepat rumus tali busur">
+
+<Langkah>
+
+Dua kota di ekuator Bumi ($R_\oplus = 6\,371\ \text{km}$) terpisah bujur $\Delta\lambda = 1{,}00^\circ$. Ubah $\Delta\lambda$ ke radian: $\theta = 1{,}00 \times \frac{\pi}{180} = 0{,}0174533\ \text{rad}$.
+
+</Langkah>
+
+<Langkah>
+
+Jarak menyusuri permukaan lengkung Bumi (lingkaran besar) adalah panjang busur:
+$$s = R_\oplus \theta = 6\,371 \times 0{,}0174533 \approx 111{,}19\ \text{km}.$$
+
+</Langkah>
+
+<Langkah>
+
+Sedangkan jarak lurus terowongan menembus kerak Bumi adalah panjang **tali busur** $c$ dari segitiga sama kaki $(R_\oplus, R_\oplus, \theta)$ menurut aturan kosinus datar:
+$$c = \sqrt{R_\oplus^2 + R_\oplus^2 - 2R_\oplus^2 \cos\theta} = R_\oplus\sqrt{2(1 - \cos\theta)} = 2R_\oplus \sin\left(\frac{\theta}{2}\right).$$
+Untuk $\theta = 1^\circ$, $c \approx 2(6\,371)\sin(0{,}5^\circ) \approx 111{,}19\ \text{km}$ (selisihnya hanya $\sim 1{,}4\ \text{meter}$ pada $1^\circ$, namun menjadi signifikan di $60^\circ$ di mana busur $= 6\,672\ \text{km}$ sementara tali busur $= R_\oplus = 6\,371\ \text{km}$).
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="vektor-3d" judul="2. Vektor 3D, Perkalian Titik, Perkalian Silang & Kinematika Garis Pandang" tag="Aljabar Vektor">
+
+Dalam ruang tiga dimensi dengan basis ortonormal Kartesian $(\hat{i}, \hat{j}, \hat{k})$, dua vektor $\vec{A} = A_x\hat{i} + A_y\hat{j} + A_z\hat{k}$ dan $\vec{B} = B_x\hat{i} + B_y\hat{j} + B_z\hat{k}$ memiliki dua operasi perkalian utama yang berperan sangat spesifik dalam astrofisika:
+
+1. **Perkalian Titik (*Dot Product* — menghasilkan skalar):**
+   $$\vec{A}\cdot\vec{B} = A_x B_x + A_y B_y + A_z B_z = AB\cos\theta.$$
+   **Makna astronomi:** Mengukur sudut pisah $\theta$ antara dua bintang di langit melalui vektor satuan posisi $\hat{r}_1 \cdot \hat{r}_2 = \cos\theta$, dan menghitung proyeksi kecepatan ruang $\vec{v}$ ke arah garis pandang $\hat{n}$ ($v_r = \vec{v}\cdot\hat{n}$).
+2. **Perkalian Silang (*Cross Product* — menghasilkan vektor semu tegak lurus bidang):**
+   $$\vec{A}\times\vec{B} = (A_y B_z - A_z B_y)\hat{i} + (A_z B_x - A_x B_z)\hat{j} + (A_x B_y - A_y B_x)\hat{k}, \qquad |\vec{A}\times\vec{B}| = AB\sin\theta.$$
+   **Makna astronomi:** Mendefinisikan **vektor momentum sudut spesifik** $\vec{h} = \vec{r} \times \vec{v}$ yang arahnya selalu normal terhadap bidang orbit planet atau bintang ganda, serta torsi $\vec{\tau} = \vec{r}\times\vec{F}$ (untuk gaya sentral sejajar $\vec{r}$, $\vec{r}\times\vec{F} = 0$, sehingga $\vec{h}$ kekal!).
+
+### Koordinat Sferis & Proyeksi Radial–Tangensial Bintang
+
+Posisi suatu benda langit pada jarak $r$, sudut polar $\theta$ (atau deklinasi $\delta = 90^\circ - \theta$), dan azimut/asensio rekta $\alpha$ dinyatakan dalam koordinat Kartesian sebagai:
+
+$$\hat{r}(\alpha, \delta) = \begin{pmatrix} \cos\delta\cos\alpha \\ \cos\delta\sin\alpha \\ \sin\delta \end{pmatrix}.$$
+
+Amati bahwa $\|\hat{r}\|^2 = \cos^2\delta(\cos^2\alpha + \sin^2\alpha) + \sin^2\delta = 1$: ia selalu merupakan **vektor satuan** pada bola langit. Sementara itu, gerak bintang berkecepatan ruang $\vec{v}$ selalu dipecah menjadi dua komponen saling ortogonal terhadap garis pandang:
+- **Kecepatan radial ($v_r$):** Komponen sejajar garis pandang ($\vec{v}\cdot\hat{r}$), diukur melalui geseran Doppler spektrum ($\Delta\lambda/\lambda_0 \approx v_r/c$).
+- **Kecepatan tangensial ($v_t$):** Komponen pada bidang langit ($\|\vec{v} - v_r\hat{r}\|$), terukur melalui gabungan **gerak diri sudut** $\mu$ (dalam $\text{arcsec/tahun}$) dan jarak $d$:
+  $$v_t\ [\text{km/s}] = 4{,}74047 \times \mu\ [\text{arcsec/yr}] \times d\ [\text{pc}], \qquad v_{\text{ruang}} = \sqrt{v_r^2 + v_t^2}.$$
+
+*(Angka $4{,}74047$ berasal langsung dari $\dfrac{1\ \text{au}}{1\ \text{tahun Julian}} = \dfrac{1{,}49598\times 10^8\ \text{km}}{3{,}15576\times 10^7\ \text{s}} \approx 4{,}74047\ \text{km/s}$!)*
+
+<VisualParametrik
+  type="schematic"
+  judul="Uraian Vektor Kecepatan Ruang Bintang terhadap Garis Pandang"
+  params={{
+    variant: 'vector_projection',
+    axisLabel: 'Garis pandang (radial v_r)',
+    orthoLabel: 'Bidang langit (tangensial v_t)',
+    showComponents: true,
+    vectors: [
+      { label: 'v_ruang', mag: 50, angleDeg: 60 },
+    ],
+  }}
+  caption="Perhatikan proyeksi hijau v_r = v cos θ sepanjang garis pandang (terukur lewat Doppler) dan proyeksi ungu v_t = v sin θ pada bidang langit (terukur lewat gerak diri μ dan jarak d)."
+/>
+
+<Contoh judul="Jarak sudut dua bintang & menentukan vektor normal bidang orbit">
+
+<Langkah>
+
+Dua bintang diamati memiliki koordinat ekuatorial: Bintang 1 ($\alpha_1 = 0^\circ,\ \delta_1 = +30^\circ$) dan Bintang 2 ($\alpha_2 = 60^\circ,\ \delta_2 = +30^\circ$). Hitung sudut pisah $\theta$ keduanya di bola langit menggunakan perkalian titik!
+
+</Langkah>
+
+<Langkah>
+
+Tulis vektor satuan posisi masing-masing:
+$$\hat{r}_1 = \begin{pmatrix} \cos 30^\circ \cos 0^\circ \\ \cos 30^\circ \sin 0^\circ \\ \sin 30^\circ \end{pmatrix} = \begin{pmatrix} \sqrt{3}/2 \\ 0 \\ 1/2 \end{pmatrix}, \qquad \hat{r}_2 = \begin{pmatrix} \cos 30^\circ \cos 60^\circ \\ \cos 30^\circ \sin 60^\circ \\ \sin 30^\circ \end{pmatrix} = \begin{pmatrix} \sqrt{3}/4 \\ 3/4 \\ 1/2 \end{pmatrix}.$$
+
+</Langkah>
+
+<Langkah>
+
+Hitung perkalian titik $\cos\theta = \hat{r}_1 \cdot \hat{r}_2$:
+$$\cos\theta = \left(\frac{\sqrt{3}}{2}\right)\left(\frac{\sqrt{3}}{4}\right) + 0 + \left(\frac{1}{2}\right)\left(\frac{1}{2}\right) = \frac{3}{8} + \frac{1}{4} = \frac{5}{8} = 0{,}625.$$
+
+</Langkah>
+
+<Langkah>
+
+Ambil $\arccos(0{,}625) \approx 51{,}32^\circ$. Perhatikan: sekadar mengurangkan $\Delta\alpha = 60^\circ$ memberikan jawaban **salah**! Pada deklinasi $\delta = 30^\circ$, lingkaran sejajar deklinasi menyempit oleh faktor $\cos\delta$, dan jalur terpendek (lingkaran besar) sedikit lebih pendek lagi menjadi $51{,}32^\circ$ dibanding $60^\circ\cos 30^\circ \approx 51{,}96^\circ$.
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="penurunan-segitiga-bola" judul="3. Penurunan Eksak Aturan Kosinus & Sinus Segitiga Bola" tag="Derivasi Inti ke A2">
+
+Banyak siswa menghafal aturan kosinus segitiga bola tanpa tahu dari mana ia berasal, sehingga mudah tertukar tanda minus atau lupa fungsi mana yang $\sin$ dan mana yang $\cos$. Padahal, seluruh **Hukum Segitiga Bola** dapat diturunkan hanya dalam beberapa baris aljabar vektor 3D (`SRC-05`, `SRC-08`)!
+
+Ambil tiga titik $A, B, C$ pada permukaan bola satuan ($R = 1$) yang dihubungkan oleh tiga busur lingkaran besar dengan panjang sudut $a$ (sisi di depan $A$), $b$ (di depan $B$), dan $c$ (di depan $C$). Kita ingin menghubungkan panjang sisi $a, b, c$ dengan sudut bola $C$ (sudut dihedral antara bidang $OAC$ dan bidang $OBC$).
+
+<Rumus judul="Penurunan Aturan Kosinus Bola dari Perkalian Titik Vektor Satuan">
+
+$$\cos c = \cos a \cos b + \sin a \sin b \cos C$$
+
+</Rumus>
+
+<Contoh judul="Bukti langkah demi langkah Aturan Kosinus Segitiga Bola" olimpiade>
+
+<Langkah>
+
+Letakkan titik sudut $C$ tepat di kutub utara sistem koordinat Kartesian lokal pada bola satuan, sehingga vektor satuan menuju $C$ adalah $\hat{r}_C = (0, 0, 1)$. Putar kerangka sehingga busur $CB$ (panjang sudut $a$) terletak tepat di bidang $xz$.
+
+</Langkah>
+
+<Langkah>
+
+Karena jarak sudut dari kutub $\hat{r}_C$ ke $B$ adalah $a$ pada bidang $xz$ ($\phi_B = 0$), maka vektor posisi $B$ adalah:
+$$\hat{r}_B = (\sin a,\ 0,\ \cos a).$$
+
+</Langkah>
+
+<Langkah>
+
+Busur $CA$ memiliki panjang sudut $b$ dari kutub $z$, dan bidang $OAC$ membentuk sudut $C$ terhadap bidang $OBC$ ($xz$). Maka dalam koordinat sferis ($\theta = b$, azimut $= C$), vektor posisi $A$ adalah:
+$$\hat{r}_A = (\sin b\cos C,\ \sin b\sin C,\ \cos b).$$
+
+</Langkah>
+
+<Langkah>
+
+Jarak sudut $c$ antara titik $A$ dan $B$ pada bola satuan memenuhi $\cos c = \hat{r}_A \cdot \hat{r}_B$. Hitung perkalian titiknya komponen demi komponen:
+$$\cos c = (\sin b\cos C)(\sin a) + (\sin b\sin C)(0) + (\cos b)(\cos a)$$
+$$\implies \boxed{\cos c = \cos a \cos b + \sin a \sin b \cos C}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Cek limit kelengkungan nol (bola sangat besar, sisi $a, b, c \ll 1\ \text{rad}$):** Gunakan deret Taylor $\cos x \approx 1 - x^2/2$ dan $\sin x \approx x$:
+$$1 - \frac{c^2}{2} \approx \left(1 - \frac{a^2}{2}\right)\left(1 - \frac{b^2}{2}\right) + ab\cos C \approx 1 - \frac{a^2 + b^2}{2} + ab\cos C$$
+Kalikan dengan $-2$ dan susun ulang $\implies c^2 = a^2 + b^2 - 2ab\cos C$! <Sorot>Aturan kosinus segitiga datar muncul otomatis sebagai limit kecil dari aturan kosinus bola</Sorot>.
+
+</Langkah>
+
+</Contoh>
+
+### Aturan Sinus Bola & Peta Menuju Segitiga P–Z–S
+
+Dari aturan kosinus bola, substitusi identitas $\sin^2 C = 1 - \cos^2 C$ menghasilkan **Aturan Sinus Bola**:
+
+$$\frac{\sin a}{\sin A} = \frac{\sin b}{\sin B} = \frac{\sin c}{\sin C}.$$
+
+Bukti singkat: nyatakan $\cos C = \dfrac{\cos c - \cos a\cos b}{\sin a\sin b}$, lalu hitung:
+$$\frac{\sin^2 C}{\sin^2 c} = \frac{1 - \cos^2 C}{\sin^2 c} = \frac{\sin^2 a\sin^2 b - (\cos c - \cos a\cos b)^2}{\sin^2 a\sin^2 b\sin^2 c} = \frac{\sqrt{1 - \cos^2 a - \cos^2 b - \cos^2 c + 2\cos a\cos b\cos c}^2}{\sin^2 a\sin^2 b\sin^2 c}.$$
+Perhatikan bahwa pembilang dan penyebut **sepenuhnya simetris** terhadap permutasi $a, b, c$! Oleh karena itu nilainya pasti identik untuk $\dfrac{\sin^2 A}{\sin^2 a}$ dan $\dfrac{\sin^2 B}{\sin^2 b}$.
+
+<VisualParametrik
+  type="pzs_triangle"
+  judul="Pratinjau Segitiga Bola P–Z–S: Aturan Kosinus pada Bola Langit"
+  params={{
+    phiDeg: -7,
+    decDeg: 20,
+    haDeg: 45,
+    interactive: true,
+    highlightSide: 'ZS',
+  }}
+  caption="Ganti huruf umum (a, b, c, C) menjadi segitiga posisi langit P–Z–S: sisi PZ = 90°−φ, PS = 90°−δ, ZS = z (jarak zenit), dan sudut apit di kutub ∠ZPS = H (sudut jam). Geser slider lintang φ atau H untuk melihat ketinggian bintang berubah secara seketika."
+/>
+
+</Bagian>
+
+<Bagian id="taylor-sudut-kecil" judul="4. Ekspansi Taylor Sudut Kecil & Batas Validitas Kuantitatif" tag="Analisis Galat Aproksimasi">
+
+Mengapa pada bab F1 dan F2 kita sering menulis $\sin\theta \approx \theta$ dan $\cos\theta \approx 1$, padahal dalam penurunan aturan kosinus datar di atas kita justru memakai $\cos\theta \approx 1 - \theta^2/2$? Jawabannya terletak pada **orde suku pertama yang tak saling meniadakan**:
+
+- Untuk $\sin\theta$ dan $\tan\theta$, suku orde-1 adalah $\theta$, sedangkan penyimpangan pertama muncul pada **orde-3**:
+  $$\sin\theta = \theta - \frac{\theta^3}{6} + \mathcal{O}(\theta^5), \qquad \tan\theta = \theta + \frac{\theta^3}{3} + \mathcal{O}(\theta^5).$$
+  Maka galat relatif $\left|\frac{\theta - \sin\theta}{\sin\theta}\right| \approx \frac{\theta^2}{6}$ dan $\left|\frac{\tan\theta - \theta}{\tan\theta}\right| \approx \frac{\theta^2}{3}$ (galat $\tan$ selalu dua kali lebih besar daripada galat $\sin$).
+- Untuk $\cos\theta$, suku orde-0 bernilai $1$, dan perubahan pertama terjadi pada **orde-2** ($-\theta^2/2$). Apabila dua besaran $1$ dan $\cos\theta$ saling dikurangkan ($1 - \cos\theta$, muncul pada kelengkungan horizon, efek Doppler transversal, atau penurunan jarak tali busur), maka $\cos\theta \approx 1$ akan menghilangkan seluruh jawaban menjadi $0$! Di situ kamu **wajib** membawa minimal suku kuadratik: $1 - \cos\theta \approx \theta^2/2$.
+
+<VisualParametrik
+  type="data_table"
+  judul="Uji Batas Aproksimasi Sudut Kecil (θ dalam radian vs sin θ dan tan θ)"
+  params={{
+    title: 'Perbandingan Nilai Eksak dan Galat Relatif Sudut Kecil',
+    columns: [
+      { key: 'deg', label: 'θ (°)', align: 'right' },
+      { key: 'rad', label: 'θ (rad)', align: 'right' },
+      { key: 'sin', label: 'sin θ', align: 'right' },
+      { key: 'errSin', label: 'Galat |θ−sin θ|/sin θ', unit: '%', align: 'right' },
+      { key: 'errTan', label: 'Galat |tan θ−θ|/tan θ', unit: '%', align: 'right' },
+    ],
+    rows: [
+      { deg: 1, rad: '0,017453', sin: '0,017452', errSin: '0,005', errTan: '0,010' },
+      { deg: 5, rad: '0,087266', sin: '0,087156', errSin: '0,127', errTan: '0,253' },
+      { deg: 10, rad: '0,174533', sin: '0,173648', errSin: '0,510', errTan: '1,012' },
+      { deg: 20, rad: '0,349066', sin: '0,342020', errSin: '2,060', errTan: '4,114' },
+      { deg: 30, rad: '0,523599', sin: '0,500000', errSin: '4,720', errTan: '9,310' },
+    ],
+    uncertaintyNote: 'Galat relatif tumbuh sebagai θ²/6 (sin) dan θ²/3 (tan). Di bawah 5°, keduanya akurat hingga < 0,3%; di atas 20° galat melebihi 2–4%.',
+  }}
+  caption="Perhatikan baris θ = 10° vs θ = 20°: saat sudut digandakan 2×, galat relatif melonjak 4× karena pola kuadratik θ²."
+/>
+
+<BatasValiditas
+  aturan={[
+    {
+      rumus: 'cos θ ≈ 1',
+      berlakuJika: 'cos θ menjadi faktor pengali langsung (misal v_r = v cos θ dengan θ ≈ 1°) dan kesalahan ~θ²/2 ≈ 0,015% dapat diabaikan.',
+      gagalJika: 'Ekspresi berbentuk (1 − cos θ) atau pada efek orde kedua seperti dilatasi waktu / penyimpangan bidang datar.',
+      akibat: 'Mengganti cos θ → 1 di dalam (1 − cos θ) membuang suku fisis dominan menjadi nol!',
+    },
+    {
+      rumus: 'd = D / θ_rad (ukuran linier dari ukuran sudut)',
+      berlakuJika: 'Objek berjarak jauh (θ ≪ 1 rad) DAN sumbu objek tegak lurus garis pandang.',
+      gagalJika: 'Benda sangat besar/dekat (Bulan jika mendekat 10×), atau piringan/cakram galaksi mengalami proyeksi inklinasi i terhadap garis pandang.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="5. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Jarak sudut antara dua bintang di lintang/deklinasi yang sama (δ = +60°) dan terpisah Δα = 2 jam (= 30°) adalah 30°.',
+      kenapaKeliru: 'Lingkaran deklinasi konstan δ ≠ 0° bukanlah lingkaran besar (great circle), melainkan lingkaran kecil berjari-jari R cos δ.',
+      caraDeteksi: 'Uji kasus batas kutub δ = 90°: di kutub langit utara, mengubah α sebesar 30° tidak memindahkan bintang sama sekali (jarak sudut = 0°!). Rumus benar harus memuat cos δ.',
+      benar: 'Dengan aturan kosinus bola pada δ₁ = δ₂ = δ, cos θ = sin²δ + cos²δ cos(Δα), yang untuk sudut kecil mereduksi ke θ ≈ Δα cos δ (= 30° cos 60° = 15°).',
+    },
+    {
+      salah: 'Kalkulator yang menampilkan arcsin(−0,5) = −30° pasti berarti sudut posisi bintang berada di kuadran IV (330°).',
+      kenapaKeliru: 'sin θ juga bernilai −0,5 pada θ = 210° (kuadran III)! Satu fungsi trigonometri selalu punya dua solusi di rentang [0°, 360°).',
+      caraDeteksi: 'Selalu hitung cos θ secara terpisah (atau pembilang cos dari aturan kosinus bola) untuk mengetahui tanda komponen x sebelum menetapkan kuadran.',
+      benar: 'Tentukan kuadran unik dengan mengevaluasi pasangan (cos θ, sin θ) secara simultan melalui atan2(sin θ, cos θ).',
+    },
+    {
+      salah: 'Pada sudut θ = 20°, memakai aturan θ (rad) dan sin θ hampir sama saja seperti di 5°.',
+      kenapaKeliru: 'Laju pertumbuhan galat bersifat kuadratik (θ²/6), sehingga menggandakan sudut akan melipatempatkan galat relatif.',
+      caraDeteksi: 'Cek cepat: 20° ≈ 0,349 rad, sehingga θ²/3 ≈ 0,041 (galat tan mencapai > 4%!). Untuk akurasi OSN tiga angka penting (< 0,1%), batas aman hanyalah sekitar θ ≲ 4°–5°.',
+      benar: 'Gunakan aturan sudut kecil hanya bila θ ≲ 5° atau bila ketelitian target lebih longgar dari θ²/3.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="6. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="f2-cek-1"
+  pertanyaan="Dua vektor sebesar $6$ dan $8$ saling tegak lurus. Berapa besar resultannya?"
+  opsi={['$14$', '$10$', '$2$', '$7$']}
+  jawaban={1}
+  penjelasan="Karena tegak lurus ($\\vec{A}\\cdot\\vec{B} = 0$), resultan adalah $\\sqrt{6^2 + 8^2} = \\sqrt{100} = 10$."
+/>
+
+<CekPaham
+  id="f2-cek-2"
+  pertanyaan="Satu radian kira-kira sama dengan berapa derajat?"
+  opsi={['$45^\\circ$', '$57{,}3^\\circ$', '$60^\\circ$', '$90^\\circ$']}
+  jawaban={1}
+  penjelasan="$1\\ \\text{rad} = 180^\\circ / \\pi \\approx 57{,}2958^\\circ$."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'f2-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Sebuah pesawat terbang tepat ke timur sepanjang paralel lintang $\\phi = +60^\\circ$ di Bumi ($R_\\oplus = 6\,371\\ \\text{km}$) sejauh $\\Delta\\lambda = 20^\\circ$. Apakah jarak tempuhnya lebih pendek atau sama dengan jarak lingkaran besar antara titik awal dan titik akhir? Jelaskan secara fisis.',
+      petunjuk: 'Paralel lintang $\\phi = 60^\\circ$ adalah lingkaran kecil berpusat di sumbu rotasi Bumi, bukan pusat Bumi.',
+      langkahKunci: [
+        'Lintasan menyusuri paralel $\\phi = 60^\\circ$ memiliki jari-jari kelengkungan $r = R_\\oplus\\cos 60^\\circ = 0{,}5\\,R_\\oplus$, sehingga panjangnya $s_{\\text{paralel}} = R_\\oplus\\cos 60^\\circ \\cdot (20\\pi/180) \\approx 1\,111{,}9\\ \\text{km}$.',
+        'Lintasan **terpendek** (geodesik) di permukaan bola adalah busur lingkaran besar (yang justru agak melengkung ke utara mendekati kutub sebelum turun kembali ke $\\phi = 60^\\circ$).',
+        'Dengan aturan kosinus bola: $\\cos\\theta = \\sin^2 60^\\circ + \\cos^2 60^\\circ \\cos 20^\\circ = 0{,}75 + 0{,}25(0{,}93969) = 0{,}98492 \\implies \\theta = 9{,}962^\\circ \\approx 0{,}17387\\ \\text{rad}$.',
+        'Panjang lingkaran besar: $s_{\\text{geodesik}} = R_\\oplus \\theta \\approx 1\,107{,}7\\ \\text{km}$, lebih pendek $\\approx 4{,}2\\ \\text{km}$ daripada menyusuri lintang konstan.',
+      ],
+      rubrik: [
+        'Membedakan lingkaran kecil ($r = R\\cos\\phi$) vs lingkaran besar (geodesik berpusat di pusat bola).',
+        'Menghitung kedua panjang busur dan menunjukkan $s_{\\text{geodesik}} < s_{\\text{paralel}}$.',
+      ],
+    },
+    {
+      id: 'f2-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari aturan kosinus bola untuk segitiga P–Z–S ($\\cos z = \\sin\\phi\\sin\\delta + \\cos\\phi\\cos\\delta\\cos H$), turunkan rumus sudut jam terbit dan terbenam ($H_0$) sebuah bintang bila diandaikan terbit tepat di horizon geometris ($z = 90^\\circ$), serta syarat deklinasi agar bintang menjadi **sirkumpolar** atau **tak pernah terbit**.',
+      petunjuk: 'Substitusikan $z = 90^\\circ \\implies \\cos z = 0$, lalu periksa batas domain $|\\cos H_0| \\le 1$.',
+      langkahKunci: [
+        'Pada horizon geometris $z = 90^\\circ$, sehingga $0 = \\sin\\phi\\sin\\delta + \\cos\\phi\\cos\\delta\\cos H_0$.',
+        'Isolasi $\\cos H_0$: $\\cos H_0 = -\\frac{\\sin\\phi\\sin\\delta}{\\cos\\phi\\cos\\delta} = -\\tan\\phi\\tan\\delta$.',
+        'Agar bintang dapat memotong horizon ($\\cos H_0$ memiliki solusi riil), harus dipenuhi $|-\\tan\\phi\\tan\\delta| \\le 1$.',
+        'Jika $-\\tan\\phi\\tan\\delta < -1$ (yaitu $\\phi$ dan $\\delta$ sejenis/sama tanda dengan $|\\delta| > 90^\\circ - |\\phi|$), $\\cos z > 0$ sepanjang waktu $\\implies z < 90^\\circ$ selalu (bintang **sirkumpolar**). Jika $-\\tan\\phi\\tan\\delta > +1$, bintang selalu di bawah horizon (**tak pernah terbit**).',
+      ],
+      rubrik: [
+        'Menghasilkan $\\cos H_0 = -\\tan\\phi\\tan\\delta$ tanpa tanda minus yang tertinggal.',
+        'Menganalisis ketidaksetaraan $|\\cos H_0| > 1$ untuk kedua kasus tanda $(\\phi, \\delta)$.',
+      ],
+    },
+    {
+      id: 'f2-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah asteroid berdiameter $D = 1\\ \\text{km}$ melintas dekat Bumi dan tertangkap oleh kamera survei dengan resolusi sudut $1^{\\prime\\prime}$ per piksel pada jarak $1\\ \\text{au}$. Dapatkah bentuk tak beraturan asteroid itu terlihat jelas sebagai citra terurai (*resolved*), ataukah ia tampak sebagai titik tak terurai?',
+      petunjuk: 'Bandingkan ukuran sudut asteroid $\\theta = D/d$ dalam detik busur dengan ukuran 1 piksel ($1^{\\prime\\prime}$).',
+      langkahKunci: [
+        'Pada $d = 1\\ \\text{au} \\approx 1{,}5\\times 10^8\\ \\text{km}$, diameter sudut asteroid $D = 1\\ \\text{km}$ adalah $\\theta \\approx \\frac{1}{1{,}5\\times 10^8} \\approx 6{,}7\\times 10^{-9}\\ \\text{rad}$.',
+        'Ubah ke detik busur: $\\theta^{\\prime\\prime} = 6{,}7\\times 10^{-9} \\times 2{,}06\\times 10^5 \\approx 0{,}0014^{\\prime\\prime} \\approx 1{,}4\\ \\text{mas}$.',
+        'Karena $\\theta^{\\prime\\prime} \\approx 0{,}0014^{\\prime\\prime} \\ll 1^{\\prime\\prime}$, asteroid hampir $700\\times$ lebih kecil daripada satu piksel kamera — ia mutlak tampak sebagai sumber titik sempurna!',
+      ],
+      rubrik: [
+        'Mengubah jarak $1\\ \\text{au}$ ke km dengan benar dan menghitung sudut dalam radian.',
+        'Mengonversi radian ke arcsec ($\\times 206\\,265$) dan membandingkan terhadap resolusi $1^{\\prime\\prime}$.',
+      ],
+    },
+    {
+      id: 'f2-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Sebuah bintang diukur pada jarak $d = 25{,}0\\ \\text{pc}$ memiliki kecepatan radial $v_r = +30{,}0\\ \\text{km/s}$ dan gerak diri total $\\mu = 0{,}3375^{\\prime\\prime}/\\text{yr}$. Hitung kelajuan tangensial $v_t$, kelajuan ruang total $v_{\\text{ruang}}$, dan sudut kemiringan $\\theta$ vektor kecepatannya terhadap garis pandang.',
+      petunjuk: 'Gunakan $v_t = 4{,}7405\\,\\mu\\,d$ dan $\\tan\\theta = v_t / v_r$.',
+      langkahKunci: [
+        '$v_t = 4{,}74047 \\times 0{,}3375 \\times 25{,}0 \\approx 40{,}00\\ \\text{km/s}$.',
+        '$v_{\\text{ruang}} = \\sqrt{v_r^2 + v_t^2} = \\sqrt{30{,}0^2 + 40{,}0^2} = 50{,}0\\ \\text{km/s}$.',
+        'Sudut terhadap garis pandang: $\\theta = \\operatorname{atan2}(40{,}0,\\ 30{,}0) \\approx 53{,}1^\\circ$ (menjauh dari Tata Surya karena $v_r > 0$).',
+      ],
+      rubrik: [
+        'Menghitung $v_t \\approx 40{,}0\\ \\text{km/s}$ dengan satuan tepat.',
+        'Menggabungkan vektor secara ortogonal menjadi $50{,}0\\ \\text{km/s}$ dan sudut $53{,}1^\\circ$.',
+      ],
+    },
+    {
+      id: 'f2-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Tunjukkan mengapa **sudut fase** sebuah eksoplanet atau bulan (sudut antara arah ke bintang induk dan arah ke Bumi dilihat dari planet) menentukan sekaligus fraksi area cakram planet yang tersinari ($f_{\\text{fase}}$) DAN kapan planet mengalami kecepatan radial ekstrem saat orbitnya melingkar.',
+      petunjuk: 'Gunakan perkalian titik antara vektor posisi planet terhadap bintang $\\vec{r}$ dan vektor garis pandang dari bintang ke pengamat $\\hat{n}$.',
+      langkahKunci: [
+        'Misalkan $\\hat{r}$ arah bintang $\\to$ planet dan $\\hat{n}$ arah bintang $\\to$ pengamat. Untuk pengamat di jauh ($d \\gg r$), vektor dari planet ke pengamat juga $\\hat{n}$, sedangkan arah dari planet ke bintang adalah $-\\hat{r}$. Maka sudut fase $\\alpha$ memenuhi $\\cos\\alpha = (-\\hat{r})\\cdot\\hat{n}$.',
+        'Fraksi diameter yang tersinari sepanjang garis ekuator fase adalah proyeksi batas terminator: $f_{\\text{fase}} = \\frac{1}{2}(1 + \\cos\\alpha)$ — fase penuh saat $\\alpha = 0$ (planet di balik bintang), kuartir saat $\\alpha = 90^\\circ$, fase baru saat $\\alpha = 180^\\circ$ (transit).',
+        'Karena kecepatan orbit lingkaran $\\vec{v}$ tegak lurus $\\hat{r}$, proyeksi radial $v_r = \\vec{v}\\cdot\\hat{n}$ mencapai maksimum tepat ketika $\\hat{r}\\perp\\hat{n}$, yakni tepat pada fase kuartir ($\\alpha = 90^\\circ$), dan nol pada konjungsi/oposisi ($\\alpha = 0^\\circ, 180^\\circ$).',
+      ],
+      rubrik: [
+        'Mendefinisikan sudut fase lewat produk skalar vektor satuan posisi dan garis pandang.',
+        'Menghubungkan geometri proyeksi ke fraksi iluminasi $\\frac{1}{2}(1 + \\cos\\alpha)$ dan nilai ekstrem kecepatan radial di $\\alpha = 90^\\circ$.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'f2-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa perkalian silang dua vektor posisi orbit dan kecepatan ($\\vec{h} = \\vec{r} \\times \\vec{v}$) bersifat konstan arahnya sepanjang orbit Keplerian, sedangkan $\\vec{r}\\cdot\\vec{v}$ berubah-ubah tanda sepanjang orbit elips?',
+      petunjuk: 'Diferensiasikan $\\vec{r}\\times\\vec{v}$ dan $\\vec{r}\\cdot\\vec{v}$ terhadap waktu $t$ dengan $\\ddot{\\vec{r}} = -(GM/r^3)\\vec{r}$.',
+      rubrik: [
+        'Menunjukkan $\\frac{d}{dt}(\\vec{r}\\times\\vec{v}) = \\vec{v}\\times\\vec{v} + \\vec{r}\\times\\ddot{\\vec{r}} = 0$ karena percepatan gravitasi sejajar $\\vec{r}$.',
+        'Menunjukkan $\\vec{r}\\cdot\\vec{v} = r\\dot{r}$ bernilai negatif saat bergerak menuju perihelion ($\\dot{r} < 0$), nol di perihelion dan aphelion, dan positif saat menjauh ($\\dot{r} > 0$).',
+      ],
+      jawabanKunci:
+        'Turunan waktu $\\frac{d}{dt}(\\vec{r}\\times\\vec{v}) = \\vec{r}\\times\\ddot{\\vec{r}} = 0$ sebab gaya gravitasi sentral selalu sejajar vektor posisi $\\vec{r}$, sehingga baik besar maupun arah vektor normal $\\vec{h}$ tidak berubah (orbit selalu terkurung pada satu bidang datar!). Sebaliknya, $\\vec{r}\\cdot\\vec{v} = \\frac{1}{2}\\frac{d}{dt}(r^2) = r\\dot{r}$ mengukur apakah jarak radial sedang memanjang atau memendek — ia hanya nol di orbit lingkaran atau di apsis (perihelion/aphelion) elips.',
+    },
+    {
+      id: 'f2-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Untuk mencari tinggi maksimum gunung di Bulan dari panjang bayangannya, seorang siswa mengukur jarak sudut ujung bayangan sebesar $\\theta = 5^{\\prime\\prime}$, lalu ia menulis $\\text{tinggi} = d\\,\\tan\\theta$ dengan memasukkan langsung $5^{\\prime\\prime}$ sebagai $\\tan(5)$ di kalkulator. Ada dua kesalahan mendasar dalam satu langkah itu — sebutkan keduanya!',
+      petunjuk: 'Periksa satuan sudut pada kalkulator dan geometri sudut datang cahaya Matahari terhadap vertikal lokal permukaan Bulan!',
+      rubrik: [
+        'Kesalahan matematis: $5^{\\prime\\prime}$ harus diubah ke derajat ($5/3600$) atau radian ($5/206265$), bukan dimasukkan langsung sebagai $5$ radian atau $5^\\circ$.',
+        'Kesalahan fisis/geometris: $d\\theta$ hanya memberi **panjang mendatar bayangan** ($L_{\\text{bayangan}}$) pada bidang langit (bahkan itu pun harus dibagi faktor proyeksi garis pandang bila tidak di pusat cakram), yang masih harus dikalikan $\\tan(\\text{ketinggian Matahari})$ untuk memperoleh tinggi vertikal gunung!',
+      ],
+      jawabanKunci:
+        'Pertama, memasukkan angka $5^{\\prime\\prime}$ langsung ke $\\tan(5)$ mencampur satuan arcsecond dengan radian/derajat; harusnya $\\theta_{\\text{rad}} = 5/206\\,265$. Kedua, sudut tampak $\\theta$ dari Bumi hanya mengukur panjang **horizontal** bayangan di permukaan Bulan ($L = d\\theta$ jika tegak lurus garis pandang), bukan tinggi gunung; tinggi gunung masih harus dihitung melalui $h = L \\tan(a_\\odot)$ dengan $a_\\odot$ adalah ketinggian Matahari di atas cakrawala lokal saat itu.',
+    },
+    {
+      id: 'f2-log-3',
+      tipe: 'bandingkan_model',
+      pertanyaan:
+        'Bandingkan aturan kosinus segitiga datar ($c^2 = a^2 + b^2 - 2ab\\cos C$) dengan aturan kosinus segitiga bola ($\\cos c = \\cos a\\cos b + \\sin a\\sin b\\cos C$) untuk memprediksi sifat jumlah ketiga sudut segitiga ($A + B + C$) ketika ukuran segitiga makin diperbesar di langit.',
+      petunjuk: 'Uji segitiga sama sisi di bola dengan tiga sudut $90^\\circ$ (misal kutub utara dan dua titik terpisah $90^\\circ$ di ekuator).',
+      rubrik: [
+        'Pada geometri datar, jumlah sudut selalu tetap $\\pi$ ($180^\\circ$) terlepas dari ukuran segitiga.',
+        'Pada bola satuan, ambil $a = b = c = 90^\\circ$: aturan kosinus bola memberi $0 = 0 + 1\\cdot 1\\cos C \\implies C = 90^\\circ$, sehingga $A + B + C = 270^\\circ > 180^\\circ$ (ekses sferis $E = \\Omega$).',
+      ],
+      jawabanKunci:
+        'Model datar mengasumsikan kelengkungan nol sehingga $A + B + C = 180^\\circ$ selalu dan penskalaan segitiga tidak mengubah sudutnya. Model bola mengakui kelengkungan Gauss positif $K = 1/R^2$: semakin besar luas segitiga di bola langit ($\\Omega$ dalam steradian), semakin besar pula kelebihan sudutnya ($A + B + C = \\pi + \\Omega > 180^\\circ$, Teorema Girard). Sebagai contoh ekstrem, segitiga dengan $a = b = c = 90^\\circ$ memenuhi aturan kosinus bola dengan $A = B = C = 90^\\circ$ ($\\sum = 270^\\circ$).',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="f2-refleksi-1"
+  pertanyaan="Mengapa astronom memisahkan kecepatan ruang bintang menjadi komponen radial dan tangensial, padahal keduanya berasal dari satu gerak yang sama? Instrumen dan metode pengamatan apa saja yang harus digabungkan untuk merekonstruksi vektor 3D penuhnya?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'f2-m1', gerbang: 'logika', teks: 'Menggunakan atan2(y, x) dan uji pasangan (cos, sin) untuk mencegah kesalahan kuadran sudut 0°–360°.' },
+    { id: 'f2-m2', gerbang: 'derivasi', teks: 'Menguraikan vektor posisi sferis r̂(α, δ) dan menghitung sudut pisah dua bintang lewat perkalian titik.' },
+    { id: 'f2-m3', gerbang: 'derivasi', teks: 'Menurunkan Aturan Kosinus Segitiga Bola cos c = cos a cos b + sin a sin b cos C langsung dari r̂_A · r̂_B.' },
+    { id: 'f2-m4', gerbang: 'derivasi', teks: 'Membuktikan kapan sin θ ≈ θ aman dan kapan suku orde-2 (1 − cos θ ≈ θ²/2) wajib dipertahankan.' },
+    { id: 'f2-m5', gerbang: 'observasi', teks: 'Mengonversi gerak diri μ dan jarak d menjadi v_t = 4,74 μ d (km/s) dan menggabungkannya dengan v_r Doppler.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="7. Konstanta & Referensi Akademik" tag="Rujukan Modul F2">
+
+<Konstanta
+  data={[
+    { simbol: '1 radian', nilai: '57,29578', satuan: 'derajat (°)' },
+    { simbol: '1 radian', nilai: '206 264,8', satuan: 'detik busur (″)' },
+    { simbol: '1°', nilai: '0,01745329', satuan: 'radian' },
+    { simbol: '1°', nilai: '3 600', satuan: 'detik busur (″)' },
+    { simbol: 'Faktor kecepatan tangensial (1 au / yr_J)', nilai: '4,74047', satuan: 'km s⁻¹ / (arcsec yr⁻¹ · pc)' },
+    { simbol: 'R⊕ (rata-rata volumetrik)', nilai: '6 371,0', satuan: 'km' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-01', 'SRC-05', 'SRC-08', 'SRC-11']}
+  pemetaan={[
+    { sumberId: 'SRC-01', rujukan: 'Basic Mathematical Tools: Plane & Spherical Trigonometry, 3D Vectors pada silabus IOAA.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al. (6e), Bab 2 (Spherical Astronomy): penurunan segitiga bola dari vektor posisi.' },
+    { sumberId: 'SRC-08', rujukan: 'Roy & Clarke (4e), Bab 4 & 5: formula kosinus, sinus, dan resolusi kuadran trigonometri bola.' },
+    { sumberId: 'SRC-11', rujukan: 'OpenStax Algebra & Trigonometry + University Physics Vol. 1 Bab 2: aljabar vektor dot/cross.' },
+  ]}
+/>
+
+</Bagian>

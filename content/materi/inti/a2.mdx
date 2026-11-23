@@ -1,0 +1,536 @@
+<IdentitasModul
+  kode="A2"
+  judul="Astronomi Bola & Sistem Koordinat Langit"
+  klaster="Klaster Inti Astronomi"
+  posisi="Bab 8 dari 19 · Tulang punggung astronomi posisi & observasi"
+  estimasi="85 menit"
+  tingkat="Menengah -> S1 Astronomi Posisi (AS2103)"
+  prasyarat={[
+    { id: 'f2', label: 'F2 · Trigonometri, Vektor 3D & Segitiga Bola' },
+    { id: 'f4', label: 'F4 · Mekanika & Rotasi Kerangka' },
+  ]}
+  lanjutan={[
+    { id: 'a3', label: 'A3 · Waktu, Kalender & Gerhana' },
+    { id: 'a7', label: 'A7 · Teleskop, Airmass & Observasi' },
+    { id: 'l4', label: 'L4 · Sistem Koordinat Galaktik & Bima Sakti' },
+  ]}
+/>
+
+<Tujuan>
+
+- Membangun geometri **Bola Langit** serta empat sistem koordinat standar: **Horizontal** $(a, A)$, **Ekuatorial I** $(H, \delta)$, **Ekuatorial II** $(\alpha, \delta)$, **Ekliptika** $(\lambda, \beta)$, dan **Galaktik** $(l, b)$.
+- Menghubungkan **Waktu Sideris Lokal ($\text{LST}$)**, Asensio Rekta ($\alpha$), dan Sudut Jam ($H$) dalam konvensi tanda yang konsisten.
+- Menurunkan secara analitik **Segitiga Bola P–Z–S** (hukum kosinus, hukum sinus, dan **aturan 5-elemen**) termasuk **resolusi kuadran Azimuth dengan `atan2`**.
+- Membuktikan kondisi **kulminasi atas/bawah**, batas lintang bintang **sirkumpolar** vs **tak pernah terbit**, sudut jam terbit-terbenam, serta kecepatan perubahan altitude ($\frac{da}{dt}$) di horizon.
+- Menganalisis efek nyata observasional: **panjang siang sebagai fungsi $(\phi, \delta_\odot)$**, **presesi ekuinoks** ($50{,}29''/\text{yr}$), dan **refraksi atmosfer** ($\Delta z \approx k\tan z$) terhadap waktu terbit-terbenam Matahari.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'horizontal',
+      judul: 'Horizon (Alt–Az)',
+      ringkas: 'Terikat pengamat & waktu: altitude a = 90° - z, azimuth A.',
+      peran: 'Digunakan langsung oleh mata pengamat, airmass X = sec z, dan mount teleskop Alt-Az.',
+      terkait: ['pzs', 'refraksi'],
+    },
+    {
+      id: 'ekuatorial',
+      judul: 'Ekuatorial & LST',
+      ringkas: 'Deklinasi δ & RA α tetap di langit; terhubung lokal lewat H = LST - α.',
+      peran: 'Menjadi bahasa standar katalog bintang (J2000.0) dan mount teleskop ekuatorial.',
+      terkait: ['pzs', 'ekliptika'],
+    },
+    {
+      id: 'pzs',
+      judul: 'Segitiga Bola P–Z–S',
+      ringkas: 'Tiga titik puncak: Kutub P, Zenit Z, Bintang S dengan busur (90°-φ, 90°-δ, z).',
+      peran: 'Mesin konversi koordinat eksak, terbit-terbenam, durasi siang, dan laju gerak vertikal bintang.',
+      terkait: ['horizontal', 'ekuatorial', 'sirkumpolar'],
+    },
+    {
+      id: 'sirkumpolar',
+      judul: 'Kulminasi & Sirkumpolar',
+      ringkas: '|δ| >= 90° - |φ| (selalu di atas atau di bawah horizon); cos H_0 = -tan φ tan δ.',
+      peran: 'Menentukan jendela visibilitas observatorium dan fenomena Matahari tengah malam di kutub.',
+      terkait: ['pzs', 'ekliptika'],
+    },
+    {
+      id: 'ekliptika',
+      judul: 'Ekliptika, Galaktik & Presesi',
+      ringkas: 'Kemiringan ekliptika ε = 23,439°; sumbu Bumi berpresesi periode 25 772 tahun.',
+      peran: 'Mengubah koordinat (α, δ) dari epok katalog ke epok pengamatan dan menghubungkan bidang Bima Sakti.',
+      terkait: ['ekuatorial', 'sirkumpolar'],
+    },
+    {
+      id: 'refraksi',
+      judul: 'Refraksi Atmosfer',
+      ringkas: 'Pembiasan cahaya membuat benda tampak lebih tinggi: R ≈ 58″ tan z (untuk z < 70°).',
+      peran: 'Memanjangkan siang beberapa menit dan memperbesar altitude batas ufuk sebesar ≈ 34′.',
+      terkait: ['horizontal'],
+    },
+  ]}
+/>
+
+<Bagian id="empat-sistem" judul="1. Bola Langit & Empat Sistem Koordinat Astronomi" tag="Kerangka Acuan">
+
+<Epistemik jenis="model">
+Karena jarak bintang-bintang ($d \gtrsim 1\ \text{pc}$) amat jauh melebihi ukuran Bumi ($R_\oplus$) maupun orbitnya ($1\ \text{au}$), arah pandang dapat diproyeksikan ke sebuah **bola langit satuan** berjari-jari tak hingga berpusat di pengamat. Untuk pengamat di lintang geografis $\phi$ ($+90^\circ$ Kutub Utara, $-90^\circ$ Kutub Selatan), tinggi Kutub Langit terdekat di atas ufuk tepat sama dengan $|\phi|$.
+</Epistemik>
+
+<Gambar id="bola-langit" />
+
+### Ringkasan Matematis Empat Sistem Koordinat Utama
+
+1. **Sistem Horizontal $(a, A)$** — berpusat pada horizon lokal pengamat:
+   - *Bidang dasar:* **Horizon astronomis** (tegak lurus garis vertikal Zenit $Z$ – Nadir $N$).
+   - *Altitude ($a$):* sudut dari horizon ke atas ($-90^\circ \le a \le +90^\circ$), pasangan komplementernya **jarak zenit ($z = 90^\circ - a$)**.
+   - *Azimuth ($A$):* sudut horizontal sepanjang horizon searah jarum jam jika dilihat dari atas Zenit: konvensi IAU modern diukur dari **Utara ($0^\circ$) $\to$ Timur ($90^\circ$) $\to$ Selatan ($180^\circ$) $\to$ Barat ($270^\circ$)**. *(Waspada: beberapa buku klasik mengukur Azimuth dari Selatan $0^\circ \to$ Barat $90^\circ$; selalu cek definisi soal!)*
+
+2. **Sistem Ekuatorial Jam $(H, \delta)$ dan Ekuatorial Katalog $(\alpha, \delta)$** — berpusat pada sumbu rotasi Bumi:
+   - *Bidang dasar:* **Ekuator Langit** (miring sudut $90^\circ - |\phi|$ terhadap horizon lokal).
+   - *Deklinasi ($\delta$):* jarak sudut dari ekuator langit ($-90^\circ \le \delta \le +90^\circ$).
+   - *Asensio Rekta ($\alpha$ / RA):* sudut ke **timur** dari **Titik Aries / Vernal Equinox ($\Upsilon$)** ($0^{\text{h}} \le \alpha < 24^{\text{h}}$, dengan $1^{\text{h}} = 15^\circ$, $1^{\text{m}} = 15'$, $1^{\text{s}} = 15''$).
+   - *Sudut Jam ($H$ / HA):* sudut sepanjang ekuator dari **meridian lokal atas** ke arah **barat** menuju bintang ($-12^{\text{h}} \le H \le +12^{\text{h}}$ atau $0^{\text{h}}\text{--}24^{\text{h}}$). Terhubung ke Waktu Sideris Lokal ($\text{LST}$, yaitu sudut jam $\Upsilon$) via identitas fundamental:
+     $$\text{LST} = \alpha + H \iff H = \text{LST} - \alpha.$$
+
+3. **Sistem Ekliptika $(\lambda, \beta)$** — berpusat pada bidang orbit Bumi:
+   - *Bidang dasar:* **Ekliptika** (miring $\varepsilon \approx 23{,}439^\circ$ terhadap ekuator langit).
+   - *Bujur ekliptika ($\lambda$)* diukur ke timur dari $\Upsilon$ ($0^\circ\text{--}360^\circ$); *lintang ekliptika ($\beta$)* tegak lurus ekliptika ($-90^\circ\text{--}+90^\circ$). Untuk Matahari praktis $\beta_\odot \approx 0^\circ$, sehingga transformasinya menyederhana menjadi:
+     $$\sin\delta_\odot = \sin\varepsilon\sin\lambda_\odot, \qquad \tan\alpha_\odot = \cos\varepsilon\tan\lambda_\odot.$$
+
+4. **Sistem Galaktik $(l, b)$** — berpusat pada piringan Bima Sakti:
+   - *Kutub Galaktik Utara (NGP, J2000.0):* $\alpha_{\text{NGP}} = 12^{\text{h}}51^{\text{m}}26{,}28^{\text{s}}$ ($192{,}8595^\circ$), $\delta_{\text{NGP}} = +27^\circ 07' 42{,}0''$ ($+27{,}1283^\circ$).
+   - *Arah Pusat Galaksi ($l = 0^\circ, b = 0^\circ$):* Sgr A* ($\alpha \approx 17^{\text{h}}45{,}6^{\text{m}}, \delta \approx -29^\circ 00'$). Lintang galaktik $|b|$ yang kecil berarti arah pengamatan menembus cakram debu padat Bima Sakti sehingga ekstingsi antarbintang ($A_V$) sangat besar.
+
+</Bagian>
+
+<Bagian id="segitiga-pzs" judul="2. Segitiga Bola P–Z–S & Transformasi Koordinat Lengkap" tag="Derivasi Inti">
+
+Segitiga bola **P–Z–S** (*Pole – Zenith – Star*) dibentuk oleh tiga titik di belahan langit pengamat (ambil contoh kutub acuan Kutub Langit Utara $P$, valid secara aljabar untuk seluruh $\phi \in [-90^\circ, +90^\circ]$):
+
+- Busur $PZ = 90^\circ - \phi$ (ko-lintang pengamat)
+- Busur $PS = 90^\circ - \delta$ (jarak kutub utara bintang)
+- Busur $ZS = 90^\circ - a = z$ (jarak zenit)
+- Sudut puncak di Kutub $P$: $\angle ZPS = |H|$
+- Sudut puncak di Zenit $Z$ (diukur dari titik Utara $P$ menuju bintang $S$): $\angle PZS = A$ (jika bintang di timur, $H < 0$) atau $360^\circ - A$ (jika di barat, $H > 0$). Jadi selalu $\cos(\angle PZS) = \cos A$ dan tanda $\sin(\angle PZS)$ mengikuti tanda $\sin H$ dengan minus!
+
+<Gambar id="segitiga-bola" />
+
+### Penurunan Rumus Konversi $(\alpha, \delta, \text{LST}) \longrightarrow (a, A)$
+
+Terapkan **Aturan Kosinus Bola** dari Modul F2 (menggunakan $\cos(90^\circ - x) = \sin x$ dan $\sin(90^\circ - x) = \cos x$):
+
+1. **Mencari Altitude $a$ (atau jarak zenit $z$):**
+   $$\cos z = \sin a = \sin\phi\sin\delta + \cos\phi\cos\delta\cos H.$$
+
+2. **Mencari Azimuth $A$ (terbebas dari ambiguitas kuadran!):**
+   - Dari Aturan Sinus Bola:
+     $$\frac{\sin A}{\sin(90^\circ - \delta)} = \frac{-\sin H}{\sin z} \implies \cos a\sin A = -\cos\delta\sin H.$$
+   - Dari Aturan Kosinus pada sisi $PS = 90^\circ - \delta$ *(atau identitas 5-elemen)*:
+     $$\sin\delta = \sin\phi\sin a + \cos\phi\cos a\cos A \implies \cos a\cos A = \frac{\sin\delta - \sin\phi\sin a}{\cos\phi}.$$
+   - Substitusikan $\sin a$ dan sederhanakan memakai $\cos^2\phi = 1 - \sin^2\phi$:
+     $$\cos a\cos A = \cos\phi\sin\delta - \sin\phi\cos\delta\cos H.$$
+   - Bagi keduanya melalui fungsi `atan2(y, x)` sehingga **Azimuth $A \in [0^\circ, 360^\circ)$ terjamin unik di kuadran yang benar** (mengatasi jebakan $\arcsin$!):
+     $$A = \operatorname{atan2}\!\Big(\underbrace{-\cos\delta\sin H}_{\text{komponen Timur (+) / Barat (-)}},\ \underbrace{\cos\phi\sin\delta - \sin\phi\cos\delta\cos H}_{\text{komponen Utara (+) / Selatan (-)}}\Big).$$
+
+<Epistemik jenis="fakta">
+**Pemeriksaan Tanda Kuadran `atan2`:** Ketika bintang tepat terbit di Timur sejati ($a = 0, \delta = 0, H = -6^{\text{h}} = -90^\circ$), pembilang $-\cos 0\sin(-90^\circ) = +1$ dan penyebut $= 0 \implies A = \operatorname{atan2}(+1, 0) = +90^\circ$ (Timur)! Saat kulminasi di selatan Zenit ($\phi = +45^\circ, \delta = 0^\circ, H = 0$), pembilang $= 0$ dan penyebut $= -\sin 45^\circ < 0 \implies A = 180^\circ$ (Selatan). Konsistensi kuadran selalu terjaga!
+</Epistemik>
+
+### Kecepatan Perubahan Altitude Bintang ($da/dt$)
+
+Dengan mendiferensiasikan $\sin a = \sin\phi\sin\delta + \cos\phi\cos\delta\cos H$ terhadap waktu $t$ (di mana $\phi, \delta$ konstan dan $\frac{dH}{dt} = \omega_\oplus \approx 15{,}041^\circ/\text{jam}$):
+
+$$\cos a \frac{da}{dt} = -\cos\phi\cos\delta\sin H \cdot \omega_\oplus.$$
+
+Substitusikan identitas sinus bola $\cos\delta\sin H = -\cos a\sin A$:
+
+$$\frac{da}{dt} = \omega_\oplus \cos\phi \sin A.$$
+
+Hasil menakjubkan! Laju naik-turun bintang **tidak bergantung pada altitude $a$ maupun deklinasinya $\delta$**, melainkan hanya pada **lintang pengamat** dan **azimuth**!
+- Bintang terbit paling cepat tegak lurus horizon di khatulistiwa ($\phi = 0^\circ, A = 90^\circ \implies da/dt = +15^\circ/\text{jam}$).
+- Di meridian ($A = 0^\circ$ atau $180^\circ$), $da/dt = 0$ (titik stasioner kulminasi).
+
+</Bagian>
+
+<Bagian id="kulminasi-sirkumpolar" judul="3. Kulminasi, Bintang Sirkumpolar & Panjang Siang" tag="Analisis Horizon">
+
+### Kulminasi Atas, Kulminasi Bawah & Pengukuran Lintang dari Polaris/Bintang Sirkumpolar
+
+Sebuah bintang melintasi meridian lokal atas saat $H = 0^{\text{h}}$ ($\cos H = +1$):
+$$\sin a_{\text{atas}} = \sin\phi\sin\delta + \cos\phi\cos\delta = \cos(\phi - \delta) = \sin\big(90^\circ - |\phi - \delta|\big) \implies a_{\text{atas}} = 90^\circ - |\phi - \delta|.$$
+*(Dengan penandaan sisi: di belahan Utara Zenit bila $\delta > \phi$, di belahan Selatan Zenit bila $\delta < \phi$).*
+
+Setengah hari sideris kemudian ($H = 12^{\text{h}}, \cos H = -1$), bintang mencapai **kulminasi bawah**:
+$$\sin a_{\text{bawah}} = \sin\phi\sin\delta - \cos\phi\cos\delta = -\cos(\phi + \delta) \implies a_{\text{bawah}} = \begin{cases} \phi + \delta - 90^\circ & (\text{jika }\phi > 0,\ \delta > 0), \\ |\phi| + |\delta| - 90^\circ & (\text{tanda }\phi, \delta\text{ sama}). \end{cases}$$
+
+### Syarat Sirkumpolar & Busur Semi-Diurnal ($H_0$)
+
+1. **Bintang Sirkumpolar (Selalu Di Atas Horizon):** Syarat mutlak $a_{\text{bawah}} \ge 0^\circ$ dengan tanda $\phi$ dan $\delta$ sejenis:
+   $$|\delta| \ge 90^\circ - |\phi|.$$
+2. **Bintang Tak Pernah Terbit:** Syarat $a_{\text{atas}} \le 0^\circ$ (tanda $\phi$ dan $\delta$ berlawanan):
+   $$|\delta| \ge 90^\circ - |\phi| \quad (\text{tanda berlawanan dengan }\phi).$$
+3. **Bintang Terbit–Terbenam & Panjang Siang Matahari ($D$):**
+   Pada horizon geometris sejati ($a = 0^\circ \implies \sin a = 0$):
+   $$0 = \sin\phi\sin\delta + \cos\phi\cos\delta\cos H_0 \implies \cos H_0 = -\tan\phi\tan\delta.$$
+   Maka panjang siang geometris dari terbit ($-H_0$) hingga terbenam ($+H_0$) adalah:
+   $$D = \frac{2 H_0^\circ}{15^\circ/\text{jam}} = \frac{2}{15^\circ/\text{jam}}\arccos(-\tan\phi\tan\delta).$$
+   - Di **ekuator** ($\phi = 0$): $\cos H_0 = 0 \implies H_0 = 90^\circ \implies D \equiv 12{,}0\ \text{jam}$ sepanjang tahun!
+   - Saat **ekuinoks** ($\delta_\odot = 0$): $\cos H_0 = 0 \implies D = 12{,}0\ \text{jam}$ di seluruh lintang (kecuali kutub di mana Matahari mengitari tepi ufuk $a = 0^\circ$).
+   - Di **lingkaran kutub** ($|\phi| = 90^\circ - \varepsilon = 66{,}56^\circ$): pada solstis musim panas ($|\delta_\odot| = \varepsilon$), $|\tan\phi\tan\delta| = 1 \implies H_0 = 180^\circ \implies D = 24\ \text{jam}$ (*Midnight Sun*).
+
+</Bagian>
+
+<Bagian id="koreksi-pengamatan" judul="4. Presesi Ekuinoks & Refraksi Atmosfer" tag="Koreksi Nyata">
+
+<Epistemik jenis="fakta">
+Posisi katalog J2000.0 ($\alpha_{2000}, \delta_{2000}$) tidak identik dengan posisi tempat teleskop harus diarahkan pada tahun $T$, dan posisi bintang di dekat ufuk selalu terangkat ke atas oleh pembiasan atmosfer Bumi.
+</Epistemik>
+
+### Presesi Ekuinoks ($\approx 25\,772\ \text{tahun}$)
+
+Akibat torsi gravitasi Matahari dan Bulan terhadap tonjolan khatulistiwa Bumi yang pepat, sumbu rotasi Bumi berpresesi mundur (*retrograde*) mengitari kutub ekliptika dengan laju total $p \approx 50{,}29''/\text{tahun}$ sepanjang ekliptika. Proyeksinya ke koordinat ekuatorial memberi laju presesi tahunan (untuk selang waktu $\Delta t$ tidak terlalu panjang):
+
+$$\frac{d\alpha}{dt} = m + n\sin\alpha\tan\delta, \qquad \frac{d\delta}{dt} = n\cos\alpha,$$
+
+dengan $m \approx 46{,}12''/\text{yr} \approx 3{,}075^{\text{s}}/\text{yr}$ dan $n \approx 20{,}04''/\text{yr} \approx 1{,}336^{\text{s}}/\text{yr}$ di dekat epok J2000.0. *(Perhatikan: untuk $\delta$ mendekati $\pm 90^\circ$, $\tan\delta \to \infty$ sehingga rumus diferensial linier gagal dan wajib memakai transformasi matriks rotasi penuh melalui koordinat ekliptika!)*
+
+### Refraksi Atmosfer & Efeknya pada Panjang Siang
+
+Cahaya dari ruang hampa ($n_0 = 1$) memasuki lapisan atmosfer (di permukaan laut $n_{\text{udara}} \approx 1{,}00029$) mengalami pembelokan ke arah vertikal sehingga **jarak zenit tampak ($z_{\text{obs}}$) selalu lebih kecil daripada jarak zenit geometris ($z_{\text{geom}}$)** — bintang selalu terlihat *lebih tinggi* daripada posisi geometris sebenarnya!
+
+Untuk atmosfer paralel-bidang dengan $z \lesssim 70^\circ$:
+$$R = z_{\text{geom}} - z_{\text{obs}} = a_{\text{obs}} - a_{\text{geom}} \approx (n_{\text{udara}} - 1)\tan z_{\text{obs}} \approx 58{,}2''\tan z_{\text{obs}}.$$
+
+Di horizon ($z_{\text{obs}} = 90^\circ$), model paralel-bidang gagal ($\tan 90^\circ \to \infty$); model lengkungan sferis atmosfer pada tekanan $1013\ \text{hPa}, 10^\circ\text{C}$ menghasilkan **refraksi horisontal standar** $R_h \approx 34'$ (lebih dari diameter sudut piringan penuh Matahari!). Jika ditambah setengah diameter sudut Matahari ($\approx 16'$), momen "tepi atas Matahari terbit/terbenam" terjadi saat pusat geometris Matahari masih berada pada ketinggian:
+
+$$a_{\text{geom, terbit/terbenam}} = -(34' + 16') = -50' \approx -0{,}833^\circ \quad (\text{atau } z_{\text{geom}} = 90^\circ 50').$$
+
+<BatasValiditas
+  judul="Validitas Rumus Refraksi Sederhana R = 58,2″ tan z dan Koreksi Presesi Linier"
+  syarat={[
+    'Refraksi bidang datar $R \\approx 58{,}2^{\\prime\\prime}\\tan z$: akurat untuk $z \\le 70^\\circ$ ($a \\ge 20^\\circ$).',
+    'Presesi linier $\\Delta\\alpha, \\Delta\\delta$: akurat untuk $\\Delta t \\lesssim 50\\ \\text{tahun}$ dan $|\\delta| < 80^\\circ$.',
+  ]}
+  gagalJika="Menggunakan 58,2″ tan z mendekati horizon (z > 75° di mana tan z meledak tak terhingga) atau memakai presesi linier dekat kutub langit (misal Polaris δ = +89,26°)."
+  akibat="Prediksi refraksi dekat horizon menyimpang besar (pakai formula Bennett/Saemundsson atau nilai empiris 34′ di z=90°); dekat kutub langit, aproksimasi linear RA rusak berat karena tan δ meledak."
+/>
+
+</Bagian>
+
+<Bagian id="worked-examples" judul="5. Contoh Hitung Lengkap (Notebook Hitung)" tag="Worked Examples">
+
+<Contoh judul="Contoh 1 (Fundamental): Waktu, Azimuth, & Kuadran Rigel di Observatorium Bosscha">
+
+<Langkah>
+
+**Data:** Pengamat berada di Observatorium Bosscha ($\phi = -6{,}82^\circ$). Bintang Rigel ($\alpha = 5^{\text{h}}14{,}5^{\text{m}}$, $\delta = -8{,}20^\circ$) diamati pada Waktu Sideris Lokal $\text{LST} = 8^{\text{h}}00{,}0^{\text{m}}$. Hitung altitude ($a$) dan azimuth ($A$, diukur $0^\circ$ Utara $\to$ Timur $\to$ Selatan $\to$ Barat) secara eksak!
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Sudut Jam ($H$):**
+$$H = \text{LST} - \alpha = 8^{\text{h}}00{,}0^{\text{m}} - 5^{\text{h}}14{,}5^{\text{m}} = +2^{\text{h}}45{,}5^{\text{m}} = +2{,}7583^{\text{h}} = +41{,}375^\circ.$$
+*(Tanda positif $H > 0$ berarti Rigel **sudah melintasi meridian** dan berada di langit **barat**).*
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Altitude ($a$):**
+$$\sin a = \sin(-6{,}82^\circ)\sin(-8{,}20^\circ) + \cos(-6{,}82^\circ)\cos(-8{,}20^\circ)\cos(41{,}375^\circ)$$
+$$= (-0{,}11875)(-0{,}14263) + (0{,}99292)(0{,}98978)(0{,}75040) = 0{,}01694 + 0{,}73747 = 0{,}75441.$$
+$$a = \arcsin(0{,}75441) \approx +48{,}97^\circ \quad (z = 41{,}03^\circ).$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 3 — Azimuth ($A$) dengan `atan2`:**
+- Komponen Timur–Barat: $Y = -\cos\delta\sin H = -(0{,}98978)(0{,}66099) = -0{,}65423$ (negatif $\implies$ belahan **Barat**).
+- Komponen Utara–Selatan: $X = \cos\phi\sin\delta - \sin\phi\cos\delta\cos H = (0{,}99292)(-0{,}14263) - (-0{,}11875)(0{,}98978)(0{,}75040) = -0{,}14162 + 0{,}08820 = -0{,}05342$ (negatif $\implies$ belahan **Selatan**).
+Maka sudut kuadran III:
+$$A = \operatorname{atan2}(-0{,}65423,\ -0{,}05342) = 180^\circ + \arctan\!\left(\frac{0{,}65423}{0{,}05342}\right) \approx 180^\circ + 85{,}33^\circ = 265{,}33^\circ.$$
+**Cek kewajaran:** Rigel ($\delta = -8{,}2^\circ$) berdekatan dengan lintang pengamat ($\phi = -6{,}8^\circ$), sehingga melintas hampir tepat di selatan zenit dan turun mengarah hampir ke Barat murni ($270^\circ$) — hasil $265{,}33^\circ$ (Barat-sedikit-Selatan) sangat masuk akal!
+
+</Langkah>
+
+</Contoh>
+
+<Contoh judul="Contoh 2 (Rantai Olimpiade): Koreksi Refraksi Panjang Siang Matahari saat Solstis di Jakarta">
+
+<Langkah>
+
+**Data:** Kota Jakarta berada pada lintang $\phi = -6{,}20^\circ$. Pada tanggal 21 Desember (Solstis Selatan), deklinasi Matahari mencapai $\delta_\odot = -23{,}44^\circ$.\
+(a) Hitung panjang siang geometris murni ($z_{\text{terbit}} = 90^\circ$).\
+(b) Hitung panjang siang **aktual** (waktu antara tepi atas piringan Matahari terbit dan tepi atas terbenam di horizon) dengan memperhitungkan refraksi standar $34'$ dan jari-jari sudut Matahari $16'$ ($z_{\text{geom}} = 90^\circ 50'$). Berapa menit tambahan panjang siang akibat kedua efek ini?
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Panjang Siang Geometris ($z = 90^\circ$):**
+$$\cos H_{0,\text{geom}} = -\tan(-6{,}20^\circ)\tan(-23{,}44^\circ) = -(-0{,}10863)(-0{,}43357) = -0{,}04710.$$
+$$H_{0,\text{geom}} = \arccos(-0{,}04710) = 92{,}700^\circ \implies D_{\text{geom}} = \frac{2 \times 92{,}700^\circ}{15^\circ/\text{jam}} = 12{,}360\ \text{jam} = 12^{\text{h}}21{,}6^{\text{m}}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Koreksi Refraksi + Semi-Diameter ($z = 90{,}833^\circ, a_{\text{geom}} = -0{,}8333^\circ$):**
+Dari segitiga bola P–Z–S:
+$$\sin(-0{,}8333^\circ) = \sin(-6{,}20^\circ)\sin(-23{,}44^\circ) + \cos(-6{,}20^\circ)\cos(-23{,}44^\circ)\cos H_{0,\text{akt}}.$$
+$$\cos H_{0,\text{akt}} = \frac{\sin(-0{,}8333^\circ) - \sin\phi\sin\delta_\odot}{\cos\phi\cos\delta_\odot} = \frac{-0{,}014544 - (-0{,}10800)(-0{,}39779)}{(0{,}99415)(0{,}91748)} = \frac{-0{,}057505}{0{,}91211} = -0{,}063046.$$
+$$H_{0,\text{akt}} = \arccos(-0{,}063046) = 93{,}615^\circ \implies D_{\text{akt}} = \frac{2 \times 93{,}615^\circ}{15^\circ/\text{jam}} = 12{,}482\ \text{jam} = 12^{\text{h}}28{,}9^{\text{m}}.$$
+**Tambahan durasi siang:** $12^{\text{h}}28{,}9^{\text{m}} - 12^{\text{h}}21{,}6^{\text{m}} = +7{,}3\ \text{menit}$ (sekitar $3{,}6\ \text{menit}$ lebih awal saat fajar dan $3{,}6\ \text{menit}$ lebih lambat saat senja!).\
+*(Cek cepat lewat laju perubahan altitude di horizon: $\frac{da}{dt} = 15^\circ/\text{jam} \times \cos\phi\sin A$. Di dekat ekuinoks/solstis, koreksi tinggi $0{,}833^\circ$ pada dua sisi ufuk menambah waktu $\approx \frac{2 \times 0{,}833^\circ}{15^\circ/\text{jam}\cos\phi\cos\delta_\odot} \approx 0{,}122\ \text{jam} = 7{,}3\ \text{menit}$!)*
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  items={[
+    {
+      salah: 'Menggunakan invers sinus tunggal (arcsin) langsung dari aturan sinus bola untuk menentukan Azimuth A.',
+      kenapaKeliru: 'Fungsi arcsin hanya mengembalikan nilai antara −90° dan +90°, sehingga tidak pernah bisa membedakan Azimuth Timur–Selatan (120°) vs Timur–Utara (60°), atau Barat–Selatan (240°) vs Barat–Utara (300°).',
+      caraDeteksi: 'Uji dengan bintang bersudut jam H = 0° (transit meridian tepat di selatan zenit): sin A = 0 menghasilkan arcsin(0) = 0° (Utara!), padahal bintang sebenarnya berada di Selatan (A = 180°)!',
+      benar: 'Gunakan rumus dua-argumen atan2(−cos δ sin H, cos φ sin δ − sin φ cos δ cos H) agar kedua komponen tanda (Timur/Barat dan Utara/Selatan) ikut menentukan kuadran.',
+    },
+    {
+      salah: 'Pada saat ekuinoks (21 Maret / 23 September), panjang siang dan malam di seluruh Bumi tepat 12 jam 00 menit.',
+      kenapaKeliru: 'Kalimat itu hanya benar untuk pusat Matahari geometris tanpa refraksi atmosfer. Pada kenyataannya refraksi di horizon (34′) plus semi-diameter Matahari (16′) membuat tepi atas Matahari tampak selama pusat geometris berada hingga 50′ di bawah ufuk.',
+      caraDeteksi: 'Di ekuator sekalipun, tambahan waktu lintas ±50′ pada kecepatan terbit 15°/jam menambah panjang siang sekitar 2 × (50/60)/15 jam ≈ 6,7 menit, sehingga panjang siang saat ekuinoks justru ≈ 12 jam 07 menit (*equilux* terjadi beberapa hari sebelumnya/sesudahnya).',
+      benar: 'Siang dan malam tepat 12 jam (*equilux*) sedikit bergeser dari tanggal ekuinoks akibat refraksi atmosfer dan ukuran sudut piringan Matahari.',
+    },
+    {
+      salah: 'Jika lokasi pengamat berada di belahan selatan (φ < 0), maka lintang bintang selalu diukur relatif terhadap Kutub Langit Utara dengan rumus tanpa memperhatikan tanda φ dan δ.',
+      kenapaKeliru: 'Mengabaikan tanda negatif φ atau salah menukar sisi ko-lintang PZ = 90° − φ menjadi 90° − |φ| tanpa menyesuaikan tanda deklinasi akan membalik belahan langit utara dan selatan.',
+      caraDeteksi: 'Selalu cek batas ekuator (φ = 0, δ = 0) dan titik balik uji (φ = −90° Kutub Selatan: bintang δ = −90° harus memiliki a_atas = 90° − |−90° − (−90°)| = +90° di Zenit!).',
+      benar: 'Pertahankan tanda aljabar asli φ ∈ [−90°, +90°] dan δ ∈ [−90°, +90°] langsung ke dalam sin a = sin φ sin δ + cos φ cos δ cos H.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="evaluasi" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mandiri">
+
+<CekPaham
+  id="a2-cek-1"
+  pertanyaan="Bagi pengamat yang berada tepat di ekuator Bumi (lintang 0 derajat), di manakah posisi Kutub Langit Utara (KLU) dan Kutub Langit Selatan (KLS)?"
+  opsi={[
+    'Tepat di horizon titik Utara dan titik Selatan',
+    'Tepat di zenith dan nadir',
+    'Masing-masing pada ketinggian 45 derajat di atas horizon',
+    'Kutub langit tidak dapat ditentukan bagi pengamat ekuator'
+  ]}
+  jawaban={0}
+  penjelasan="Ketinggian kutub langit sama dengan lintang pengamat: a = |φ|. Untuk lintang 0°, altitude KLU dan KLS tepat 0° di titik kardinal Utara dan Selatan."
+/>
+
+<CekPaham
+  id="a2-cek-2"
+  pertanyaan="Sebuah bintang memiliki deklinasi δ = +70°. Bagi pengamat di kota London (lintang +51,5° LU), apakah bintang tersebut tergolong sirkumpolar?"
+  opsi={[
+    'Ya, sirkumpolar karena deklinasi lebih besar dari 90° − 51,5° = 38,5°',
+    'Tidak, karena deklinasinya tidak mencapai 90°',
+    'Tidak, bintang tersebut terbit dan terbenam setiap hari',
+    'Tidak dapat ditentukan tanpa mengetahui asensio rektanya'
+  ]}
+  jawaban={0}
+  penjelasan="Syarat sirkumpolar di belahan utara adalah δ >= 90° − φ = 38,5°. Karena +70° > 38,5°, altitude kulminasi bawahnya (+51,5° + 70° − 90° = +31,5°) tetap tinggi di atas horizon."
+/>
+
+<CekPaham
+  id="a2-cek-3"
+  pertanyaan="Kapan bintang mencapai altitude tertingginya (kulminasi atas) di langit lokal?"
+  opsi={[
+    'Saat sudut jam bintang bernilai tepat nol (HA = 0 jam atau LST = RA)',
+    'Saat sudut jam bernilai 6 jam',
+    'Saat bintang berada tepat di titik zenith untuk semua pengamat',
+    'Saat matahari terbenam di horizon barat'
+  ]}
+  jawaban={0}
+  penjelasan="Kulminasi atas terjadi ketika bintang melintasi meridian atas pengamat: H = 0 jam sehingga LST = α."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'a2-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Pengamat A berada di Pontianak ($\\phi \\approx 0^\\circ$), sedangkan pengamat B berada di Oslo ($\\phi \\approx +60^\\circ\\ \\text{LU}$). Pada hari Ekuinoks (21 Maret, $\\delta_\\odot = 0^\\circ$), berapa perbandingan waktu yang dibutuhkan piringan penuh Matahari (diameter sudut $0{,}53^\\circ$) dari saat tepi bawahnya menyentuh horizon hingga seluruh piringan tepat terbenam di bawah horizon?',
+      petunjuk: 'Gunakan rumus laju perubahan ketinggian $\\left|\\frac{da}{dt}\\right| = \\omega_\\oplus \\cos\\phi\\sin A$ pada saat $A = 270^\\circ$ (terbenam di Barat sejati).',
+      langkahKunci: [
+        'Pada hari Ekuinoks ($\\delta_\\odot = 0^\\circ$), Matahari terbenam tepat di titik Barat ($A = 270^\\circ$, $|\\sin A| = 1$) bagi kedua pengamat.',
+        'Laju penurunan ketinggian di horizon: $\\left|\\frac{da}{dt}\\right| = 15^\\circ/\\text{jam} \\times \\cos\\phi$.',
+        'Di Pontianak ($\\phi = 0^\\circ$): laju $15^\\circ/\\text{jam}$, sehingga durasi terbenam $= \\frac{0{,}53^\\circ}{15^\\circ/\\text{jam}} \\approx 2{,}12\\ \\text{menit}$.',
+        'Di Oslo ($\\phi = 60^\\circ$): $\\cos 60^\\circ = 0{,}5$, laju menjadi $7{,}5^\\circ/\\text{jam}$ (lintasan miring $30^\\circ$ terhadap horizon!), sehingga durasi terbenam $2\\times$ lebih lama ($\\approx 4{,}24\\ \\text{menit}$)!',
+      ],
+      rubrik: [
+        'Menurunkan atau menerapkan $|da/dt| = \\omega_\\oplus \\cos\\phi \\sin A$.',
+        'Menghitung rasio durasi terbenam $1/\\cos 60^\\circ = 2\\times$ lebih lambat di lintang $60^\\circ$.',
+      ],
+    },
+    {
+      id: 'a2-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari segitiga bola P–Z–S pada saat bintang tepat berada pada **lingkaran vertikal utama** (*prime vertical*, yaitu tepat di titik Timur $A = 90^\\circ$ atau Barat $A = 270^\\circ$), turunkan hubungan langsung antara altitude $a$, deklinasi $\\delta$, dan lintang $\\phi$ tanpa bergantung pada sudut jam $H$!',
+      petunjuk: 'Gunakan aturan kosinus pada sisi $PS = 90^\\circ - \\delta$ dengan sudut di $Z$ sebesar $A = 90^\\circ$ ($\\cos A = 0$).',
+      langkahKunci: [
+        'Tulis aturan kosinus segitiga bola terhadap sisi $PS = 90^\\circ - \\delta$: $\\cos(90^\\circ - \\delta) = \\cos(90^\\circ - \\phi)\\cos(90^\\circ - a) + \\sin(90^\\circ - \\phi)\\sin(90^\\circ - a)\\cos A$.',
+        'Sederhanakan: $\\sin\\delta = \\sin\\phi\\sin a + \\cos\\phi\\cos a\\cos A$.',
+        'Saat bintang melintas tepat di *prime vertical* ($A = 90^\\circ$ atau $270^\\circ$), $\\cos A = 0$, sehingga suku kedua lenyap dan tersisa:',
+        '$$\\sin\\delta = \\sin\\phi\\sin a \\implies \\sin a = \\frac{\\sin\\delta}{\\sin\\phi}.$$',
+        'Karena $\\sin a \\in [0, 1]$ untuk posisi di atas ufuk, hanya bintang dengan tanda $\\delta$ sama dengan $\\phi$ dan $|\\delta| \\le |\\phi|$ yang pernah melintasi *prime vertical* di atas horizon!',
+      ],
+      rubrik: [
+        'Memakai aturan kosinus terhadap sisi $PS$ dan menyubstitusikan $\\cos A = 0$.',
+        'Menyatakan syarat fisis $|\\delta| \\le |\\phi|$ agar $\\sin a \\le 1$ di atas horizon.',
+      ],
+    },
+    {
+      id: 'a2-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah teleskop tanpa pelacak motorik mengarah ke bidang ekuator langit ($\\delta = 0^\\circ$) dengan bidang pandang kamera berdiameter $0{,}5^\\circ$ ($30\'$). Perkirakan berapa lama waktu yang dibutuhkan sebuah bintang untuk melintas dari satu tepi medan pandang kamera ke tepi seberangnya akibat rotasi Bumi!',
+      petunjuk: 'Laju rotasi langit adalah $360^\\circ$ per hari sideris ($23^{\\text{h}}56^{\\text{m}}$), atau $15\'$ per menit waktu.',
+      langkahKunci: [
+        'Di ekuator langit ($\\delta = 0^\\circ$), kecepatan sudut gerak diurnal bintang persis $\\omega_\\oplus \\cos\\delta = 15^\\circ/\\text{jam} = 15\'/\\text{menit}$ (atau $15^{\\prime\\prime}/\\text{s}$).',
+        'Lebar medan pandang $= 30\'$, sehingga waktu melintas $= \\frac{30\'}{15\'/\\text{menit}} \\approx 2{,}0\\ \\text{menit}$ ($120\\ \\text{detik}$).',
+        '*(Jika bintang berada pada deklinasi $\\delta = \\pm 60^\\circ$, jarak busur yang ditempuh per detik menyusut menjadi $15^{\\prime\\prime}\\cos 60^\\circ = 7{,}5^{\\prime\\prime}/\\text{s}$, sehingga waktu lintasan memanjang menjadi $4{,}0\\ \\text{menit}$!).*',
+      ],
+      rubrik: [
+        'Menggunakan $15\'/\\text{menit}$ pada ekuator langit dan membagi lebar medan $30\'$.',
+        'Menambahkan faktor koreksi $\\cos\\delta$ pada deklinasi umum.',
+      ],
+    },
+    {
+      id: 'a2-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Seorang navigator mengukur dua bintang sirkumpolar saat melintasi meridian di belahan bumi utara: Bintang X mencapai kulminasi atas $a_{\\text{atas}} = +75{,}0^\\circ$ (di utara Zenit) dan kulminasi bawah $a_{\\text{bawah}} = +25{,}0^\\circ$. Tanpa mengetahui katalog bintang X, tentukan lintang pengamat $\\phi$ dan deklinasi bintang $\\delta$!',
+      petunjuk: 'Karena kedua kulminasi ada di sisi utara Zenit, $a_{\\text{atas}} = 90^\\circ + \\phi - \\delta$ dan $a_{\\text{bawah}} = \\phi + \\delta - 90^\\circ$. Jumlahkan dan kurangkan!',
+      langkahKunci: [
+        'Untuk kulminasi atas di utara Zenit ($\\delta > \\phi$): $a_{\\text{atas}} = 90^\\circ + \\phi - \\delta = 75{,}0^\\circ$.',
+        'Untuk kulminasi bawah: $a_{\\text{bawah}} = \\phi + \\delta - 90^\\circ = 25{,}0^\\circ$.',
+        'Jumlahkan kedua persamaan: $2\\phi = a_{\\text{atas}} + a_{\\text{bawah}} = 75{,}0^\\circ + 25{,}0^\\circ = 100{,}0^\\circ \\implies \\phi = +50{,}0^\\circ\\ \\text{LU}$ (rata-rata aritmetika kedua altitude persis sama dengan ketinggian Kutub Langit Utara!).',
+        'Kurangkan untuk $\\delta$: $\\delta = 90^\\circ + a_{\\text{bawah}} - \\phi = 90^\\circ + 25{,}0^\\circ - 50{,}0^\\circ = +65{,}0^\\circ$.',
+      ],
+      rubrik: [
+        'Menulis kedua persamaan kulminasi sirkumpolar dengan sisi utara Zenit secara tepat.',
+        'Menemukan $\\phi = (a_{\\text{atas}} + a_{\\text{bawah}})/2 = +50{,}0^\\circ$ dan $\\delta = +65{,}0^\\circ$.',
+      ],
+    },
+    {
+      id: 'a2-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Bintang Polaris ($\\alpha$ Ursae Minoris) memiliki koordinat J2000.0 sekitar $\\alpha = 2^{\\text{h}}31^{\\text{m}}49^{\\text{s}}$, $\\delta = +89^\\circ 15\' 51^{\\prime\\prime}$. Mengapa pengamat tidak boleh mengasumsikan $a_{\\text{Polaris}} \\equiv \\phi$ secara mutlak dalam penentuan lintang presisi, dan mengapa koreksi presesi Polaris selama $200$ tahun ke depan tidak boleh dihitung dengan rumus diferensial $\\Delta\\alpha = (m + n\\sin\\alpha\\tan\\delta)\\Delta t$?',
+      petunjuk: 'Tinjau dua hal: jarak kutub $p = 90^\\circ - \\delta \\approx 44\'$ dan ledakan nilai $\\tan\\delta$ saat $\\delta \\to 90^\\circ$.',
+      langkahKunci: [
+        'Pertama, Polaris masih berjarak $\\approx 0{,}74^\\circ$ ($44{,}15\'$) dari KLU sejati, sehingga ia menggambarkan lingkaran kecil berjejari $44\'$ mengelilingi KLU sepanjang malam ($a_{\\text{Polaris}} = \\phi \\pm 0{,}74^\\circ$ bergantung pada sudut jam $H$!).',
+        'Kedua, pada $\\delta = +89{,}26^\\circ$, $\\tan\\delta \\approx 77{,}9$, sehingga laju presesi asensio rekta $d\\alpha/dt \\approx 3{,}1^{\\text{s}} + 1{,}34^{\\text{s}}\\sin\\alpha\\,(77{,}9) \\sim 67^{\\text{s}}/\\text{tahun}$ dan berubah drastis begitu $\\alpha$ bergeser! Dalam ratusan tahun $\\tan\\delta$ bahkan berbalik tanda setelah Polaris melewati posisi terdekatnya dengan KLU (~2100 M), sehingga perhitungan presesi dekat kutub wajib memakai rotasi vektor satuan 3D atau transformasi koordinat ekliptika eksak.',
+      ],
+      rubrik: [
+        'Mengidentifikasi simpangan $\\pm 0{,}74^\\circ$ dari KLU sejati akibat jarak kutub Polaris yang tidak nol.',
+        'Menjelaskan kegagalan singularitas koordinat $\\tan\\delta \\to \\infty$ pada ekspansi linier $\\Delta\\alpha$ dekat kutub.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'a2-log-1',
+      tipe: 'prediksi_akibat',
+      pertanyaan:
+        'Jika suatu saat kemiringan sumbu rotasi Bumi terhadap bidang ekliptika membesar dari $\\varepsilon = 23{,}44^\\circ$ menjadi $\\varepsilon = 45^\\circ$, bagaimana nasib zona **Bintang Sirkumpolar** di langit pengamat Surabaya ($\\phi = -7{,}25^\\circ$) versus nasib fenomena **Matahari Tengah Malam (*Midnight Sun*)** di bumi?',
+      petunjuk: 'Pisahkan mana yang ditentukan oleh $\\phi$ pengamat (sirkumpolar bintang) dan mana yang ditentukan oleh $\\delta_\\odot \\in [-\\varepsilon, +\\varepsilon]$ (visibilitas Matahari)!',
+      rubrik: [
+        'Syarat bintang sirkumpolar ($|\\delta| \\ge 90^\\circ - |\\phi|$) TIDAK bergantung pada $\\varepsilon$, sehingga zona sirkumpolar bintang di Surabaya tetap pada $\\delta \\le -82{,}75^\\circ$!',
+        'Sebaliknya, deklinasi maksimum Matahari melonjak hingga $\\pm 45^\\circ$, sehingga batas Lingkaran Kutub bergeser dari $66{,}56^\\circ$ turun jauh ke $90^\\circ - 45^\\circ = 45^\\circ$ — kota seperti Paris atau Toronto akan mengalami *Midnight Sun* pada musim panas!',
+      ],
+      jawabanKunci:
+        'Zona bintang sirkumpolar untuk lintang Surabaya ($|\\delta| \\ge 90^\\circ - 7{,}25^\\circ = 82{,}75^\\circ$) **sama sekali tidak berubah** karena hanya bergantung pada sumbu rotasi Bumi relatif terhadap bintang jauh, bukan pada ekliptika. Namun, karena gerak deklinasi Matahari kini membentang dari $-45^\\circ$ hingga $+45^\\circ$, syarat agar Matahari menjadi sirkumpolar ($|\\phi| \\ge 90^\\circ - \\varepsilon$) turun menjadi $|\\phi| \\ge 45^\\circ$ — memperluas wilayah *Midnight Sun* dan malam kutub hingga lintang menengah Bumi!',
+    },
+    {
+      id: 'a2-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang peserta menghitung waktu terbit Matahari pada lintang $\\phi = -6{,}8^\\circ$ saat $\\delta_\\odot = +23{,}4^\\circ$ memakai $\\cos H_0 = -\\tan\\phi\\tan\\delta = +0{,}0516 \\implies H_0 = 87{,}04^\\circ$, lalu ia menyimpulkan panjang siang hari itu adalah $D = 2\\times 87{,}04^\\circ / 15 = 11{,}61\\ \\text{jam}$, DAN karena Matahari terbenam lebih cepat daripada 12 jam, maka Matahari pasti terbit di bagian selatan titik Timur ($A_{\\text{terbit}} > 90^\\circ$). Benarkah kedua bagian kesimpulannya?',
+      petunjuk: 'Panjang siang benar (< 12 jam saat musim dingin lokal), tetapi cek azimuth terbit Matahari ketika $\\delta_\\odot > 0$ via $\\cos A_{\\text{terbit}} = \\sin\\delta / \\cos\\phi$!',
+      rubrik: [
+        'Bagian 1 benar secara geometris: untuk pengamat Selatan ($\\phi < 0$) dan Matahari Utara ($\\delta_\\odot > 0$), sedang musim dingin lokal sehingga siang memang lebih pendek dari 12 jam ($11{,}61\\ \\text{jam}$).',
+        'Bagian 2 salah: saat terbit ($a = 0$), $\\cos A_{\\text{terbit}} = \\sin(+23{,}4^\\circ)/\\cos(-6{,}8^\\circ) \\approx +0{,}400 > 0 \\implies A_{\\text{terbit}} \\approx 66{,}4^\\circ < 90^\\circ$, artinya Matahari terbit di **Timur-Laut (utara titik Timur)**, bukan selatan Timur!',
+      ],
+      jawabanKunci:
+        'Kesimpulan panjang siang ($11{,}61\\ \\text{jam} < 12\\ \\text{jam}$) benar karena belahan selatan sedang mengalami musim dingin ketika Matahari berada di belahan utara ($\\delta_\\odot = +23{,}4^\\circ$). Namun kesimpulan arah terbitnya keliru: karena $\\delta_\\odot > 0$ berada di utara ekuator langit, Matahari selalu terbit di sebelah **utara** titik Timur ($\\cos A_{\\text{terbit}} = \\sin\\delta/\\cos\\phi > 0 \\implies A \\approx 66{,}4^\\circ$), tidak peduli di lintang mana pengamat berada!',
+    },
+    {
+      id: 'a2-log-3',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Andaikan Bumi tiba-tiba berotasi secara **retrograde** (berputar dari timur ke barat seperti Venus), tetapi arah revolusi mengelilingi Matahari dan sumbu kutub utara geografis tetap sama. Bagaimana tanda hubungan $\\text{LST}, \\alpha, H$ berubah agar benda-bintang tetap transit di meridian lokal pada $H = 0$?',
+      petunjuk: 'Jika Bumi berputar berlawanan, langit tampak bergerak dari barat ke timur ($\\text{LST}$ berputar mundur). Cek bagaimana $\\alpha$ bertambah (tetap ke timur) dan sudut jam didefinisikan!',
+      rubrik: [
+        'Jika rotasi Bumi terbalik (timur ke barat), seluruh bola langit tampak terbit di Barat dan terbenam di Timur.',
+        'Bintang dengan Asensio Rekta $\\alpha$ lebih besar (lebih ke timur) kini akan melintasi meridian LEBIH AWAL daripada bintang ber-$\\alpha$ lebih kecil, bukan lebih lambat — artinya sudut jam Barat harus ditulis terbalik atau laju $\\text{LST}$ berjalan mundur ($d(\\text{LST})/dt < 0$).',
+      ],
+      jawabanKunci:
+        'Dalam kondisi standar, rotasi ke timur membuat langit berputar ke barat sehingga bintang ber-$\\alpha$ lebih besar menyusul belakangan ($H = \\text{LST} - \\alpha$ tumbuh positif setelah transit). Bila Bumi berputar ke barat, bintang tampak terbit di Barat dan terbenam di Timur; jika konvensi $\\alpha$ ke timur dan $\\text{LST}$ sebagai posisi Titik Aries di meridian dipertahankan, maka sudut di meridian akan berkurang seiring waktu sehingga tanda perubahan $H$ berbalik: objek transit lebih dahulu justru memiliki $\\alpha$ lebih besar.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="a2-refleksi-1"
+  pertanyaan="Mengapa bangunan observatorium optik profesional di belahan bumi utara dan selatan tidak dapat mengamati seluruh bola langit secara lengkap? Jelaskan zona langit buta (blind zone) yang dialami teleskop tetap berdasarkan lintang geografisnya serta batas airmass praktis observasi."
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'a2-m1', gerbang: 'derivasi', teks: 'Menurunkan sin a dan atan2 Azimuth A unik dari Segitiga Bola P–Z–S beserta laju da/dt = ω cos φ sin A.' },
+    { id: 'a2-m2', gerbang: 'derivasi', teks: 'Membuktikan batas sirkumpolar |δ| >= 90° - |φ| dan rumus durasi siang cos H_0 = -tan φ tan δ.' },
+    { id: 'a2-m3', gerbang: 'observasi', teks: 'Menghitung panjang siang aktual dengan koreksi refraksi horizontal 34′ dan semi-diameter Matahari 16′.' },
+    { id: 'a2-m4', gerbang: 'logika', teks: 'Memeriksa kuadran Azimuth via atan2 dan mengenali kegagalan presesi linear di dekat kutub langit (tan δ -> ∞).' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul A2">
+
+<Konstanta
+  data={[
+    { simbol: 'ε (kemiringan ekliptika J2000)', nilai: '23,43929', satuan: 'derajat' },
+    { simbol: '1 jam RA ↔ derajat busur', nilai: '15', satuan: 'deg/h' },
+    { simbol: 'ω_⊕ (laju rotasi sideris)', nilai: '15,04107', satuan: 'deg/jam surya' },
+    { simbol: 'Refraksi horizontal standar R_h', nilai: '34', satuan: 'arcmin' },
+    { simbol: 'Laju presesi umum p', nilai: '50,288', satuan: 'arcsec/tahun' },
+    { simbol: 'NGP Galaktik (α, δ J2000)', nilai: '192,86° · +27,13°', satuan: 'derajat' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-03', 'SRC-05', 'SRC-06', 'SRC-08']}
+  pemetaan={[
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS2103 (Astronomi Posisi): transformasi koordinat, refraksi atmosfer, presesi-nutasi, dan bola langit.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al. (6e), Bab 2: sistem koordinat bola langit, sudut jam, dan waktu sideris.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Bab 1: koordinat ekuatorial, ekliptika, galaktik, dan koreksi presesi.' },
+    { sumberId: 'SRC-08', rujukan: 'Roy & Clarke (4e), Bab 7–11: trigonometri bola lengkap, aturan 5-elemen, refraksi tan z, dan koreksi posisi nyata.' },
+  ]}
+/>
+
+</Bagian>

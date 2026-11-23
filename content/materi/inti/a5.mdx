@@ -1,0 +1,518 @@
+<IdentitasModul
+  kode="A5"
+  judul="Radiasi, Magnitudo & Fotometri"
+  klaster="Klaster Inti Astronomi"
+  posisi="Bab 11 dari 19 · Radiometri, benda hitam, transfer radiatif & sistem filter"
+  estimasi="90 menit"
+  tingkat="Menengah -> S1 Astrofisika Pengantar (AS2101 / AS2102)"
+  prasyarat={[
+    { id: 'f3', label: 'F3 · Kalkulus Integral Tak Wajar & Optimasi' },
+    { id: 'f5', label: 'F5 · Termodinamika & Radiasi Rongga' },
+    { id: 'a1', label: 'A1 · Skala Pogson & Jarak Parsek' },
+  ]}
+  lanjutan={[
+    { id: 'a7', label: 'A7 · Detektor CCD, Filter & SNR Fotometri' },
+    { id: 'l1', label: 'L1 · Spektroskopi Bintang & Diagram H–R' },
+    { id: 'l4', label: 'L4 · Pemetaan Debu Antarbintang & Ekstingsi' },
+  ]}
+/>
+
+<Tujuan>
+
+- Membedakan secara tegas **intensitas spesifik ($I_\nu, I_\lambda$)**, **fluks ($F$)**, dan **kerapatan energi ($u$)**, serta membuktikan bahwa **kecerahan permukaan (*surface brightness*) sumber terurai invarian terhadap jarak** di ruang Euclidean.
+- Menurunkan **Hukum Pergeseran Wien** (lewat turunan pertama fungsi Planck) dan **Hukum Stefan–Boltzmann** ($\sigma = \frac{2\pi^5 k_B^4}{15 c^2 h^3}$) dari integrasi spektrum Planck.
+- Merumuskan **Persamaan Transfer Radiatif 1D** ($\frac{dI_\nu}{d\tau_\nu} = -I_\nu + S_\nu$), membuktikan atenuasi eksponensial $I = I_0 e^{-\tau}$ dan **pendekatan Eddington–Barbier** ($I_\nu(0, \mu) \approx S_\nu(\tau_\nu = \mu)$) untuk menjelaskan *limb darkening* Matahari.
+- Menghubungkan **skala Pogson**, **modulus jarak terkoreksi ekstingsi ($A_V$)**, dan **koreksi bolometrik ($BC$, IAU 2015 B2)** dengan penentuan radius bintang $R/R_\odot$.
+- Menganalisis sistem pita lebar **Johnson–Cousins UBVRI**, rasio ekstingsi total-ke-selektif $R_V \approx 3{,}1$, dan indeks **bebas-ekstingsi ($Q$-parameter)** pada diagram warna–warna $(U-B)$ vs $(B-V)$.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'radiometri',
+      judul: 'Intensitas Spesifik I_ν & Fluks',
+      ringkas: 'I_ν invarian di ruang hampa; F = ∫ I_ν cos θ dΩ memberi hukum 1/d².',
+      peran: 'Menghubungkan sifat lokal fotosfer (kecerahan permukaan) ke fluks terukur di Bumi.',
+      terkait: ['planck', 'transfer'],
+    },
+    {
+      id: 'planck',
+      judul: 'Hukum Planck, Wien & S–B',
+      ringkas: 'B_λ(T) menghasilkan λ_max T = b dan π∫B dλ = σ T⁴.',
+      peran: 'Mengubah puncak warna spektrum dan fluks terintegrasi menjadi suhu efektif T_eff dan radius R.',
+      terkait: ['radiometri', 'ubvri'],
+    },
+    {
+      id: 'transfer',
+      judul: 'Transfer Radiatif & Kedalaman Optis',
+      ringkas: 'dI/dτ = -I + S -> I = I₀ e^(-τ) pada medium penyerap murni.',
+      peran: 'Menjelaskan kedalaman fotosfer (τ ≈ 2/3), limb darkening, dan atenuasi debu A_λ = 1,086 τ_λ.',
+      terkait: ['radiometri', 'ekstingsi'],
+    },
+    {
+      id: 'ekstingsi',
+      judul: 'Modulus Jarak, Ekstingsi & BC',
+      ringkas: 'm_V - M_V = 5 log d - 5 + A_V; A_V = R_V E(B-V); M_bol = M_V + BC.',
+      peran: 'Mengoreksi efek serapan debu agar jarak d dan luminositas L_bol tidak meleset.',
+      terkait: ['transfer', 'ubvri'],
+    },
+    {
+      id: 'ubvri',
+      judul: 'UBVRI & Diagram Warna–Warna',
+      ringkas: '(B−V) mengukur suhu; kemiringan vektor debu di (U−B) vs (B−V) melahirkan indeks Q bebas debu.',
+      peran: 'Memisahkan tipe spektral sejati bintang dari pemredihan antarbintang.',
+      terkait: ['planck', 'ekstingsi'],
+    },
+  ]}
+/>
+
+<Bagian id="radiometri" judul="1. Radiometri Astronomi: Intensitas Spesifik, Fluks & Invariansi Kecerahan" tag="Prinsip Pertama">
+
+### Intensitas Spesifik ($I_\nu$) vs Fluks ($F_\nu$)
+
+- **Intensitas Spesifik ($I_\nu$):** Energi radiasi $dE$ yang menembus elemen luas proyeksi $dA\cos\theta$ dalam selang waktu $dt$, rentang sudut ruang $d\Omega$, dan rentang frekuensi $[\nu, \nu + d\nu]$:
+  $$dE = I_\nu(\vec{r}, \hat{n}, t)\,\cos\theta\, dA\, d\Omega\, dt\, d\nu \qquad \big[\text{W m}^{-2}\ \text{Hz}^{-1}\ \text{sr}^{-1}\big].$$
+- **Fluks Monokromatik ($F_\nu$):** Laju aliran energi neto per satuan luas melewati suatu permukaan, diperoleh dengan mengintegralkan komponen normal $I_\nu\cos\theta$ ke seluruh sudut ruang $4\pi$:
+  $$F_\nu = \int_{4\pi} I_\nu \cos\theta\, d\Omega.$$
+
+<Epistemik jenis="fakta">
+**Teorema Invariansi $I_\nu$ (Hukum Konservasi Kecerahan Permukaan):** Sepanjang berkas sinar di ruang hampa tanpa emisi atau serapan ($dI_\nu / ds = 0$), **intensitas spesifik $I_\nu$ TIDAK berkurang dengan jarak $d$**! Mengapa? Karena energi yang diterima elemen detektor $dA_2$ dari elemen sumber $dA_1$ berjarak $d$ adalah $dE = I_\nu dA_1 (dA_2/d^2)\,dt\,d\nu = I_\nu (dA_1/d^2) dA_2\,dt\,d\nu = I_\nu d\Omega_1\, dA_2\, dt\, d\nu$: ukuran sudut sumber $d\Omega_1 \propto d^{-2}$ menyusut seimbang tepat dengan menyusutnya fluks per elemen!
+</Epistemik>
+
+### Penurunan Hukum Kuadrat Terbalik dari Intensitas Spesifik Seragam
+
+Untuk bintang bulat berjejari $R$ yang memancarkan intensitas seragam $I_\nu$ ke belahan luar pada jarak jauh $d \gg R$, sudut tepi cakram bintang dari Bumi adalah $\theta_{\max} \approx R/d$. Integralkan $I_\nu\cos\theta\, d\Omega$ dengan $d\Omega = 2\pi\sin\theta\, d\theta$:
+
+$$F_\nu(d) = \int_0^{\theta_{\max}} I_\nu \cos\theta (2\pi\sin\theta\, d\theta) = 2\pi I_\nu \left[\frac{1}{2}\sin^2\theta\right]_0^{\theta_{\max}} = \pi I_\nu \sin^2\theta_{\max} = \pi I_\nu \left(\frac{R}{d}\right)^2.$$
+
+Di permukaan bintang ($d = R$, $\theta_{\max} = \pi/2$), fluks pancarannya adalah **$F_\nu(R) = \pi I_\nu$**! Substitusikan kembali:
+$$F_\nu(d) = F_\nu(R)\left(\frac{R}{d}\right)^2 = \frac{4\pi R^2 F_\nu(R)}{4\pi d^2} = \frac{L_\nu}{4\pi d^2}.$$
+Bagi sebuah galaksi atau nebula yang **terurai oleh teleskop** (*resolved*), magnitudo per detik busur persegi (**kecerahan permukaan $\mu$**) hanya mengukur $I_\nu$, sehingga **tidak bergantung pada jarak $d$** (di ruang datar statis; baru di kosmologi relativistik meredup oleh faktor Tolman $(1+z)^4$)!
+
+</Bagian>
+
+<Bagian id="benda-hitam" judul="2. Spektrum Planck, Penurunan Wien & Hukum Stefan–Boltzmann" tag="Derivasi Kalkulus">
+
+<Gambar id="kurva-benda-hitam" />
+
+Fungsi Planck memberikan intensitas spesifik kesetimbangan termodinamika (radiasi benda hitam isotropik) pada suhu $T$:
+
+$$B_\lambda(T) = \frac{2hc^2}{\lambda^5}\,\frac{1}{e^{hc/(\lambda k_B T)} - 1}, \qquad B_\nu(T) = \frac{2h\nu^3}{c^2}\,\frac{1}{e^{h\nu/(k_B T)} - 1}.$$
+
+*(Catatan penting konversi spektral: karena $B_\lambda |d\lambda| = B_\nu |d\nu|$ dan $\nu = c/\lambda \implies |d\nu/d\lambda| = c/\lambda^2$, puncak $\lambda_{\max}$ pada grafik $B_\lambda$ berbeda dengan $c/\nu_{\max}$ pada grafik $B_\nu$!)*
+
+### Derivasi Hukum Pergeseran Wien ($\lambda_{\max} T = b$)
+
+Dari Modul F3, substitusi variabel tak-berdimensi $x \equiv \frac{hc}{\lambda k_B T}$ membuat pencarian maksimum $B_\lambda(T)$ setara memaksimalkan $g(x) = \frac{x^5}{e^x - 1}$:
+$$g'(x) = \frac{5x^4(e^x - 1) - x^5 e^x}{(e^x - 1)^2} = 0 \implies x = 5(1 - e^{-x}) \implies x_0 \approx 4{,}965114.$$
+Maka:
+$$\lambda_{\max} T = \frac{hc}{x_0 k_B} = \frac{(6{,}62607\times 10^{-34})(2{,}99792\times 10^8)}{4{,}965114 \times 1{,}38065\times 10^{-23}} = \mathbf{2{,}89777 \times 10^{-3}\ \text{m K}}.$$
+
+### Derivasi Eksak Hukum Stefan–Boltzmann ($F = \sigma T^4$)
+
+Fluks bolometrik di permukaan benda hitam diperoleh dengan mengintegralkan $\pi B_\nu(T)$ ke seluruh frekuensi $\nu \in [0, \infty)$:
+
+$$F = \pi \int_0^\infty \frac{2h\nu^3}{c^2}\frac{d\nu}{e^{h\nu/(k_B T)} - 1}.$$
+
+Substitusi tak-berdimensi $y = \frac{h\nu}{k_B T} \implies \nu = \frac{k_B T}{h} y$, $d\nu = \frac{k_B T}{h} dy$:
+
+$$F = \frac{2\pi k_B^4}{c^2 h^3}\, T^4 \underbrace{\int_0^\infty \frac{y^3}{e^y - 1}\,dy}_{=\ \pi^4/15} = \left(\frac{2\pi^5 k_B^4}{15 c^2 h^3}\right) T^4 \equiv \sigma T^4.$$
+
+Evaluasi numerik konstanta gabungan $\sigma = \frac{2\pi^5 k_B^4}{15 c^2 h^3} = \mathbf{5{,}67037 \times 10^{-8}\ \text{W m}^{-2}\text{K}^{-4}}$ — seluruh koefisien empiris Stefan–Boltzmann diturunkan langsung dari konstanta kuantum-statistik fundamental $(h, c, k_B)$! Untuk bola bintang berjejari $R$ dan definisi **suhu efektif ($T_{\text{eff}}$)**:
+$$L_{\text{bol}} = 4\pi R^2 F = 4\pi R^2 \sigma T_{\text{eff}}^4.$$
+
+</Bagian>
+
+<Bagian id="transfer-radiatif" judul="3. Persamaan Transfer Radiatif 1D & Kedalaman Optis" tag="Fisika Atmosfer">
+
+<Epistemik jenis="model">
+Saat radiasi menembus gas atau debu sepanjang lintasan $ds$, intensitas spesifik berubah akibat pengurangan oleh absorpsi/hamburan ($\kappa_\nu \rho\, I_\nu$) dan penambahan oleh emisi lokal ($j_\nu$):
+$$\frac{dI_\nu}{ds} = -\kappa_\nu \rho\, I_\nu + j_\nu.$$
+Definisikan **kedalaman optis (*optical depth*)** $d\tau_\nu \equiv \kappa_\nu \rho\, ds$ dan **fungsi sumber (*source function*)** $S_\nu \equiv \frac{j_\nu}{\kappa_\nu \rho}$, sehingga diperoleh **Persamaan Transfer Radiatif**:
+$$\frac{dI_\nu}{d\tau_\nu} = -I_\nu + S_\nu \quad (\text{atau }\frac{dI_\nu}{d\tau_\nu} = I_\nu - S_\nu \text{ bila }\tau_\nu\text{ diukur masuk dari pengamat}).$$
+</Epistemik>
+
+### Dua Kasus Khusus Fundamental
+
+1. **Medium Penyerap Dingin Murni ($S_\nu = 0$, misalnya debu antarbintang di optik):**
+   $$\frac{dI_\nu}{d\tau_\nu} = -I_\nu \implies \int_{I_{\nu,0}}^{I_\nu} \frac{dI'}{I'} = -\int_0^{\tau_\nu} d\tau' \implies I_\nu = I_{\nu,0}\, e^{-\tau_\nu}.$$
+   Jika dikonversi langsung ke skala magnitudo Pogson, **hubungan eksak antara ekstingsi $A_\lambda$ dan kedalaman optis $\tau_\lambda$** adalah:
+   $$A_\lambda = -2{,}5\log_{10}\!\left(\frac{I_\lambda}{I_{\lambda,0}}\right) = -2{,}5\log_{10}(e^{-\tau_\lambda}) = \big(2{,}5\log_{10} e\big)\tau_\lambda \approx \mathbf{1{,}0857\,\tau_\lambda}.$$
+
+2. **Medium Emisi + Absorpsi Homogen ($S_\nu = \text{konst}$):**
+   Dengan mengalikan faktor integrasi $e^{\tau_\nu}$, diperoleh solusi formal:
+   $$I_\nu(\tau_\nu) = I_{\nu,0}\, e^{-\tau_\nu} + S_\nu\big(1 - e^{-\tau_\nu}\big).$$
+   - **Batas Tipis Optis ($\tau_\nu \ll 1$):** $e^{-\tau_\nu} \approx 1 - \tau_\nu \implies I_\nu \approx I_{\nu,0}(1 - \tau_\nu) + S_\nu \tau_\nu$: emisi sebanding dengan jumlah atom sepanjang garis pandang!
+   - **Batas Tebal Optis ($\tau_\nu \gg 1$):** $e^{-\tau_\nu} \to 0 \implies I_\nu \to S_\nu$: bila berada dalam kesetimbangan termal lokal (LTE), $S_\nu = B_\nu(T)$, spektrum memancarkan **kurva benda hitam**!
+   - **Aproksimasi Eddington–Barbier pada Fotosfer Bintang:** Sinar yang keluar pada sudut $\theta$ dari normal fotosfer ($\mu = \cos\theta$) terutama berasal dari kedalaman optis vertikal $\tau_\nu \approx \mu$. Pada tepi piringan Matahari ($\mu \to 0$), garis pandang miring menembus lapisan atas fotosfer yang lebih dingin ($\tau = \mu$ kecil), menyebabkan **penggelapan tepi (*limb darkening*)**!
+
+</Bagian>
+
+<Bagian id="pogson-ekstingsi" judul="4. Modulus Jarak, Ekstingsi Debu & Sistem UBVRI" tag="Fotometri Observasional">
+
+<Gambar id="tangga-magnitudo" />
+
+<Gambar id="modulus-jarak-grafik" />
+
+### Koreksi Bolometrik IAU 2015 B2 & Modulus Jarak Nyata
+
+Filter visual $V$ hanya menangkap pita $\sim 500\text{--}600\ \text{nm}$. Hubungan luminositas total $L_{\text{bol}}$ dengan magnitudo $V$ memakai **Koreksi Bolometrik ($BC_V$)**:
+
+$$BC_V \equiv m_{\text{bol}} - m_V = M_{\text{bol}} - M_V \le 0,$$
+
+*(Dengan titik nol IAU 2015 B2: $M_{\text{bol}} = 0$ tepat setara $L_0 = 3{,}0128 \times 10^{28}\ \text{W}$; untuk Matahari $L_\odot = 3{,}828 \times 10^{26}\ \text{W}$ memberi $M_{\text{bol},\odot} = +4{,}74$, $M_{V,\odot} = +4{,}83$, sehingga $BC_{V,\odot} = -0{,}09$). Dari Stefan–Boltzmann:*
+
+$$\frac{L}{L_\odot} = 10^{-0{,}4(M_{\text{bol}} - 4{,}74)} = \left(\frac{R}{R_\odot}\right)^2\left(\frac{T_{\text{eff}}}{5\,778\ \text{K}}\right)^4 \implies \frac{R}{R_\odot} = 10^{-0{,}2(M_{\text{bol}} - 4{,}74)}\left(\frac{5\,778\ \text{K}}{T_{\text{eff}}}\right)^2.$$
+
+### Ekstingsi Antarbintang ($A_V$), Pemredihan $E(B-V)$ & Indeks Bebas-Ekstingsi ($Q$)
+
+Butiran debu sub-mikron di Bima Sakti menyerap & menghamburkan cahaya biru jauh lebih kuat daripada cahaya merah (penampang hamburan debu rata-rata $\kappa_\lambda \propto \lambda^{-1}$ di optik). Akibatnya pada magnitudo tampak:
+
+$$m_V - M_V = 5\log_{10} d - 5 + A_V, \qquad m_B - M_B = 5\log_{10} d - 5 + A_B.$$
+
+Kurangkan kedua persamaan untuk memperoleh **kelebihan warna (*color excess*)**:
+
+$$E(B - V) \equiv (B - V)_{\text{obs}} - (B - V)_0 = A_B - A_V > 0, \qquad A_V = R_V\,E(B - V) \quad (R_V \approx 3{,}1\ \text{di ISM difus}).$$
+
+<Gambar id="warna-suhu" />
+
+<Interaktif jenis="magnitudo" />
+
+### Diagram Warna–Warna $(U-B)$ vs $(B-V)$ & Indeks $Q$ Johnson–Morgan
+
+Pada diagram $(U-B)$ terhadap $(B-V)$, vektor pemredihan debu menggeser posisi bintang ke kanan bawah sepanjang garis lurus bermiring hampir konstan:
+
+$$\frac{E(U - B)}{E(B - V)} \approx 0{,}72 \quad (+ 0{,}05\, E(B - V)\ \text{untuk debu tebal}).$$
+
+Oleh karena itu, kita dapat mengkonstruksi kombinasi linear **indeks bebas-ekstingsi ($Q$-parameter)** yang nilainya **invarian terhadap jumlah debu di sepanjang garis pandang**:
+
+$$Q \equiv (U - B) - 0{,}72\,(B - V) = (U - B)_0 - 0{,}72\,(B - V)_0.$$
+
+Dari nilai $Q$ saja, astronom dapat langsung mengklasifikasi bintang panas O/B meskipun bintang itu tersembunyi di balik awan debu tebal, lalu menelusuri vektor pemredihan balik ke kurva utama deret spektral intrinsik untuk membaca $E(B-V)$ dan $A_V$ secara presisi!
+
+<BatasValiditas
+  judul="Validitas Asumsi Nilai Universal R_V = 3,1"
+  syarat={[
+    'Garis pandang melintasi medium antarbintang (ISM) difus standar Bima Sakti.',
+    'Spektrum objek mendekati bintang normal deret utama di pita optik Johnson B & V.',
+  ]}
+  gagalJika="Pengamatan menembus inti awan molekul rapat (di mana butiran es tumbuh membesar sehingga hamburan menjadi lebih netral terhadap panjang gelombang) atau pada galaksi pembentuk bintang/quasar berdebu spesifik."
+  akibat="Di dalam awan molekul padat (seperti Nebula Orion atau ρ Ophiuchi), nilai R_V membengkak dari 3,1 menjadi 4,5–5,5; memakai R_V = 3,1 secara membabi buta akan meremehkan A_V hingga 40% dan melebih-lebihkan jarak gugus muda."
+/>
+
+</Bagian>
+
+<Bagian id="worked-examples" judul="5. Contoh Hitung Lengkap (Notebook Hitung)" tag="Worked Examples">
+
+<Contoh judul="Contoh 1 (Fundamental): Memisahkan Efek Suhu dan Pemredihan Debu dengan Indeks Q">
+
+<Langkah>
+
+**Data:** Sebuah bintang deret utama teramati memiliki $(B-V)_{\text{obs}} = +0{,}45$, $(U-B)_{\text{obs}} = -0{,}28$, dan magnitudo tampak $V = 11{,}20$. Dari kalibrasi deret utama bintang awal, hubungan intrinsik bintang tipe B memenuhi $(U-B)_0 \approx 3{,}69\,(B-V)_0 + 0{,}03$ (untuk $-0{,}35 \le (B-V)_0 \le 0{,}00$), dan kemiringan pemredihan standar adalah $E(U-B)/E(B-V) = 0{,}72$ dengan $R_V = 3{,}1$. Jika magnitudo absolut visual bintang tersebut diketahui $M_V = -1{,}50$, tentukan indeks warna intrinsik $(B-V)_0$, ekstingsi $A_V$, dan jarak sejatinya ($d$)!
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Hitung Parameter Bebas-Ekstingsi ($Q$):**
+$$Q = (U - B)_{\text{obs}} - 0{,}72\,(B - V)_{\text{obs}} = -0{,}28 - 0{,}72(0{,}45) = -0{,}28 - 0{,}324 = -0{,}604.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Tentukan $(B-V)_0$, $E(B-V)$, dan $A_V$:**
+Karena $Q$ invarian terhadap debu, $Q = (U - B)_0 - 0{,}72\,(B - V)_0$:
+$$-0{,}604 = \big[3{,}69\,(B-V)_0 + 0{,}03\big] - 0{,}72\,(B-V)_0 = 2{,}97\,(B-V)_0 + 0{,}03.$$
+$$(B-V)_0 = \frac{-0{,}634}{2{,}97} \approx -0{,}213\ \text{mag}\quad (\text{khas bintang panas kelas B2–B3 V!}).$$
+Kelebihan warna & ekstingsi:
+$$E(B - V) = (B - V)_{\text{obs}} - (B - V)_0 = 0{,}45 - (-0{,}213) = 0{,}663\ \text{mag}.$$
+$$A_V = R_V\, E(B - V) = 3{,}1 \times 0{,}663 \approx 2{,}06\ \text{mag}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 3 — Jarak Sejati vs Jarak Naif Tanpa Koreksi Debu:**
+- **Jarak sejati:** $5\log_{10} d = V - M_V - A_V + 5 = 11{,}20 - (-1{,}50) - 2{,}06 + 5 = 15{,}64 \implies d = 10^{15{,}64/5} = 10^{3{,}128} \approx \mathbf{1\,343\ \text{pc}}$.
+- **Bandingkan jika $A_V$ diabaikan:** $d_{\text{semu}} = 10^{(11{,}20 + 1{,}50 + 5)/5} = 10^{3{,}54} \approx 3\,467\ \text{pc}$ ($2{,}58\times$ terlalu jauh!).
+
+</Langkah>
+
+</Contoh>
+
+<Contoh judul="Contoh 2 (Rantai Olimpiade): Penurunan Diameter Sudut, Koreksi Bolometrik & Kedalaman Optis">
+
+<Langkah>
+
+**Data:** Sebuah bintang raksasa merah dingin teramati di arah pusat galaksi memiliki magnitudo semu $m_V = 7{,}80$, ekstingsi $A_V = 1{,}40$, jarak terukur Gaia $d = 250\ \text{pc}$, suhu efektif $T_{\text{eff}} = 3\,500\ \text{K}$, dan koreksi bolometrik $BC_V = -1{,}85$.\
+(a) Hitung luminositas bolometrik bintang dalam $L_\odot$ dan radius fisiknya dalam $R_\odot$.\
+(b) Hitung diameter sudut piringan bintang ($\theta$ dalam mili-detik busur, $\text{mas}$) untuk menguji apakah ia bisa diuraikan oleh interferometri VLTI ($\theta_{\text{res}} \approx 2\ \text{mas}$).\
+(c) Berapakah kedalaman optis total debu ($\tau_V$) antara kita dan bintang tersebut?
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — $M_V$, $M_{\text{bol}}$, dan Luminositas:**
+$$M_V = m_V - 5\log_{10}(250) + 5 - A_V = 7{,}80 - 5(2{,}39794) + 5 - 1{,}40 = 7{,}80 - 11{,}990 + 5 - 1{,}40 = -0{,}590\ \text{mag}.$$
+$$M_{\text{bol}} = M_V + BC_V = -0{,}590 + (-1{,}85) = -2{,}440\ \text{mag}.$$
+$$\frac{L}{L_\odot} = 10^{-0{,}4(M_{\text{bol}} - 4{,}74)} = 10^{-0{,}4(-2{,}440 - 4{,}74)} = 10^{2{,}872} \approx \mathbf{745\,L_\odot}.$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Radius Fisik & Diameter Sudut:**
+$$\frac{R}{R_\odot} = \sqrt{745}\left(\frac{5\,778}{3\,500}\right)^2 = 27{,}29 \times (1{,}6509)^2 \approx \mathbf{74{,}4\,R_\odot}.$$
+Diameter fisik $D = 2R = 148{,}8\,R_\odot \times \frac{6{,}957\times 10^8\ \text{m}}{1{,}496\times 10^{11}\ \text{m/au}} \approx 0{,}692\ \text{au}$.
+Karena pada $d = 250\ \text{pc}$, sudut $1''$ setara $250\ \text{au}$, diameter sudutnya langsung:
+$$\theta'' = \frac{D_{\text{au}}}{d_{\text{pc}}} = \frac{0{,}692}{250} \approx 0{,}00277'' = \mathbf{2{,}77\ \text{mas}} > 2{,}0\ \text{mas}\ (\text{terurai oleh VLTI!}).$$
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 3 — Kedalaman Optis Debu ($\tau_V$):**
+$$\tau_V = \frac{A_V}{2{,}5\log_{10} e} = \frac{1{,}40}{1{,}08574} \approx \mathbf{1{,}29}.$$
+Artinya sekitar $1 - e^{-1{,}29} \approx 72{,}5\%$ foton pita visual bintang ini hilang terserap/terhambur sebelum mencapai Bumi!
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  items={[
+    {
+      salah: 'Intensitas spesifik B_λ(T) dan B_ν(T) memiliki puncak di frekuensi/panjang gelombang yang sama persis: λ_max · ν_max = c.',
+      kenapaKeliru: 'B_λ dan B_ν bukan nilai titik tunggal, melainkan DENSITAS fluks per satuan dλ atau per satuan dν! Karena |dν| = (c/λ²)|dλ| berubah secara tak-linear terhadap λ, turunan dB_λ/dλ = 0 menghasilkan x_λ = hc/(λ_max k_B T) ≈ 4,965, sedangkan dB_ν/dν = 0 menghasilkan x_ν = hν_max/(k_B T) ≈ 2,821!',
+      caraDeteksi: 'Untuk Matahari (T = 5 778 K), puncak B_λ berada di λ_max ≈ 501 nm (hijau-kuning, pita tampak), sedangkan puncak B_ν berada di ν_max setara panjang gelombang c/ν_max ≈ 882 nm (inframerah dekat!) — berbeda hampir 1,76 kali lipat!',
+      benar: 'Selalu sesuaikan hukum Wien dengan variabel sumbu spektrumnya: λ_max = 2,898×10⁻³ m·K/T untuk B_λ, dan ν_max ≈ 5,879×10¹⁰ Hz·K⁻¹ × T untuk B_ν.',
+    },
+    {
+      salah: 'Koreksi Bolometrik (BC) adalah bilangan positif untuk sebagian bintang dan negatif untuk bintang lain tergantung konvensi bebas, dan bintang kelas G memiliki nilai |BC| paling besar.',
+      kenapaKeliru: 'Di IAU 2015 B2 dan konvensi astronomi modern, BC = M_bol − M_V selalu bernilai ≤ 0 karena fluks pita V hanyalah bagian dari fluks bolometrik total (dengan kalibrasi agar bintang F/G puncaknya dekat pita V sehingga |BC| paling KECIL ≈ −0,08 mag).',
+      caraDeteksi: 'Uji bintang ekstrem (bintang O 40 000 K yang mayoritas energinya di UV, atau katai M 3 000 K yang mayoritas di IR): keduanya hanya membocorkan sedikit cahaya ke pita V, sehingga M_V jauh lebih besar (redup) daripada M_bol -> BC = M_bol − M_V amat negatif (−3 hingga −4 mag)!',
+      benar: 'BC = M_bol − M_V <= 0; nilai |BC| terkecil dimiliki bintang F/G yang puncak spektrumnya jatuh di pita visual V.',
+    },
+    {
+      salah: 'Jika awan debu antarbintang mempunyai kedalaman optis τ = 1, artinya seluruh cahaya (100%) terhalang dan tidak ada satu foton pun yang lolos.',
+      kenapaKeliru: 'Mengira τ sebagai fraksi serapan linear (τ = 1 -> 100%) alih-alih eksponen redaman I = I₀ e^(−τ).',
+      caraDeteksi: 'Untuk τ = 1, e^(−1) ≈ 0,368, sehingga masih ada 36,8% foton awal yang menembus awan debu langsung (A_V ≈ 1,086 mag)!',
+      benar: 'Fraksi cahaya langsung yang lolos tanpa berinteraksi adalah e^(−τ).',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="evaluasi" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mandiri">
+
+<CekPaham
+  id="a5-cek-1"
+  pertanyaan="Bintang memiliki m = 10 dan M = 0 tanpa ekstingsi. Berapa jaraknya?"
+  opsi={['1 kpc', '100 pc', '10 kpc', '10 pc']}
+  jawaban={0}
+  penjelasan="m − M = 10 = 5 log d − 5, sehingga log d = 3 dan d = 1.000 pc = 1 kpc."
+/>
+
+<CekPaham
+  id="a5-cek-2"
+  pertanyaan="Dua bintang memiliki luminositas sama, tetapi bintang A berjarak 10 kali lebih jauh dibanding bintang B. Berapa selisih magnitudo tampak m_A − m_B?"
+  opsi={['+5 magnitudo', '−5 magnitudo', '+2,5 magnitudo', '+10 magnitudo']}
+  jawaban={0}
+  penjelasan="Fluks turun 10² = 100 kali lipat, sehingga magnitudo A bertambah +5 mag (lebih redup) dibanding B."
+/>
+
+<CekPaham
+  id="a5-cek-3"
+  pertanyaan="Jika debu antarbintang menyebabkan ekstingsi sebesar A_V = 2 magnitudo tetapi diabaikan saat menghitung jarak dari modulus m_V − M_V, bagaimana estimasi jarak yang diperoleh?"
+  opsi={[
+    'Terlalu besar sekitar 2,51 kali dari jarak sebenarnya',
+    'Terlalu kecil sekitar 2,51 kali dari jarak sebenarnya',
+    'Terlalu besar 2 kali dari jarak sebenarnya',
+    'Tidak terpengaruh karena ekstingsi hanya mengubah warna'
+  ]}
+  jawaban={0}
+  penjelasan="5 log(d_semu / d_sejati) = A_V = 2 -> d_semu / d_sejati = 10^0,4 ≈ 2,512 kali terlalu jauh."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'a5-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Dua bintang deret utama identik secara fisis ($M_V = +4{,}8$) berada di dalam gugus bintang yang jaraknya diketahui $d = 500\\ \\text{pc}$. Bintang A teramati bebas debu dengan $(B-V)_A = +0{,}65$, sedangkan Bintang B berada di balik filamen awan debu kecil dengan $(B-V)_B = +1{,}05$ (anggap $R_V = 3{,}1$). Berapa magnitudo tampak $V_B$ dan $B_B$ Bintang B?',
+      petunjuk: 'Hitung $(B-V)_0 = +0{,}65$ dari Bintang A kembarannya, cari $E(B-V)$ dan $A_V$ untuk Bintang B, lalu tambahkan ke $m_{V,0}$.',
+      langkahKunci: [
+        'Magnitudo tampak tanpa debu pada $500\\ \\text{pc}$: $V_A = 4{,}8 + 5\\log_{10}(500) - 5 = 4{,}8 + 5(2{,}699) - 5 = 13{,}295\\ \\text{mag}$.',
+        'Kelebihan warna Bintang B: $E(B-V) = 1{,}05 - 0{,}65 = 0{,}40\\ \\text{mag}$.',
+        'Ekstingsi visual: $A_V = 3{,}1 \\times 0{,}40 = 1{,}24\\ \\text{mag}$, dan ekstingsi biru $A_B = A_V + E(B-V) = 1{,}64\\ \\text{mag}$.',
+        'Maka $V_B = 13{,}295 + 1{,}24 \\approx \\mathbf{14{,}54\\ \\text{mag}}$ dan $B_B = V_B + (B-V)_B = 14{,}54 + 1{,}05 \\approx \\mathbf{15{,}59\\ \\text{mag}}$.',
+      ],
+      rubrik: [
+        'Menentukan $E(B-V) = 0{,}40\\ \\text{mag}$ dari kembar bebas debu.',
+        'Menghitung $A_V = 1{,}24\\ \\text{mag}$ dan $A_B = A_V + E(B-V) = 1{,}64\\ \\text{mag}$.',
+      ],
+    },
+    {
+      id: 'a5-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Suatu lempeng atmosfer bintang memiliki fungsi sumber linear terhadap kedalaman optis: $S_\\nu(\\tau_\\nu) = a_\\nu + b_\\nu \\tau_\\nu$, dan tidak ada radiasi datang dari dalam ke arah pengamat di tak hingga ($\\tau_\\nu \\to \\infty$). Integralkan persamaan transfer radiatif $\\mu\\frac{dI_\\nu}{d\\tau_\\nu} = I_\\nu - S_\\nu$ (di mana $\\tau_\\nu$ diukur ke bawah sepanjang normal dan $\\mu = \\cos\\theta$) untuk menurunkan **Hukum Penggelapan Tepi (*Limb Darkening*) Eddington–Barbier**: $I_\\nu(0, \\mu) = a_\\nu + b_\\nu \\mu = S_\\nu(\\tau_\\nu = \\mu)$!',
+      petunjuk: 'Kalikan kedua ruas dengan faktor integrasi $e^{-\\tau_\\nu/\\mu}$, integralkan dari $\\tau_\\nu = 0$ ke $\\infty$, lalu pakai integral parsial untuk suku $b_\\nu \\tau_\\nu e^{-\\tau_\\nu/\\mu}$!',
+      langkahKunci: [
+        'Kalikan persamaan $\\frac{dI_\\nu}{d\\tau_\\nu} - \\frac{1}{\\mu}I_\\nu = -\\frac{1}{\\mu}S_\\nu(\\tau_\\nu)$ dengan faktor integrasi $e^{-\\tau_\\nu/\\mu}$:',
+        '$$\\frac{d}{d\\tau_\\nu}\\left(I_\\nu e^{-\\tau_\\nu/\\mu}\\right) = -\\frac{1}{\\mu}\\big(a_\\nu + b_\\nu \\tau_\\nu\\big)e^{-\\tau_\\nu/\\mu}.$$',
+        'Integralkan dari $\\tau_\\nu = 0$ hingga $\\tau_\\nu = \\infty$ (suku batas atas nol karena $I_\\nu$ tumbuh polinomial sementara $e^{-\\tau/\\mu} \\to 0$):',
+        '$$-I_\\nu(0, \\mu) = -\\frac{1}{\\mu}\\left[a_\\nu \\int_0^\\infty e^{-\\tau/\\mu}d\\tau + b_\\nu \\int_0^\\infty \\tau\\,e^{-\\tau/\\mu}d\\tau\\right] = -\\frac{1}{\\mu}\\left[a_\\nu \\mu + b_\\nu \\mu^2\\right] = -(a_\\nu + b_\\nu \\mu).$$',
+        'Jadi $I_\\nu(0, \\mu) = a_\\nu + b_\\nu \\mu = S_\\nu(\\tau_\\nu = \\mu)$! Di pusat cakram ($\\mu = 1$) kita melihat lebih dalam ($\\tau = 1$, panas), sedangkan di tepi ($\\mu \\to 0$) kita melihat lapisan dangkal dingin ($\\tau \\to 0$).',
+      ],
+      rubrik: [
+        'Mengalikan faktor integrasi $e^{-\\tau_\\nu/\\mu}$ dengan benar dan mengevaluasi batas tak hingga.',
+        'Menghasilkan $\\int_0^\\infty \\tau e^{-\\tau/\\mu}d\\tau = \\mu^2$ hingga memperoleh $I_\\nu(0, \\mu) = a_\\nu + b_\\nu\\mu$.',
+      ],
+    },
+    {
+      id: 'a5-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah galaksi spiral mirip Bima Sakti memiliki kecerahan permukaan rata-rata $\\mu_V = 21{,}5\\ \\text{mag/arcsec}^2$ ketika diamati dari jarak $10\\ \\text{Mpc}$ (abaikan redshift kosmologis $z \\ll 1$). Jika galaksi identik dipindahkan ke jarak $40\\ \\text{Mpc}$ ($4\\times$ lebih jauh), berapakah fluks totalnya yang terukur, dan berapakah **kecerahan permukaan** $\\mu_V$ barunya?',
+      petunjuk: 'Ingat efek dua arah: fluks total turun $(1/4)^2$, tetapi luas sudut galaksi di langit $\\Delta\\Omega \\propto \\theta^2$ juga menyusut $(1/4)^2$!',
+      langkahKunci: [
+        'Pada jarak $4\\times$ lebih jauh, fluks total galaksi turun sebesar $1/4^2 = 1/16$ (magnitudo terintegrasi meredup $+5\\log_{10}(4) \\approx +3{,}01\\ \\text{mag}$).',
+        'Namun luas sudut piringan galaksi di langit ($\\text{arcsec}^2$) juga menyusut sebesar $1/4^2 = 1/16$!',
+        'Kecerahan permukaan = Fluks / Luas sudut = $\\frac{F/16}{\\Omega/16} = \\frac{F}{\\Omega} = \\text{konstan}$! Jadi $\\mu_V$ tetap tepat **$21{,}5\\ \\text{mag/arcsec}^2$** (invariansi intensitas spesifik di ruang datar!).',
+      ],
+      rubrik: [
+        'Menghitung perubahan magnitudo terpadu $+3{,}01\\ \\text{mag}$ akibat jarak $4\\times$ lebih jauh.',
+        'Menjelaskan kompensasi tepat oleh penyusutan luas sudut $d^{-2}$ sehingga kecerahan permukaan invarian.',
+      ],
+    },
+    {
+      id: 'a5-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Sebuah awan debu dan gas dingin meredam cahaya bintang latar pada tiga panjang gelombang dengan rasio kedalaman optis terukur $\\tau_V = 0{,}92$, $\\tau_B = 1{,}22$, dan $\\tau_K = 0{,}10$ (inframerah $2{,}2\\ \\mu\\text{m}$). Hitung ekstingsi $A_V$, $A_B$, $A_K$, kelebihan warna $E(B-V)$, rasio $R_V$, serta persentase cahaya pita $K$ vs pita $V$ yang berhasil menembus awan!',
+      petunjuk: 'Gunakan $A_\\lambda = 1{,}08574\\,\\tau_\\lambda$, $E(B-V) = A_B - A_V$, dan fraksi transmisi $T_\\lambda = e^{-\\tau_\\lambda}$.',
+      langkahKunci: [
+        '$A_V = 1{,}08574 \\times 0{,}92 = \\mathbf{1{,}00\\ \\text{mag}}$; $A_B = 1{,}08574 \\times 1{,}22 = \\mathbf{1{,}325\\ \\text{mag}}$; $A_K = 1{,}08574 \\times 0{,}10 = \\mathbf{0{,}109\\ \\text{mag}}$.',
+        '$E(B-V) = A_B - A_V = 1{,}325 - 1{,}00 = \\mathbf{0{,}325\\ \\text{mag}} \\implies R_V = A_V / E(B-V) = 1{,}00 / 0{,}325 \\approx \\mathbf{3{,}08}$ (cocok dengan debu difus Bima Sakti!).',
+        'Transmisi foton: di pita $V$ hanya lolos $e^{-0{,}92} \\approx 39{,}9\\%$, sedangkan di inframerah $K$ lolos $e^{-0{,}10} \\approx 90{,}5\\%$! Inilah sebab JWST & survei IR mampu menembus pusat Bima Sakti yang gelap di optik.',
+      ],
+      rubrik: [
+        'Mengonversi $\\tau_\\lambda$ ke $A_\\lambda = 1{,}0857\\,\\tau_\\lambda$ untuk ketiga pita.',
+        'Menghitung $R_V \\approx 3{,}1$ dan membandingkan fraksi transmisi $e^{-\\tau}$ optik vs inframerah.',
+      ],
+    },
+    {
+      id: 'a5-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Pada bagian inti Matahari suhunya mencapai $T_c \\approx 1{,}5\\times 10^7\\ \\text{K}$, sedangkan fotosfernya $T_{\\text{eff}} \\approx 5\\,778\\ \\text{K}$. Jelaskan berdasarkan teori benda hitam dan panjang jalur bebas rata-rata foton ($\\ell = 1/(\\kappa\\rho)$) mengapa spektrum Matahari yang kita lihat di Bumi memiliki suhu benda hitam $\\sim 5\\,778\\ \\text{K}$ (foton optik) dan BUKAN $\\sim 1{,}5\\times 10^7\\ \\text{K}$ (sinar-X keras), padahal seluruh energi dihasilkan di inti!',
+      petunjuk: 'Bandingkan ketebalan optis total Matahari dari inti ke permukaan ($\\tau_{\\text{inti}} \\sim 10^{11}$) terhadap kedalaman dari mana foton akhirnya lolos ke ruang hampa ($\\tau \\sim 2/3$)!',
+      langkahKunci: [
+        'Foton gamma/sinar-X yang lahir di inti hanya menempuh jarak $\\sim 1\\ \\text{cm}$ sebelum terserap/terhambur dan bertermalisasi ulang berkali-kali ($\\tau_{\\text{inti}} \\sim R_\\odot / \\ell \\sim 10^{11}$!).',
+        'Sepanjang ratusan ribu tahun difusi ke luar, satu foton MeV terpecah lewat tumbukan atom menjadi ribuan foton berenergi makin rendah sesuai suhu lokal $T(r)$.',
+        'Foton baru berhenti berinteraksi dan terbang bebas ke Bumi begitu mencapai lapisan dengan $\\tau \\lesssim 2/3$ (fotosfer!). Karena itu energi total yang lolos ($L_\\odot$) berasal dari inti, tetapi *distribusi panjang gelombangnya* mencerminkan suhu lapisan terakhir $\\tau = 2/3$ ($\\approx 5\\,778\\ \\text{K}$).',
+      ],
+      rubrik: [
+        'Menjelaskan termalisasi foton di interior yang sangat tebal optis ($\\tau \\gg 1$).',
+        'Mengaitkan spektrum teramati dengan permukaan pelepasan $\\tau \\approx 2/3$ sesuai teorema Eddington–Barbier.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'a5-log-1',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Andaikan ukuran butiran debu di suatu galaksi asing jauh lebih besar daripada panjang gelombang cahaya optik maupun inframerah (misal butiran kerikil berdiameter $d \\sim 1\\ \\text{mm}$, jauh di atas $\\lambda$). Bagaimana perubahan pada **ekstingsi $A_V$**, **pemredihan $E(B-V)$**, dan keampuhan **indeks $Q$** untuk mengukur jarak galaksi tersebut?',
+      petunjuk: 'Ketika ukuran partikel $a \\gg \\lambda$, hamburan optis memasuki batas geometris murni (penampang $\\sigma = \\pi a^2$ konstan tak bergantung pada $\\lambda$ — disebut *grey dust*)!',
+      rubrik: [
+        'Untuk debu besar ($a \\gg \\lambda$), penampang hamburan bersifat geometris dan tidak bergantung panjang gelombang: $\\tau_B = \\tau_V = \\tau_U$, sehingga $A_U = A_B = A_V > 0$.',
+        'Konsekuensi fatal: $E(B-V) = A_B - A_V = 0$ (tidak ada pemredihan warna!), sementara $A_V > 0$ (cahaya tetap redup!).',
+        'Rasio $R_V = A_V / E(B-V) \\to \\infty$, sehingga koreksi debu standar dan indeks $Q$ menjadi buta total (*grey dust* membuat jarak tampak lebih jauh tanpa terdeteksi lewat perubahan warna!).',
+      ],
+      jawabanKunci:
+        'Jika debu tersusun atas partikel makroskopik ($a \\gg \\lambda$, disebut *grey dust*), hukum hamburan tidak lagi bergantung pada $\\lambda$ sehingga setiap filter meredup sama besar ($A_U = A_B = A_V > 0$). Akibatnya kelebihan warna $E(B-V) = 0$! Metode pemredihan standar ($A_V = 3{,}1 E(B-V)$) dan diagram warna–warna akan menyangka tidak ada debu sama sekali, menghasilkan estimasi jarak yang terlalu jauh secara tak terdeteksi.',
+    },
+    {
+      id: 'a5-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang siswa mengamati dua awan gas emisi antarbintang (Nebula A dan Nebula B) yang bersuhu $T = 10\\,000\\ \\text{K}$. Karena sama-sama bersuhu $10\\,000\\ \\text{K}$, siswa memakai $F = \\sigma T^4$ untuk menyimpulkan bahwa energi per meter persegi permukaan nebula yang dipancarkan Nebula A (kerapatan rendah $\\tau_{H\\alpha} = 0{,}01$) pasti sama dengan fotosfer bintang kelas A bersuhu $10\\,000\\ \\text{K}$. Temukan kesalahan fisik mendasarnya!',
+      petunjuk: 'Periksa asumsi hukum Stefan–Boltzmann ($F = \\sigma T^4$): apakah awan nebula transparan dengan $\\tau \\ll 1$ bisa memancarkan intensitas benda hitam penuh $B_\\nu(T)$?',
+      rubrik: [
+        'Hukum Stefan–Boltzmann $F = \\sigma T^4$ dan spektrum Planck hanya berlaku pada benda **tebal optis ($\\tau \\gg 1$)** dalam kesetimbangan termodinamika radiasi.',
+        'Dari solusi transfer radiatif $I_\\nu = S_\\nu(1 - e^{-\\tau_\\nu})$, nebula tipis optis ($\\tau = 0{,}01$) hanya memancarkan $I_\\nu \\approx \\tau_\\nu B_\\nu(T) \\ll B_\\nu(T)$ (dan hanya pada garis emisi diskret, bukan kontinu!).',
+      ],
+      jawabanKunci:
+        'Kesalahan fatalnya adalah mengaplikasikan $F = \\sigma T^4$ pada medium tipis optis ($\\tau \\ll 1$). Hukum Planck dan Stefan–Boltzmann menuntut medium tebal optis ($\\tau_\\nu \\gg 1$ di seluruh panjang gelombang) agar foton bertermalisasi penuh dengan gas. Untuk nebula ber-$\\tau = 0{,}01$, solusi persamaan transfer radiatif memberi emisi $I_\\nu \\approx \\tau_\\nu S_\\nu \\sim 0{,}01\\,B_\\nu(T)$ di garis emisi saja dan hampir nol di kontinu — ratusan hingga jutaan kali lebih redup per luas permukaan daripada fotosfer bintang $10\\,000\\ \\text{K}$!',
+    },
+    {
+      id: 'a5-log-3',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa di alam semesta terdapat batas fisis di mana memperbesar teleskop tetap tidak akan pernah membuat piringan suatu bintang jauh terlihat lebih terang secara *surface brightness* di mata atau detektor dibandingkan melihat permukaan Matahari secara langsung (bila mengabaikan reduksi atmosfer)?',
+      petunjuk: 'Tinjau teorema konservasi *etendue* / intensitas spesifik $I_\\nu$ melewati sistem optik ideal ($n_1^2 dA_1 d\\Omega_1 = n_2^2 dA_2 d\\Omega_2$)!',
+      rubrik: [
+        'Sistem lensa atau cermin pasif tidak pernah bisa menaikkan intensitas spesifik ($I_\\nu$) melebihi nilai di sumber aslinya.',
+        'Ketika teleskop memperbesar bayangan sumber terurai seluas $M^2$ kali di retina/sensor sekaligus mengumpulkan $D^2$ kali foton, kedua faktor saling mengimbangi sehingga fluks per satuan luas bayangan terikat oleh batas $I_{\\nu,\\text{sumber}}$ (hukum II termodinamika: optik pasif tidak bisa memanaskan target melampaui suhu benda hitam sumber!).',
+      ],
+      jawabanKunci:
+        'Menurut teorema invariansi intensitas spesifik dan Hukum II Termodinamika, optik pasif (lensa/cermin tanpa penguat energi) tidak mungkin membuat bayangan sebuah objek tampak memiliki intensitas spesifik $I_\\nu$ lebih tinggi daripada sumber aslinya. Memperbesar diameter teleskop memang mengumpulkan lebih banyak foton untuk objek **titik tak terurai** (bintang) dan menaikkan kecerahan totalnya, tetapi untuk objek **terurai** (seperti nebula, galaksi, atau piringan Matahari), peningkatan perbesaran menyebarkan foton ke area piksel lebih luas sehingga kecerahan permukaan maksimum selalu dibatasi oleh $I_{\\nu,\\text{sumber}}$ (jika tidak demikian, cermin raksasa bisa memanaskan benda melebihi suhu permukaan Matahari dan melanggar Hukum II Termodinamika!).',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="a5-refleksi-1"
+  pertanyaan="Mengapa dalam penentuan jarak gugus bintang terbuka di bidang Bima Sakti, astronom wajib mengukur indeks warna (B−V) selain magnitudo visual V? Jelaskan peran diagram warna–magnitudo dan vektor pemredihan dalam memisahkan jarak fisik sejati dari efek ekstingsi debu."
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'a5-m1', gerbang: 'derivasi', teks: 'Menurunkan λ_max T = b dan konstanta Stefan-Boltzmann σ = 2π⁵ k_B⁴ / (15 c² h³) langsung dari integral fungsi Planck.' },
+    { id: 'a5-m2', gerbang: 'derivasi', teks: 'Menyelesaikan persamaan transfer radiatif 1D untuk atenuasi I = I₀ e^(−τ), A_λ = 1,0857 τ_λ, dan limb darkening Eddington–Barbier.' },
+    { id: 'a5-m3', gerbang: 'logika', teks: 'Membuktikan invariansi kecerahan permukaan sumber terurai dan membedakan puncak B_λ vs B_ν.' },
+    { id: 'a5-m4', gerbang: 'observasi', teks: 'Menghitung jarak sejati bebas bias menggunakan indeks Q = (U−B) − 0,72(B−V), E(B−V), A_V, dan koreksi bolometrik BC.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul A5">
+
+<Konstanta
+  data={[
+    { simbol: 'σ (Stefan–Boltzmann)', nilai: '5,67037 × 10⁻⁸', satuan: 'W m⁻² K⁻⁴' },
+    { simbol: 'b (Wien untuk B_λ)', nilai: '2,89777 × 10⁻³', satuan: 'm K' },
+    { simbol: 'L₀ (titik nol M_bol = 0, IAU 2015)', nilai: '3,0128 × 10²⁸', satuan: 'W' },
+    { simbol: 'L_☉ (nominal IAU 2015)', nilai: '3,828 × 10²⁶', satuan: 'W' },
+    { simbol: 'M_bol,☉ · M_V,☉ · BC_V,☉', nilai: '+4,74 · +4,83 · −0,09', satuan: 'mag' },
+    { simbol: 'Konversi A_λ / τ_λ', nilai: '2,5 log₁₀ e ≈ 1,08574', satuan: 'mag' },
+    { simbol: 'R_V standar ISM difus', nilai: '3,1', satuan: 'rasio' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-03', 'SRC-05', 'SRC-06', 'SRC-17']}
+  pemetaan={[
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS2101 & AS2102: radiometri, transfer radiatif 1D, benda hitam, dan fotometri multi-pita.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al. (6e), Bab 3–4: magnitudo Pogson, filter UBVRI, ekstingsi antarbintang, dan indeks Q.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Bab 3, 5, 9: penurunan hukum Planck/Wien/Stefan–Boltzmann dan persamaan transfer radiatif.' },
+    { sumberId: 'SRC-17', rujukan: 'IAU Resolution 2015 B2: definisi skala magnitudo bolometrik absolut dan titik nol luminositas L₀.' },
+  ]}
+/>
+
+</Bagian>

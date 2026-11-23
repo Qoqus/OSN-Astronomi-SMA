@@ -1,0 +1,472 @@
+<IdentitasModul
+  kode="L4"
+  tier="Klaster Lanjutan · Modul 4 dari 6"
+  posisi="Materi Antarbintang, Struktur & Kinematika Bima Sakti, Materi Gelap & AGN"
+  estimasi="85 menit studi mendalam"
+  tingkat="S1 Astrofisika Pengantar & IOAA Penuh"
+  prasyarat={[
+    { id: 'a4', label: 'A4 · Mekanika Langit & Orbit' },
+    { id: 'a5', label: 'A5 · Radiasi, Magnitudo & Fotometri' },
+    { id: 'l1', label: 'L1 · Bintang: Karakteristik & Spektrum' },
+  ]}
+  koneksi={[
+    { id: 'l5', label: 'L5 · Kosmologi Dasar', peran: 'Galaksi sebagai pelacak ekspansi Hubble–Lemaître dan bukti materi gelap kosmik' },
+    { id: 'l6', label: 'L6 · Analisis Data & Praktikum Observasi', peran: 'Linearisasi Tully–Fisher, reduksi kurva rotasi & analisis data gugus galaksi' },
+  ]}
+  sumberUtama={['SRC-03', 'SRC-04', 'SRC-05', 'SRC-06']}
+/>
+
+<Tujuan>
+
+- Membedakan keempat fase **Materi Antarbintang (ISM)** (awan molekul CO, gas H I $21{,}1\ \text{cm}$, daerah H II, dan gas koronal), menurunkan **Radius Strömgren ($R_S$)** daerah H II dari kesetimbangan fotoionisasi–rekombinasi, dan menghubungkan debu dengan ekstingsi $A_V$.
+- Mengklasifikasikan morfologi galaksi dalam **Urutan Hubble** (E0–E7, S0, Sa–Sc, SBa–SBc, Irr) dan menjelaskan mengapa urutan itu bersifat struktural/kinematis, bukan garis evolusi sederhana.
+- Memetakan komponen struktur **Bima Sakti** (cakram tipis/tebal, *bulge*/palang, halo) dan menimbang massa lubang hitam supermasif pusat galaksi **Sgr A\*** dari orbit bintang **S2**.
+- Menurunkan **Konstanta Oort ($A, B$)** untuk rotasi diferensial cakram Galaksi serta membuktikan bagaimana **kurva rotasi datar ($v \approx \text{konst}$)** menuntut adanya **halo materi gelap** ($\rho_{\text{DM}} \propto r^{-2}$ / NFW).
+- Menerapkan hukum skala galaksi (**Tully–Fisher** & **Faber–Jackson**), menimbang gugus galaksi via **Teorema Virial Zwicky**, dan menurunkan **Luminositas Eddington ($L_{\text{Edd}}$)** sebagai batas daya **AGN / Kuasar**.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'ism',
+      label: 'Fase ISM & Bola Strömgren',
+      peran: 'Gas H₂/CO dingin, garis spin-flip HI 21 cm, daerah H II terionisasi (R_S), dan debu A_V.',
+      ke: ['bima-sakti', 'rotasi'],
+    },
+    {
+      id: 'bima-sakti',
+      label: 'Struktur Bima Sakti & Sgr A*',
+      peran: 'Cakram Populasi I, halo Populasi II, dan lubang hitam 4,3×10⁶ M☉ di pusat (orbit S2).',
+      ke: ['rotasi'],
+    },
+    {
+      id: 'rotasi',
+      label: 'Konstanta Oort & Materi Gelap',
+      peran: 'v_r = A d sin(2l) memetakan kecepatan lokal; kurva rotasi datar → halo materi gelap.',
+      ke: ['galaksi-gugus'],
+    },
+    {
+      id: 'galaksi-gugus',
+      label: 'Hubble, Tully–Fisher & Zwicky Virial',
+      peran: 'Tangga jarak galaksi L ∝ v_max⁴ dan massa dinamis gugus M_vir ~ 5 R σ² / G.',
+      ke: ['agn'],
+    },
+    {
+      id: 'agn',
+      label: 'AGN, Kuasar & Batas Eddington',
+      peran: 'Akresi lubang hitam supermasif dibatasi gaya tekan radiasi L_Edd = 4πGMm_p c / σ_T.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Ruang di antara bintang-bintang bukanlah hampa absolut: sekitar $10\text{--}15\%$ massa barionik cakram Bima Sakti berupa gas dan debu antarbintang yang menjadi bahan mentah generasi bintang berikutnya. Di skala lebih agung lagi, kinematika gas hidrogen $21\ \text{cm}$ dan bintang di dalam maupun antar-galaksi mengungkap misteri terbesar astrofisika modern: <Sorot>materi tampak hanyalah puncak gunung es di tengah lautan halo materi gelap tak terlihat</Sorot> (`SRC-03`, `SRC-04`, `SRC-06`).
+</div>
+
+<Bagian id="ism-stromgren" judul="1. Materi Antarbintang (ISM), Garis 21 cm HI & Penurunan Radius Strömgren" tag="Medium Antarbintang">
+
+Ruang antarbintang berisi campuran gas ($\sim 99\%$ massa, mayoritas H dan He) dan butiran debu silikat/karbon ($\sim 1\%$ massa, ukuran $\sim 0{,}01\text{--}0{,}3\ \mu\text{m}$) dalam kesetimbangan tekanan termal kasar melintasi empat fase utama (`SRC-06`):
+
+| Fase ISM | Temperatur ($T$) | Kerapatan ($n$) | Pelacak Utama Observasi | Peran Astrofisika |
+|---|---|---|---|---|
+| **Awan Molekul Raksasa (GMC)** | $10\text{--}20\ \text{K}$ | $10^8\text{--}10^{12}\ \text{m}^{-3}$ | Emisi rotasi molekul **CO** ($\lambda = 2{,}6\ \text{mm}$) | Tempat kelahiran gugus bintang (Jeans collapse) |
+| **Hidrogen Netral (H I)** | $50\text{--}100\ \text{K}$ (dingin) / $\sim 8\,000\ \text{K}$ (hangat) | $10^5\text{--}10^7\ \text{m}^{-3}$ | Garis radio hiperhalus **$21{,}1\ \text{cm}$** ($1420{,}4\ \text{MHz}$) | Memetakan struktur spiral & kurva rotasi galaksi |
+| **Daerah H II (Gas Terionisasi)** | $\sim 8\,000\text{--}10\,000\ \text{K}$ | $10^7\text{--}10^{10}\ \text{m}^{-3}$ | Garis rekombinasi **H$\alpha$** ($656{,}3\ \text{nm}$) & garis terlarang [O III] | Nebula emisi di sekitar bintang muda O–B |
+| **Gas Koronal Panas** | $10^6\text{--}10^7\ \text{K}$ | $\sim 10^3\ \text{m}^{-3}$ | Sinar-X lunak & garis ion tinggi (O VI) | Gelembung yang ditiup gelombang kejut supernova |
+
+**Mengapa garis H I $21{,}1\ \text{cm}$ sangat revolusioner?** Pada keadaan dasar hidrogen ($n=1$), interaksi magnetik antara spin proton dan spin elektron memecah tingkat energi menjadi dua sub-tingkat amat berdekatan: keadaan paralel (energi sedikit lebih tinggi) dan anti-paralel. Transisi pembalikan spin (*spin-flip*) ini memancarkan foton radio $\Delta E = 5{,}87\times 10^{-6}\ \text{eV} \implies \lambda = \mathbf{21{,}106\ \text{cm}}$ ($\nu = 1420{,}406\ \text{MHz}$). Meski peluang transisi spontan per atom amat kecil ($A_{10} = 2{,}85\times 10^{-15}\ \text{s}^{-1}$, waktu tunggu $\sim 11$ juta tahun!), jumlah atom H I di galaksi amat masif sehingga garis $21\ \text{cm}$ bersinar terang dan **menembus tirai debu antarbintang tanpa terhalang ekstingsi**!
+
+### Penurunan Radius Bola Strömgren ($R_S$) pada Daerah H II
+
+Sebuah bintang muda panas kelas O atau B memancarkan $\dot{N}_{\text{LyC}}$ foton Lyman kontinu ($h\nu > 13{,}6\ \text{eV}$) per detik ke dalam gas hidrogen homogen berkerapatan $n_H$. Foton tersebut mengionisasi gas di sekeliling bintang membentuk bola plasma bercahaya (**Daerah H II**, misal Nebula Orion) hingga seluruh fluks foton UV habis diserap tepat di jari-jari batas **Radius Strömgren ($R_S$)**.
+
+Dalam kesetimbangan ionisasi, laju total foton pengionisasi per detik yang keluar dari bintang tepat sama dengan laju total **rekombinasi** proton + elektron menjadi atom H (ke tingkat $n \ge 2$, dengan koefisien rekombinasi Case B $\alpha_B \approx 2{,}6\times 10^{-19}\ \text{m}^3/\text{s}$ pada $10^4\ \text{K}$; rekombinasi langsung ke $n=1$ memancarkan kembali foton $13{,}6\ \text{eV}$ yang langsung mengionisasi atom lain!):
+
+$$\dot{N}_{\text{LyC}} = \int_0^{R_S} n_e n_p\,\alpha_B\,(4\pi r^2\,dr).$$
+
+Karena gas hidrogen hampir terionisasi penuh di dalam bola ($n_e = n_p \approx n_H$ konstan), integrasinya langsung memberi **Radius Strömgren**:
+
+<Rumus judul="Radius Bola Strömgren Daerah H II">
+
+$$R_S = \left(\frac{3\,\dot{N}_{\text{LyC}}}{4\pi\,n_H^2\,\alpha_B}\right)^{1/3}$$
+
+</Rumus>
+
+*(Cek ketergantungan: semakin padat awan $n_H$, laju tumbukan rekombinasi naik sebagai $n_H^2$, sehingga bola Strömgren menyusut tajam sebagai $n_H^{-2/3}$!)*
+
+</Bagian>
+
+<Bagian id="bima-sakti-sgr" judul="2. Struktur Bima Sakti, Tipe Galaksi Hubble & Massa Sgr A*" tag="Arsitektur Galaksi">
+
+### A. Morfologi Galaksi (Garpu Tala Hubble)
+
+Edwin Hubble mengelompokkan galaksi berdasarkan morfologi optik ke dalam tiga keluarga utama (plus tak beraturan):
+- **Elips (E0–E7):** Profil cahaya mulus tanpa cakram atau lengan spiral; angka $n = 10(1 - b/a)$ menyatakan kegepengan tampak ($0$ bundar, $7$ paling elips). Didominasi bintang tua merah (Populasi II), sangat miskin gas dingin, dan ditopang dispersi kecepatan acak 3D ($\sigma_v$).
+- **Lentikular (S0 / SB0):** Memiliki *bulge* besar dan cakram bintang, tetapi hampir tanpa gas dan lengan spiral.
+- **Spiral (Sa–Sc) & Spiral Berpalang (SBa–SBc):** Memiliki *bulge*, palang sentral (pada $\sim 2/3$ spiral termasuk Bima Sakti **SBbc**!), serta cakram kaya gas, debu, dan formasi bintang muda di lengan spiral. Dari **a $\to$ c**: rasio *bulge*/cakram mengecil, lengan spiral makin terbuka longgar, serta fraksi gas dan bintang muda biru makin tinggi.
+- **Tak Beraturan (Irr):** Tanpa simetri jelas, sangat kaya gas, kerap dipicu interaksi gravitasi (contoh: Awan Magellan Besar & Kecil).
+
+**Catatan Penting:** Diagram garpu tala Hubble **bukan diagram evolusi** (galaksi tidak lahir sebagai E0 lalu perlahan berubah menjadi Sc!). Justru galaksi spiral yang bertabrakan kerap melebur menjadi galaksi elips raksasa.
+
+### B. Komponen Bima Sakti & Menimbang Lubang Hitam Supermasif Sgr A\*
+
+| Komponen Bima Sakti | Isi & Populasi Dominan | Dimensi Khas |
+|---|---|---|
+| **Bulge & Palang Pusat** | Bintang tua–menengah kaya & miskin logam; di pusat terdapat Sgr A\* | Radius $\sim 2\text{--}3\ \text{kpc}$ |
+| **Cakram Tipis** | Gas molekuler/H I, debu, gugus terbuka, bintang muda **Populasi I**; Matahari di $R_0 \approx 8{,}2\ \text{kpc}$ | Tebal skala $\sim 300\ \text{pc}$, diameter $\sim 30\ \text{kpc}$ |
+| **Cakram Tebal** | Bintang lebih tua dan miskin logam daripada cakram tipis | Tebal skala $\sim 1\ \text{kpc}$ |
+| **Halo Bintang & Gugus Bola** | Bintang amat tua & miskin logam (**Populasi II**), $>150$ gugus bola | Radius $> 30\text{--}50\ \text{kpc}$ |
+| **Halo Materi Gelap** | Materi non-barionik tak memancarkan cahaya (NFW / isotermal) | Radius virial $\sim 200\text{--}250\ \text{kpc}$ |
+
+Dengan teleskop inframerah adaptif (*Keck* & *VLT GRAVITY*, menembus ekstingsi debu pusat galaksi $A_V \approx 30\ \text{mag}$!), astronom melacak orbit elips penuh bintang **S2** mengelilingi sumber radio **Sgr A\*** ($d = 8{,}2\ \text{kpc}$): $P = 16{,}05\ \text{tahun}$ dan sumbu semi-mayor sudut $\alpha'' = 0{,}125'' \implies a = 0{,}125 \times 8\,200 \approx 1\,025\ \text{AU}$. Hukum III Kepler langsung memberikan massa terpusat di dalam orbit S2:
+
+$$M_{\text{Sgr A*}} = \frac{a_{\text{AU}}^3}{P_{\text{th}}^2} = \frac{1\,025^3}{16{,}05^2} \approx 4{,}18\times 10^6\,M_\odot \quad (\text{nilai presisi modern: } 4{,}3\times 10^6\,M_\odot)!$$
+
+</Bagian>
+
+<Bagian id="oort-materi-gelap" judul="3. Rotasi Diferensial (Konstanta Oort) & Kurva Rotasi Materi Gelap" tag="Dinamika Galaksi">
+
+Bima Sakti tidak berputar sebagai benda tegar ($\Omega = \text{konst}$), melainkan berotasi **diferensial** dengan kecepatan sudut $\Omega(R) = V(R)/R$ yang bergantung pada jarak galaktosentris $R$. Tinjau bintang tetangga pada jarak $d \ll R_0$ dari Matahari ke arah bujur galaktik $l$ (dengan $R_0 \approx 8{,}2\ \text{kpc}$ dan $V_0 \approx 220\text{--}230\ \text{km/s}$) (`SRC-03`, `SRC-06`):
+
+1. Kecepatan radial relatif bintang terhadap Matahari ($LSR$) sepanjang garis pandang adalah proyeksi kecepatan orbit bintang dikurangi proyeksi kecepatan Matahari:
+   $$v_r = V(R)\sin(l + \theta) - V_0\sin l,$$
+   di mana sudut antara pusat galaksi–bintang–Matahari memenuhi $R\sin\theta = d\sin l$ (aturan sinus) dan untuk $d \ll R_0$, $\sin(l+\theta) = \sin l\cos\theta + \cos l\sin\theta \approx \sin l + \frac{d}{R}\sin l\cos l$ serta $\Omega(R) = \frac{V(R)}{R}$.
+2. Nyatakan $v_r = \left[\Omega(R) - \Omega_0\right] R_0 \sin l$. Lakukan **ekspansi Taylor orde pertama** di sekitar $R_0$:
+   $$\Omega(R) - \Omega_0 \approx \left.\frac{d\Omega}{dR}\right|_{R_0}(R - R_0).$$
+   Dari aturan kosinus $R^2 = R_0^2 + d^2 - 2 R_0 d \cos l$, pada $d \ll R_0$ berlaku $R - R_0 \approx -d\cos l$.
+3. Gunakan identitas $2\sin l\cos l = \sin(2l)$ dan turunan $\frac{d\Omega}{dR} = \frac{1}{R}\frac{dV}{dR} - \frac{V}{R^2}$:
+
+$$v_r \approx -R_0\left(\frac{1}{R_0}\left.\frac{dV}{dR}\right|_{R_0} - \frac{V_0}{R_0^2}\right) d\sin l\cos l = \frac{1}{2}\left(\frac{V_0}{R_0} - \left.\frac{dV}{dR}\right|_{R_0}\right) d\sin(2l).$$
+
+Dengan cara identik untuk komponen kecepatan tangensial (gerak diri $v_t$), kita memperoleh **Rumus Rotasi Diferensial Oort** beserta dua **Konstanta Oort $A$ dan $B$**:
+
+<Rumus judul="Rumus Kecepatan Radial/Tangensial & Konstanta Oort (d ≪ R₀)">
+
+$$v_r \approx A\,d\,\sin(2l), \qquad v_t \approx d\left(A\cos(2l) + B\right)$$
+$$A \equiv \frac{1}{2}\left(\frac{V_0}{R_0} - \left.\frac{dV}{dR}\right|_{R_0}\right) \approx +14{,}8\ \text{km s}^{-1}\text{kpc}^{-1}, \qquad B \equiv -\frac{1}{2}\left(\frac{V_0}{R_0} + \left.\frac{dV}{dR}\right|_{R_0}\right) \approx -12{,}4\ \text{km s}^{-1}\text{kpc}^{-1}$$
+
+</Rumus>
+
+*(Cek identitas luar biasa konstanta Oort: $A - B = \frac{V_0}{R_0} = \Omega_0$ memberi langsung kecepatan sudut lokal Matahari, dan $A + B = -\left.\frac{dV}{dR}\right|_{R_0}$ langsung mengukur kemiringan kurva rotasi di $R_0$! Karena $A + B \approx 0$ di tata surya, kurva rotasi Bima Sakti di sekitar Matahari sudah hampir **datar**!)*
+
+### Kurva Rotasi Datar & Bukti Halo Materi Gelap
+
+Untuk objek bermassa kecil dalam orbit lingkaran pada radius $r$ di dalam distribusi massa simetri bola $M(<r)$:
+
+$$v(r) = \sqrt{\frac{G\,M(<r)}{r}} \implies M(<r) = \frac{v^2(r)\,r}{G}.$$
+
+<Gambar id="kurva-rotasi" />
+
+- **Prediksi Keplerian (jika massa terpusat pada bintang tampak):** Di luar cakram terang ($r \gtrsim 15\ \text{kpc}$), $M(<r) \approx \text{konst}$, maka kecepatan orbit seharusnya meluruh sebagai **$v(r) \propto r^{-1/2}$**.
+- **Fakta Observasi (Vera Rubin, kurva H I $21\ \text{cm}$):** Hingga $r > 30\text{--}50\ \text{kpc}$ jauh melampaui bintang terluar, kecepatan rotasi tetap **datar** ($v(r) \approx v_0 \approx \text{konst}$)! Dengan $v$ konstan, massa terlingkup wajib terus tumbuh linear **$M(<r) = \frac{v_0^2}{G}\,r \propto r$**!
+- Menggunakan $dM = 4\pi r^2 \rho(r)\,dr \implies \rho(r) = \frac{1}{4\pi r^2}\frac{dM}{dr}$, kita dapatkan profil kerapatan **Halo Isotermal Tunggal** yang dibutuhkan:
+  $$\rho_{\text{DM}}(r) = \frac{v_0^2}{4\pi G\,r^2} \propto r^{-2}.$$
+  *(Dalam simulasi kosmologi modern $N$-body Cold Dark Matter, profil halo mengikuti **Profil Navarro–Frenk–White (NFW)**: $\rho_{\text{NFW}}(r) = \frac{\rho_s}{(r/r_s)(1 + r/r_s)^2}$, berlereng $r^{-1}$ di dalam dan $r^{-3}$ di luar!)*
+
+</Bagian>
+
+<Bagian id="hukum-skala-agn" judul="4. Hukum Skala Galaksi, Virial Zwicky & Batas Eddington AGN" tag="Galaksi Ekstragalaktik & Kuasar">
+
+1. **Relasi Tully–Fisher (Spiral) & Faber–Jackson (Elips):**
+   Dari kesetimbangan virial $v^2 \propto GM/R$, apabila rasio massa-terhadap-cahaya ($M/L$) dan kecerahan permukaan efektif ($I_e \propto L / R^2$) hampir seragam antar-galaksi:
+   $$R \propto L^{1/2} \implies v^2 \propto \frac{L}{L^{1/2}} = L^{1/2} \implies L \propto v_{\max}^4 \quad (\text{Tully–Fisher}) \quad \text{atau} \quad L \propto \sigma_v^4 \quad (\text{Faber–Jackson})!$$
+   Karena kecepatan rotasi maksimum $v_{\max}$ (dari lebar profil garis H I $21\ \text{cm}$) atau dispersi kecepatan $\sigma_v$ (dari pelebaran Doppler spektrum) bersifat **bebas jarak**, hukum skala pangkat-4 ini menjadi indikator jarak kosmologis sekunder amat penting hingga ratusan Mpc!
+2. **Gugus Galaksi & Teorema Virial Zwicky:**
+   Fritz Zwicky (1933) mengukur dispersi kecepatan radial satu dimensi $\sigma_r$ galaksi-galaksi anggota Gugus Coma ($N$ galaksi tersebar dalam radius $R$) dan menerapkan teorema virial $2K + U = 0$ ($\sigma_{\text{3D}}^2 = 3\sigma_r^2$, $U \approx -\frac{3}{5}\frac{GM^2}{R}$):
+   $$M_{\text{vir}} \approx \frac{5\,R\,\sigma_r^2}{G} \quad (\text{atau } \frac{3\pi R \sigma_r^2}{2G}\text{ dengan proyeksi rata-rata}).$$
+   Hasilnya melampaui total massa seluruh cahaya bintang hingga ratusan kali (kini diketahui gugus galaksi tersusun atas $\sim 85\%$ **materi gelap**, $\sim 12\%$ gas antargalaksi superpanas $10^7\text{--}10^8\ \text{K}$ pemancar sinar-X bremsstrahlung, dan hanya $\sim 3\%$ bintang!). Hal ini dikonfirmasi secara independen oleh **pelensaan gravitasi kuat & lemah**.
+3. **Galaksi Aktif (AGN), Kuasar & Luminositas Eddington ($L_{\text{Edd}}$):**
+   Di inti galaksi aktif (Seyfert, Blazar, Kuasar), materi yang jatuh membentuk cakram akresi ke lubang hitam supermasif ($M \sim 10^6\text{--}10^{10}\,M_\odot$) memancarkan daya $L = \eta \dot{M} c^2$ dengan efisiensi $\eta \approx 0{,}06\text{--}0{,}42$ (jauh lebih efisien daripada fusi nuklir $0{,}7\%$!).
+   Daya maksimum stabil sebelum **tekanan radiasi foton** menghamburkan elektron (yang menyeret proton lewat tarikan Coulomb!) hingga meniup gas akresi keluar disebut **Luminositas Eddington**: samakan gaya gravitasi per pasang $p^+$–$e^-$ ($F_g = \frac{GM m_p}{r^2}$) dengan gaya tekan radiasi via penampang hamburan Thomson $\sigma_T = 6{,}652\times 10^{-29}\ \text{m}^2$ ($F_{\text{rad}} = \frac{L}{4\pi r^2 c}\sigma_T$):
+
+<Rumus judul="Batas Luminositas Eddington">
+
+$$L_{\text{Edd}} = \frac{4\pi G M m_p c}{\sigma_T} \approx 1{,}26\times 10^{31}\left(\frac{M}{M_\odot}\right)\ \text{W} \approx 3{,}28\times 10^4\left(\frac{M}{M_\odot}\right)\,L_\odot$$
+
+</Rumus>
+
+<BatasValiditas
+  aturan={[
+    {
+      rumus: 'Rumus Konstanta Oort $v_r = A d \\sin(2l)$',
+      berlakuJika: 'Bintang/awan gas berada di bidang cakram ($b \\approx 0^\\circ$), mengikuti orbit hampir lingkaran, dan jarak dari Matahari jauh lebih kecil daripada jarak Matahari ke pusat galaksi ($d \\ll R_0 \\approx 8{,}2\\ \\text{kpc}$, mis. $d \\lesssim 1{,}5\\ \\text{kpc}$).',
+      gagalJika: 'Jarak $d$ sebanding dengan atau melampaui $R_0$ (ekspansi Taylor $R-R_0 \\approx -d\\cos l$ rusak total!), atau pada bintang halo Populasi II yang berorbit sangat elips dan acak (tidak ikut rotasi cakram).',
+      akibat: 'Untuk awan gas jauh di lengan spiral bagian dalam, gunakan rumus geometris eksak metode kecepatan terminal $V(R_0\\sin l) = v_{r,\\max} + V_0\\sin l$ bukan pendekatan $A\\sin(2l)$.',
+    },
+    {
+      rumus: 'Massa dinamis $M(<r) = v^2 r / G$',
+      berlakuJika: 'Distribusi massa total di dalam $r$ mendekati simetri bola (halo materi gelap dominan) dan pelacak gas/bintang menempuh orbit lingkaran tanpa dukungan tekanan atau gerak non-sirkuler.',
+      gagalJika: 'Wilayah pusat yang didominasi palang non-aksisimetrik atau cakram sangat tipis bergravitasi-diri (selisih faktor orde $\\sim 0{,}6\\text{--}1{,}0$ dibanding bola), atau aliran gas mengalami gelombang kejut/aliran keluar AGN.',
+      akibat: 'Menaksir massa di dalam bagian terdalam cakram tanpa memodelkan potensial cakram pipih bisa menyimpang $\\sim 20\\text{--}40\\%$.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="contoh-l4" judul="5. Worked Example: Konstanta Oort, Halo Gelap & Daya Kuasar" tag="Notebook Hitung">
+
+<Contoh judul="Menghitung kurva rotasi galaksi, massa total, dan batas massa minimum lubang hitam kuasar">
+
+<Langkah>
+
+**Bagian A — Massa Total & Fraksi Materi Gelap Galaksi:**
+Sebuah galaksi spiral mirip Bima Sakti memiliki kecepatan rotasi datar konstan $v = 220\ \text{km/s} = 2{,}20\times 10^5\ \text{m/s}$ yang masih datar sampai pengamatan H I terluar pada radius $r = 30\ \text{kpc} = 30 \times 3{,}086\times 10^{19}\ \text{m} = 9{,}258\times 10^{20}\ \text{m}$. Jika total massa materi tampak (bintang + gas barionik) di seluruh galaksi hanyalah $M_{\text{bar}} = 6{,}0\times 10^{10}\,M_\odot$, hitung massa total di dalam $30\ \text{kpc}$ dan fraksi materi gelapnya!
+$$M(<30\ \text{kpc}) = \frac{v^2 r}{G} = \frac{(2{,}20\times 10^5)^2 (9{,}258\times 10^{20})}{6{,}674\times 10^{-11}} \approx 6{,}71\times 10^{41}\ \text{kg}.$$
+Dalam massa Matahari ($M_\odot = 1{,}989\times 10^{30}\ \text{kg}$):
+$$M(<30\ \text{kpc}) = \frac{6{,}71\times 10^{41}}{1{,}989\times 10^{30}} \approx 3{,}37\times 10^{11}\,M_\odot.$$
+Fraksi materi gelap di dalam $30\ \text{kpc}$:
+$$f_{\text{DM}} = \frac{3{,}37\times 10^{11} - 6{,}0\times 10^{10}}{3{,}37\times 10^{11}} \approx 82{,}2\%!$$
+
+</Langkah>
+
+<Langkah>
+
+**Bagian B — Laju Akresi Kuasar & Batas Eddington:**
+Sebuah kuasar terang memancarkan luminositas bolometrik $L = 1{,}26\times 10^{40}\ \text{W}$ ($\approx 3{,}3\times 10^{13}\,L_\odot$). Dengan efisiensi konversi massa akresi $\eta = 0{,}10$, berapa **massa minimum lubang hitam** agar tak melampaui batas Eddington, dan berapa **massa gas yang ditelan per tahun** ($\dot{M}$)?
+1. Dari $L \le L_{\text{Edd}} = 1{,}26\times 10^{31}\,(M_{\text{BH}}/M_\odot)\ \text{W}$:
+   $$M_{\text{BH, min}} = \frac{1{,}26\times 10^{40}}{1{,}26\times 10^{31}} = 1{,}0\times 10^9\,M_\odot \quad (\text{1 miliar massa Matahari!}).$$
+2. Dari $L = \eta \dot{M} c^2$:
+   $$\dot{M} = \frac{L}{\eta c^2} = \frac{1{,}26\times 10^{40}}{(0{,}10)(2{,}998\times 10^8)^2} \approx 1{,}40\times 10^{24}\ \text{kg/s}.$$
+   Dalam $M_\odot/\text{tahun}$ ($1\ \text{th} = 3{,}156\times 10^7\ \text{s}$):
+   $$\dot{M} = \frac{(1{,}40\times 10^{24})(3{,}156\times 10^7)}{1{,}989\times 10^{30}} \approx 22{,}2\,M_\odot/\text{tahun}!$$
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Urutan garpu tala Hubble menunjukkan evolusi: setiap galaksi bermula sebagai Elips (E0), lalu memipih membentuk palang dan lengan spiral (Sa → Sc).',
+      kenapaKeliru: 'Terjebak oleh sebutan lama "early-type" (E/S0) dan "late-type" (Sc/Irr) yang dipakai Edwin Hubble, padahal istilah itu hanya merujuk kerumitan gambar morfologi, bukan umur fisiknya!',
+      caraDeteksi: 'Cek usia bintang dan momentum sudut: galaksi Elips hampir seluruhnya berisi bintang TUA dan rendah momentum sudut spesifik, sedangkan Spiral terus membentuk bintang MUDA penuh gas; penggabungan dua Spiral justru menghasilkan Elips!',
+      benar: 'Diagram Hubble adalah klasifikasi morfologi/kinematis: jika ada jalur penggabungan, justru peleburan galaksi spiral kaya momentum sudut membentuk galaksi elips raksasa.',
+    },
+    {
+      salah: 'Kurva rotasi datar galaksi spiral terjadi karena bintang di luar cakram mengikuti rotasi benda tegar (v = ω r).',
+      kenapaKeliru: 'Mengacaukan v(r) = konstan (kurva datar) dengan v(r) ∝ r (rotasi benda tegar).',
+      caraDeteksi: 'Turunkan M(<r) = v² r / G untuk keduanya: rotasi benda tegar (v ∝ r) menuntut M(<r) ∝ r³ (kerapatan konstan ρ = konst), sedangkan kurva datar (v = konst) memberi M(<r) ∝ r (kerapatan ρ ∝ r⁻²)!',
+      benar: 'Rotasi benda tegar hanya terjadi dekat pusat bulge (v naik linear dengan r); bagian datar jauh di luar cakram (v konstan) adalah jejak halo materi gelap dengan ρ ∝ r⁻².',
+    },
+    {
+      salah: 'Materi gelap berarti gas hidrogen dingin H I atau debu hitam biasa yang terlalu redup untuk memancarkan cahaya tampak.',
+      kenapaKeliru: 'Menyamakan "gelap secara optik" dengan "materi gelap kosmologis".',
+      caraDeteksi: 'Gas dingin H I menyerap latar belakang & memancarkan garis radio 21 cm; awan molekul memancarkan CO mm; debu memancarkan termal inframerah jauh — SEMUA materi barionik terlihat di spektrum multi-panjang gelombang dan terbatasi oleh nukleosintesis Big Bang (BBN)!',
+      benar: 'Materi gelap non-barionik tidak berinteraksi dengan gaya elektromagnetik sama sekali (tidak menyerap, memantul, atau memancarkan foton di panjang gelombang apa pun) dan hanya terdeteksi lewat gravitasinya.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="l4-cek-1"
+  pertanyaan="Kurva rotasi sebuah galaksi datar dengan v konstan. Bagaimana massa di dalam radius r berubah terhadap r?"
+  opsi={['M ∝ r', 'M ∝ r²', 'M konstan', 'M ∝ 1/r']}
+  jawaban={0}
+  penjelasan="M(<r) = v²r/G. Dengan v konstan, massa sebanding dengan r. Massa bertambah terus tanpa cahaya yang sepadan — bukti materi gelap."
+/>
+
+<CekPaham
+  id="l4-cek-2"
+  pertanyaan="Bima Sakti paling tepat digolongkan sebagai galaksi..."
+  opsi={['Elips raksasa', 'Spiral berpalang', 'Lentikular', 'Tak beraturan']}
+  jawaban={1}
+  penjelasan="Bima Sakti memiliki cakram dengan lengan spiral dan palang di pusat, sehingga tergolong spiral berpalang (sekitar SBbc)."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'l4-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Mengapa pengamatan bintang-bintang muda panas kelas O/B di cakram Bima Sakti secara historis gagal menyingkap struktur spiral jauh maupun sisi seberang Galaksi, sedangkan pemetaan radio garis **21 cm H I** dan **2,6 mm CO** sukses menggambar seluruh peta cakram hingga melampaui pusat galaksi?',
+      petunjuk: 'Tinjau hukum ekstingsi panjang gelombang $A_\\lambda \\propto \\lambda^{-1}$ (dari A5) dan sumber radiasi tiap pelacak.',
+      langkahKunci: [
+        'Cahaya tampak dan UV dari bintang O/B mengalami penghamburan Mie dan serapan debu sangat parah di sepanjang bidang cakram Bima Sakti ($A_V \\approx 1\\text{--}2\\ \\text{mag/kpc}$, bahkan $A_V \\approx 30\\ \\text{mag}$ ke arah pusat galaksi $\\implies$ cahaya optik meredup $10^{-12}\\times$!).',
+        'Sebaliknya, panjang gelombang radio ($\\lambda = 21{,}1\\ \\text{cm}$) dan milimeter ($\\lambda = 2{,}6\\ \\text{mm}$) jauh lebih besar daripada ukuran butiran debu antarbintang ($a \\sim 0{,}1\\ \\mu\\text{m}$), sehingga debu hampir **transparan total** ($\\tau_{\\text{radio}} \\ll 1$) dan efek Doppler garis 21 cm sekaligus langsung memisahkan kecepatan radial masing-masing lengan spiral!',
+      ],
+      rubrik: [
+        'Menghubungkan ukuran butiran debu ($\\sim 0{,}1\\ \\mu\\text{m}$) dengan atenuasi optik/UV yang ekstrem.',
+        'Menjelaskan transparansi debu pada gelombang radio $21\\ \\text{cm}$ / mm CO dan fungsi pemetaan kecepatan Doppler.',
+      ],
+    },
+    {
+      id: 'l4-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari dua definisi Konstanta Oort $A = \\frac{1}{2}\\left(\\frac{V_0}{R_0} - \\left.\\frac{dV}{dR}\\right|_{R_0}\\right)$ dan $B = -\\frac{1}{2}\\left(\\frac{V_0}{R_0} + \\left.\\frac{dV}{dR}\\right|_{R_0}\\right)$, hitunglah nilai eksak rasio $A / (-B)$ untuk tiga model kurva rotasi berikut: (1) **rotasi benda tegar** ($V \\propto R$), (2) **kurva rotasi datar** ($V = \\text{konst}$), dan (3) **rotasi Keplerian** ($V \\propto R^{-1/2}$)!',
+      petunjuk: 'Nyatakan $\\left.\\frac{dV}{dR}\\right|_{R_0} = n\\frac{V_0}{R_0}$ untuk model hukum pangkat $V(R) \\propto R^n$, lalu substitusi ke $A$ dan $B$.',
+      langkahKunci: [
+        'Untuk $V(R) = V_0 (R/R_0)^n$, turunannya di $R_0$ adalah $\\left.\\frac{dV}{dR}\\right|_{R_0} = n\\frac{V_0}{R_0}$.',
+        'Maka $A = \\frac{1}{2}(1 - n)\\Omega_0$ dan $B = -\\frac{1}{2}(1 + n)\\Omega_0$, di mana $\\Omega_0 = V_0 / R_0$.',
+        'Kasus 1 (**Benda tegar**, $n = +1$): $A = 0$, $B = -\\Omega_0$ (tidak ada pergeseran *shear* kecepatan radial antar bintang!).',
+        'Kasus 2 (**Kurva datar**, $n = 0$): $A = +\\frac{1}{2}\\Omega_0$ dan $B = -\\frac{1}{2}\\Omega_0 \\implies A / (-B) = 1{,}0$. (Nilai observasi Bima Sakti $A \\approx 14{,}8$ dan $B \\approx -12{,}4$ amat dekat dengan $1{,}0$, menandakan kurva datar/sedikit menurun lokal!).',
+        'Kasus 3 (**Keplerian**, $n = -1/2$): $A = \\frac{3}{4}\\Omega_0$ dan $B = -\\frac{1}{4}\\Omega_0 \\implies A / (-B) = 3{,}0$.',
+      ],
+      rubrik: [
+        'Menurunkan rumus umum $A = \\frac{1}{2}(1-n)\\Omega_0$ dan $B = -\\frac{1}{2}(1+n)\\Omega_0$.',
+        'Memberikan nilai tepat untuk benda tegar ($A=0$), kurva datar ($A=-B$), dan Keplerian ($A=-3B$).',
+      ],
+    },
+    {
+      id: 'l4-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah bintang supermasif kelas O memancarkan $\\dot{N}_{\\text{LyC}} = 3{,}0\\times 10^{49}$ foton pengionisasi per detik ke dalam medium antarbintang di sekitarnya yang memiliki kerapatan hidrogen seragam $n_H = 1{,}0\\times 10^8\\ \\text{m}^{-3}$ ($100\\ \\text{cm}^{-3}$). Dengan koefisien rekombinasi $\\alpha_B = 2{,}6\\times 10^{-19}\\ \\text{m}^3/\\text{s}$, hitung **Radius Strömgren $R_S$** (dalam parsek) daerah H II yang terbentuk, dan hitung total massa gas terionisasi di dalamnya!',
+      petunjuk: 'Substitusikan ke $R_S = \\left(\\frac{3\\dot{N}_{\\text{LyC}}}{4\\pi n_H^2 \\alpha_B}\\right)^{1/3}$ dan gunakan $1\\ \\text{pc} = 3{,}086\\times 10^{16}\\ \\text{m}$.',
+      langkahKunci: [
+        'Penyebut: $4\\pi n_H^2 \\alpha_B = 4\\pi (10^{16})(2{,}6\\times 10^{-19}) \\approx 3{,}27\\times 10^{-2}\\ \\text{m}^{-3}\\text{s}^{-1}$.',
+        'Hitung $R_S^3 = \\frac{3(3{,}0\\times 10^{49})}{3{,}27\\times 10^{-2}} \\approx 2{,}75\\times 10^{51}\\ \\text{m}^3 \\implies R_S \\approx 1{,}40\\times 10^{17}\\ \\text{m}$.',
+        'Dalam parsek: $R_S = \\frac{1{,}40\\times 10^{17}}{3{,}086\\times 10^{16}} \\approx 4{,}54\\ \\text{pc}$ (diameter $\\sim 9\\ \\text{pc}$ — tepat seukuran Nebula Orion/Rosette!).',
+        'Total massa gas terionisasi: $M_{\\text{HII}} = \\frac{4}{3}\\pi R_S^3 n_H m_p = \\frac{\\dot{N}_{\\text{LyC}}}{n_H \\alpha_B} m_p \\approx \\frac{3{,}0\\times 10^{49}}{2{,}6\\times 10^{-11}}(1{,}673\\times 10^{-27}) \\approx 1{,}93\\times 10^{33}\\ \\text{kg} \\approx 970\\,M_\\odot$!',
+      ],
+      rubrik: [
+        'Menghitung $R_S \\approx 4{,}5\\ \\text{pc}$ dengan satuan SI konsisten.',
+        'Menghitung total massa nebula $M_{\\text{HII}} \\approx 970\\,M_\\odot$ (jauh lebih berat daripada bintang pengionisasinya sendiri!).',
+      ],
+    },
+    {
+      id: 'l4-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Pengamatan gugus galaksi Coma menunjukkan radius virial karakteristik $R = 3{,}0\\ \\text{Mpc} = 9{,}26\\times 10^{22}\\ \\text{m}$ dan dispersi kecepatan radial satu dimensi antar-galaksi $\\sigma_r = 1\\,000\\ \\text{km/s} = 1{,}0\\times 10^6\\ \\text{m/s}$. (a) Taksir **massa virial total** gugus menggunakan $M_{\\text{vir}} \\approx \\frac{5 R \\sigma_r^2}{G}$ (dalam $M_\\odot$). (b) Jika total luminositas cahaya bintang seluruh galaksi anggota gugus adalah $L_{\\text{tot}} = 5{,}0\\times 10^{12}\\,L_\\odot$, hitung rasio massa-terhadap-cahaya $(M/L)$ gugus dalam satuan solar $(M_\\odot / L_\\odot)$ dan tafsirkan hasilnya!',
+      petunjuk: 'Bandingkan $(M/L)_{\\text{gugus}}$ dengan $(M/L)$ populasi bintang murni ($\\sim 2\\text{--}5\\,M_\\odot/L_\\odot$).',
+      langkahKunci: [
+        'Massa virial: $M_{\\text{vir}} \\approx \\frac{5(9{,}26\\times 10^{22})(10^6)^2}{6{,}674\\times 10^{-11}} = \\frac{4{,}63\\times 10^{35}}{6{,}674\\times 10^{-11}} \\approx 6{,}94\\times 10^{45}\\ \\text{kg}$.',
+        'Dalam $M_\\odot$: $M_{\\text{vir}} \\approx \\frac{6{,}94\\times 10^{45}}{1{,}989\\times 10^{30}} \\approx 3{,}49\\times 10^{15}\\,M_\\odot$.',
+        'Rasio massa-terhadap-cahaya: $\\frac{M}{L} \\approx \\frac{3{,}49\\times 10^{15}}{5{,}0\\times 10^{12}} \\approx 700\\,M_\\odot / L_\\odot$!',
+        'Karena populasi bintang murni hanya memiliki $M/L \\sim 3\\,M_\\odot/L_\\odot$, nilai $\\sim 300\\text{--}700$ ini membuktikan bahwa $>95\\%$ massa gravitasi pengikat gugus Coma tidak berasal dari bintang tampak, melainkan gas panas antar-galaksi ($\\sim 12\\%$) dan dominasi **materi gelap** ($\\sim 85\\%$).',
+      ],
+      rubrik: [
+        'Menghitung $M_{\\text{vir}} \\approx 3{,}5\\times 10^{15}\\,M_\\odot$.',
+        'Menghitung $M/L \\approx 700\\,M_\\odot/L_\\odot$ dan menafsirkannya sebagai dominasi materi gelap + gas ICM.',
+      ],
+    },
+    {
+      id: 'l4-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Kuasar jauh menunjukkan variasi kecerahan optik yang cukup drastis dalam skala waktu hanya $\\Delta t_{\\text{var}} \\approx 1\\ \\text{hari}$ (di kerangka diam kuasar), sambil memancarkan daya $L \\approx 10^{40}\\ \\text{W}$. Bagaimana prinsip **batas kausalitas cahaya ($R \\lesssim c\\,\\Delta t_{\\text{var}}$)** digabungkan dengan **Luminositas Eddington** memaksa astronom menyimpulkan bahwa kuasar wajib ditenagai oleh **lubang hitam supermasif yang amat kompak**, bukan gugus ribuan supernova?',
+      petunjuk: 'Hitung ukuran maksimum sumber $R_{\\text{maks}}$ untuk $\\Delta t = 1\\ \\text{hari}$, massa minimum $M_{\\text{Edd}}$ untuk $L = 10^{40}\\ \\text{W}$, lalu bandingkan $R_{\\text{maks}}$ dengan radius Schwarzschild $R_s$ massa tersebut!',
+      langkahKunci: [
+        'Dari argumen kausalitas kecepatan cahaya $c$, sumber tak dapat berubah terang secara koheren lebih cepat dari waktu tempuh cahaya melintasi diameternya: $R \\lesssim c\\,\\Delta t = (2{,}998\\times 10^8)(86\\,400) \\approx 2{,}6\\times 10^{13}\\ \\text{m} \\approx 173\\ \\text{AU}$ (ukuran Tata Surya luar!).',
+        'Sementara dari batas Eddington ($L_{\\text{Edd}} = 1{,}26\\times 10^{31}\\,M/M_\\odot$), daya $10^{40}\\ \\text{W}$ menuntut massa terikat minimal $M \\gtrsim 8\\times 10^8\\,M_\\odot$.',
+        'Radius Schwarzschild lubang hitam $8\\times 10^8\\,M_\\odot$ adalah $R_s \\approx 3\\ (8\\times 10^8)\\ \\text{km} \\approx 2{,}4\\times 10^{12}\\ \\text{m} \\approx 16\\ \\text{AU}$ — artinya massa hampir satu miliar Matahari itu harus dimampatkan ke dalam volume beradius hanya beberapa kali radius peristiwa Schwarzschild-nya ($R \\sim 10\\,R_s$), mustahil berupa gugus bintang normal yang berjarak tahunan cahaya!',
+      ],
+      rubrik: [
+        'Menghitung batas ukuran kausalitas $c\\Delta t \\approx 170\\ \\text{AU}$.',
+        'Menghitung massa Eddington minimum ($\\sim 10^9\\,M_\\odot$) dan membandingkannya dengan $R_s$ untuk membuktikan kekompakan ekstrem.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'l4-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa daerah H II yang lebih padat ($n_H$ $10\\times$ lebih besar) di sekitar bintang O yang identik justru menghasilkan Bola Strömgren yang **lebih kecil** secara fisik ($R_S \\propto n_H^{-2/3}$), padahal jumlah total foton UV per detik yang dipancarkan bintang tersebut tetap sama?',
+      petunjuk: 'Periksa kebergantungan laju **rekombinasi** per satuan volume ($n_e n_p \\alpha_B$) vs jumlah atom netral per satuan volume.',
+      rubrik: [
+        'Setiap peristiwa rekombinasi membutuhkan tumbukan antara satu proton ($n_p = n_H$) dan satu elektron ($n_e = n_H$), sehingga laju rekombinasi per satuan volume tumbuh secara **kuadratik** sebagai $n_H^2 \\alpha_B$!',
+        'Jika kerapatan gas naik $10\\times$, laju "menangkap balik elektron" per $\\text{m}^3$ melonjak $100\\times$ lebih cepat sehingga pasokan foton $\\dot{N}_{\\text{LyC}}$ yang tetap habis dikonsumsi dalam volume $(10^2)\\times$ lebih kecil ($R_S^3 \\propto n_H^{-2} \\implies R_S \\propto n_H^{-2/3}$)!',
+      ],
+      jawabanKunci:
+        'Dalam bola Strömgren kesetimbangan, jumlah foton UV tidak dihabiskan sekali saja untuk mengionisasi gas statis, melainkan terus-menerus dipakai untuk **mengimbangi laju rekombinasi** $p^+ + e^- \\to \\text{H} + \\gamma$! Karena rekombinasi adalah proses tumbukan dua-benda ($n_e \\cdot n_p = n_H^2$), memperbesar kerapatan gas $10\\times$ melipatgandakan laju rekombinasi per satuan volume sebesar **$100\\times$**. Akibatnya pasokan foton tetap $\\dot{N}_{\\text{LyC}}$ hanya sanggup menjaga status terionisasi dalam volume $100\\times$ lebih kecil ($R_S \\propto n_H^{-2/3}$).',
+    },
+    {
+      id: 'l4-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Untuk mencari kurva kecepatan rotasi $V(R)$ seluruh cakram Bima Sakti dari luar, seorang pengamat menyaring semua bintang di sekitar Matahari hingga jarak $d = 5\\ \\text{kpc}$ lalu mencocokkannya dengan rumus $v_r = A\\,d\\,\\sin(2l)$ guna mengukur $A$. Apa kekeliruan fatal metode ini?',
+      petunjuk: 'Cek dua syarat berlakunya rumus Oort: rasio $d / R_0$ ($5\\ \\text{kpc} / 8{,}2\\ \\text{kpc} \\approx 0{,}61$) serta ekstingsi debu + sifat bintang di jarak jauh.',
+      rubrik: [
+        'Rumus $v_r = A d \\sin(2l)$ berasal dari deret Taylor orde pertama dalam $d/R_0 \\ll 1$: pada $d = 5\\ \\text{kpc}$ ($d/R_0 \\approx 0{,}61$), aproksimasi $\\sin\\theta \\approx (d/R)\\sin l$ dan $R - R_0 \\approx -d\\cos l$ runtuh dengan galat puluhan persen!',
+        'Selain itu di jarak optik $5\\ \\text{kpc}$ sepanjang bidang cakram ($b=0^\\circ$), ekstingsi debu $A_V \\sim 5\\text{--}10\\ \\text{mag}$ membutakan pengamatan optik di sebagian besar arah bujur $l$.',
+      ],
+      jawabanKunci:
+        'Kesalahan utamanya adalah melanggar syarat asumsi deret Taylor Oort ($d \\ll R_0 \\approx 8{,}2\\ \\text{kpc}$)! Pada jarak $d = 5\\ \\text{kpc}$, $d/R_0 \\approx 0{,}61$ membuat aproksimasi linear $R - R_0 \\approx -d\\cos l$ dan suku sudut segitiga galaktosentris menyimpang sangat besar sehingga kurva $v_r(l)$ bukan lagi sinusoida murni $\\sin(2l)$ (muncul harmonik lebih tinggi & pergeseran fasa). Untuk $d \\gtrsim 1{,}5\\ \\text{kpc}$, analisis harus menggunakan persamaan geometri eksak $v_r = R_0(\\Omega(R) - \\Omega_0)\\sin l$ (biasanya lewat garis radio 21 cm H I atau maser VLBI untuk menghindari ekstingsi debu).',
+    },
+    {
+      id: 'l4-log-3',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Misalkan lubang hitam supermasif di pusat kuasar sedang mengalami akresi gas bermuatan (hidrogen terionisasi), namun dalam skenario hipotetis gas tersebut ternyata diganti menjadi **plasma murni elektron–positron ($e^- e^+$)** tanpa proton! Bagaimana perubahan besar nilai **Luminositas Eddington ($L_{\\text{Edd}}$)** pada massa lubang hitam $M$ yang sama?',
+      petunjuk: 'Cek rasio massa inersia per elektron ($m_{\\text{inertia}}$) yang ditahan gravitasi vs penampang hamburan Thomson $\\sigma_T$ pada elektron/positron!',
+      rubrik: [
+        'Pada plasma H normal, gaya tekan radiasi bekerja pada elektron ($\\sigma_T$) tetapi setiap elektron mengikat secara elektrostatik satu proton bermassa $m_p$ yang menahan tarikan gravitasi: $L_{\\text{Edd}} = 4\\pi G M m_p c / \\sigma_T$.',
+        'Pada plasma pasangan $e^- e^+$, massa per partikel penghambur hanyalah $m_e$ ($\\approx m_p / 1836$), sehingga gravitasi hanya $1/1836$ kali lebih lemah untuk tiap $\\sigma_T$: akibatnya **$L_{\\text{Edd}}$ turun drastis menjadi $\\sim 1/1836$ kalinya** (plasma pasangan $e^- e^+$ langsung tertiup keluar menjadi jet relativistik pada daya amat kecil)!',
+      ],
+      jawabanKunci:
+        'Dalam rumus $L_{\\text{Edd}} = \\frac{4\\pi G M m_{\\text{eff}} c}{\\sigma_T}$, massa $m_p$ muncul karena setiap elektron yang terdorong foton menyeret beban gravitasi satu proton. Jika plasma berubah menjadi pasangan elektron–positron murni ($e^- e^+$) tanpa proton, beban gravitasi per partikel penghambur merosot dari $m_p$ menjadi hanya $m_e$ — akibatnya **Luminositas Eddington anjlok sebesar faktor $m_e / m_p \\approx 1 / 1\,836$**! Itulah alasan mengapa plasma pasangan $e^- e^+$ di dekat AGN nyaris mustahil bertahan akresi dan langsung terdorong keluar membentuk **jet relativistik**!',
+    },
+    {
+      id: 'l4-log-4',
+      tipe: 'bandingkan_model',
+      pertanyaan:
+        'Untuk menjelaskan mengapa bintang pinggir galaksi berputar secepat bagian dalam ($v \\approx \\text{konst}$), selain hipotesis **Halo Materi Gelap (CDM)** muncul pula hipotesis alternatif **MOND (*Modified Newtonian Dynamics*, Milgrom 1983)** yang memodifikasi hukum II Newton/gravitasi pada percepatan amat kecil ($a < a_0 \\approx 1{,}2\\times 10^{-10}\\ \\text{m/s}^2$). Sebutkan satu bukti observasional di skala gugus galaksi (**Bullet Cluster 1E 0657-56**) yang secara kuat memihak materi gelap partikel dibanding modifikasi gravitasi murni terhadap gas tampak!',
+      petunjuk: 'Dalam tabrakan dua gugus galaksi (*Bullet Cluster*), bandingkan letak puncak massa gravitasi (dari pelensaan lemah) terhadap letak massa barionik dominan (gas panas sinar-X)!',
+      rubrik: [
+        'Di *Bullet Cluster*, dua gugus galaksi baru saja saling menembus: gas antarbintang barionik ($\\sim 85\\%$ massa barionik total, tampak di sinar-X *Chandra*) mengalami gesekan/tumbukan fluida sehingga **tertinggal di tengah**.',
+        'Namun peta pelensaan gravitasi lemah menunjukkan pusat potensi gravitasi terkuat **JUSTU melesat terus di depan** berimpit dengan galaksi-galaksi nir-tumbukan — membuktikan bahwa sumber gravitasi dominan terpisah secara fisik dari massa gas barionik (tidak menempel pada distribusi barion seperti prediksi MOND murni)!',
+      ],
+      jawabanKunci:
+        'Pada tabrakan gugus galaksi **Bullet Cluster**, mayoritas massa materi biasa (barionik) berada dalam bentuk gas panas antargalaksi pemancar sinar-X yang saling bertumbukan dan melambat di bagian tengah tabrakan, sementara galaksi-galaksi dan partikel materi gelap nir-tumbukan melesat terus melewati satu sama lain. Peta pelensaan gravitasi membuktikan bahwa pusat gravitasi terkuat **berimpit dengan posisi galaksi di depan — terpisah jauh secara spasial dari pusat massa gas barionik di tengah**! Seandainya tidak ada materi gelap partikel dan gravitasi hanyalah modifikasi dari materi barionik yang ada, pusat pelensaan gravitasi seharusnya berpusat pada gas barionik terberat di tengah.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="l4-refleksi-1"
+  pertanyaan="Materi gelap tidak memancarkan maupun menyerap cahaya di panjang gelombang apa pun. Bagaimana astronom dapat memetakan bukan hanya keberadaannya, melainkan juga profil kerapatannya $\rho_{\text{DM}}(r)$ di galaksi dan gugus galaksi?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'l4-m1', gerbang: 'derivasi', teks: 'Menurunkan Radius Strömgren daerah H II R_S ∝ (N_LyC / (n_H² α_B))^(1/3) serta menjelaskan garis 21 cm H I menembus debu.' },
+    { id: 'l4-m2', gerbang: 'observasi', teks: 'Membedakan tipe Hubble (E, S0, Sa–Sc, Irr), struktur Bima Sakti (cakram, bulge, halo), dan menghitung massa Sgr A* dari orbit S2.' },
+    { id: 'l4-m3', gerbang: 'derivasi', teks: 'Menurunkan Konstanta Oort A dan B untuk rotasi diferensial serta memakai kurva rotasi datar v = konst → ρ_DM ∝ r^-2.' },
+    { id: 'l4-m4', gerbang: 'konsep', teks: 'Menerapkan Tully–Fisher (L ∝ v^4), Faber–Jackson, Teorema Virial Zwicky pada gugus galaksi, dan pelensaan gravitasi.' },
+    { id: 'l4-m5', gerbang: 'derivasi', teks: 'Menurunkan Luminositas Eddington L_Edd = 4πGMm_p c/σ_T untuk AGN/kuasar dan mengaitkannya dengan efisiensi akresi η.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul L4">
+
+<Konstanta
+  data={[
+    { simbol: 'R₀ (Matahari – Pusat Galaksi)', nilai: '8,2', satuan: 'kpc' },
+    { simbol: 'V₀ (kecepatan orbit Matahari)', nilai: '220–230', satuan: 'km/s' },
+    { simbol: 'Garis hiperhalus H I', nilai: '21,106 (1420,406)', satuan: 'cm (MHz)' },
+    { simbol: 'Konstanta Oort A · B', nilai: '+14,8 · −12,4', satuan: 'km s⁻¹ kpc⁻¹' },
+    { simbol: 'Massa Sgr A*', nilai: '4,3 × 10⁶', satuan: 'M_☉' },
+    { simbol: 'Penampang Thomson σ_T', nilai: '6,652 × 10⁻²⁹', satuan: 'm²' },
+    { simbol: 'Luminositas Eddington', nilai: '1,26 × 10³¹ (M/M_☉)', satuan: 'W' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-03', 'SRC-04', 'SRC-05', 'SRC-06']}
+  pemetaan={[
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS3203 & AS4106 (Fisika Galaksi & Materi Antarbintang): bola Strömgren, konstanta Oort & materi gelap.' },
+    { sumberId: 'SRC-04', rujukan: 'MIT OCW 8.902 (Astrophysics II): dinamika galaksi, profil NFW, batas Eddington AGN & gugus galaksi.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al., Fundamental Astronomy (6e), Ch. 15, 17–18: ISM, Bima Sakti, galaksi & kuasar.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Ch. 12 & 24–28: fisika medium antarbintang, rotasi diferensial, hukum skala galaksi & AGN.' },
+  ]}
+/>
+
+</Bagian>

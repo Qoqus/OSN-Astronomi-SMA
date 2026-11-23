@@ -1,0 +1,484 @@
+<IdentitasModul
+  kode="L2"
+  tier="Klaster Lanjutan · Modul 2 dari 6"
+  posisi="Persamaan Struktur Bintang, Teorema Virial, Termonuklir & Materi Terdegenerasi"
+  estimasi="95 menit studi mendalam"
+  tingkat="S1 Astrofisika Pengantar & IOAA Penuh"
+  prasyarat={[
+    { id: 'f4', label: 'F4 · Mekanika' },
+    { id: 'f6', label: 'F6 · Listrik-Magnet & Fisika Modern' },
+    { id: 'l1', label: 'L1 · Bintang: Karakteristik & Spektrum' },
+  ]}
+  koneksi={[
+    { id: 'l3', label: 'L3 · Bintang Ganda, Gugus & Eksoplanet', peran: 'Titik belok (MSTO) evolusi gugus bintang & transfer massa biner rapat' },
+    { id: 'l4', label: 'L4 · Galaksi & Materi Antarbintang', peran: 'Pengayaan logam ISM oleh supernova & pembentukan bintang di awan molekul' },
+    { id: 'l5', label: 'L5 · Kosmologi Dasar', peran: 'Supernova tipe Ia sebagai lilin standar jarak kosmologis di ambang Chandrasekhar' },
+  ]}
+  sumberUtama={['SRC-01', 'SRC-03', 'SRC-04', 'SRC-06']}
+/>
+
+<Tujuan>
+
+- Menuliskan dan menurunkan keempat **persamaan diferensial struktur bintang** ($dP/dr, dM/dr, dL/dr, dT/dr$) termasuk syarat konveksi Schwarzschild dan batas bawah tekanan pusat.
+- Membuktikan **Teorema Virial bintang** ($2\langle K\rangle + \langle U\rangle = 0$) melalui integrasi parsial persamaan hidrostatik dan menjelaskan mengapa bintang gas ideal memiliki **kapasitas panas negatif** (*termostat alami bintang*).
+- Menurunkan **Massa Jeans ($M_J$)** untuk keruntuhan awan molekul antarbintang dan melacak jalur evolusi pra-deret utama (**Jejak Hayashi & Henyey**).
+- Membandingkan fisika pembangkitan energi nuklir **rantai proton–proton** ($\epsilon_{pp} \propto \rho T^4$), **siklus CNO** ($\epsilon_{\text{CNO}} \propto \rho T^{16\text{--}20}$), dan **proses triple-alpha** ($\epsilon_{3\alpha} \propto \rho^2 T^{40}$), serta batas struktur konvektif inti pada $M \approx 1{,}3\,M_\odot$.
+- Menurunkan persamaan keadaan **gas elektron terdegenerasi Fermi** non-relativistik ($P_e \propto \rho^{5/3}$) dan relativistik ($P_e \propto \rho^{4/3}$), membuktikan hubungan massa–radius katai putih ($R \propto M^{-1/3}$) hingga munculnya **Batas Chandrasekhar ($\sim 1{,}44\,M_\odot$)**, bintang neutron, dan radius Schwarzschild.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'empat-pdb',
+      label: '4 PDB Struktur Bintang',
+      peran: 'Keseimbangan hidrostatik, kontinuitas massa, pembangkitan energi & transpor radiasi/konveksi.',
+      ke: ['virial', 'fusi'],
+    },
+    {
+      id: 'virial',
+      label: 'Teorema Virial & Massa Jeans',
+      peran: 'E_tot = -K = U/2: menyusut memanaskan inti (kapasitas panas negatif) sampai fusi menyala.',
+      ke: ['fusi', 'degenerasi'],
+    },
+    {
+      id: 'fusi',
+      label: 'pp-Chain, CNO & Triple-Alpha',
+      peran: 'Kepekaan suhu menentukan apakah inti bintang radiatif (<1,3 M☉) atau konvektif (>1,3 M☉).',
+      ke: ['evolusi'],
+    },
+    {
+      id: 'evolusi',
+      label: 'Jejak Evolusi Diagram H–R',
+      peran: 'Hayashi → ZAMS → RGB → Helium Flash/HB → AGB/Nebula Planet vs Supernova Inti Besi.',
+      ke: ['degenerasi'],
+    },
+    {
+      id: 'degenerasi',
+      label: 'Degenerasi Fermi & Chandrasekhar',
+      peran: 'Tekanan kuantum Pauli menahan katai putih (R ∝ M^-1/3) hingga batas relativistik 1,44 M☉.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Di L1 kita memotret permukaan bintang; di modul ini kita menembus masuk ke jantung reaktor termonuklir yang suhunya puluhan juta kelvin. Mengapa Matahari tidak langsung meledak atau runtuh? Mengapa katai putih justru makin kecil jika massanya bertambah? Seluruh jawabannya lahir dari <Sorot>empat persamaan diferensial struktur bintang, Teorema Virial, kepekaan suhu fusi kuantum, dan tekanan degenerasi Fermi</Sorot> (`SRC-03`, `SRC-04`, `SRC-06`).
+</div>
+
+<Bagian id="struktur-empat-pdb" judul="1. Empat Persamaan Struktur Bintang & Kriteria Konveksi" tag="Mekanika Fluida Bintang">
+
+Sebuah bintang bulat simetris statis tanpa rotasi ekstrem maupun medan magnet global sepenuhnya diperikan pada setiap jari-jari $r \in [0, R]$ oleh **empat persamaan diferensial biasa (PDB)** berpasangan (`SRC-06`):
+
+<Rumus judul="Empat Persamaan Dasar Struktur Bintang">
+
+$$\frac{dM}{dr} = 4\pi r^2 \rho(r), \qquad \frac{dP}{dr} = -\frac{G M(r)\rho(r)}{r^2}$$
+$$\frac{dL}{dr} = 4\pi r^2 \rho(r)\,\epsilon(r), \qquad \frac{dT}{dr} = -\frac{3\kappa(r)\rho(r)}{16\pi a c r^2}\frac{L(r)}{T^3(r)} \quad (\text{radiatif})$$
+
+</Rumus>
+
+Makna fisis keempatnya:
+1. **Kontinuitas Massa ($dM/dr$):** Massa cangkang tipis ketebalan $dr$ adalah $dM = \rho\,dV = 4\pi r^2 \rho\,dr$.
+2. **Keseimbangan Hidrostatik ($dP/dr$):** Gaya gravitasi ke dalam pada elemen cangkang bermassa $dm = \rho A\,dr$ tepat ditahan oleh selisih gaya tekanan dari bawah ke atas, $A\,[P(r) - P(r+dr)] = -A\,dP = \frac{GM(r)\,dm}{r^2}$. Skala waktu penyeimbangan ulang bila keseimbangan ini terganggu adalah **skala waktu dinamika (jatuh bebas)**: $t_{\text{dyn}} \sim (G\bar{\rho})^{-1/2} \approx 30\ \text{menit}$ untuk Matahari!
+3. **Kekekalan Energi ($dL/dr$):** Perubahan daya pancar melintasi cangkang $dr$ berasal dari laju pembangkitan energi nuklir per satuan massa $\epsilon(\rho, T)$ ($\text{W/kg}$).
+4. **Transpor Energi ($dT/dr$):** Jika energi dibawa oleh difusi foton melalui gas beropasitas Rosseland $\kappa$ ($\text{m}^2/\text{kg}$), gradien suhu sebanding fluks lokal $L/(4\pi r^2)$. Namun apabila gradien radiatif menjadi **terlalu curam** (lebih curam daripada gradien adiabatik $\left|\frac{dT}{dr}\right|_{\text{rad}} > \left|\frac{dT}{dr}\right|_{\text{ad}} = \left(1 - \frac{1}{\gamma}\right)\frac{T}{P}\left|\frac{dP}{dr}\right|$), gelembung gas panas yang terangkat ke atas tetap lebih ringan daripada lingkungannya dan terus membubung! Itulah **Kriteria Konveksi Schwarzschild**: energi langsung diambil alih oleh arus **konveksi** yang mendidih sangat efisien sehingga gradien suhu terkunci mendekati gradien adiabatik.
+
+### Penurunan Batas Bawah Tekanan Pusat ($P_c$)
+
+Kalikan persamaan hidrostatik dengan $4\pi r^3$ atau langsung substitusi $dr = \frac{dM}{4\pi r^2 \rho}$ untuk mengubah variabel ke koordinat massa $M(r)$:
+
+$$\frac{dP}{dM} = -\frac{G M}{4\pi r^4}.$$
+
+Integrasikan dari pusat ($M=0, P=P_c$) hingga permukaan ($M=M_*, P \approx 0$). Karena di dalam bintang $r \le R_*$, maka $\frac{1}{r^4} \ge \frac{1}{R_*^4}$ di mana-mana:
+
+$$P_c - 0 = \int_0^{M_*} \frac{G M}{4\pi r^4}\,dM > \frac{G}{4\pi R_*^4}\int_0^{M_*} M\,dM = \frac{G M_*^2}{8\pi R_*^4}.$$
+
+Untuk Matahari, batas bawah eksak ini memberi $P_{c,\odot} > 4{,}5\times 10^{13}\ \text{Pa}$; profil kerapatan sebenarnya yang memusat di inti menghasilkan **$P_{c,\odot} \approx 2{,}5\times 10^{16}\ \text{Pa}$** ($2{,}5\times 10^{11}\ \text{atm}$!).
+
+</Bagian>
+
+<Bagian id="virial-jeans" judul="2. Teorema Virial, Kapasitas Panas Negatif & Massa Jeans" tag="Termodinamika Gravitasi">
+
+Bagaimana energi termal bagian dalam bintang berhubungan dengan energi potensial gravitasinya? Mari kita turunkan **Teorema Virial Bintang** langsung dari persamaan keseimbangan hidrostatik $\frac{dP}{dr} = -\frac{GM(r)\rho(r)}{r^2}$ (`SRC-04`, `SRC-06`)!
+
+1. Kalikan kedua ruas dengan volume $V(r) = \frac{4}{3}\pi r^3$ dan integralkan dari $r=0$ ke permukaan $r=R$:
+   $$\int_0^R \frac{4}{3}\pi r^3 \frac{dP}{dr}\,dr = -\int_0^R \frac{4}{3}\pi r^3 \frac{G M(r) \rho(r)}{r^2}\,dr = \frac{1}{3}\underbrace{\left(-\int_0^M \frac{GM(r)}{r}\,dM\right)}_{U_{\text{grav}}}.$$
+   Perhatikan bahwa suku di kanan tepat sama dengan $\frac{1}{3} U_{\text{grav}}$ (untuk bola pejal seragam $U_{\text{grav}} = -\frac{3}{5}\frac{GM^2}{R}$).
+2. Integrasikan ruas kiri secara parsial ($\int u\,dv = uv - \int v\,du$ dengan $u = \frac{4}{3}\pi r^3, dv = dP$):
+   $$\left[\frac{4}{3}\pi r^3 P(r)\right]_0^R - \int_0^R P(r)\,(4\pi r^2\,dr) = 0 - \int_0^V P\,dV.$$
+   Suku batas lenyap karena di pusat $r=0$ dan di permukaan $P(R) \approx 0$.
+3. Bagi gas ideal monoatomik ($\gamma = 5/3$), tekanan berkaitan langsung dengan kerapatan energi kinetik translasi lokal: $P = \frac{2}{3}u_K$, sehingga $\int P\,dV = \frac{2}{3} K_{\text{tot}}$! Menggabungkan ruas kiri dan kanan langsung membuktikan:
+
+<Rumus judul="Teorema Virial Bintang (Gas Ideal Non-Relativistik)">
+
+$$-\frac{2}{3}K_{\text{tot}} = \frac{1}{3}U_{\text{grav}} \implies 2 K_{\text{tot}} + U_{\text{grav}} = 0 \implies E_{\text{tot}} = K_{\text{tot}} + U_{\text{grav}} = \frac{1}{2}U_{\text{grav}} = -K_{\text{tot}} < 0$$
+
+</Rumus>
+
+<Epistemik jenis="interpretasi" judul="Paradoks Kapasitas Panas Negatif & Termostat Bintang">
+
+Karena $E_{\text{tot}} = -K_{\text{tot}} \propto -T$, ketika sebuah bintang (atau awan protobintang sebelum fusi menyala) kehilangan energi lewat radiasi ($\Delta E_{\text{tot}} < 0$), ia menyusut ($U_{\text{grav}}$ makin negatif): **separuh energi potensial gravitasi yang dilepaskan dipancarkan keluar sebagai cahaya, sementara separuh lainnya MEMANASKAN inti bintang ($\Delta K_{\text{tot}} = -\Delta E_{\text{tot}} > 0$)!** Jadi $C_V = \frac{dE_{\text{tot}}}{dT} < 0$. Inilah rahasia mengapa bintang gas ideal memiliki **termostat otomatis** stabil: jika laju fusi tiba-tiba naik terlalu tinggi, inti sedikit mengembang, mendingin, dan reaksi melambat kembali! (Sebaliknya, pada gas **terdegenerasi** di mana tekanan tak bergantung $T$, mekanisme termostat ini mati total sehingga memicu ledakan termonuklir!).
+
+</Epistemik>
+
+### Kriteria Ketidakstabilan Jeans ($M_J$)
+
+Awan molekul raksasa bertemperatur $T$ dan kerapatan massa seragam $\rho_0$ (berat molekul rata-rata $\mu m_H$) baru akan runtuh secara gravitasi bila energi gravitasinya mengalahkan energi termal penopangnya ($|U_{\text{grav}}| > 2 K_{\text{tot}}$):
+
+$$\frac{3}{5}\frac{G M^2}{R} > 3 \left(\frac{M}{\mu m_H}\right) k_B T, \qquad \text{dengan } R = \left(\frac{3M}{4\pi \rho_0}\right)^{1/3}.$$
+
+Mengisolasi massa $M$ menghasilkan **Massa Jeans** (batas minimum massa awan untuk runtuh membentuk bintang):
+
+<Rumus judul="Massa Jeans Keruntuhan Gravitasi">
+
+$$M_J \approx \left(\frac{5 k_B T}{G \mu m_H}\right)^{3/2}\left(\frac{3}{4\pi \rho_0}\right)^{1/2}$$
+
+</Rumus>
+
+*(Implikasi astrofisika krusial: saat awan dingin $T \approx 10\ \text{K}$ dan $n \sim 10^{10}\ \text{m}^{-3}$ memadat secara isotermal $\rho_0 \uparrow$ sementara $T$ dijaga dingin oleh radiasi debu/CO, $M_J \propto \rho_0^{-1/2}$ terus mengecil! Akibatnya satu awan raksasa ribuan $M_\odot$ terpecah-pecah (*fragmentasi*) menjadi ratusan bintang — menjelaskan mengapa bintang lahir dalam **gugus bintang**, bukan sendirian!)*
+
+</Bagian>
+
+<Bagian id="fusi-nuklir" judul="3. Reaksi Termonuklir: pp-Chain, Siklus CNO, Triple-Alpha & Puncak Besi" tag="Tungku Nuklir Bintang">
+
+Sebagaimana diturunkan pada Modul F6 melalui **Puncak Gamow** ($P_{\text{tunnel}} \propto e^{-\sqrt{E_G/E}}$), laju reaksi fusi sangat sensitif terhadap muatan nuklir $Z_1 Z_2$ dan temperatur inti $T$ (`SRC-06`):
+
+1. **Rantai Proton–Proton (pp-chain, $T \sim 4\times 10^6\text{--}1{,}5\times 10^7\ \text{K}$):**
+   $$4\,{}^1\text{H} \longrightarrow {}^4\text{He} + 2e^+ + 2\nu_e + 2\gamma \qquad (Q_{\text{net}} = 26{,}73\ \text{MeV},\ \sim 26{,}2\ \text{MeV}\text{ tertahan di bintang}).$$
+   Langkah awal $p + p \to {}^2\text{H} + e^+ + \nu_e$ membutuhkan peluruhan $\beta^+$ lewat gaya lemah sehingga sangat lambat, dan kepekaan suhunya moderat: **$\epsilon_{pp} \propto \rho\,T^4$**.
+2. **Siklus CNO (Karbon–Nitrogen–Oksigen sebagai katalis, $T \gtrsim 1{,}7\times 10^7\ \text{K}$):**
+   Empat proton tetap digabung menjadi ${}^4\text{He}$, tetapi melalui penangkapan proton pada inti $^{12}\text{C}, {}^{14}\text{N}, {}^{15}\text{N}$ ($Z=6\text{--}7$). Penghalang Coulomb yang jauh lebih tinggi menyebabkan kepekaan suhu luar biasa curam: **$\epsilon_{\text{CNO}} \propto \rho\,X_{\text{CNO}}\,T^{16\text{--}20}$**!
+   - **Dampak struktur ($M \approx 1{,}3\,M_\odot$):** Di Matahari ($1\,M_\odot, T_c \approx 1{,}57\times 10^7\ \text{K}$), rantai pp menyumbang $>98\%$ energi sehingga pembangkitan daya tersebar cukup halus dan **inti Matahari bersifat radiatif** (selubung luar konvektif). Sebaliknya pada bintang $M \gtrsim 1{,}3\,M_\odot$, siklus CNO mendominasi; karena $T^{18}$ memusatkan seluruh daya di titik pusat yang sangat sempit, fluks energi melampaui kemampuan foton $\to$ **bintang masif memiliki inti konvektif dan selubung radiatif!**
+3. **Proses Triple-Alpha ($T \gtrsim 10^8\ \text{K}$):**
+   Karena tidak ada inti stabil bermassa $A = 5$ atau $A = 8$ ($^8\text{Be}$ meluruh balik dalam $\sim 10^{-16}\ \text{s}$!), dua inti ${}^4\text{He}$ membentuk ${}^8\text{Be}$ sementara, dan hanya jika inti ${}^4\text{He}$ ketiga langsung menumbuk melalui keadaan resonansi Hoyle $^{12}\text{C}^*$ ($7{,}65\ \text{MeV}$) maka karbon stabil terbentuk:
+   $$3\,{}^4\text{He} \longrightarrow {}^{12}\text{C} + \gamma \qquad (Q = 7{,}275\ \text{MeV},\quad \epsilon_{3\alpha} \propto \rho^2\,T^{40}!).$$
+4. **Pembakaran Unsur Berat hingga Besi ($M_{\text{awal}} \gtrsim 8\,M_\odot$):**
+   Bintang masif melanjutkan fusi C ($T\sim 6\times 10^8\ \text{K}$), Ne, O, hingga Si ($T\sim 3\times 10^9\ \text{K}$) yang membangun inti **$^{56}\text{Fe}$ / $^{56}\text{Ni}$**. Di titik puncak kurva energi ikat per nukleon ($B/A \approx 8{,}8\ \text{MeV}$), fusi lebih lanjut bersifat **endotermik ($Q < 0$)**. Ditambah hilangnya energi lewat emisi neutrino dan fotodisintegrasi, inti besi runtuh bebas dalam $< 1\ \text{detik}$ memicu **supernova keruntuhan inti (Tipe II / Ib / Ic)**!
+
+</Bagian>
+
+<Bagian id="evolusi-hr" judul="4. Evolusi Bintang pada Diagram H–R: Rendah vs Masif" tag="Jejak Evolusi Bintang">
+
+<Gambar id="hr-evolusi" />
+
+<Interaktif jenis="hr" />
+
+- **Pra-Deret Utama:** Protobintang bermassa rendah menyusut hampir vertikal ke bawah pada **Jejak Hayashi** (konvektif penuh pada suhu permukaan minimum $\sim 3\,500\ \text{K}$) sampai inti cukup panas memulai fusi di **Zero-Age Main Sequence (ZAMS)**; bintang lebih masif membelok ke kiri pada **Jejak Henyey** (radiatif).
+- **Cabang Raksasa Merah (RGB) & Prinsip Cermin (*Mirror Principle*):** Ketika H di inti Matahari habis ($\sim 10$ Gyr), fusi H berpindah ke cangkang tipis mengelilingi inti helium inert. Inti helium mengerut dan memanas, yang berdasarkan konservasi virial/gradien tekanan justru membuat selubung luar mengembang ratusan kali dan mendingin menjadi **Raksasa Merah** ($L \sim 10^3\,L_\odot, T \sim 3\,500\ \text{K}$)!
+- **Kilatan Helium (*Helium Flash*) vs Halus:** Pada bintang $M \lesssim 2\,M_\odot$, inti helium menjadi **terdegenerasi elektron** sebelum mencapai $10^8\ \text{K}$. Saat triple-alpha akhirnya menyala, kapasitas panas positif membuat suhu naik $\to$ laju reaksi $\propto T^{40}$ meledak tak terkendali dalam hitungan menit (**Helium Flash**, energi setara satu galaksi yang seluruhnya terserap mengangkat degenerasi selubung!) lalu bintang turun stabil ke **Cabang Horizontal (*Horizontal Branch*)**. Bintang $M > 2\,M_\odot$ menyalakan He secara halus tanpa degenerasi.
+- **Akhir Hidup Bermassa Rendah–Menengah ($M < 8\,M_\odot$):** Setelah He inti habis, pembakaran ganda cangkang H dan He membawa bintang ke **Asymptotic Giant Branch (AGB)**, selubung luar berdenyut terlepas sebagai **Nebula Planet** (mengungkap inti C–O telanjang di pusat), yang akhirnya mendingin sebagai **Katai Putih**.
+
+</Bagian>
+
+<Bagian id="degenerasi-kompak" judul="5. Fisika Degenerasi Fermi, Relasi R ∝ M^(-1/3) & Batas Chandrasekhar" tag="Sisa Bintang Kompak">
+
+Mengapa katai putih bermassa $1\,M_\odot$ namun berukuran se-Bumi tidak pernah runtuh meski seluruh tungku nuklirnya sudah padam? Penopangnya bukan tekanan gas ideal $P = n k_B T$, melainkan **tekanan degenerasi elektron kuantum** akibat **Prinsip Eksklusi Pauli** (dua fermion identik tak dapat menempati keadaan kuantum ruang-fasa yang sama) dan ketidakpastian Heisenberg $\Delta x\,\Delta p \sim \hbar$ (`SRC-03`, `SRC-04`, `SRC-06`).
+
+### Penurunan Relasi Massa–Radius & Batas Chandrasekhar
+
+Jika kerapatan elektron adalah $n_e = \frac{Z}{A}\frac{\rho}{m_u} \approx \frac{\rho}{2 m_u}$ (untuk C–O di mana $Z/A = 1/2$), tiap elektron terkurung dalam kotak berukuran $\Delta x \sim n_e^{-1/3}$, sehingga momentum Fermi karakteristiknya adalah $p_F \sim \hbar n_e^{1/3}$ (secara eksak dalam gas Fermi 3D pada $T=0$, $p_F = \hbar (3\pi^2 n_e)^{1/3}$):
+
+1. **Rezim Non-Relativistik ($p_F \ll m_e c$):**
+   Kelajuan elektron $v_F = p_F / m_e$, sehingga tekanan degenerasi elektron ($P_e \sim n_e p_F v_F$ atau eksak $\frac{1}{5} \frac{p_F^2}{m_e} n_e$) memenuhi:
+   $$P_e = \frac{(3\pi^2)^{2/3}}{5}\frac{\hbar^2}{m_e}\,n_e^{5/3} = K_1 \rho^{5/3}.$$
+   Perhatikan suhu $T$ **hilang total** dari persamaan keadaan! Seimbangkan $P_e$ dengan skala tekanan hidrostatik pusat $P_{\text{grav}} \sim \frac{G M^2}{R^4}$ memakai $\rho \sim \frac{M}{R^3}$:
+   $$\frac{\hbar^2}{m_e}\left(\frac{M}{m_u R^3}\right)^{5/3} \sim \frac{G M^2}{R^4} \implies \frac{\hbar^2}{m_e m_u^{5/3}} \frac{M^{5/3}}{R^5} \sim \frac{G M^2}{R^4}.$$
+   Menyelesaikan untuk $R$ memberikan sifat paling ajaib pada katai putih:
+
+<Rumus judul="Relasi Massa–Radius Katai Putih & Batas Chandrasekhar">
+
+$$R_{\text{WD}} \sim \frac{\hbar^2}{G m_e m_u^{5/3}} M^{-1/3} \propto M^{-1/3}, \qquad M_{\text{Ch}} \approx 1{,}44\,M_\odot$$
+
+</Rumus>
+
+   Semakin **besar massa** katai putih, semakin **kecil radiusnya** (sebab ia harus lebih padat agar tekanan Pauli mengimbangi gravitasi)!
+
+2. **Rezim Ultra-Relativistik & Munculnya Batas Chandrasekhar ($p_F \gtrsim m_e c$):**
+   Ketika massa $M$ mendekati ambang kritis, $R$ menyusut, $n_e$ melonjak, dan momentum Fermi menembus rezim relativistik di mana kecepatan elektron terkunci pada $v_F \to c$! Kini $P_e \sim n_e p_F c \propto n_e^{4/3} \propto \rho^{4/3}$:
+   $$\hbar c \left(\frac{M}{m_u R^3}\right)^{4/3} \sim \frac{G M^2}{R^4} \implies R^{-4}\text{ di kedua ruas SALING MENIADAKAN!}$$
+   Radius lenyap dari keseimbangan, menyisakan **massa maksimum tunggal independen-radius** di mana skala gaya kuantum kalah mutlak terhadap gravitasi bila dilampaui:
+   $$M_{\text{Ch}} \sim \left(\frac{\hbar c}{G}\right)^{3/2} \frac{1}{m_u^2} \approx 1{,}44\,M_\odot \quad (\text{dari integrasi politrop } n=3\text{ oleh Subrahmanyan Chandrasekhar, 1930}).$$
+
+Jika katai putih melewati $M_{\text{Ch}}$ (misal akresi massa dari bintang pasangan di sistem ganda), ia runtuh memicu pembakaran karbon eksplosif **Supernova Tipe Ia** — atau pada keruntuhan inti bintang masif, elektron dipaksa bergabung dengan proton ($p + e^- \to n + \nu_e$) membentuk **Bintang Neutron** ($R \sim 10\text{--}12\ \text{km}$) yang ditopang degenerasi neutron serta gaya inti kuat (Batas Tolman–Oppenheimer–Volkoff $\sim 2{,}1\text{--}2{,}3\,M_\odot$), di atasnya tak ada gaya apa pun yang mampu mencegah keruntuhan menjadi **Lubang Hitam** beradius peristiwa **Schwarzschild**:
+
+$$R_s = \frac{2GM}{c^2} \approx 2{,}95\ \text{km} \times \left(\frac{M}{M_\odot}\right).$$
+
+<BatasValiditas
+  aturan={[
+    {
+      rumus: 'Kapasitas panas negatif & stabilitas termal bintang ($E_{\\text{tot}} = \\frac{1}{2}U_{\\text{grav}}$)',
+      berlakuJika: 'Tekanan interior didominasi gas ideal monoatomik ($P = n k_B T$, indeks adiabatik $\\gamma = 5/3$).',
+      gagalJika: 'Gas terdegenerasi elektron (inti He sebelum Helium Flash atau katai putih, di mana $P$ tak bergantung $T$), atau didominasi tekanan radiasi ($\\gamma \\to 4/3$, bintang supermasif).',
+      akibat: 'Tanpa bergantungnya $P$ pada $T$, kenaikan suhu tidak mengekspansi inti sehingga laju fusi melejit eksponensial memicu *Helium Flash* atau ledakan termonuklir Supernova Ia!',
+    },
+    {
+      rumus: 'Hukum Massa–Radius Katai Putih $R \\propto M^{-1/3}$',
+      berlakuJika: 'Katai putih bermassa rendah–sedang ($M \\lesssim 0{,}6\\,M_\\odot$) dalam rezim elektron non-relativistik.',
+      gagalJika: 'Massa mendekati $M_{\\text{Ch}} \\approx 1{,}44\\,M_\\odot$ di mana elektron berubah menjadi ultra-relativistik ($P \\propto \\rho^{4/3}$).',
+      akibat: 'Kurva $R(M)$ menukik tajam menuju nol alih-alih melandai sebagai $M^{-1/3}$, berakhir pada instabilitas gravitasi di $M_{\\text{Ch}}$.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="contoh-l2" judul="6. Worked Example: Konsumsi Hidrogen Matahari & Radius Katai Putih" tag="Notebook Hitung">
+
+<Contoh judul="Laju pembakaran hidrogen Matahari, pembuktian batas Eddington & energi ikat gravitasi">
+
+<Langkah>
+
+**Bagian A — Berapa ton hidrogen yang diubah Matahari menjadi helium setiap detik?**
+Dari $4\,{}^1\text{H} \to {}^4\text{He}$ dilepaskan $Q_{\text{net}} = 26{,}73\ \text{MeV}$ ($\approx 26{,}2\ \text{MeV}$ yang keluar sebagai foton dan $L_\odot = 3{,}828\times 10^{26}\ \text{W}$; sisanya $\sim 2\%$ dibawa neutrino).
+Laju energi foton per reaksi adalah $E_\gamma = 26{,}2 \times 1{,}602\times 10^{-13}\ \text{J} \approx 4{,}20\times 10^{-12}\ \text{J}$:
+$$\dot{N}_{\text{He}} = \frac{L_\odot}{E_\gamma} = \frac{3{,}828\times 10^{26}}{4{,}20\times 10^{-12}} \approx 9{,}11\times 10^{37}\ \text{inti }{}^4\text{He/detik}.$$
+Karena tiap inti He memakai $4$ proton ($4m_p \approx 6{,}69\times 10^{-27}\ \text{kg}$), laju konsumsi hidrogen adalah:
+$$\dot{M}_{\text{H}} = 9{,}11\times 10^{37} \times 6{,}69\times 10^{-27} \approx 6{,}1\times 10^{11}\ \text{kg/s} \quad (\approx 610\ \text{juta ton/detik!}).$$
+Dari jumlah itu, $0{,}71\%$ berubah menjadi energi radiasi ($dm/dt = L_\odot/c^2 \approx 4{,}26\times 10^9\ \text{kg/s}$).
+
+</Langkah>
+
+<Langkah>
+
+**Bagian B — Perbandingan Tekanan Pusat Katai Putih vs Inti Matahari:**
+Hitung kerapatan rata-rata katai putih $M = 1{,}0\,M_\odot$ beradius $R = 6{,}0\times 10^6\ \text{m}$ (ukuran Bumi):
+$$\bar{\rho}_{\text{WD}} = \frac{1{,}989\times 10^{30}}{\frac{4}{3}\pi (6{,}0\times 10^6)^3} \approx 2{,}20\times 10^9\ \text{kg/m}^3 \quad (\approx 2{,}2\ \text{ton per cm}^3!).$$
+Batas bawah tekanan pusat katai putih:
+$$P_{c,\text{WD}} > \frac{G M^2}{8\pi R^4} = \frac{(6{,}674\times 10^{-11})(1{,}989\times 10^{30})^2}{8\pi (6{,}0\times 10^6)^4} \approx 8{,}1\times 10^{21}\ \text{Pa} \quad (> 300\,000\times \text{lebih tinggi daripada inti Matahari!}).$$
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="7. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Saat inti bintang menyusut akibat kehabisan bahan bakar nuklir, seluruh bintang ikut mengerut menjadi dingin dan kecil.',
+      kenapaKeliru: 'Mengira selubung luar selalu bergerak searah dengan inti tanpa memperhitungkan prinsip cermin cangkang pembakar.',
+      caraDeteksi: 'Lacak energi di cangkang H yang makin panas akibat kontraksi inti: luminositas cangkang melonjak menembus keseimbangan sehingga tekanan mendorong selubung mengembang $100\\times$ menjadi raksasa merah!',
+      benar: 'Dalam fase pembakaran cangkang, inti menyusut dan memanas sementara selubung luar mengembang jauh dan mendingin (Prinsip Cermin).',
+    },
+    {
+      salah: 'Batas Chandrasekhar 1,44 M☉ berarti bintang deret utama bermassa di atas 1,44 M☉ pasti langsung meledak sebagai supernova dan mustahil menjadi katai putih.',
+      kenapaKeliru: 'Mengabaikan kehilangan massa raksasa (stellar wind dan ejeksi nebula planet) pada fase Raksasa Merah dan AGB.',
+      caraDeteksi: 'Bandingkan massa awal ZAMS (hingga ~8 M☉) dengan massa sisa inti C–O setelah selubung luarnya terkelupas menjadi nebula planet (~0,5–1,1 M☉ < 1,44 M☉).',
+      benar: 'Ambang supernova keruntuhan inti untuk bintang tunggal adalah massa ZAMS ≥ 8 M☉; semua bintang antara 0,08–8 M☉ kehilangan mayoritas selubungnya dan berakhir sebagai katai putih bermassa < 1,44 M☉.',
+    },
+    {
+      salah: 'Tekanan degenerasi elektron pada katai putih timbul karena panas inti yang sangat tinggi menolak elektron-elektron.',
+      kenapaKeliru: 'Mencampuradukkan tekanan gas termal klasik (P = n k_B T) dengan tekanan kuantum prinsip eksklusi Pauli.',
+      caraDeteksi: 'Evaluasi rumus Fermi P_e = K₁ ρ^(5/3): tidak ada variabel temperatur T sedikit pun di dalamnya! Bahkan pada T → 0 K, tekanan degenerasi tetap penuh.',
+      benar: 'Tekanan degenerasi elektron bersifat murni mekanika kuantum (Prinsip Pauli + Δx Δp ~ ħ) dan tetap menahan katai putih selamanya saat ia mendingin menuju katai hitam.',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="8. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="l2-cek-1"
+  pertanyaan="Tahap evolusi bintang mana yang paling lama?"
+  opsi={['Deret utama', 'Raksasa merah', 'Katai putih', 'Nebula planet']}
+  jawaban={0}
+  penjelasan="Fusi hidrogen di inti berlangsung sekitar 90% umur bintang. Tahap raksasa dan katai putih jauh lebih singkat."
+/>
+
+<CekPaham
+  id="l2-cek-2"
+  pertanyaan="Berapa batas massa maksimum katai putih sebelum runtuh?"
+  opsi={['8 M☉', '3 M☉', '1,4 M☉', '0,5 M☉']}
+  jawaban={2}
+  penjelasan="Batas Chandrasekhar sekitar 1,4 M☉. Di atas itu, tekanan degenerasi elektron tidak cukup menahan gravitasi."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'l2-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Mengapa struktur bagian dalam bintang deret utama bermassa $0{,}8\\,M_\\odot$ memiliki **inti radiatif + selubung konvektif**, sedangkan bintang $5\\,M_\\odot$ justru memiliki **inti konvektif + selubung radiatif**?',
+      petunjuk: 'Tinjau dua faktor dalam Kriteria Schwarzschild: (1) konsentrasi pembangkitan daya $L(r)/r^2$ dari kepekaan suhu rantai pp vs siklus CNO, dan (2) opasitas H$^-$ di selubung dingin.',
+      langkahKunci: [
+        'Pada bintang $5\\,M_\\odot$, suhu pusat tinggi ($>2\\times 10^7\\ \\text{K}$) sehingga **siklus CNO** ($\\epsilon_{\\text{CNO}} \\propto T^{17}$) mendominasi: seluruh daya $L$ dihasilkan di wilayah inti amat kecil, membuat fluks $L(r)/4\\pi r^2$ melampaui batas transpor foton $\\implies$ inti menjadi **konvektif**; sebaliknya selubung luarnya sangat panas sehingga hidrogen terionisasi sempurna dan opasitasnya rendah ($\\implies$ selubung radiatif).',
+        'Pada bintang $0{,}8\\,M_\\odot$, **rantai pp** ($\\propto T^4$) menghasilkan panas lebih menyebar di inti ($\\implies$ inti radiatif), sedangkan lapisan luar yang dingin penuh ion H$^-$ dan atom H parsial terionisasi memiliki opasitas tinggi sehingga memicu **selubung konvektif**.',
+      ],
+      rubrik: [
+        'Menghubungkan inti konvektif bintang masif dengan kepekaan suhu ekstrem siklus CNO ($\\propto T^{16\\text{--}20}$).',
+        'Menjelaskan selubung konvektif bintang dingin melalui tingginya opasitas lapisan luar yang dingin.',
+      ],
+    },
+    {
+      id: 'l2-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Untuk sebuah bintang bola pejal berkerapatan seragam $\\rho$ bermassa $M$ dan beradius $R$ yang tersusun atas gas ideal monoatomik bermassa partikel rata-rata $\\bar{m} = \\mu m_H$, gunakan **Teorema Virial** ($2K + U = 0$) untuk menurunkan **temperatur rata-rata bagian dalam bintang** $\\langle T\\rangle$ sebagai fungsi $M, R, \\mu$. Hitung taksiran $\\langle T\\rangle$ untuk Matahari ($\\mu \\approx 0{,}6$)!',
+      petunjuk: 'Gunakan $U = -\\frac{3}{5}\\frac{GM^2}{R}$ dan $K = N \\cdot \\frac{3}{2}k_B \\langle T\\rangle$ dengan $N = M / (\\mu m_H)$.',
+      langkahKunci: [
+        'Total energi kinetik termal partikel gas ideal: $K = \\frac{3}{2} N k_B \\langle T\\rangle = \\frac{3 M k_B \\langle T\\rangle}{2\\mu m_H}$.',
+        'Energi potensial gravitasi bola seragam: $U = -\\frac{3}{5}\\frac{G M^2}{R}$.',
+        'Substitusikan ke Teorema Virial $2K = -U$:',
+        '$$3\\frac{M k_B \\langle T\\rangle}{\\mu m_H} = \\frac{3}{5}\\frac{G M^2}{R} \\implies \\langle T\\rangle = \\frac{G M \\mu m_H}{5 k_B R}.$$',
+        'Untuk Matahari ($M_\\odot = 1{,}989\\times 10^{30}\\ \\text{kg}, R_\\odot = 6{,}957\\times 10^8\\ \\text{m}, \\mu = 0{,}6$): $\\langle T\\rangle = \\frac{(6{,}674\\times 10^{-11})(1{,}989\\times 10^{30})(0{,}6)(1{,}673\\times 10^{-27})}{5(1{,}381\\times 10^{-23})(6{,}957\\times 10^8)} \\approx 2{,}8\\times 10^6\\ \\text{K}$ (konsisten sebagai rata-rata volume antara permukaan $5\\,772\\ \\text{K}$ dan pusat $1{,}57\\times 10^7\\ \\text{K}$!).',
+      ],
+      rubrik: [
+        'Menuliskan $K = \\frac{3}{2}(M/\\mu m_H)k_B \\langle T\\rangle$ dan $U = -\\frac{3}{5}GM^2/R$.',
+        'Menurunkan $\\langle T\\rangle = G M \\mu m_H / (5 k_B R)$ serta menghitung nilai $\\sim 2{,}8\\times 10^6\\ \\text{K}$.',
+      ],
+    },
+    {
+      id: 'l2-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah awan molekul antarbintang dingin berisi gas $H_2$ ($\\mu \\approx 2{,}3$) dengan temperatur $T = 10\\ \\text{K}$ dan kerapatan jumlah $n = 10^{10}\\ \\text{m}^{-3}$ ($\\rho_0 = n\\mu m_H$). Hitung taksiran orde besar **Massa Jeans ($M_J$)** awan ini dalam satuan massa Matahari $M_\\odot$, lalu jelaskan apa yang terjadi bila sebagian energi runtuh dapat keluar lewat radiasi debu sehingga $T$ tetap $10\\ \\text{K}$ saat $n$ naik $10^4\\times$!',
+      petunjuk: 'Gunakan rumus $M_J \\approx \\left(\\frac{5 k_B T}{G \\mu m_H}\\right)^{3/2}\\left(\\frac{3}{4\\pi\\rho_0}\\right)^{1/2}$.',
+      langkahKunci: [
+        'Kerapatan massa: $\\rho_0 = 10^{10} \\times 2{,}3 \\times 1{,}673\\times 10^{-27} \\approx 3{,}85\\times 10^{-17}\\ \\text{kg/m}^3$.',
+        'Faktor pertama: $\\frac{5 k_B T}{G \\mu m_H} = \\frac{5(1{,}381\\times 10^{-23})(10)}{(6{,}674\\times 10^{-11})(3{,}85\\times 10^{-27})} \\approx 2{,}69\\times 10^{15}\\ \\text{kg/m}$. Pangkat $3/2$-nya adalah $\\approx 1{,}39\\times 10^{23}$.',
+        'Faktor kedua: $\\left(\\frac{3}{4\\pi(3{,}85\\times 10^{-17})}\\right)^{1/2} \\approx 7{,}87\\times 10^7$.',
+        'Maka $M_J \\approx 1{,}1\\times 10^{31}\\ \\text{kg} \\approx 5{,}5\\,M_\\odot$. Saat kerapatan naik $10^4\\times$ secara isotermal ($T=10\\ \\text{K}$ tetap), $M_J \\propto \\rho_0^{-1/2}$ turun $100\\times$ menjadi $\\sim 0{,}055\\,M_\\odot$, memicu **fragmentasi hierarkis** menjadi gugus bintang bermassa beragam!',
+      ],
+      rubrik: [
+        'Menghitung $\\rho_0$ dan substitusi konsisten ke rumus Massa Jeans ($\\sim 5\\text{--}10\\,M_\\odot$).',
+        'Menjelaskan penskalaan $M_J \\propto \\rho_0^{-1/2}$ pada fase isotermal sebagai mekanisme fragmentasi.',
+      ],
+    },
+    {
+      id: 'l2-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Dua bintang katai putih diamati dalam sistem ganda terpisah: Sirion A ber-massa $0{,}50\\,M_\\odot$ dan Sirion B ber-massa $1{,}00\\,M_\\odot$. Dengan pendekatan hukum massa–radius non-relativistik ($R \\propto M^{-1/3}$), (a) hitung rasio radius $R_B / R_A$ serta **rasio kerapatan rata-rata** $\\bar{\\rho}_B / \\bar{\\rho}_A$; (b) jika pada pengamatan aktual rasio $R_B / R_A$ ternyata terukur **lebih kecil** daripada $2^{-1/3} \\approx 0{,}794$ (yakni sekitar $0{,}60$), apa penyebab fisika mendasarnya?',
+      petunjuk: '$\\bar{\\rho} \\propto M / R^3 \\propto M / M^{-1} = M^2$ dalam rezim non-relativistik.',
+      langkahKunci: [
+        'Secara non-relativistik: $\\frac{R_B}{R_A} = \\left(\\frac{1{,}00}{0{,}50}\\right)^{-1/3} = 2^{-1/3} \\approx 0{,}794$.',
+        'Rasio kerapatan rata-ratanya: $\\frac{\\bar{\\rho}_B}{\\bar{\\rho}_A} = \\frac{M_B}{M_A}\\left(\\frac{R_A}{R_B}\\right)^3 = 2 \\times 2 = 4{,}0\\times$!',
+        'Pada $M_B = 1{,}00\\,M_\\odot$, katai putih sudah memasuki **rezim transisi relativistik** mendekati batas Chandrasekhar ($1{,}44\\,M_\\odot$): momentum Fermi mendekati $m_e c$ sehingga indeks politrop bergeser dari $n=1{,}5$ ($\\gamma=5/3$) ke $n=3$ ($\\gamma \\to 4/3$). Kekerasan persamaan keadaan melemah, membuat radius menyusut **lebih tajam** dari kurva $M^{-1/3}$!',
+      ],
+      rubrik: [
+        'Menghitung $R_B/R_A \\approx 0{,}794$ dan $\\bar{\\rho}_B/\\bar{\\rho}_A = 4$ (non-relativistik).',
+        'Mengidentifikasi efek relativitas khusus elektron mendekati $M_{\\text{Ch}}$ sebagai sebab menyusutnya radius melebihi prediksi $M^{-1/3}$.',
+      ],
+    },
+    {
+      id: 'l2-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Bintang $15\\,M_\\odot$ memerlukan sekitar $12$ juta tahun untuk menghabiskan hidrogen intinya, namun pembakaran karbon ($\\sim 600\\ \\text{tahun}$), neon ($\\sim 1\\ \\text{tahun}$), oksigen ($\\sim 6\\ \\text{bulan}$), dan silikon ($\\sim 1\\ \\text{hari!}$) menyusut secara dramatis makin singkat. Jelaskan dua alasan astrofisika terpadu yang menyebabkan percepatan waktu bakar eksponensial ini!',
+      petunjuk: 'Tinjau: (1) berapa energi per nukleon $Q/A$ tiap tahap lanjutan pada kurva $B/A$, dan (2) ke mana sebagian besar energi lari pada $T > 5\\times 10^8\\ \\text{K}$ (emisi neutrino termal)!',
+      langkahKunci: [
+        'Alasan pertama (**cadangan energi per gram menyusut**): Fusi H $\\to$ He melepaskan $\\sim 6{,}7\\ \\text{MeV}$/nukleon ($0{,}71\\%$ massa), sedangkan dari He $\\to$ C hanya $\\sim 0{,}6\\ \\text{MeV}$/nukleon, dan dari Si $\\to$ Fe tinggal $<0{,}2\\ \\text{MeV}$/nukleon karena kurva $B/A$ makin mendatar mendekati puncak besi.',
+        'Alasan kedua (**pendinginan neutrino masif**): Di atas $T \\approx 5\\times 10^8\\ \\text{K}$, foton gamma berenergi cukup untuk memproduksi pasangan $e^- e^+$ yang langsung beranihilasi sebagian menjadi pasangan **neutrino–antineutrino** ($\\gamma \\leftrightarrow e^- e^+ \\to \\nu_e \\bar{\\nu}_e$). Karena neutrino menembus bintang secepat cahaya tanpa tertahan, luminositas neutrino ($L_\\nu \\sim 10^6 L_\\gamma$ pada pembakaran Si!) menguras seluruh cadangan energi inti hanya dalam hitungan jam–hari!',
+      ],
+      rubrik: [
+        'Menjelaskan menurunnya selisih $\\Delta(B/A)$ tiap tahap fusi mendekati puncak $^{56}\\text{Fe}$.',
+        'Menjelaskan kerugian energi masif melalui **emisi neutrino termal** pada suhu $T \\gtrsim 5\\times 10^8\\ \\text{K}$ yang memaksa fusi berjalan jutaan kali lebih cepat demi menjaga tekanan hidrostatik.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'l2-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa di alam semesta awal maupun di inti bintang tidak langsung terjadi pembakaran proton menjadi karbon atau oksigen tanpa melewati tahap "jembatan sulit" triple-alpha ($3\,{}^4\\text{He} \\to {}^{12}\\text{C}$)? Apa kendala nuklir fundamentalnya?',
+      petunjuk: 'Cek keberadaan inti atom stabil pada nomor massa $A = 5$ dan $A = 8$, serta sifat resonansi ${}^8\\text{Be}$.',
+      rubrik: [
+        'Tidak ada isotop stabil bermassa $A = 5$ ($^5\\text{He}, {}^5\\text{Li}$) maupun $A = 8$ ($^8\\text{Be}$ meluruh balik menjadi $2\\alpha$ dalam waktu $\\sim 10^{-16}\\ \\text{s}$!).',
+        'Akibatnya penangkapan satu proton atau satu partikel $\\alpha$ oleh ${}^4\\text{He}$ selalu gagal membangun unsur lebih berat kecuali tiga partikel $\\alpha$ bertemu nyaris serentak pada kerapatan & suhu tinggi ($\\gtrsim 10^8\\ \\text{K}$) lewat tingkat resonansi Hoyle di $^{12}\\text{C}$.',
+      ],
+      jawabanKunci:
+        'Ketiadaan inti atom stabil pada nomor massa $A = 5$ dan $A = 8$ menciptakan "celah massa" nuklir yang memblokir reaksi dua-benda berurutan: $^{4}\\text{He} + p$ maupun $^{4}\\text{He} + {}^{4}\\text{He} \\to {}^{8}\\text{Be}$ langsung terpecah kembali dalam $10^{-16}\\ \\text{s}$. Hanya pada suhu $\\ge 10^8\\ \\text{K}$ dan kerapatan tinggi populasi keseimbangan sesaat $^{8}\\text{Be}$ cukup banyak agar partikel $\\alpha$ ketiga menangkapnya tepat di tingkat resonansi $7{,}65\\ \\text{MeV}$ membentuk $^{12}\\text{C}$ stabil.',
+    },
+    {
+      id: 'l2-log-2',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Andai massa elektron $m_e$ tiba-tiba menjadi **2 kali lebih besar** sementara massa proton/nukleon $m_u$, konstanta Planck $\\hbar$, dan gravitasi $G$ tidak berubah. Bagaimana dampak langsungnya terhadap: (a) radius katai putih non-relativistik bermassa $0{,}5\\,M_\\odot$, dan (b) nilai **Batas Chandrasekhar** $M_{\\text{Ch}}$?',
+      petunjuk: 'Periksa kemunculan $m_e$ pada $R_{\\text{WD}} \\sim \\frac{\\hbar^2}{G m_e m_u^{5/3}} M^{-1/3}$ vs pada batas relativistik $M_{\\text{Ch}} \\sim (\\hbar c/G)^{3/2} m_u^{-2}$!',
+      rubrik: [
+        'Pada rezim non-relativistik, $R_{\\text{WD}} \\propto 1/m_e$: jika $m_e$ menjadi $2\\times$ lebih berat, energi kinetik degenerasi turun $2\\times$ pada jarak sama sehingga radius katai putih $0{,}5\\,M_\\odot$ **menyusut menjadi separuhnya**!',
+        'Sebaliknya pada batas ultra-relativistik ($E \\approx p c$), massa diam $m_e$ menghilang dari rumus tekanan $P \\sim n_e p_F c$ sehingga **Batas Chandrasekhar $M_{\\text{Ch}} \\approx 1{,}44\\,M_\\odot$ NYARIS TIDAK BERUBAH** (hanya densitas kritis saat ambang tercapai bergeser naik karena $p_F \\sim m_e c$ dicapai di radius lebih kecil)!',
+      ],
+      jawabanKunci:
+        'Pertama, dari $R_{\\text{WD}} \\propto m_e^{-1}$, melipatgandakan massa elektron membuat katai putih non-relativistik menyusut menjadi separuh radiusnya (karena elektron lebih berat butuh ruang lebih sempit untuk menghasilkan momentum & tekanan Fermi yang sama). Kedua — hasil yang sangat mengejutkan — karena di limit ultra-relativistik hubungan energi-momentum menjadi $E = p c$ yang bebas dari $m_e$, nilai **Batas Chandrasekhar $M_{\\text{Ch}} \\sim (\\hbar c / G)^{3/2} m_u^{-2}$ tetap $\\sim 1{,}44\\,M_\\odot$ tidak berubah**, hanya dicapai pada radius yang lebih padat!',
+    },
+    {
+      id: 'l2-log-3',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang mahasiswa menyatakan bahwa jika Matahari tiba-tiba mati reaktor nuklirnya tanpa kehilangan massa, ia bisa tetap bersinar selama miliaran tahun lagi dengan cara terus menyusut pelan-pelan dan mengubah energi gravitasinya menjadi panas — dan suhu pusatnya akan turun perlahan sejak hari pertama. Sebutkan **dua kesalahan fatal** dalam pernyataan tersebut!',
+      petunjuk: 'Cek skala waktu Kelvin–Helmholtz dan tanda kapasitas panas bintang gas ideal ($\\Delta T$ saat $\\Delta E_{\\text{tot}} < 0$).',
+      rubrik: [
+        'Kesalahan 1 (skala waktu): Energi gravitasi $U \\sim GM_\\odot^2/R_\\odot$ hanya cukup menyuplai $L_\\odot$ selama **skala waktu Kelvin–Helmholtz $\\tau_{\\text{KH}} \\approx 30$ juta tahun**, bukan miliaran tahun.',
+        'Kesalahan 2 (arah suhu): Berdasarkan Teorema Virial, saat gas ideal menyusut memancarkan energi ($\\Delta E_{\\text{tot}} < 0$), suhu pusatnya justru **NAIK** ($\\Delta K = -\\Delta E > 0$), bukan turun — hingga baru berhenti naik setelah materi memasuki degenerasi kuantum!',
+      ],
+      jawabanKunci:
+        'Ada dua kesalahan fisika mendasar: (1) cadangan energi potensial gravitasi Matahari hanya cukup memberi daya selama $\\tau_{\\text{KH}} \\approx \\frac{GM_\\odot^2}{R_\\odot L_\\odot} \\approx 3\\times 10^7\\ \\text{tahun}$ (30 juta tahun), seribu kali lebih singkat daripada miliaran tahun; (2) selama gas masih ideal, penyusutan oleh radiasi justru **memanaskan** inti ($\\Delta K = -\\frac{1}{2}\\Delta U > 0$), sehingga suhu pusat awalnya justru naik drastis hingga membakar cangkang atau mencapai degenerasi elektron!',
+    },
+    {
+      id: 'l2-log-4',
+      tipe: 'prediksi_akibat',
+      pertanyaan:
+        'Mengapa lubang hitam bermassa satu juta hingga miliaran massa Matahari ($M = 10^8\\,M_\\odot$, pusat galaksi/quasar) memiliki **kerapatan rata-rata efektif di dalam horizon peristiwanya** yang lebih kecil daripada air — bahkan lebih renggang daripada udara — sementara lubang hitam bermassa bintang ($10\\,M_\\odot$) kerapatannya melampaui inti atom?',
+      petunjuk: 'Substitusikan $R_s = 2GM/c^2$ ke dalam definisi kerapatan $\\bar{\\rho}_s = \\frac{M}{\\frac{4}{3}\\pi R_s^3}$.',
+      rubrik: [
+        'Menurunkan $\\bar{\\rho}_s = \\frac{3 c^6}{32\\pi G^3 M^2} \\propto M^{-2}$.',
+        'Menunjukkan untuk $M = 10^8\\,M_\\odot$, $R_s \\approx 3\\times 10^{11}\\ \\text{m} \\approx 2\\ \\text{AU}$, memberi $\\bar{\\rho}_s \\approx 1{,}8\\ \\text{kg/m}^3$ (setipis atmosfer Bumi bagian atas!) sehingga gaya pasang surut di horizonnya pun amat lembut bagi pengamat jatuh bebas.',
+      ],
+      jawabanKunci:
+        'Karena radius Schwarzschild tumbuh linear dengan massa ($R_s = 2GM/c^2$), volume horizon peristiwa tumbuh sebagai $R_s^3 \\propto M^3$, sehingga kerapatan rata-rata di dalam horizon peristiwa turun drastis sebagai $\\bar{\\rho}_s \\propto M / R_s^3 \\propto M^{-2}$! Untuk $10\\,M_\\odot$, $\\bar{\\rho}_s \\sim 1{,}8\\times 10^{17}\\ \\text{kg/m}^3$ (setara materi nuklir), sedangkan untuk lubang hitam supermasif $10^8\\,M_\\odot$, $R_s \\approx 2\\ \\text{AU}$ dan $\\bar{\\rho}_s \\approx 1{,}8\\ \\text{kg/m}^3$ — hampir setara kerapatan udara ruang kelas ($1{,}2\\ \\text{kg/m}^3$)!',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="l2-refleksi-1"
+  pertanyaan="Mengapa bintang seperti Matahari mengembang menjadi raksasa merah setelah hidrogen di intinya habis, padahal energi totalnya justru berkurang dan intinya mengerut?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'l2-m1', gerbang: 'derivasi', teks: 'Menuliskan 4 PDB struktur bintang beserta syarat konveksi Schwarzschild dan batas bawah tekanan pusat P_c > GM²/(8πR⁴).' },
+    { id: 'l2-m2', gerbang: 'derivasi', teks: 'Membuktikan Teorema Virial 2K + U = 0 dari persamaan hidrostatik dan menjelaskan kapasitas panas negatif & Massa Jeans.' },
+    { id: 'l2-m3', gerbang: 'konsep', teks: 'Membandingkan kepekaan suhu pp-chain, siklus CNO (inti konvektif > 1,3 M☉), triple-alpha, dan emisi neutrino tahap akhir.' },
+    { id: 'l2-m4', gerbang: 'derivasi', teks: 'Menurunkan R ∝ M^-1/3 untuk katai putih non-relativistik serta munculnya Batas Chandrasekhar (1,44 M☉) pada limit relativistik.' },
+    { id: 'l2-m5', gerbang: 'logika', teks: 'Melacak jalur lengkap evolusi di Diagram H–R (Hayashi, ZAMS, RGB, Helium Flash, AGB, Nebula Planet vs Supernova II/Ia).' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="9. Konstanta & Referensi Akademik" tag="Rujukan Modul L2">
+
+<Konstanta
+  data={[
+    { simbol: 'Energi neto 4p → ⁴He', nilai: '26,73 (26,2 non-ν)', satuan: 'MeV' },
+    { simbol: 'Efisiensi fusi H → He', nilai: '0,71', satuan: '%' },
+    { simbol: 'Ambang triple-alpha', nilai: '~1,0 × 10⁸', satuan: 'K' },
+    { simbol: 'Transisi pp → CNO', nilai: '~1,3', satuan: 'M_☉' },
+    { simbol: 'Ambang Supernova II', nilai: '~8', satuan: 'M_☉ (ZAMS)' },
+    { simbol: 'Batas Chandrasekhar', nilai: '1,44', satuan: 'M_☉' },
+    { simbol: 'Radius Schwarzschild R_s', nilai: '2,953 × (M/M_☉)', satuan: 'km' },
+    { simbol: 'P_c Matahari', nilai: '2,48 × 10¹⁶', satuan: 'Pa' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-01', 'SRC-03', 'SRC-04', 'SRC-06']}
+  pemetaan={[
+    { sumberId: 'SRC-01', rujukan: 'Silabus Resmi IOAA: keseimbangan hidrostatik, virial, struktur & evolusi bintang, serta materi kompak.' },
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS3104 & AS4105 (Fisika Interior Bintang): 4 PDB struktur bintang, politrop, & degenerasi Fermi.' },
+    { sumberId: 'SRC-04', rujukan: 'MIT OCW 8.901 (Astrophysics I): penurunan Teorema Virial, Massa Jeans, batas Eddington & Batas Chandrasekhar.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Ch. 10, 12–17: fusi termonuklir, jejak evolusi H–R lengkap, dan fisika bintang kompak.' },
+  ]}
+/>
+
+</Bagian>

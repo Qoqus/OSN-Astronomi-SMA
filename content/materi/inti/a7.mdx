@@ -1,0 +1,473 @@
+<IdentitasModul
+  kode="A7"
+  judul="Instrumen, Detektor CCD & Teknik Pengamatan"
+  klaster="Klaster Inti Astronomi"
+  posisi="Bab 13 dari 19 · Optik teleskop, difraksi, SNR CCD, spektrograf & radio"
+  estimasi="85 menit"
+  tingkat="Menengah -> S1 Astronomi Observasional (AS4103 / AS4206)"
+  prasyarat={[
+    { id: 'f5', label: 'F5 · Optik Geometris, Difraksi Airy & Kisi' },
+    { id: 'f6', label: 'F6 · Efek Fotolistrik & Foton' },
+    { id: 'a5', label: 'A5 · Radiometri, Skala Pogson & Filter UBVRI' },
+  ]}
+  lanjutan={[
+    { id: 'l1', label: 'L1 · Spektroskopi Bintang & Profil Garis' },
+    { id: 'l6', label: 'L6 · Reduksi Citra CCD & Analisis Data IOAA' },
+  ]}
+/>
+
+<Tujuan>
+
+- Menganalisis parameter optik teleskop (**rasio fokal $N = f/D$**, ***plate scale* $P = 206\,265''/f$**, perbesaran berguna visual, daya kumpul cahaya vs **kecerahan permukaan di bidang fokus**).
+- Membedakan **batas difraksi Rayleigh** ($\theta = 1{,}22\lambda/D$), degradasi turbulensi atmosfer (**parameter Fried $r_0 \propto \lambda^{6/5}$** dan *seeing* $\propto \lambda^{-1/5}$), serta prinsip koreksi **Optik Adaptif (AO)**.
+- Menurunkan **persamaan Signal-to-Noise Ratio (SNR) CCD lengkap** yang menggabungkan statistik Poisson foton bintang ($N_*$), latar langit ($N_{\text{sky}}$), arus gelap ($N_{\text{dark}}$), dan derau baca (*read noise* $\sigma_{\text{read}}$) lengkap dengan batas *read-noise limited* vs *background-limited* serta **kriteria sampling Nyquist ($2\ \text{piksel/FWHM}$)**.
+- Menghitung **persamaan kisi difraksi**, **daya pisah spektral ($R = \lambda/\Delta\lambda = m N_g W$)**, kebergantungan $R$ pada lebar celah (*slit*) vs *seeing*, serta kecepatan radial minimum terdeteksi.
+- Memahami **astronomi radio & multi-panjang gelombang**: jendela transmisi atmosfer, suhu kecerahan Rayleigh–Jeans ($T_B$), satuan fluks Jansky ($\text{Jy}$), dan sintesis bukaan **interferometri / VLBI** ($\theta \sim \lambda/B$).
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'optik-teleskop',
+      judul: 'Optik & Plate Scale Teleskop',
+      ringkas: 'D menentukan jumlah foton (∝ D²); f menentukan ukuran bayangan (P = 206 265″ / f).',
+      peran: 'Memilih f/D cepat untuk survei lebar vs lambat untuk planet/spektroskopi.',
+      terkait: ['difraksi-seeing', 'ccd-snr'],
+    },
+    {
+      id: 'difraksi-seeing',
+      judul: 'Difraksi Airy, Seeing & AO',
+      ringkas: 'θ_diff = 1,22 λ/D; θ_seeing ≈ λ/r₀ dengan r₀ ∝ λ^(6/5) -> seeing ∝ λ^(-1/5).',
+      peran: 'Menjelaskan mengapa teleskop 8 m tanpa AO tetap kabur ~1″ di darat, dan mengapa AO lebih mudah di IR.',
+      terkait: ['optik-teleskop', 'radio-vlbi'],
+    },
+    {
+      id: 'ccd-snr',
+      judul: 'Detektor CCD & Persamaan SNR',
+      ringkas: 'SNR = N_* / √(N_* + n_px(N_sky + N_dark + RN²)); SNR ∝ √t saat batas foton, ∝ t saat batas baca.',
+      peran: 'Menentukan waktu eksposur t optimal untuk mencapai presisi fotometri target.',
+      terkait: ['optik-teleskop', 'spektrograf'],
+    },
+    {
+      id: 'spektrograf',
+      judul: 'Kisi Difraksi & Spektrograf',
+      ringkas: 'd(sin α + sin β) = mλ; R = λ/Δλ = m N; v_min ~ c/R.',
+      peran: 'Merancang spektrograf yang mampu memisahkan garis biner atau goyangan eksoplanet.',
+      terkait: ['ccd-snr'],
+    },
+    {
+      id: 'radio-vlbi',
+      judul: 'Radio, Jendela Atmosfer & VLBI',
+      ringkas: '1 Jy = 10⁻²⁶ W m⁻² Hz⁻¹; T_B Rayleigh–Jeans; resolusi interferometri θ ~ λ/B.',
+      peran: 'Menembus batas difraksi panjang gelombang milimeter/sentimeter hingga skala mikro-detik busur.',
+      terkait: ['difraksi-seeing'],
+    },
+  ]}
+/>
+
+<Bagian id="optik-teleskop" judul="1. Desain Optik Teleskop, Rasio Fokal & Skala Pelat" tag="Optik Instrumen">
+
+### Refraktor vs Reflektor & Besaran Kunci
+
+Dua tugas utama teleskop adalah **mengumpulkan foton** (sebanding luas bukaan efektif $\propto D^2$) dan **menguraikan sudut halus**. Reflektor cermin bebas dari **aberasi kromatik** dan dapat disangga dari belakang hingga diameter puluhan meter, sedangkan refraktor lensa terbentur berat dan penyerapan kaca UV/IR.
+
+<Gambar id="refraktor" />
+
+1. **Perbesaran Visual:** $M = \frac{f_{\text{obj}}}{f_{\text{ok}}}$, dengan batas praktis difraksi/kontras mata $M_{\max} \approx 2 D\ [\text{mm}]$ dan batas rendah (*exit pupil* $\le D_{\text{pupil}} = 7\ \text{mm}$) $M_{\min} \approx D[\text{mm}]/7$.
+2. **Skala Pelat (*Plate Scale* $P$):** Pada jarak fokus $f$ ($\text{mm}$), sudut kecil $\theta_{\text{rad}}$ membentuk bayangan linier $y = f\theta_{\text{rad}}$, sehingga skala pada bidang fokus adalah:
+   $$P \equiv \frac{\theta''}{y\ [\text{mm}]} = \frac{206\,264{,}8''}{f\ [\text{mm}]}.$$
+   Bila piksel sensor CCD berukuran $s_{\text{px}}$ ($\mu\text{m} = 10^{-3}\ \text{mm}$), **skala piksel** adalah $\text{pixel scale} = P \cdot s_{\text{px}}\ [\text{mm}]$. Untuk memulihkan bentuk bintang tanpa kehilangan informasi spasial (**Kriteria Nyquist**), profil lebar setengah puncak bintang (*FWHM seeing*) harus mencakup minimal **$2\text{--}3\ \text{piksel}$**.
+3. **Rasio Fokal ($N \equiv f/D$) & Kecepatan Fotografi:**
+   Untuk objek **diperluas** (nebula/galaksi dengan kecerahan permukaan konstan $I$), energi per unit luas sensor sebanding dengan $(D^2) / (f^2) = 1/N^2$: teleskop *f/4* mengumpulkan **$4\times$ lebih banyak foton per piksel per detik** untuk nebula daripada teleskop *f/8*! Sebaliknya, untuk **bintang titik** yang seluruh energinya jatuh ke dalam cakram *seeing* tetap yang lebih kecil daripada piksel, jumlah foton total hanya bergantung pada $D^2$.
+
+</Bagian>
+
+<Bagian id="difraksi-seeing" judul="2. Difraksi Airy, Turbulensi Seeing & Optik Adaptif" tag="Resolusi Sudut">
+
+<Gambar id="pola-airy" />
+
+Gelombang bidang melewati bukaan lingkaran berdiameter $D$ menghasilkan pola difraksi Fraunhofer (**Piringan Airy**) dengan minimum gelap pertama pada:
+
+$$\theta_{\text{Rayleigh}} = 1{,}22\,\frac{\lambda}{D}\ [\text{rad}] \approx \mathbf{0{,}2516\,\frac{\lambda\ [\mu\text{m}]}{D\ [\text{m}]}}\ \text{detik busur}.$$
+
+### Fisika *Seeing* Atmosfer & Parameter Fried ($r_0$)
+
+Di permukaan Bumi, sel-sel turbulensi konvektif atmosfer (model Kolmogorov) mengacak fasa gelombang datang pada skala koherensi lintang khas yang disebut **parameter Fried ($r_0$)**. Di situs terbaik (Mauna Kea, Paranal, La Palma) $r_0 \approx 15\text{--}20\ \text{cm}$ di $\lambda = 500\ \text{nm}$. Karena sel turbulensi membatasi ukuran bidang gelombang datar yang koheren, resolusi teleskop besar ($D \gg r_0$) tanpa koreksi mentok pada:
+
+$$\theta_{\text{seeing}} \approx 0{,}98\,\frac{\lambda}{r_0}.$$
+
+Dari teori turbulensi Kolmogorov, parameter Fried meningkat tajam terhadap panjang gelombang sebagai **$r_0 \propto \lambda^{6/5}$**, sehingga lebar *seeing* mengecil pada panjang gelombang lebih panjang:
+$$\theta_{\text{seeing}}(\lambda) \propto \frac{\lambda}{\lambda^{6/5}} = \lambda^{-1/5}.$$
+
+<Epistemik jenis="interpretasi">
+**Mengapa Optik Adaptif (AO) Hampir Selalu Bekerja di Inframerah Dekat ($1\text{--}2{,}2\ \mu\text{m}$) Dahulu?** Untuk teleskop $D = 8\ \text{m}$, jumlah aktuator cermin deformabel yang dibutuhkan agar permukaan gelombang datar dalam tiap sel $r_0$ adalah $N_{\text{act}} \sim (D/r_0)^2$, dan laju koreksinya harus lebih cepat dari waktu lintas angin $\tau_0 \sim r_0 / v_{\text{angin}}$. Ketika pindah dari $\lambda = 0{,}5\ \mu\text{m}$ ke $2{,}2\ \mu\text{m}$ ($4{,}4\times$ lebih panjang), $r_0$ membesar $4{,}4^{6/5} \approx 5{,}9\times$, sehingga jumlah aktuator turun **$35\times$** dan waktu tanggap melonggar $6\times$!
+</Epistemik>
+
+</Bagian>
+
+<Bagian id="ccd-snr" judul="3. Fisika Detektor CCD & Penurunan Persamaan SNR" tag="Detektor & Statistik">
+
+Sensor **CCD** mengubah foton masuk menjadi elektron bebas di pita konduksi silikon melalui efek fotolistrik dengan **Efisiensi Kuantum ($\text{QE}$)** mencapai $>90\%$ di pita optik (bandingkan dengan film fotografi $\sim 2\%$ atau mata $\sim 5\%$). Elektron yang terkumpul di tiap piksel dibaca sebagai satuan digital ADU melalui faktor *gain* $g\ [\text{e}^-/\text{ADU}]$.
+
+### Penurunan Persamaan SNR Lengkap
+
+Misalkan selama waktu eksposur $t$ ($\text{detik}$), citra bintang jatuh di dalam apertur fotometri berisi $n_{\text{px}}$ piksel. Total sinyal bersih yang diterima dari bintang adalah:
+$$N_* = \dot{N}_*\, t \qquad (\text{satuan elektron }\text{e}^-).$$
+Tiga sumber derau independen turut menyumbang elektron di dalam $n_{\text{px}}$ piksel tersebut:
+1. **Derau foton sinyal bintang (Poisson):** varians $\sigma_*^2 = N_*$.
+2. **Derau latar langit (*sky background*):** laju per piksel $\dot{N}_{\text{sky}}$, total dalam apertur $n_{\text{px}} \dot{N}_{\text{sky}} t$, varians $= n_{\text{px}} \dot{N}_{\text{sky}} t$.
+3. **Derau arus gelap termal (*dark current*):** laju elektron termal per piksel $\dot{N}_D$ (ditekan mendekati nol dengan pendinginan kriogenik $-100^\circ\text{C}$), varians $= n_{\text{px}} \dot{N}_D t$.
+4. **Derau baca (*readout noise*, $\text{RN}$ atau $\sigma_{\text{read}}$):** kesalahan elektronik penguat pembaca per piksel per bacaan (tidak bergantung $t$!), varians total $= n_{\text{px}} \text{RN}^2$. *(Catatan: bila latar langit dikurangkan lewat $n_B$ piksel anulus langit, muncul faktor koreksi $1 + n_{\text{px}}/n_B$ di suku latar).*
+
+Dengan menjumlahkan seluruh varians independen dalam kuadratur ($\sigma_{\text{tot}}^2 = \sum \sigma_i^2$), diperoleh **Persamaan SNR CCD Fundamental**:
+
+$$\text{SNR} = \frac{\dot{N}_*\, t}{\sqrt{\dot{N}_*\, t + n_{\text{px}}\big(\dot{N}_{\text{sky}}\, t + \dot{N}_D\, t + \text{RN}^2\big)}}.$$
+
+Tinjau tiga rezim penting:
+- **Bintang Terang (*Photon/Source-Noise Limited*):** $\dot{N}_* t \gg n_{\text{px}}(\dot{N}_{\text{sky}}t + \text{RN}^2) \implies \text{SNR} \approx \sqrt{\dot{N}_*\,t} \propto \mathbf{t^{1/2}}$.
+- **Bintang Redup pada Langit Terang (*Background-Limited*):** $n_{\text{px}}\dot{N}_{\text{sky}}t$ mendominasi $\implies \text{SNR} \approx \frac{\dot{N}_*}{\sqrt{n_{\text{px}}\dot{N}_{\text{sky}}}}\,t^{1/2} \propto \mathbf{t^{1/2}}$ (itulah sebab memperkecil radius apertur $n_{\text{px}}$ pada *seeing* tajam meningkatkan SNR!).
+- **Eksposur Singkat / Pita Sempit (*Read-Noise Limited*):** $\text{RN}^2$ mendominasi $\implies \text{SNR} \propto \mathbf{t^1}$! Di rezim ini mengambil 10 foto $10\ \text{s}$ memberi SNR $\sqrt{10}\times$ lebih buruk daripada 1 foto $100\ \text{s}$ karena derau baca masuk $10$ kali!
+
+</Bagian>
+
+<Bagian id="spektrograf-radio" judul="4. Spektrograf Kisi, Astronomi Radio & Interferometri" tag="Spektroskopi & Multi-Panjang Gelombang">
+
+### Spektrograf Kisi Difraksi
+
+<Gambar id="spektrum-absorpsi" />
+
+<Gambar id="doppler-geser" />
+
+Untuk kisi refleksi dengan jarak antar-alur $d$ (atau $N_g = 1/d$ alur/mm), sudut datang $\alpha$, dan sudut difraksi $\beta$, interferensi konstruktif terjadi pada **Persamaan Kisi**:
+$$d(\sin\alpha + \sin\beta) = m\lambda \quad (m = \text{orde difraksi}).$$
+Jika seluruh lebar kisi $W$ berisi $N_{\text{tot}} = N_g W$ alur tersinari oleh berkas kolimasi, **resolusi spektral batas difraksi kisi** adalah $R_{\text{kisi}} = \frac{\lambda}{\Delta\lambda} = m N_{\text{tot}}$. Namun pada teleskop darat menggunakan **celah masuk (*slit*)** selebar sudut $\phi_{\text{slit}}$ di langit, resolusi nyata dibatasi proyeksi celah pada kamera (*slit-limited resolution*):
+$$R_{\text{slit}} = \frac{\lambda}{\Delta\lambda} = \frac{m\lambda}{d\cos\beta}\frac{f_{\text{kol}}}{\phi_{\text{slit}} f_{\text{tel}}} \propto \frac{1}{D\,\phi_{\text{slit}}}.$$
+Implikasi penting desain instrumen: memperbesar diameter teleskop $D$ pada lebar *seeing* tetap $\phi_{\text{slit}}$ menuntut diameter berkas kolimasi $f_{\text{kol}}$ dan kisi raksasa ikut diperbesar secara proporsional agar $R$ tidak merosot! Kemampuan deteksi kecepatan radial batasnya mengikuti efek Doppler $v_{\min} \sim c / R$.
+
+### Astronomi Radio, Satuan Jansky & Interferometri Sintesis Bukaan
+
+<Epistemik jenis="fakta">
+Atmosfer Bumi hanya sepenuhnya transparan melalui dua jendela utama: **jendela optik/IR dekat** ($0{,}3\text{--}2{,}5\ \mu\text{m}$) dan **jendela radio** ($1\ \text{mm}\text{--}15\ \text{m}$). Radiasi UV ekstrem, sinar-X, gamma, dan sebagian besar IR jauh/sub-mm diserap oleh $\text{O}_3, \text{H}_2\text{O}, \text{CO}_2$, serta ionosfer sehingga wajib diamati dari pesawat/satelit antariksa.
+</Epistemik>
+
+- **Satuan Fluks Radio (*Jansky*):** $1\ \text{Jy} \equiv 10^{-26}\ \text{W m}^{-2}\ \text{Hz}^{-1}$.
+- **Suhu Kecerahan (*Brightness Temperature* $T_B$):** Pada panjang gelombang radio ($h\nu \ll k_B T$), hukum Planck menyederhana menjadi **aproksimasi Rayleigh–Jeans** $B_\nu(T) \approx \frac{2\nu^2 k_B T}{c^2} = \frac{2k_B T}{\lambda^2}$. Astronom radio mendefinisikan $T_B \equiv \frac{\lambda^2}{2k_B}I_\nu$: untuk sumber termal tebal optis, $T_B = T_{\text{fisik}}$, sedangkan untuk emisi non-termal sinkrotron/maser $T_B$ bisa mencapai $10^{12}\ \text{K}$!
+- **Interferometri & VLBI:** Karena $\lambda$ radio ribuan kali lebih panjang daripada optik, antena tunggal $D = 100\ \text{m}$ pada $\lambda = 21\ \text{cm}$ hanya beresolusi $\theta \approx 1{,}22(0{,}21/100) \approx 8{,}8'$! Dengan menggabungkan sinyal amplitudo dan fasa koheren dari array antena terpisah sejauh **baseline maksimum $B_{\max}$** (seperti ALMA $16\ \text{km}$ atau EHT VLBI berdiameter Bumi $B_{\max} \approx 10\,000\ \text{km}$), resolusi sudutnya menyamai bukaan raksasa:
+  $$\theta_{\text{int}} \approx \frac{\lambda}{B_{\max}}.$$
+  Pada $\lambda = 1{,}3\ \text{mm}$ dan $B = 10\,700\ \text{km}$, Event Horizon Telescope mencapai $\theta \approx \frac{1{,}3\times 10^{-3}}{1{,}07\times 10^7} \times 206\,265'' \approx 25\ \mu\text{as}$ — cukup tajam untuk mencitrakan bayangan horizon peristiwa lubang hitam M87* dan Sgr A*!
+
+<BatasValiditas
+  judul="Validitas Pendekatan Rayleigh–Jeans & Rumus SNR Tanpa Saturasi"
+  syarat={[
+    'Aproksimasi Rayleigh–Jeans $B_\\nu \\approx 2k_B T / \\lambda^2$: berlaku bila $h\\nu \\ll k_B T$ (misal radio hingga mm untuk $T \\gtrsim 10\\ \\text{K}$).',
+    'Linearitas CCD & SNR: elektron terkumpul masih di bawah kapasitas penuh sumur piksel (*full-well capacity*, biasanya $\\sim 50\\,000\\text{--}100\\,000\\ \\text{e}^-$).',
+  ]}
+  gagalJika="Memakai Rayleigh–Jeans untuk debu dingin 10 K pada sub-milimeter/IR jauh (λ < 300 μm) atau memaparkan bintang terang di CCD melewati batas saturasi/nonlinearitas."
+  akibat="Rayleigh–Jeans melebih-lebihkan fluks Planck pada frekuensi tinggi (*bencana ultraviolet*), dan piksel CCD yang jenuh memotong puncak bintang (*bleeding*) sehingga fotometri menghancurkan akurasi rasio fluks."
+/>
+
+</Bagian>
+
+<Bagian id="worked-examples" judul="5. Contoh Hitung Lengkap (Notebook Hitung)" tag="Worked Examples">
+
+<Contoh judul="Contoh 1 (Fundamental): Plate Scale, Sampling Nyquist CCD & Efisiensi Rasio Fokal">
+
+<Langkah>
+
+**Data:** Sebuah teleskop reflektor berdiameter $D = 0{,}50\ \text{m}$ dengan rasio fokal $f/8$ dipasangi kamera CCD berformat $4096 \times 4096$ piksel berukuran $s_{\text{px}} = 9{,}0\ \mu\text{m}$. Pada malam pengamatan, lebar *seeing* atmosfer di zenith adalah $\text{FWHM} = 1{,}50''$.\
+(a) Hitung panjang fokus $f$, *plate scale* ($''/\text{mm}$), *pixel scale* ($''/\text{px}$), dan medan pandang total (*field of view* dalam menit busur).\
+(b) Apakah profil bintang ter-sampling memenuhi kriteria Nyquist ($\ge 2$ piksel per FWHM), dan berapa faktor binning jika *seeing* memburuk menjadi $3{,}0''$?
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Optik, Plate Scale & Medan Pandang:**
+- Panjang fokus: $f = N \times D = 8 \times 500\ \text{mm} = \mathbf{4\,000\ \text{mm}}$.
+- *Plate scale:* $P = \frac{206\,265''}{4\,000\ \text{mm}} = \mathbf{51{,}57''/\text{mm}}$.
+- *Pixel scale:* $p = 51{,}57''/\text{mm} \times 0{,}0090\ \text{mm/px} = \mathbf{0{,}464''/\text{piksel}}$.
+- Medan pandang total (FoV): $4096 \times 0{,}464'' = 1\,901'' = \mathbf{31{,}7' \times 31{,}7'}$ (hampir selebar piringan Bulan Purnama!).
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Uji Sampling Nyquist:**
+Jumlah piksel per FWHM:
+$$n_{\text{FWHM}} = \frac{1{,}50''}{0{,}464''/\text{px}} \approx \mathbf{3{,}23\ \text{piksel/FWHM}}.$$
+Karena $3{,}23 > 2{,}0$, citra **memenuhi kriteria Nyquist dengan baik** (*well-sampled*) tanpa memboroskan foton pada terlalu banyak piksel. Jika *seeing* memburuk menjadi $3{,}0''$ ($6{,}46\ \text{px/FWHM}$), melakukan **binning $2\times 2$** mengubah skala piksel menjadi $0{,}928''/\text{px}$ ($3{,}23\ \text{px/FWHM}$ kembali!) sekaligus memotong jumlah piksel derau baca per bintang sebanyak $4\times$!
+
+</Langkah>
+
+</Contoh>
+
+<Contoh judul="Contoh 2 (Rantai Olimpiade): Menghitung Waktu Eksposur CCD untuk Target SNR Fotometri 1%">
+
+<Langkah>
+
+**Data:** Bintang redup menghasilkan laju elektron sinyal total pada CCD sebesar $\dot{N}_* = 12{,}0\ \text{e}^-/\text{s}$ (sudah termasuk luas teleskop, transmisi atmosfer, filter $V$, dan QE). Apertur fotometri melingkup $n_{\text{px}} = 25\ \text{piksel}$, laju latar langit $\dot{N}_{\text{sky}} = 2{,}0\ \text{e}^-/(\text{s}\cdot\text{px})$, arus gelap $\dot{N}_D = 0{,}05\ \text{e}^-/(\text{s}\cdot\text{px})$, dan derau baca $\text{RN} = 8{,}0\ \text{e}^-/\text{px}$.\
+(a) Berapa lama waktu eksposur tunggal $t$ yang dibutuhkan untuk mencapai ketelitian fotometri $\sigma_m \approx 0{,}01\ \text{mag}$ ($\text{SNR} \approx 100$)?\
+(b) Mengapa mencapai ketelitian yang sama lewat menumpuk (*stacking*) 10 eksposur pendek berdurasi $t/10$ menghasilkan SNR lebih rendah, dan seberapa besar perbedaannya?
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 1 — Menyelesaikan Persamaan Kuadratik Waktu Eksposur ($t$):**
+Ingat relasi galat magnitudo $\sigma_m = \frac{1{,}0857}{\text{SNR}} \implies \text{SNR} \approx 108{,}6$ (atau ambil $\text{SNR} = 100$ bila $\sigma_m \approx 0{,}0109$). Mari pakai target $\text{SNR} = 100$:
+$$100 = \frac{12{,}0\, t}{\sqrt{12{,}0\, t + 25\big((2{,}0 + 0{,}05)\, t + 64{,}0\big)}} = \frac{12{,}0\, t}{\sqrt{63{,}25\, t + 1\,600}}.$$
+Kuadratkan kedua ruas ($10^4$):
+$$144\, t^2 = 10^4 (63{,}25\, t + 1\,600) \implies 144\, t^2 - 632\,500\, t - 1{,}60\times 10^7 = 0.$$
+Gunakan rumus kuadratik ($t > 0$):
+$$t = \frac{632\,500 + \sqrt{632\,500^2 + 4(144)(1{,}60\times 10^7)}}{288} = \frac{632\,500 + \sqrt{4{,}0927\times 10^{11}}}{288} = \frac{632\,500 + 639\,740}{288} \approx \mathbf{4\,418\ \text{detik}\ (\approx 73{,}6\ \text{menit})}.$$
+*(Cek kontribusi derau pada $t = 4\,418\ \text{s}$: total sinyal $= 53\,016\ \text{e}^-$, total derau latar+gelap $= 226\,423\ \text{e}^-$, sedangkan derau baca $25\times 64 = 1\,600$ — sistem berada di rezim **background-limited**!)*
+
+</Langkah>
+
+<Langkah>
+
+**Langkah 2 — Efek Penumpukan 10 Sub-Eksposur ($10 \times 441{,}8\ \text{s}$):**
+Bila dibagi menjadi $10$ frame berdurasi $t_i = 441{,}8\ \text{s}$ lalu dijumlahkan, sinyal total dan derau langit/gelap tetap sama persis, **tetapi varians derau baca masuk $10$ kali lipat** ($10 \times 1\,600 = 16\,000$):
+$$\text{SNR}_{\text{stack}} = \frac{53\,016}{\sqrt{53\,016 + 226\,423 + 16\,000}} = \frac{53\,016}{\sqrt{295\,439}} \approx 97{,}5.$$
+Pada $t = 441{,}8\ \text{s}$ pun efek derau baca sudah menurunkan SNR ($97{,}5 < 100$); jika dipecah menjadi $100$ sub-frame $44{,}2\ \text{s}$, varians derau baca melonjak menjadi $160\,000$ dan SNR anjlok ke **$80{,}0$**!
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  items={[
+    {
+      salah: 'Menumpuk (stacking) sepuluh eksposur berdurasi 10 detik pada CCD selalu memberikan Signal-to-Noise Ratio (SNR) yang sama persis dengan satu eksposur tunggal berdurasi 100 detik.',
+      kenapaKeliru: 'Anggapan ini hanya mendekati benar bila CCD berada jauh di dalam rezim *background-limited* (n_px N_sky t >> n_px RN²). Pada pita sempit, malam gelap gulita, atau pengamatan kecepatan tinggi, setiap pembacaan frame menyuntikkan varians derau baca baru n_px RN² sehingga total varians derau baca tumbuh k kali lipat untuk k frame!',
+      caraDeteksi: 'Uji limit N_sky = 0 dan RN = 10 e⁻: satu frame 100 s hanya menambah varians 100 e⁻², sedangkan 100 frame 1 s menambah varians 100 × 100 = 10 000 e⁻² (SNR merosot 10 kali)!',
+      benar: 'Splitting eksposur hanya tidak merugikan SNR apabila durasi sub-eksposur cukup panjang sehingga derau foton langit jauh melampaui derau baca (n_px N_sky t_sub >> n_px RN², yakni kondisi sky-background dominated).',
+    },
+    {
+      salah: 'Teleskop optik berdiameter 10 meter di darat (tanpa optik adaptif) mampu memisahkan bintang ganda berjarak sudut 0,015″ karena batas Rayleigh-nya 1,22 λ/D ≈ 0,014″.',
+      kenapaKeliru: 'Mengabaikan turbulensi atmosfer! Tanpa optik adaptif (AO), gelombang datar bintang hancur menjadi sel-sel koherensi berdiameter parameter Fried r₀ ≈ 15 cm, sehingga resolusi aktual terkunci pada θ_seeing ≈ λ/r₀ ≈ 0,8″–1,5″ tidak peduli apakah D = 0,5 m atau 10 m!',
+      caraDeteksi: 'Tanyakan mengapa bintang tampak berkelap-kelip dan mengapa teleskop darat besar dibangun terutama untuk daya kumpul foton (∝ D²) serta beroperasi dengan AO atau spektroskopi resolusi tinggi.',
+      benar: 'Pada pengamatan darat tanpa AO, apertur > 20 cm tidak mempertajam citra mentah di bawah batas seeing atmosfer (~1″); keunggulan D = 10 m adalah mengumpulkan ratusan kali lebih banyak foton per detik.',
+    },
+    {
+      salah: 'Memperpanjang panjang fokus teleskop (memperbesar rasio f/D pada D tetap) membuat gambar nebula yang difoto di CCD tampak lebih terang.',
+      kenapaKeliru: 'Memperpanjang f hanya memperbesar ukuran bayangan nebula di sensor (luas bayangan naik ∝ f²). Karena jumlah foton yang masuk melalui lensa depan berdiameter D tetap konstan, kerapatan foton per piksel justru turun ∝ 1/f² — gambar menjadi lebih REDUP per satuan waktu eksposur!',
+      caraDeteksi: 'Dalam fotografi dan survei medan lebar, f/2 disebut lensa "cepat" sedangkan f/15 disebut "lambat", persis karena kecerahan permukaan citra di bidang fokus berbanding terbalik dengan (f/D)²!',
+      benar: 'Untuk sumber diperluas (nebula/galaksi), kecepatan pengumpulan cahaya per piksel berbanding lurus dengan (D/f)² = 1/N².',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="evaluasi" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mandiri">
+
+<CekPaham
+  id="a7-cek-1"
+  pertanyaan="Teleskop dengan f_obj = 900 mm memakai okuler 15 mm. Berapa perbesarannya, dan berapa diameter minimum apertur agar perbesaran ini masih berguna (di bawah M_maks = 2D[mm])?"
+  opsi={['60×; apertur minimal 30 mm', '60×; apertur minimal 15 mm', '45×; apertur minimal 22,5 mm', '15×; apertur minimal 7,5 mm']}
+  jawaban={0}
+  penjelasan="M = 900/15 = 60×. Batas perbesaran berguna D ≥ M/2 = 30 mm; apertur di bawah itu hanya menghasilkan pembesaran kosong yang buram oleh difraksi."
+/>
+
+<CekPaham
+  id="a7-cek-2"
+  pertanyaan="Dua bintang terpisah sudut 0,5 detik busur. Teleskop mana yang BARU CUKUP memisahkan keduanya pada λ = 550 nm menurut kriteria Rayleigh (θ = 1,22λ/D)?"
+  opsi={['D ≈ 275 mm', 'D ≈ 55 mm', 'D ≈ 550 mm', 'D ≈ 138 mm']}
+  jawaban={0}
+  penjelasan="D = 1,22 λ / θ = 1,22 × 550×10⁻⁹ / (0,5/206 265) ≈ 0,277 m ≈ 277 mm."
+/>
+
+<CekPaham
+  id="a7-cek-3"
+  pertanyaan="Sebuah spektrograf memiliki resolusi R = 30.000 pada λ = 589 nm (garis Na). Berapakah kecepatan radial minimum yang dapat diukur, dan berapakah Δλ minimum yang dapat dipisahkan?"
+  opsi={[
+    'v_min = 10 km/s; Δλ_min ≈ 0,020 nm',
+    'v_min = 30 km/s; Δλ_min ≈ 0,020 nm',
+    'v_min = 10 km/s; Δλ_min ≈ 0,002 nm',
+    'v_min = 100 km/s; Δλ_min ≈ 0,200 nm'
+  ]}
+  jawaban={0}
+  penjelasan="v_min = c/R = 3×10⁵ / 30 000 = 10 km/s, dan Δλ_min = λ/R = 589 / 30 000 ≈ 0,0196 nm."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'a7-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Sebuah teleskop survei optik berdiameter $D = 8{,}4\\ \\text{m}$ (*Vera C. Rubin Observatory*) memiliki panjang fokus sangat pendek ($f = 10{,}3\\ \\text{m}$, $f/1{,}23$) dan kamera raksasa $3{,}2$ gigapiksel dengan piksel $10\\ \\mu\\text{m}$. Mengapa desain $f/1{,}23$ yang ekstrem ini dipilih ketimbang desain klasik $f/10$ seperti teleskop pada umumnya?',
+      petunjuk: 'Tinjau dua keuntungan langsung $f$ pendek dan $N = f/D$ kecil: medan pandang per eksposur (FoV) serta kecepatan pengumpulan foton untuk galaksi lemah yang *resolved*!',
+      langkahKunci: [
+        '*Plate scale* di $f = 10{,}3\\ \\text{m}$ adalah $206\\,265/10\\,300 \\approx 20{,}0^{\\prime\\prime}/\\text{mm}$ ($0{,}20^{\\prime\\prime}/\\text{px}$ pada piksel $10\\ \\mu\\text{m}$).',
+        'Dengan diameter bidang fokus $\\sim 64\\ \\text{cm}$, kamera menangkap medan pandang raksasa berdiameter **$3{,}5^\\circ$** sekaligus ($\\sim 9{,}6\\ \\text{deg}^2$ — setara hampir $50\\times$ luas Bulan Purnama dalam satu jepretan!).',
+        'Selain itu rasio fokal super cepat $f/1{,}23$ memungkinkan eksposur hanya $15\\text{--}30\\ \\text{detik}$ untuk mencapai kedalaman magnitudo $r \\sim 24{,}5$ dan memindai seluruh langit selatan setiap 3 malam!',
+      ],
+      rubrik: [
+        'Menghubungkan panjang fokus pendek $f$ dengan *plate scale* besar dan medan pandang lebar.',
+        'Menjelaskan kecepatan fotometri $(D/f)^2$ pada survei langit berulang.',
+      ],
+    },
+    {
+      id: 'a7-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Dari persamaan dasar spektroskopi kisi $d(\\sin\\alpha + \\sin\\beta) = m\\lambda$ (dengan sudut datang $\\alpha$ tetap dan lebar celah masuk sudut $\\Delta\\alpha$), turunkan **dispersi sudut** $\\frac{d\\beta}{d\\lambda}$ dan **daya pisah spektral batas celah (*slit-limited* $R$)** jika proyeksi bayangan celah oleh kamera spektrograf harus sama dengan $\\Delta\\lambda$ yang baru terurai!',
+      petunjuk: 'Diferensiasikan persamaan kisi terhadap $\\lambda$ dengan $\\alpha$ konstan untuk $\\frac{d\\beta}{d\\lambda}$, lalu kaitkan $\\Delta\\beta$ dengan lebar sudut bayangan celah $\\Delta\\beta = \\frac{\\cos\\alpha}{\\cos\\beta}\\Delta\\alpha = \\frac{D_{\\text{tel}}}{D_{\\text{kol}}}\\phi_{\\text{slit}}\\frac{\\cos\\alpha}{\\cos\\beta}$.',
+      langkahKunci: [
+        'Diferensiasi pada $\\alpha = \\text{konst}$: $d\\cos\\beta\\frac{d\\beta}{d\\lambda} = m \\implies \\frac{d\\beta}{d\\lambda} = \\frac{m}{d\\cos\\beta}$.',
+        'Substitusikan $m = d(\\sin\\alpha + \\sin\\beta)/\\lambda$: $\\frac{d\\beta}{d\\lambda} = \\frac{\\sin\\alpha + \\sin\\beta}{\\lambda\\cos\\beta}$.',
+        'Konservasi *etendue* teleskop ke kolimator memberi lebar sudut bayangan celah pada bidang kisi sebesar $\\Delta\\beta = \\left(\\frac{D_{\\text{tel}}}{D_{\\text{kol}}}\\right)\\phi_{\\text{slit}}\\frac{\\cos\\alpha}{\\cos\\beta}$ (di mana lebar berkas kolimasi pada kisi adalah $W = D_{\\text{kol}}/\\cos\\alpha$).',
+        'Samakan $\\Delta\\lambda = \\Delta\\beta / (d\\beta/d\\lambda)$ sehingga resolusi spektral $R = \\frac{\\lambda}{\\Delta\\lambda}$ adalah:',
+        '$$R = \\frac{D_{\\text{kol}}(\\sin\\alpha + \\sin\\beta)}{D_{\\text{tel}}\\,\\phi_{\\text{slit}}\\cos\\alpha} = \\frac{W(\\sin\\alpha + \\sin\\beta)}{D_{\\text{tel}}\\,\\phi_{\\text{slit}}}.$$',
+        'Persamaan fundamental perancangan spektrograf ini membuktikan mengapa teleskop $D_{\\text{tel}} = 30\\ \\text{m}$ membutuhkan spektrograf berukuran raksasa ($W$ meter) atau teknik *echelle* ($\\sin\\alpha \\approx \\sin\\beta$ besar) serta AO ($\\phi_{\\text{slit}}$ kecil)!',
+      ],
+      rubrik: [
+        'Menurunkan dispersi sudut $\\frac{d\\beta}{d\\lambda} = \\frac{m}{d\\cos\\beta}$ dengan tepat.',
+        'Menghubungkan lebar sudut celah dengan $D_{\\text{tel}}/D_{\\text{kol}}$ hingga memperoleh ketergantungan $R \\propto W / (D_{\\text{tel}} \\phi_{\\text{slit}})$.',
+      ],
+    },
+    {
+      id: 'a7-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah teleskop radio piringan tunggal berdiameter $D = 100\\ \\text{m}$ (seperti Green Bank Telescope) mengamati garis hidrogen netral HI $\\lambda = 21{,}1\\ \\text{cm}$ ($\\nu = 1{,}42\\ \\text{GHz}$) dari sebuah galaksi jauh dengan kerapatan fluks terukur $S_\\nu = 10\\ \\text{mJy}$ ($10^{-29}\\ \\text{W m}^{-2}\\text{Hz}^{-1}$) dan lebar pita penerima $\\Delta\\nu = 10\\ \\text{MHz}$. Berapa **watt daya total** yang benar-benar masuk ke pengumpul piringan $100\\ \\text{m}$ itu, dan seberapa lama energi yang terkumpul sejak awal astronomi radio ($\\sim 80\\ \\text{tahun}$) dibandingkan energi jatuhnya **sebutir keping salju ($m = 1\\ \\text{mg}$ jatuh $1\\ \\text{cm}$)**?',
+      petunjuk: 'Hitung daya $P = S_\\nu \\cdot A_{\\text{eff}} \\cdot \\Delta\\nu$ dengan $A_{\\text{eff}} \\approx \\frac{\\pi}{4}D^2$, lalu kalikan $80\\ \\text{tahun} \\approx 2{,}5\\times 10^9\\ \\text{s}$!',
+      langkahKunci: [
+        'Luas pengumpulan: $A \\approx \\frac{\\pi}{4}(100)^2 \\approx 7{,}85\\times 10^3\\ \\text{m}^2$.',
+        'Daya masuk: $P = (10^{-29}\\ \\text{W m}^{-2}\\text{Hz}^{-1})(7{,}85\\times 10^3\\ \\text{m}^2)(10^7\\ \\text{Hz}) \\approx 7{,}85\\times 10^{-19}\\ \\text{W}$ (kurang dari 1 attowatt!).',
+        'Energi selama $80\\ \\text{tahun}$ ($2{,}5\\times 10^9\\ \\text{s}$): $E_{\\text{radio}} \\approx 2{,}0\\times 10^{-9}\\ \\text{J}$.',
+        'Energi potensial sebutir salju $10^{-6}\\ \\text{kg}$ jatuh $10^{-2}\\ \\text{m}$: $E_{\\text{salju}} = mgh \\approx 10^{-6}\\times 9{,}8\\times 10^{-2} \\approx 10^{-7}\\ \\text{J}$ — masih $50\\times$ lebih besar dari seluruh energi radio galaksi itu selama 80 tahun pengamatan kontinu!',
+      ],
+      rubrik: [
+        'Mengonversi $\\text{mJy}$ ke $\\text{W m}^{-2}\\text{Hz}^{-1}$ dan mengalikan luas serta lebar pita.',
+        'Membandingkan orde energi total ($\\sim 10^{-9}\\ \\text{J}$) terhadap skala energi makroskopik mikro.',
+      ],
+    },
+    {
+      id: 'a7-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Sebuah pengamatan *VLBI* lintas benua mengamati inti galaksi aktif (quasar) pada frekuensi $\\nu = 43\\ \\text{GHz}$ ($\\lambda = 6{,}97\\ \\text{mm}$) dengan baseline maksimum $B = 8\\,000\\ \\text{km}$. Fluks terukur adalah $S_\\nu = 2{,}0\\ \\text{Jy}$ dari sumber yang tepat tidak terurai oleh berkas berdiameter sudut $\\theta_b \\approx \\lambda/B$. Hitung resolusi sudut $\\theta_b$ (dalam $\\mu\\text{as}$) dan taksiran batas bawah **suhu kecerahan ($T_B$)** quasar tersebut menggunakan aproksimasi Rayleigh–Jeans!',
+      petunjuk: 'Gunakan $I_\\nu = S_\\nu / \\Omega_{\\text{beam}}$ dengan $\\Omega_{\\text{beam}} \\approx \\frac{\\pi}{4}\\theta_b^2$ (dalam steradian), lalu $T_B = \\frac{\\lambda^2 I_\\nu}{2 k_B}$.',
+      langkahKunci: [
+        'Resolusi sudut: $\\theta_b = \\frac{6{,}97\\times 10^{-3}\\ \\text{m}}{8{,}0\\times 10^6\\ \\text{m}} = 8{,}71\\times 10^{-10}\\ \\text{rad} \\approx 0{,}000180^{\\prime\\prime} = \\mathbf{180\\ \\mu\\text{as}}$.',
+        'Sudut ruang berkas: $\\Omega_b \\approx \\frac{\\pi}{4}(8{,}71\\times 10^{-10})^2 = 5{,}96\\times 10^{-19}\\ \\text{sr}$.',
+        'Intensitas spesifik: $I_\\nu = \\frac{2{,}0\\times 10^{-26}}{5{,}96\\times 10^{-19}} \\approx 3{,}36\\times 10^{-8}\\ \\text{W m}^{-2}\\text{Hz}^{-1}\\text{sr}^{-1}$.',
+        'Suhu kecerahan: $T_B = \\frac{(6{,}97\\times 10^{-3})^2 (3{,}36\\times 10^{-8})}{2(1{,}381\\times 10^{-23})} \\approx \\mathbf{5{,}9\\times 10^{10}\\ \\text{K}}$! Karena $T_B \\gg 10^6\\ \\text{K}$, emisi ini mustahil berasal dari gas panas biasa melainkan radiasi **sinkrotron relativistik** di dekat lubang hitam supermasif!',
+      ],
+      rubrik: [
+        'Menghitung resolusi VLBI $\\approx 180\\ \\mu\\text{as}$ dan $\\Omega_b$ dalam steradian.',
+        'Menerapkan $T_B = \\lambda^2 I_\\nu / (2k_B)$ untuk mendapat $\\sim 6\\times 10^{10}\\ \\text{K}$ dan mengidentifikasi mekanisme non-termal.',
+      ],
+    },
+    {
+      id: 'a7-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Teleskop ruang angkasa James Webb (JWST) bekerja pada panjang gelombang inframerah ($\\lambda = 2\\text{--}28\\ \\mu\\text{m}$) sehingga seluruh cermin utamanya harus didinginkan secara pasif ke $T < 50\\ \\text{K}$ dengan perisai matahari berlapis lima di titik $L_2$. Jelaskan berdasarkan hukum radiasi benda hitam mengapa cermin teleskop bersuhu ruangan ($T = 300\\ \\text{K}$) yang sangat baik untuk astronomi optik justru menjadi "buta silau" di inframerah menengah ($\\lambda \\sim 10\ \\mu\\text{m}$)!',
+      petunjuk: 'Hitung puncak emisi benda hitam ($\\lambda_{\\max} = b/T$) untuk teleskop bersuhu $300\\ \\text{K}$ versus $50\\ \\text{K}$, lalu bandingkan intensitas pancaran termal instrumen sendiri!',
+      langkahKunci: [
+        'Untuk struktur teleskop dan cermin pada suhu ruang $T = 300\\ \\text{K}$, hukum Wien memberi $\\lambda_{\\max} = \\frac{2{,}898\\times 10^{-3}}{300} \\approx 9{,}66\\ \\mu\\text{m}$ — tepat di tengah jendela inframerah menengah!',
+        'Dengan emisivitas cermin/baffle meskipun kecil ($\\epsilon \\sim 0{,}03\\text{--}1$), seluruh dinding teleskop dan atmosfer Bumi memancarkan cahaya inframerah yang jutaan kali lebih terang daripada galaksi redup jauh, menenggelamkan detektor dalam derau foton latar termal (*thermal background*)!',
+        'Dengan mendinginkan cermin ke $T < 50\\ \\text{K}$ (dan detektor MIRI aktif ke $6{,}7\\ \\text{K}$), puncak pancaran termal instrumen bergeser ke $\\lambda_{\\max} > 58\\ \\mu\\text{m}$ dan intensitas eksponensial Planck $\\propto e^{-hc/(\\lambda k_B T)}$ di $10\\ \\mu\\text{m}$ jatuh puluhan orde besar!',
+      ],
+      rubrik: [
+        'Menghitung puncak Wien $300\\ \\text{K}$ berada di $\\sim 10\\ \\mu\\text{m}$.',
+        'Menjelaskan kontras derau foton latar termal instrumen/atmosfer serta efek pendinginan ke $50\\ \\text{K}$.',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'a7-log-1',
+      tipe: 'kenapa',
+      pertanyaan:
+        'Mengapa di masa kini astronom dapat menggabungkan sinyal dari teleskop radio yang terpisah $10\\,000\\ \\text{km}$ lintas benua (VLBI) dengan merekam data ke cakram keras memakai jam atom lalu mengorelasikannya berbulan-bulan kemudian, sedangkan untuk **interferometri optik** (seperti VLTI berbaseline $130\\ \\text{m}$), berkas cahaya fisik dari tiap cermin WAJIB digabungkan secara optik langsung di terowongan vakum pada saat pengamatan berlangsung?',
+      petunjuk: 'Bandingkan frekuensi gelombang ($\\nu_{\\text{radio}} \\sim 10^9\\text{--}10^{11}\\ \\text{Hz}$ vs $\\nu_{\\text{optik}} \\sim 6\\times 10^{14}\\ \\text{Hz}$) terhadap kecepatan pencuplikan elektronik tercepat & derau kuantum penguat!',
+      rubrik: [
+        'Interferometri mensyaratkan pengukuran **amplitudo DAN fasa** gelombang elektromagnetik secara koheren ($\\Delta t \\ll 1/\\nu$).',
+        'Pada frekuensi radio GHz, antena elektronik mampu mencuplik langsung osilasi medan listrik ($E(t)$) secara digital bersama stempel waktu jam atom maser hidrogen.',
+        'Pada frekuensi optik ($\\sim 6\\times 10^{14}\\ \\text{Hz}$), tidak ada rangkaian elektronik yang dapat mencuplik medan listrik $\\sim 10^{15}$ kali per detik (dan penguatan foton menyuntikkan derau kuantum spontan $h\\nu \\gg k_B T$), sehingga satu-satunya cara membaca fasa adalah mencampur berkas foton secara fisik dalam jarak koherensi jalur optik!',
+      ],
+      jawabanKunci:
+        'Syarat mutlak interferometri adalah merekam informasi **fasa** di tiap stasiun dengan ketelitian lebih baik daripada sepersekian periode gelombang ($1/\\nu$). Pada frekuensi radio ($\\sim 10^9\\text{--}10^{11}\\ \\text{Hz}$), osilasi gelombang cukup lambat untuk dicuplik langsung oleh sirkuit elektronik digital dan disinkronkan jam atom maser (memungkinkan *offline correlation* VLBI). Sebaliknya, pada cahaya tampak ($\\sim 5\\times 10^{14}\\ \\text{Hz}$), tidak ada elektronik yang bisa mencuplik medan listrik terahertz secara langsung dan energi kuantum $h\\nu \\gg k_B T$ membuat amplifikasi fasa tercemar derau kuantum — sehingga foton harus diarahkan melalui cermin vakum hingga bertemu secara fisik!',
+    },
+    {
+      id: 'a7-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang peserta menghitung waktu eksposur untuk dua bintang pada citra CCD yang sama (pita filter sama, apertur fotometri sama $n_{\\text{px}} = 20$, tanpa saturasi): Bintang 1 bermagnitudo $V = 15$ mencapai $\\text{SNR} = 100$ dalam $t_1 = 60\\ \\text{s}$ (diketahui berada di rezim *background-limited*). Ia lalu menyimpulkan: "Bintang 2 bermagnitudo $V = 17{,}5$ ($10\\times$ lebih redup fluksnya), jadi agar mencapai $\\text{SNR} = 100$ yang sama, cukup memperpanjang waktu eksposur menjadi $10 \\times 60 = 600\\ \\text{s}$." Benarkah perhitungannya?',
+      petunjuk: 'Periksa skala $\\text{SNR} \\propto \\frac{\\dot{N}_*}{\\sqrt{n_{\\text{px}} \\dot{N}_{\\text{sky}}}} \\sqrt{t}$ di rezim *background-limited*: bila fluks bintang turun $10\\times$, berapa faktor kenaikan $t$ agar $\\text{SNR}$ tetap sama?!',
+      rubrik: [
+        'Salah besar! Karena derau latar langit tetap mengalir seiring $t$, $\\text{SNR} \\propto \\dot{N}_* \\sqrt{t}$ (bukan $\\dot{N}_* t$)!',
+        'Jika $\\dot{N}_*$ turun menjadi $1/10$, untuk menjaga produk $\\dot{N}_* \\sqrt{t}$ konstan, $\\sqrt{t}$ harus naik $10\\times$ — artinya waktu eksposur $t$ harus naik **$10^2 = 100\\times$ lipat** ($6\\,000\\ \\text{s} = 100\\ \\text{menit}$), bukan $600\\ \\text{s}$!',
+      ],
+      jawabanKunci:
+        'Kesalahan fatalnya adalah memperlakukan SNR seolah linear terhadap waktu eksposur ($t$) di rezim *background-limited*. Dalam kenyataannya, baik sinyal bintang maupun derau latar langit sama-sama bertambah seiring waktu sehingga $\\text{SNR} \\approx \\frac{\\dot{N}_*\\, t}{\\sqrt{n_{\\text{px}}\\dot{N}_{\\text{sky}}\\,t}} \\propto \\dot{N}_* \\sqrt{t}$. Jika bintang 10 kali lebih redup ($\\Delta m = +2{,}5\\ \\text{mag}$), waktu eksposur untuk menyamai SNR yang sama harus dilipatgandakan **$10^2 = 100\\times$** menjadi $6\\,000\\ \\text{s}$!',
+    },
+    {
+      id: 'a7-log-3',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Teleskop ruang angkasa HST ($D = 2{,}4\\ \\text{m}$) tidak terganggu *seeing* atmosfer. Andaikan secara ajaib atmosfer Bumi bisa membuat *seeing* pada teleskop $D = 10\\ \\text{m}$ tepat bernilai **nol**, tetapi atmosfer tersebut tetap menyala terang seperti langit malam perkotaan (*sky background* naik $100\\times$ dibanding antariksa) dan hanya meloloskan $80\\%$ cahaya. Apakah dalam kondisi ini HST $2{,}4\\ \\text{m}$ masih unggul untuk mendeteksi galaksi paling redup yang ukuran sudutnya di bawah $0{,}05^{\\prime\\prime}$?',
+      petunjuk: 'Bandingkan SNR pada rezim *background-limited* antara dua teleskop bila sama-sama mencapai batas difraksi ($n_{\\text{px}}$ menyusut seiring luas cakram Airy $\\Omega_{\\text{Airy}} \\propto (\\lambda/D)^2$)!',
+      rubrik: [
+        'Jika kedua teleskop bekerja pada batas difraksi ($\\theta \\propto 1/D$), luas piringan Airy menyusut $\\propto D^{-2}$, sedangkan foton sinyal naik $\\propto D^2$ dan foton latar per area langit naik $\\propto D^2 \\cdot \\Omega_{\\text{Airy}} \\propto D^0 = \\text{konstan}$!',
+        'Dengan demikian di rezim latar-terbatas berdifraksi sempurna, $\\text{SNR} \\propto \\frac{Q_{\\text{trans}}\\, D^2}{\\sqrt{B_{\\text{sky}}}}$, sehingga membandingkan $10\\ \\text{m}$ (area $17{,}4\\times$ HST, transmisi $0{,}8$, langit $100\\times$ lebih terang) memberi $\\text{SNR}_{10\\text{m}} / \\text{SNR}_{2{,}4\\text{m}} \\sim \\frac{0{,}8 \\times 17{,}4}{\\sqrt{0{,}8 \\times 100}} \\approx 1{,}56$. Keduanya hampir imbang — dan bila polusi langit lebih parah ($400\\times$ di IR), luar angkasa tetap menang mutlak!',
+      ],
+      jawabanKunci:
+        'Untuk sumber titik terbatas difraksi, sinyal tumbuh sebanding $D^2$ sedangkan derau langit di dalam cakram Airy ($\\Omega \\propto D^{-2}$) menjadi independen terhadap $D$! Akibatnya perbandingan SNR kedua instrumen adalah $\\frac{\\text{SNR}_{10\\text{m}}}{\\text{SNR}_{\\text{HST}}} = \\sqrt{\\epsilon}\\left(\\frac{D_{10}}{D_{\\text{HST}}}\\right)^2 / \\sqrt{\\frac{B_{\\text{bumi}}}{B_{\\text{angkasa}}}} \\approx \\frac{0{,}8\\times 17{,}36}{\\sqrt{80}} \\approx 1{,}55$. Tanpa polusi langit, teleskop $10\\ \\text{m}$ menang telak; tetapi karena latar langit Bumi di pita merah/IR jauh $10^3\\text{--}10^6\\times$ lebih terang daripada antariksa (emisi OH atmosfer & panas termal), teleskop ruang angkasa tetap tak terkalahkan di kedalaman inframerah!',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="a7-refleksi-1"
+  pertanyaan="Mengapa observatorium luar angkasa seperti Teleskop Luar Angkasa Hubble dengan apertur 'hanya' 2,4 meter dapat menghasilkan gambar lebih tajam (dalam batas difraksi) daripada teleskop darat berdiameter 8–10 meter tanpa optik adaptif? Hubungkan dengan konsep seeing, parameter Fried r₀, jendela atmosfer, dan latar langit."
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'a7-m1', gerbang: 'derivasi', teks: 'Menurunkan persamaan SNR CCD lengkap beserta perilaku t^(1/2) (background/photon-limited) vs t^1 (read-noise limited) dan penskalaan SNR ∝ F* √t.' },
+    { id: 'a7-m2', gerbang: 'derivasi', teks: 'Menurunkan dispersi sudut kisi dβ/dλ dan daya pisah batas celah spektrograf R ∝ W / (D φ_slit).' },
+    { id: 'a7-m3', gerbang: 'observasi', teks: 'Menghitung plate scale, pixel scale, kriteria Nyquist (≥2 px/FWHM), batas Rayleigh, dan parameter Fried r_0 ∝ λ^(6/5).' },
+    { id: 'a7-m4', gerbang: 'fermi', teks: 'Mengonversi fluks Jansky menjadi suhu kecerahan Rayleigh-Jeans T_B pada observasi radio/VLBI serta mengestimasi daya masuk antena.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul A7">
+
+<Konstanta
+  data={[
+    { simbol: 'Faktor Rayleigh lingkaran', nilai: '1,21967 (≈ 0,2516″ λ[μm]/D[m])', satuan: '—' },
+    { simbol: 'Skala pelat konstan', nilai: '206 264,8″ / f[mm]', satuan: 'arcsec mm⁻¹' },
+    { simbol: '1 Jansky (Jy)', nilai: '10⁻²⁶', satuan: 'W m⁻² Hz⁻¹' },
+    { simbol: 'r₀ tipikal situs observatorium (500 nm)', nilai: '15–20 (skala ∝ λ^(6/5))', satuan: 'cm' },
+    { simbol: 'σ_m terhadap SNR', nilai: '2,5 log₁₀ e / SNR ≈ 1,0857 / SNR', satuan: 'mag' },
+    { simbol: 'Garis HI 21 cm · Hα', nilai: '1 420,406 MHz · 656,28 nm', satuan: '—' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-03', 'SRC-05', 'SRC-06', 'SRC-08']}
+  pemetaan={[
+    { sumberId: 'SRC-03', rujukan: 'Prodi Astronomi ITB AS4103 & AS4206 (Instrumentasi & Teknik Observasi): optik, CCD SNR, spektrograf, dan astronomi radio.' },
+    { sumberId: 'SRC-05', rujukan: 'Karttunen et al. (6e), Bab 3: teleskop optik, detektor, jendela atmosfer, dan teleskop radio.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Bab 6: optik teleskop, piringan Airy, parameter Fried & AO, CCD, kisi difraksi, dan interferometri radio.' },
+    { sumberId: 'SRC-08', rujukan: 'Roy & Clarke (4e), Bab 15–21: desain optik Cassegrain/Newtonian, spektrograf celah, fotometri diferensial, dan radiometri radio.' },
+  ]}
+/>
+
+</Bagian>

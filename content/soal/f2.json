@@ -1,0 +1,1144 @@
+[
+  {
+    "id": "f2-01",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "tipe": "pilihan-ganda",
+    "soal": "Sudut 30° dinyatakan dalam radian sama dengan…",
+    "opsi": [
+      "π/3",
+      "π/6",
+      "π/4",
+      "π/12"
+    ],
+    "jawaban": 1,
+    "pembahasan": [
+      "Satu putaran penuh adalah 360° = 2π rad, sehingga 180° = π rad.",
+      "Bagi kedua ruas dengan 6: 30° = π/6 rad ≈ 0,524 rad.",
+      "Periksa dengan rumus konversi: 30 × π/180 = π/6. Arah konversi derajat ke radian selalu mengalikan dengan π/180.",
+      "Sebagai patokan cepat: 30° adalah seperdua belas putaran, dan seperdua belas dari 2π juga π/6."
+    ]
+  },
+  {
+    "id": "f2-02",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Sebuah tongkat sepanjang 10 m dipasang tegak lurus garis pandang pada jarak 50 m dari pengamat. Berapa sudut yang dibentuk tongkat itu di mata pengamat?",
+    "opsi": [
+      "11,3°",
+      "5,7°",
+      "78,7°",
+      "0,2°"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Bentuk situasinya segitiga siku-siku: sisi depan 10 m, sisi samping 50 m.",
+      "Gunakan tangen: tan θ = 10/50 = 0,2.",
+      "Maka θ = arctan(0,2) ≈ 11,3°.",
+      "Periksa dengan pendekatan sudut kecil: 10/50 = 0,2 rad ≈ 11,5°. Hasil eksak 11,3° dekat, tetapi belum identik — sudut 11° sudah di ambang batas aproksimasi."
+    ]
+  },
+  {
+    "id": "f2-03",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "soal": "Sebuah pesawat ruang angkasa memiliki dua dorongan yang saling tegak lurus: 6 satuan ke arah timur dan 8 satuan ke arah utara. Berapa besar dorongan totalnya?",
+    "opsi": [
+      "14 satuan",
+      "10 satuan",
+      "2 satuan",
+      "7 satuan"
+    ],
+    "jawaban": 1,
+    "pembahasan": [
+      "Dua vektor tegak lurus membentuk segitiga siku-siku, sehingga resultannya dihitung dengan Pythagoras.",
+      "R² = 6² + 8² = 36 + 64 = 100.",
+      "R = 10 satuan.",
+      "Perhatikan: menjumlahkan langsung 6 + 8 = 14 hanya benar bila kedua dorongan searah. Sudut 90° membuat resultan lebih pendek."
+    ]
+  },
+  {
+    "id": "f2-04",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "soal": "Spektrum sebuah bintang menunjukkan pergeseran Doppler yang setara dengan 34,6 km/s. Jika sudut antara arah gerak bintang dan garis pandang adalah 30°, berapa kecepatan total bintang itu?",
+    "opsi": [
+      "40 km/s",
+      "34,6 km/s",
+      "60 km/s",
+      "69,3 km/s"
+    ],
+    "jawaban": 0,
+    "pembahasan": [
+      "Spektrum hanya mengukur komponen kecepatan sepanjang garis pandang: v_r = v cos θ, dengan θ sudut terhadap garis pandang.",
+      "Yang diketahui v_r, bukan v: v = v_r / cos 30° = 34,6 / 0,866.",
+      "v ≈ 40 km/s. Jadi 34,6 km/s adalah proyeksi, bukan kecepatan sebenarnya.",
+      "Tafsir fisis: bintang yang bergerak tegak lurus garis pandang tidak memperlihatkan pergeseran Doppler sama sekali. Tanpa informasi sudut, kecepatan total tidak dapat ditentukan dari spektrum saja."
+    ]
+  },
+  {
+    "id": "f2-05",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "tipe": "pilihan-jamak",
+    "soal": "Pilih semua pernyataan yang benar tentang trigonometri dasar.",
+    "opsi": [
+      "Untuk sudut kecil, sin θ ≈ θ bila θ dinyatakan dalam radian",
+      "Pada aturan sinus berlaku a/sin A = b/sin B",
+      "Dua vektor sama besar yang membentuk 120° menghasilkan resultan sama besar dengan masing-masing vektor",
+      "cos 45° = 0,5",
+      "Satu radian sama dengan satu derajat"
+    ],
+    "jawaban": [0, 1, 2],
+    "pembahasan": [
+      "Aproksimasi sin θ ≈ θ hanya berlaku dalam radian; dalam derajat angkanya berbeda jauh. Ini alasan sudut dalam astronomi selalu ditulis dalam radian saat memakai aproksimasi.",
+      "Aturan sinus membandingkan sisi dengan sinus sudut di hadapannya. Bentuk kesetaraan ini berlaku untuk semua segitiga, bukan hanya yang siku-siku.",
+      "Dua vektor sama besar dengan sudut 120° membentuk segitiga sama sisi saat dijumlahkan, sehingga resultannya tepat sebesar masing-masing vektor.",
+      "cos 45° = √2/2 ≈ 0,707, bukan 0,5. Yang bernilai 0,5 adalah cos 60°."
+    ]
+  },
+  {
+    "id": "f2-06",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "pilihan-jamak",
+    "soal": "Sebuah vektor kecepatan besarnya 100 km/s dan membentuk sudut 30° terhadap garis pandang. Pilih semua pernyataan yang benar.",
+    "opsi": [
+      "Komponen radialnya sekitar 86,6 km/s",
+      "Komponen tangensialnya 50 km/s",
+      "Komponen radial bisa lebih besar daripada besar vektor total",
+      "Perkalian titik dua vektor memakai sinus sudut di antara keduanya",
+      "Resultan dua vektor bisa lebih kecil daripada besar salah satu vektor"
+    ],
+    "jawaban": [0, 1, 4],
+    "pembahasan": [
+      "Komponen radial adalah proyeksi ke garis pandang: 100 cos 30° = 100 × 0,866 ≈ 86,6 km/s.",
+      "Komponen tangensial tegak lurus garis pandang: 100 sin 30° = 50 km/s.",
+      "Proyeksi tidak mungkin melebihi panjang vektor aslinya — komponen selalu lebih kecil atau sama besar.",
+      "Perkalian titik memakai kosinus, bukan sinus: A·B = AB cos θ. Sinus muncul pada besar hasil perkalian silang.",
+      "Jika dua vektor hampir berlawanan arah, resultannya bisa sangat kecil — bahkan nol bila sama besar dan tepat berlawanan."
+    ]
+  },
+  {
+    "id": "f2-07",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "isian",
+    "soal": "Sebuah bintang memiliki paralaks 0,77 detik busur. Berapa jarak bintang itu dari Bumi, dalam parsek?",
+    "jawaban": 1.3,
+    "toleransiRel": 0.02,
+    "satuan": "pc",
+    "pembahasan": [
+      "Hubungan paralaks dan jarak untuk sudut kecil: p (detik busur) = 1 / d (parsek).",
+      "Susun untuk jarak: d = 1 / p = 1 / 0,77.",
+      "d ≈ 1,30 pc. Ini jarak bintang terdekat, sebanding dengan Proxima Centauri.",
+      "Periksa kewajaran: paralaks 1'' berarti 1 pc, dan paralaks yang lebih kecil dari 1'' berarti jarak lebih besar dari 1 pc. Hasil 1,30 pc masuk akal."
+    ]
+  },
+  {
+    "id": "f2-08",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "tipe": "isian",
+    "soal": "Berapa panjang busur 2° di ekuator Bumi? Gunakan jari-jari Bumi 6.371 km.",
+    "jawaban": 222.4,
+    "toleransiRel": 0.02,
+    "satuan": "km",
+    "pembahasan": [
+      "Ubah sudut ke radian: 2° × π/180 = 0,034907 rad.",
+      "Panjang busur s = Rθ = 6.371 × 0,034907.",
+      "Hasilnya ≈ 222,4 km.",
+      "Sebagai pemeriksaan cepat: 1° di ekuator sekitar 111 km, jadi 2° sekitar 222 km. Konsisten."
+    ]
+  },
+  {
+    "id": "f2-09",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "isian",
+    "soal": "Dua bintang tampak terpisah 1,5° di langit dan keduanya berjarak 100 pc dari Bumi. Berapa pemisahan linier keduanya dalam ruang, dalam parsek? Gunakan pendekatan sudut kecil.",
+    "jawaban": 2.62,
+    "toleransiRel": 0.02,
+    "satuan": "pc",
+    "pembahasan": [
+      "Ubah pemisahan sudut ke radian: θ = 1,5° × π/180 = 0,02618 rad.",
+      "Untuk sudut kecil, ukuran linier = jarak × sudut: s = dθ = 100 pc × 0,02618.",
+      "s ≈ 2,62 pc, setara sekitar 540.000 AU.",
+      "Tafsir: pemisahan 1,5° terlihat lebar di langit, tetapi pada jarak 100 pc itu berarti ratusan ribu AU — jauh lebih besar daripada ukuran Tata Surya. Jarak sudut saja tidak cukup untuk menyimpulkan jarak fisik tanpa mengetahui jaraknya."
+    ]
+  },
+  {
+    "id": "f2-10",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "esai",
+    "soal": "Jelaskan mengapa pendekatan sudut kecil θ ≈ s/d sah untuk menghitung ukuran sudut benda langit, tetapi tidak boleh dipakai sembarangan. Sertakan satu contoh angka dan batas keberlakuannya.",
+    "rubrik": [
+      {
+        "poin": "Menjelaskan asal rumus dari definisi radian: panjang busur s = Rθ, sehingga untuk busur yang hampir lurus θ ≈ s/d.",
+        "bobot": 2
+      },
+      {
+        "poin": "Menghubungkan dengan sin θ ≈ tan θ ≈ θ dan menyebut syarat θ jauh lebih kecil dari 1 radian (praktisnya di bawah sekitar 10°).",
+        "bobot": 2
+      },
+      {
+        "poin": "Memberi contoh angka yang benar, misalnya diameter sudut Bulan sekitar 0,009 rad, atau 1 AU pada 1 pc memberi 1 detik busur.",
+        "bobot": 1
+      },
+      {
+        "poin": "Menyebut akibat bila sudut terlalu besar, misalnya kesalahan persen pada 10–20 derajat atau perlunya aturan kosinus/trigonometri eksak.",
+        "bobot": 1
+      }
+    ],
+    "jawabanTeladan": "Rumus θ = s/d berasal dari definisi radian: busur lingkaran berjari-jari d sepanjang s membentuk sudut θ = s/d. Untuk sudut kecil, busur itu hampir berupa garis lurus dan hampir sama dengan tali busur maupun garis singgung, sehingga sin θ ≈ tan θ ≈ θ bila θ dalam radian. Karena itu benda berukuran s pada jarak d tampak bersudut s/d; misalnya Bulan berdiameter 3.474 km pada jarak 384.400 km tampak sekitar 0,009 rad, atau 0,52°. Batasnya: aproksimasi memburuk saat sudut membesar. Pada 10°, sin θ berbeda sekitar 0,5% dari θ dan tan θ sekitar 1%; pada 20–30° kesalahannya sudah berapa persen sehingga soal presisi harus memakai trigonometri eksak atau aturan kosinus. Selalu tulis asumsi sudut kecil dan periksa apakah sudutnya memang kecil dibanding 1 radian.",
+    "pembahasan": [
+      "Jawaban yang lengkap harus menurunkan θ ≈ s/d dari definisi radian, bukan hanya menyebut rumusnya. Busur lingkaran berjari-jari d sepanjang s membentuk sudut s/d.",
+      "Syarat keberlakuan adalah θ jauh lebih kecil dari 1 radian, sehingga busur, tali busur, dan garis singgung hampir berimpit: sin θ ≈ tan θ ≈ θ.",
+      "Contoh angka yang kuat: diameter sudut Bulan sekitar 0,009 rad, atau 1 AU pada jarak 1 pc memberi 1 detik busur. Batas: pada 10° kesalahan aproksimasi sudah sekitar 0,5–1%, dan makin besar sudutnya makin perlu trigonometri eksak."
+    ]
+  },
+  {
+    "id": "f2-11",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "tipe": "pilihan-ganda",
+    "gambar": "lingkaran-satuan",
+    "soal": "Pada lingkaran satuan (gambar), koordinat titik pada sudut 60° adalah…",
+    "opsi": ["(1/2, √3/2)", "(√3/2, 1/2)", "(−1/2, √3/2)", "(√3/2, −1/2)"],
+    "jawaban": 0,
+    "pembahasan": ["Pada lingkaran satuan, koordinat sudut θ adalah (cos θ, sin θ).", "cos 60° = 1/2 dan sin 60° = √3/2.", "Sudut 60° di kuadran pertama memiliki kedua koordinat positif, jadi titiknya (1/2, √3/2)."]
+  },
+  {
+    "id": "f2-12",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "tipe": "pilihan-ganda",
+    "gambar": "segitiga-vektor",
+    "soal": "Dua vektor tegak lurus pada gambar memiliki komponen 5 satuan ke timur dan 12 satuan ke utara. Berapa besar resultannya?",
+    "opsi": ["7 satuan", "13 satuan", "17 satuan", "60 satuan"],
+    "jawaban": 1,
+    "pembahasan": ["Vektor yang tegak lurus membentuk segitiga siku-siku.", "Besar resultan R = √(5² + 12²) = √169 = 13.", "Menjumlahkan besar 5 + 12 hanya tepat untuk vektor searah, bukan yang tegak lurus."]
+  },
+  {
+    "id": "f2-13",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "gambar": "segitiga-vektor",
+    "soal": "Sebuah vektor kecepatan 20 km/s membentuk sudut 60° terhadap garis pandang. Berapa besar komponen radialnya?",
+    "opsi": ["10 km/s", "17,3 km/s", "20 km/s", "34,6 km/s"],
+    "jawaban": 0,
+    "pembahasan": ["Komponen radial adalah proyeksi vektor pada arah garis pandang.", "Dengan sudut θ terhadap garis pandang, v_r = v cos θ = 20 cos 60°.", "Karena cos 60° = 0,5, diperoleh v_r = 10 km/s; komponen ini tidak melebihi kecepatan total."]
+  },
+  {
+    "id": "f2-14",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "pilihan-ganda",
+    "gambar": "segitiga-vektor",
+    "soal": "Segitiga pada gambar mempunyai dua sisi 7 km dan 9 km dengan sudut apit 60°. Berapa panjang sisi yang berhadapan dengan sudut 60°?",
+    "opsi": ["√67 km ≈ 8,19 km", "√130 km ≈ 11,40 km", "16 km", "2 km"],
+    "jawaban": 0,
+    "pembahasan": ["Gunakan aturan kosinus c² = a² + b² − 2ab cos C.", "c² = 7² + 9² − 2(7)(9)cos 60° = 49 + 81 − 63 = 67.", "Jadi c = √67 ≈ 8,19 km, sesuai karena sudut apit 60° lebih kecil dari 90° dan sisi ketiga lebih pendek daripada √(7²+9²)."]
+  },
+  {
+    "id": "f2-15",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "gambar": "lingkaran-satuan",
+    "soal": "Titik pada lingkaran satuan berada pada sudut 150° dari sumbu x positif. Berapa koordinatnya?",
+    "opsi": ["(−√3/2, 1/2)", "(√3/2, −1/2)", "(−1/2, √3/2)", "(1/2, −√3/2)"],
+    "jawaban": 0,
+    "pembahasan": ["Koordinat pada lingkaran satuan ialah (cos θ, sin θ).", "150° = 180° − 30° berada di kuadran II: cos 150° = −cos 30° = −√3/2 dan sin 150° = sin 30° = 1/2.", "Tanda negatif hanya untuk komponen x di kuadran II, sehingga pilihan pertama benar."]
+  },
+  {
+    "id": "f2-16",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "pilihan-ganda",
+    "gambar": "segitiga-vektor",
+    "soal": "Dua perpindahan berturut-turut adalah 8 km ke timur lalu 6 km ke utara. Arah resultan diukur dari timur ke utara. Berapa sudutnya?",
+    "opsi": ["36,9°", "53,1°", "90°", "143,1°"],
+    "jawaban": 0,
+    "pembahasan": ["Komponen resultan adalah 8 km ke timur dan 6 km ke utara.", "tan θ = 6/8 = 0,75, sehingga θ = arctan(0,75) ≈ 36,9°.", "Sudut diukur dari arah timur menuju utara; membalik rasio akan memberi sudut komplemennya, 53,1° dari utara."]
+  },
+  {
+    "id": "f2-17",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "tipe": "pilihan-ganda",
+    "gambar": "segitiga-vektor",
+    "soal": "Pada diagram komponen vektor, A = (3, 4) dan B = (−4, 3). Berapa sudut terkecil antara A dan B?",
+    "opsi": ["0°", "45°", "90°", "180°"],
+    "jawaban": 2,
+    "pembahasan": ["Perkalian titik A·B = 3(−4) + 4(3) = −12 + 12 = 0.", "Karena A·B = |A||B|cos θ dan kedua vektor tidak nol, cos θ = 0.", "Maka sudut terkecilnya 90°; pemeriksaan komponen juga menunjukkan panjang masing-masing 5."]
+  },
+  {
+    "id": "f2-18",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "tipe": "pilihan-ganda",
+    "gambar": "segitiga-vektor",
+    "soal": "Pada segitiga posisi (gambar), dua sisi dari titik pengamat ke dua bintang adalah 5 pc dan 7 pc, dengan sudut pisah 60°. Berapa jarak fisik kedua bintang?",
+    "opsi": ["√39 pc ≈ 6,24 pc", "12 pc", "√74 pc ≈ 8,60 pc", "2 pc"],
+    "jawaban": 0,
+    "pembahasan": ["Jarak kedua bintang adalah sisi yang berhadapan dengan sudut apit 60°.", "Aturan kosinus memberi d² = 5² + 7² − 2(5)(7)cos 60° = 25 + 49 − 35 = 39.", "Jadi d = √39 ≈ 6,24 pc. Jaraknya lebih kecil dari 5 + 7 karena sudut apit tidak 180°."]
+  },
+  {
+    "id": "f2-19",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "tipe": "pilihan-jamak",
+    "gambar": "lingkaran-satuan",
+    "soal": "Perhatikan koordinat dan proyeksi pada lingkaran satuan (gambar). Pilih semua pernyataan yang benar.",
+    "opsi": ["Koordinat titik pada sudut θ adalah (cos θ, sin θ)", "sin²θ + cos²θ = 1", "Untuk θ = 0°, koordinatnya (0, 1)", "cos 60° = 1/2", "Nilai sinus selalu positif di semua kuadran"],
+    "jawaban": [0, 1, 3],
+    "pembahasan": ["Pada lingkaran berjari-jari satu, proyeksi horizontal dan vertikal berturut-turut adalah cos θ dan sin θ.", "Identitas sin²θ + cos²θ = 1 mengikuti jarak titik dari pusat yang selalu satu; cos 60° = 1/2.", "Pada 0° koordinatnya (1,0), dan sinus negatif di kuadran III serta IV, jadi pernyataan 3 dan 4 salah."]
+  },
+  {
+    "id": "f2-20",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "pilihan-jamak",
+    "gambar": "segitiga-vektor",
+    "soal": "Pada diagram, vektor A = (3, 4) dan B = (−3, 4). Pilih semua pernyataan benar.",
+    "opsi": ["|A| = 5", "A + B = (0, 8)", "A·B = 7", "Besar resultan A + B adalah 8", "Kedua vektor memiliki arah sama"],
+    "jawaban": [0, 1, 2, 3],
+    "pembahasan": ["|A| = √(3²+4²) = 5; penjumlahan komponen memberi A+B = (3−3,4+4) = (0,8).", "Besar resultannya √(0²+8²) = 8.", "A·B = 3(−3)+4(4) = 7, sehingga pernyataan tentang perkalian titik juga benar. Vektor tidak searah karena komponen x berbeda tanda."]
+  },
+  {
+    "id": "f2-21",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "tipe": "isian",
+    "gambar": "lingkaran-satuan",
+    "soal": "Sebuah sudut pada lingkaran satuan adalah 120°. Nyatakan sudut tersebut dalam radian sebagai nilai desimal hingga tiga angka di belakang koma.",
+    "jawaban": 2.094,
+    "toleransiRel": 0.005,
+    "satuan": "rad",
+    "pembahasan": ["Konversi derajat ke radian memakai θ(rad) = θ(derajat) × π/180.", "120° × π/180° = 2π/3 rad.", "Dengan π ≈ 3,14159, 2π/3 ≈ 2,094 rad."]
+  },
+  {
+    "id": "f2-22",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "tipe": "isian",
+    "gambar": "lingkaran-satuan",
+    "soal": "Titik pada lingkaran satuan memiliki sudut θ = 30°. Berapa koordinat x = cos θ?",
+    "jawaban": 0.866,
+    "toleransiRel": 0.005,
+    "satuan": "tanpa satuan",
+    "pembahasan": ["Koordinat horizontal pada lingkaran satuan adalah x = cos θ.", "cos 30° = √3/2.", "√3/2 ≈ 0,866; koordinat tidak memiliki satuan karena lingkaran berjari-jari satu."]
+  },
+  {
+    "id": "f2-23",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "isian",
+    "gambar": "segitiga-vektor",
+    "soal": "Dalam segitiga, sisi a = 5 m berhadapan dengan sudut A = 30°. Sisi b berhadapan dengan sudut B = 90°. Tentukan b dalam meter.",
+    "jawaban": 10,
+    "toleransiRel": 0.02,
+    "satuan": "m",
+    "pembahasan": ["Aturan sinus menyatakan a/sin A = b/sin B.", "b = a sin B/sin A = 5 × 1/(1/2) = 10 m.", "Sudut terbesar 90° berhadapan dengan sisi terbesar 10 m, konsisten dengan geometri segitiga."]
+  },
+  {
+    "id": "f2-24",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "tipe": "isian",
+    "gambar": "segitiga-vektor",
+    "soal": "Vektor A = (−6, 8) satuannya km. Berapa besar vektor A?",
+    "jawaban": 10,
+    "toleransiRel": 0.01,
+    "satuan": "km",
+    "pembahasan": ["Besar vektor dari komponen ortogonal adalah √(Ax² + Ay²).", "|A| = √((-6)² + 8²) = √(36+64) = √100.", "Jadi |A| = 10 km; tanda negatif menunjukkan arah x, bukan panjang negatif."]
+  },
+  {
+    "id": "f2-25",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "isian",
+    "gambar": "segitiga-vektor",
+    "soal": "Dua vektor mempunyai besar 10 dan 6 satuan dan sudut apit 120°. Hitung besar resultan keduanya.",
+    "jawaban": 8.718,
+    "toleransiRel": 0.01,
+    "satuan": "satuan",
+    "pembahasan": ["Besar jumlah vektor memenuhi R² = A² + B² + 2AB cos θ.", "R² = 10² + 6² + 2(10)(6)cos 120° = 100+36−60 = 76.", "R = √76 ≈ 8,718 satuan. Karena sudutnya tumpul, resultan lebih kecil daripada 10+6."]
+  },
+  {
+    "id": "f2-26",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "isian",
+    "gambar": "segitiga-vektor",
+    "soal": "Vektor perpindahan A = (7, −2) km dan B = (−3, 8) km. Hitung komponen y dari resultan A + B dalam km.",
+    "jawaban": 6,
+    "toleransiRel": 0.01,
+    "satuan": "km",
+    "pembahasan": ["Komponen vektor dijumlahkan terpisah pada sumbu yang sama.", "Komponen y resultan adalah A_y + B_y = −2 + 8 = 6 km.", "Komponen x adalah 7 − 3 = 4 km, tetapi yang diminta hanya komponen y; tanda positif berarti ke arah sumbu y positif."]
+  },
+  {
+    "id": "f2-27",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "isian",
+    "gambar": "segitiga-vektor",
+    "soal": "Sebuah vektor memiliki komponen tegak lurus 9 km dan 12 km. Berapa besar vektor tersebut?",
+    "jawaban": 15,
+    "toleransiRel": 0.01,
+    "satuan": "km",
+    "pembahasan": ["Komponen saling tegak lurus menjadi kaki segitiga siku-siku.", "Besar vektor = √(9² + 12²) = √225 = 15 km.", "Pemeriksaan: resultan harus lebih besar dari setiap komponen (15 > 12) tetapi lebih kecil dari jumlahnya (15 < 21)."]
+  },
+  {
+    "id": "f2-28",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "tipe": "esai",
+    "gambar": "segitiga-vektor",
+    "soal": "Dua vektor A = (4, 3) dan B = (x, 4) pada diagram saling tegak lurus. Tentukan x dan jelaskan pemeriksaan yang memastikan hasilnya benar.",
+    "rubrik": [
+      {"poin": "Menyatakan bahwa dua vektor tegak lurus jika perkalian titiknya nol.", "bobot": 2},
+      {"poin": "Menuliskan A·B = 4x + 3(4) = 0.", "bobot": 2},
+      {"poin": "Menyelesaikan persamaan dan memperoleh x = −3.", "bobot": 2},
+      {"poin": "Memeriksa substitusi: (4,3)·(−3,4) = −12 + 12 = 0.", "bobot": 2}
+    ],
+    "jawabanTeladan": "Syarat tegak lurus adalah A·B = 0. Maka (4,3)·(x,4) = 4x + 3(4) = 0, sehingga 4x = −12 dan x = −3. Pemeriksaan dengan substitusi memberi (4,3)·(−3,4) = −12 + 12 = 0, jadi kedua vektor memang tegak lurus.",
+    "pembahasan": ["Perkalian titik adalah nol untuk vektor tegak lurus.", "Persamaan 4x + 12 = 0 memberi x = −3.", "Substitusi menghasilkan perkalian titik nol, sehingga jawaban konsisten."]
+  },
+  {
+    "id": "f2-29",
+    "topik": "trigonometri-vektor",
+    "level": "penalaran",
+    "tipe": "esai",
+    "gambar": "segitiga-vektor",
+    "soal": "Dengan mengacu pada gambar komponen vektor, jelaskan cara memperoleh besar dan arah resultan dua vektor yang diberikan melalui komponen kartesius. Gunakan contoh A = (3, 4) dan B = (−1, 2), lalu tunjukkan pemeriksaan hasil.",
+    "rubrik": [
+      {"poin": "Menjelaskan komponen searah dijumlahkan per sumbu untuk memperoleh R = (Aₓ+Bₓ, Aᵧ+Bᵧ).", "bobot": 2},
+      {"poin": "Menghitung contoh R = (2,6) dan besar |R| = √40 ≈ 6,32.", "bobot": 2},
+      {"poin": "Menentukan arah dari sumbu x positif θ = arctan(6/2) ≈ 71,6° serta menyebut kuadran dengan tepat.", "bobot": 2},
+      {"poin": "Memberi pemeriksaan konsistensi melalui tanda komponen/kuadran atau penghitungan ulang besar vektor.", "bobot": 2}
+    ],
+    "jawabanTeladan": "Jumlahkan komponen pada sumbu yang sama: R = A+B = (3−1, 4+2) = (2,6). Besarnya |R| = √(2²+6²) = √40 ≈ 6,32 satuan. Arahnya dari sumbu x positif adalah arctan(6/2) ≈ 71,6°; karena kedua komponen positif, vektor berada di kuadran I. Pemeriksaan Pythagoras dan tanda komponen konsisten dengan arah timur-laut pada diagram.",
+    "pembahasan": ["Vektor dijumlahkan dengan menjumlahkan komponen x dan y terpisah.", "Panjang resultan diperoleh dari Pythagoras dan arah dari rasio komponen dengan kuadran yang benar.", "Untuk contoh ini R = (2,6), besar sekitar 6,32, dan arahnya sekitar 71,6° di kuadran I."]
+  },
+  {
+    "id": "f2-30",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "tipe": "esai",
+    "gambar": "segitiga-vektor",
+    "soal": "Pada diagram segitiga posisi, sebuah pengamat melihat dua bintang pada jarak 5 pc dan 7 pc dengan sudut pisah 60°. Jelaskan dan hitung jarak fisik kedua bintang memakai aturan kosinus; kemudian jelaskan mengapa jarak bukan sekadar selisih atau jumlah kedua jarak pandang.",
+    "rubrik": [
+      {"poin": "Mengidentifikasi dua jarak pandang sebagai sisi-sisi yang mengapit sudut 60° dan jarak bintang sebagai sisi di hadapan sudut itu.", "bobot": 2},
+      {"poin": "Menerapkan aturan kosinus d² = 5² + 7² − 2(5)(7)cos60° = 39 pc².", "bobot": 2},
+      {"poin": "Memperoleh d = √39 ≈ 6,24 pc dengan satuan yang benar.", "bobot": 2},
+      {"poin": "Menjelaskan peran sudut: hasil berbeda dari jumlah maupun selisih jarak dan berada di antara keduanya untuk konfigurasi ini.", "bobot": 2}
+    ],
+    "jawabanTeladan": "Dua garis pandang sepanjang 5 pc dan 7 pc membentuk sudut 60° pada pengamat, sehingga aturan kosinus memberi jarak antarbintang d² = 5²+7²−2(5)(7)cos60° = 25+49−35 = 39 pc². Jadi d = √39 ≈ 6,24 pc. Jarak ini bukan jumlah 12 pc karena garis pandang tidak searah, dan bukan selisih 2 pc karena kedua bintang tidak berada pada arah yang sama; sudut pisah menentukan sisi ketiga segitiga.",
+    "pembahasan": ["Gambar membentuk segitiga dengan sudut apit di pengamat, sehingga jarak antarbintang adalah sisi lawan sudut.", "Aturan kosinus memberi d² = 39 pc² dan d ≈ 6,24 pc.", "Jumlah dan selisih jarak pandang hanya berlaku pada konfigurasi segaris khusus, bukan sudut 60°."]
+  },
+  {
+    "id": "f2-v1",
+    "modul": "F2",
+    "subbab": "lingkaran-satuan",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_grafik",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "unit_circle",
+        "angleDeg": 150,
+        "interactive": false
+      },
+      "caption": "Titik pada lingkaran satuan menunjukkan θ = 150° di kuadran II dengan proyeksi x negatif dan y positif."
+    },
+    "soal": "Amati diagram lingkaran satuan untuk sudut θ = 150°. Nilai pasangan (sudut dalam radian; cos θ; sin θ) yang paling tepat adalah…",
+    "opsi": [
+      "5π/6 rad; −√3/2; 1/2",
+      "5π/6 rad; 1/2; −√3/2",
+      "2π/3 rad; −1/2; √3/2",
+      "5π/6 rad; −√3/2; −1/2"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "θ_rad = θ_deg × π/180°",
+      "Koordinat lingkaran satuan = (cos θ, sin θ)"
+    ],
+    "langkah_penyelesaian": [
+      "Konversi sudut: 150° × π/180° = 5π/6 rad ≈ 2,618 rad.",
+      "Karena 150° berada di kuadran II (sudut acuan 30°), cos 150° = −cos 30° = −√3/2 ≈ −0,866 dan sin 150° = +sin 30° = 1/2 = 0,500."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-v2",
+    "modul": "F2",
+    "subbab": "sudut-kecil",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_tabel",
+    "media": {
+      "type": "data_table",
+      "params": {
+        "title": "Galat Relatif Aproksimasi Sudut Kecil",
+        "columns": [
+          { "key": "deg", "label": "θ (°)", "align": "right" },
+          { "key": "rad", "label": "θ (rad)", "align": "right" },
+          { "key": "errSin", "label": "Galat sin θ", "unit": "%", "align": "right" },
+          { "key": "errTan", "label": "Galat tan θ", "unit": "%", "align": "right" }
+        ],
+        "rows": [
+          { "deg": 5, "rad": "0,08727", "errSin": "0,127", "errTan": "0,253" },
+          { "deg": 10, "rad": "0,17453", "errSin": "0,510", "errTan": "1,012" },
+          { "deg": 20, "rad": "0,34907", "errSin": "2,060", "errTan": "4,114" }
+        ],
+        "highlightRow": 1
+      },
+      "caption": "Bandingkan kolom galat sin θ ≈ θ dan galat tan θ ≈ θ pada baris θ = 10°."
+    },
+    "soal": "Dari tabel baris θ = 10°, hitung rasio galat relatif aproksimasi tan θ ≈ θ terhadap galat relatif aproksimasi sin θ ≈ θ (nyatakan tanpa satuan, hingga dua angka di belakang koma).",
+    "jawaban": 1.98,
+    "toleransi": 0.03,
+    "rumus_dibutuhkan": [
+      "Rasio = (galat tan θ) / (galat sin θ)",
+      "Taylor: sin θ ≈ θ − θ³/6, tan θ ≈ θ + θ³/3"
+    ],
+    "langkah_penyelesaian": [
+      "Baca baris θ = 10°: galat tan θ = 1,012% dan galat sin θ = 0,510%.",
+      "Hitung rasio = 1,012 / 0,510 = 1,984 ≈ 1,98 (konsisten dengan suku Taylor θ³/3 berbanding θ³/6 yang bernilai sekitar 2)."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-v3",
+    "modul": "F2",
+    "subbab": "vektor-komponen",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "interpretasi_grafik",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "vector_projection",
+        "axisLabel": "Garis pandang (radial)",
+        "orthoLabel": "Bidang langit (tangensial)",
+        "showComponents": false,
+        "vectors": [
+          { "label": "v_bintang", "mag": 80, "angleDeg": 30 }
+        ]
+      },
+      "caption": "Vektor kecepatan ruang memiliki besar 80 km/s membentuk sudut 30° terhadap sumbu garis pandang."
+    },
+    "soal": "Berdasarkan diagram proyeksi vektor kecepatan ruang v = 80 km/s yang membentuk sudut 30° terhadap garis pandang, berapakah komponen kecepatan radial v_r yang terukur melalui pergeseran Doppler? (satuan: km/s)",
+    "jawaban": 69.3,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "v_r = v cos θ"
+    ],
+    "langkah_penyelesaian": [
+      "Komponen radial adalah proyeksi vektor kecepatan pada sumbu garis pandang: v_r = v cos θ.",
+      "v_r = 80 × cos 30° = 80 × 0,8660 = 69,28 ≈ 69,3 km/s."
+    ],
+    "satuan": "km/s"
+  },
+  {
+    "id": "f2-v4",
+    "modul": "F2",
+    "subbab": "sudut-kecil",
+    "topik": "trigonometri-vektor",
+    "level": "fondasi",
+    "difficulty": "mudah",
+    "tipe": "ranking_urutan",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "small_angle",
+        "angleDeg": 6,
+        "sizeLabel": "s = Rθ",
+        "distLabel": "D",
+        "angleLabel": "θ"
+      },
+      "caption": "Gunakan konversi 1° = 60' = 3.600\" dan 1 rad ≈ 57,3° agar keempat ukuran sudut berada pada satuan yang sebanding."
+    },
+    "kriteriaUrut": "Urutkan dari ukuran sudut TERKECIL ke TERBESAR",
+    "soal": "Urutkan keempat ukuran sudut berikut dari yang paling kecil hingga yang paling besar.",
+    "opsi": [
+      "0,01 rad",
+      "1.800\"",
+      "0,85°",
+      "45'"
+    ],
+    "jawaban": [1, 0, 3, 2],
+    "rumus_dibutuhkan": [
+      "1° = 60' = 3.600\"",
+      "θ_deg = θ_rad × (180°/π)"
+    ],
+    "langkah_penyelesaian": [
+      "Ubah semua ke derajat: 1.800\" = 1.800/3.600 = 0,500°; 0,01 rad = 0,01 × 57,296° = 0,573°; 45' = 45/60 = 0,750°; dan 0,85°.",
+      "Urutan menaik: 1.800\" (0,500°) < 0,01 rad (0,573°) < 45' (0,750°) < 0,85°."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-v5",
+    "modul": "F2",
+    "subbab": "aturan-kosinus",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "interpretasi_grafik",
+    "media": {
+      "type": "pzs_triangle",
+      "params": {
+        "phiDeg": -30,
+        "decDeg": 0,
+        "haDeg": 60,
+        "interactive": false,
+        "highlightSide": "ZS"
+      },
+      "caption": "Segitiga bola P–Z–S menunjukkan pengamat di lintang selatan φ = −30° mengamati bintang ekuator (δ = 0°) pada sudut jam H = 60°."
+    },
+    "soal": "Dari diagram segitiga bola P–Z–S (φ = −30°, δ = 0°, H = 60°), tentukan ketinggian bintang di atas horizon (alt = 90° − z). (tulis satuan: derajat)",
+    "jawaban": 25.66,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "cos z = sin φ sin δ + cos φ cos δ cos H",
+      "alt = 90° − z"
+    ],
+    "langkah_penyelesaian": [
+      "Substitusi δ = 0° ke aturan kosinus segitiga bola: cos z = sin(−30°)sin(0°) + cos(−30°)cos(0°)cos(60°) = 0 + (√3/2)(1)(1/2) = √3/4 ≈ 0,43301.",
+      "Hitung jarak zenit z = arccos(0,43301) = 64,34°, sehingga ketinggian alt = 90° − 64,34° = 25,66°."
+    ],
+    "satuan": "derajat"
+  },
+  {
+    "id": "f2-v6",
+    "modul": "F2",
+    "subbab": "lingkaran-satuan",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "temukan_kesalahan",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "unit_circle",
+        "angleDeg": 225,
+        "interactive": false
+      },
+      "caption": "Titik sudut 225° berada di kuadran III dengan kedua komponen cos θ dan sin θ bertanda negatif."
+    },
+    "soal": "Seorang siswa menghitung arah vektor kecepatan v = (−30, −30) km/s menggunakan kalkulator: θ = arctan((−30)/(−30)) = arctan(1) = 45°. Manakah diagnosis kesalahan yang paling tepat?",
+    "opsi": [
+      "Fungsi arctan hanya mengembalikan sudut di (−90°, +90°); karena v_x < 0 dan v_y < 0 berada di kuadran III, sudut yang benar adalah 45° + 180° = 225°.",
+      "Seharusnya komponen x dan y dijumlahkan dulu sebelum memakai arctan sehingga θ = arctan(−60) ≈ −89°.",
+      "Untuk vektor kuadran III, arah dihitung dengan arccos(v_y/v_x) bukan arctan(v_y/v_x).",
+      "Tanda negatif keduanya saling meniadakan sehingga arah 45° sudah sama dengan kuadran I."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "tan θ = v_y / v_x",
+      "Penentuan kuadran dari tanda (v_x, v_y)"
+    ],
+    "langkah_penyelesaian": [
+      "Nilai tan θ = (−30)/(−30) = +1 dipenuhi baik oleh 45° (kuadran I) maupun 225° (kuadran III).",
+      "Karena kedua komponen (−30, −30) bertanda negatif (lihat kuadran III pada lingkaran satuan), arah fisik vektor adalah 45° + 180° = 225°."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-v7",
+    "modul": "F2",
+    "subbab": "aturan-kosinus",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "pilihan_jamak",
+    "media": {
+      "type": "pzs_triangle",
+      "params": {
+        "phiDeg": 0,
+        "decDeg": 25,
+        "haDeg": 45,
+        "interactive": false,
+        "highlightSide": "PZ"
+      },
+      "caption": "Untuk pengamat di ekuator Bumi (φ = 0°), panjang busur PZ tepat 90°."
+    },
+    "soal": "Pengamat berada tepat di ekuator Bumi (φ = 0°) seperti pada segitiga P–Z–S. Pilih SEMUA pernyataan yang pasti benar untuk semua bintang dengan |δ| < 90°.",
+    "opsi": [
+      "Pada saat kulminasi atas (H = 0°), jarak zenit bintang tepat z = |δ|.",
+      "Setiap bintang berada di atas horizon tepat 12 jam per hari sideris (cos H₀ = 0).",
+      "Semua bintang dengan δ > 0° selalu sirkumpolar tidak pernah terbenam.",
+      "Ketinggian maksimum bintang tidak pernah melampaui 90° − |δ|."
+    ],
+    "jawaban": [0, 1, 3],
+    "rumus_dibutuhkan": [
+      "cos z = sin φ sin δ + cos φ cos δ cos H",
+      "Syarat terbit/terbenam: cos H₀ = −tan φ tan δ"
+    ],
+    "langkah_penyelesaian": [
+      "Dengan φ = 0°, cos z = cos δ cos H. Saat kulminasi atas (H = 0°), cos z = cos δ → z = |δ|, dan ketinggian maksimum alt_max = 90° − |δ| (A dan D benar).",
+      "Saat di horizon (z = 90°), 0 = cos δ cos H₀. Karena |δ| < 90° (cos δ ≠ 0), diperoleh cos H₀ = 0 → H₀ = 90° = 6 jam, sehingga lama di atas horizon = 2 × 6 = 12 jam (B benar).",
+      "Di ekuator tidak ada bintang sirkumpolar; semuanya terbit dan terbenam (C salah)."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-v8",
+    "modul": "F2",
+    "subbab": "vektor-komponen",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "interpretasi_tabel",
+    "media": {
+      "type": "data_table",
+      "params": {
+        "title": "Kinematika Empat Bintang Lapangan",
+        "columns": [
+          { "key": "nama", "label": "Bintang", "align": "left" },
+          { "key": "vr", "label": "v_r", "unit": "km/s", "align": "right" },
+          { "key": "mu", "label": "μ", "unit": "arcsec/yr", "align": "right" },
+          { "key": "p", "label": "Paralaks p", "unit": "arcsec", "align": "right" }
+        ],
+        "rows": [
+          { "nama": "K-1", "vr": 30, "mu": "0,10", "p": "0,10" },
+          { "nama": "K-2", "vr": 40, "mu": "0,15", "p": "0,05" },
+          { "nama": "K-3", "vr": 0, "mu": "0,50", "p": "0,05" },
+          { "nama": "K-4", "vr": 15, "mu": "0,20", "p": "0,10" }
+        ]
+      },
+      "caption": "Gunakan d = 1/p (pc), v_t = 4,74 μ d (km/s), dan v_total = √(v_r² + v_t²) untuk membandingkan laju gerak keempat bintang."
+    },
+    "soal": "Dari tabel kinematika tersebut, bintang manakah yang bergerak murni di bidang langit (tegak lurus garis pandang) sekaligus memiliki kecepatan tangensial v_t paling besar?",
+    "opsi": [
+      "K-1 (v_t = 4,74 km/s)",
+      "K-2 (v_t = 14,2 km/s)",
+      "K-3 (v_t = 47,4 km/s)",
+      "K-4 (v_t = 9,48 km/s)"
+    ],
+    "jawaban": 2,
+    "rumus_dibutuhkan": [
+      "d = 1 / p (pc)",
+      "v_t = 4,74 μ d (km/s)"
+    ],
+    "langkah_penyelesaian": [
+      "Bergerak murni di bidang langit berarti kecepatan radial v_r = 0 (hanya K-3).",
+      "Verifikasi v_t masing-masing: K-1 (d=10 pc) → 4,74×0,10×10 = 4,74 km/s; K-2 (d=20 pc) → 4,74×0,15×20 = 14,22 km/s; K-3 (d=20 pc) → 4,74×0,50×20 = 47,4 km/s; K-4 (d=10 pc) → 9,48 km/s."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-v9",
+    "modul": "F2",
+    "subbab": "aturan-kosinus",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "data_tidak_lengkap",
+    "media": {
+      "type": "sky_map",
+      "params": {
+        "title": "Posisi Dua Bintang di Peta Langit Lokal",
+        "stars": [
+          { "name": "Bintang A", "azDeg": 90, "altDeg": 60 },
+          { "name": "Bintang B", "azDeg": 180, "altDeg": 30 }
+        ]
+      },
+      "caption": "Peta langit lokal hanya memberikan koordinat arah (azimut A dan ketinggian alt) pada bola langit satuan tanpa informasi jarak radial."
+    },
+    "soal": "Dari peta langit lokal, Bintang A berada di (A = 90°, alt = 60°) dan Bintang B di (A = 180°, alt = 30°). Pengamat ingin menghitung jarak fisik tiga dimensi antar kedua bintang dalam parsek. Mengapa besaran itu belum dapat ditentukan dari gambar saja?",
+    "opsi": [
+      "Sudut pisah θ pada bola langit dapat dihitung dari koordinat arah, tetapi jarak tiga dimensi membutuhkan jarak radial d_A dan d_B masing-masing bintang dari Bumi.",
+      "Peta langit memakai azimut dari arah Utara sehingga sudut pisah tidak bisa dihitung dengan aturan kosinus bola.",
+      "Ketinggian alt berubah karena rotasi Bumi sehingga sudut pisah antara A dan B juga berubah setiap menit.",
+      "Satuan parsek tidak boleh digunakan pada aturan kosinus datar karena harus memakai km."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "cos θ = sin(alt_A)sin(alt_B) + cos(alt_A)cos(alt_B)cos(A_A − A_B)",
+      "D² = d_A² + d_B² − 2 d_A d_B cos θ"
+    ],
+    "langkah_penyelesaian": [
+      "Koordinat langit (A, alt) hanya mendefinisikan vektor arah satuan sehingga sudut pisah θ antar kedua garis pandang dapat dihitung.",
+      "Untuk memperoleh jarak linear 3D D dalam parsek melalui aturan kosinus D² = d_A² + d_B² − 2 d_A d_B cos θ, diperlukan kedua jarak radial d_A dan d_B (atau paralaks masing-masing)."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-v10",
+    "modul": "F2",
+    "subbab": "lingkaran-satuan",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "cek_dimensi",
+    "media": {
+      "type": "orbit_diagram",
+      "params": {
+        "eccentricity": 0.4,
+        "aLabel": "R",
+        "showFoci": true,
+        "bodyLabel": "Satelit",
+        "focusLabel": "Bumi"
+      },
+      "caption": "Jari-jari vektor posisi r berdimensi panjang [L], sedangkan sudut sapuan θ adalah rasio busur/radius yang tak berdimensi."
+    },
+    "soal": "Untuk menganalisis jarak tali busur antara dua titik pada lingkaran orbit berjari-jari R dengan sudut pisah θ, serta laju luas sapuan sektor orbit dA/dt, manakah ekspresi yang konsisten secara dimensi?",
+    "opsi": [
+      "Tali busur c = 2R sin(θ/2) berdimensi [L] dengan θ/2 tak berdimensi, dan dA/dt = ½ r² (dθ/dt) berdimensi [L² T⁻¹].",
+      "Tali busur c = 2R sin(Rθ/2) berdimensi [L] dan dA/dt = ½ r (dθ/dt) berdimensi [L² T⁻¹].",
+      "Tali busur c = 2R² sin(θ/2) berdimensi [L] dan dA/dt = ½ r² θ berdimensi [L² T⁻¹].",
+      "Tali busur c = R sin(θ/2)/θ berdimensi [L] karena sudut derajat membatalkan dimensi panjang."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "Tali busur c = 2R sin(θ/2)",
+      "Luas sektor A = ½ r² θ → dA/dt = ½ r² (dθ/dt)"
+    ],
+    "langkah_penyelesaian": [
+      "Argumen fungsi trigonometri sin(...) harus tak berdimensi; hanya θ/2 yang tak berdimensi sehingga 2R sin(θ/2) berdimensi [L].",
+      "Luas sektor berdimensi [L²] memberi laju sapuan dA/dt = ½ r²(dθ/dt) berdimensi [L²][T⁻¹] = [L² T⁻¹]."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-h1",
+    "modul": "F2",
+    "subbab": "aturan-kosinus",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "isian_angka",
+    "soal": "Dari Bumi, bintang P memiliki paralaks p₁ = 0,100\" dan bintang Q memiliki paralaks p₂ = 0,0625\". Sudut pisah kedua bintang di langit adalah 60°. Hitung jarak fisik antara bintang P dan Q dalam parsek. (satuan: pc)",
+    "jawaban": 14,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "d = 1 / p (pc)",
+      "D² = d₁² + d₂² − 2 d₁ d₂ cos θ"
+    ],
+    "langkah_penyelesaian": [
+      "Ubah paralaks menjadi jarak: d₁ = 1/0,100 = 10,0 pc dan d₂ = 1/0,0625 = 16,0 pc.",
+      "Gunakan aturan kosinus: D² = 10² + 16² − 2(10)(16)cos 60° = 100 + 256 − 160 = 196 pc² → D = 14,0 pc."
+    ],
+    "satuan": "pc"
+  },
+  {
+    "id": "f2-h2",
+    "modul": "F2",
+    "subbab": "vektor-komponen",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "cek_dimensi",
+    "soal": "Rumus cepat kecepatan tangensial v_t = 4,74 μ d (dalam km/s, dengan μ dalam arcsec/tahun dan d dalam pc) sangat sering muncul di OSN. Dari mana asal dimensi dan angka 4,74 tersebut?",
+    "opsi": [
+      "Konversi 1 AU/tahun ke km/s karena definisi 1 pc = 206.265 AU membuat 1\" pada 1 pc bernilai tepat 1 AU, dan (1,496×10⁸ km)/(3,156×10⁷ s) ≈ 4,74 km/s.",
+      "Faktor π × 1,5 dari geometri proyeksi bola langit ke bidang datar selama satu kali revolusi Matahari.",
+      "Rasio jarak rata-rata Bulan ke Bumi dibagi periode sinodis Bulan dalam detik busur per jam.",
+      "Konstanta gravitasi dalam satuan parsec-tahun dikalikan kecepatan cahaya."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "v_t = d · μ_rad",
+      "1 pc · 1\" = 1 AU = 1,496×10⁸ km; 1 tahun = 3,1557×10⁷ s"
+    ],
+    "langkah_penyelesaian": [
+      "Secara fisis v_t = d × (μ dalam rad/s). Karena 1 pc = 206.265 AU dan 1 rad = 206.265\", faktor 206.265 saling meniadakan sehingga 1 pc · 1\" = 1 AU.",
+      "Dengan demikian satuan alaminya adalah 1 AU/tahun = (1,49598×10⁸ km) / (3,15576×10⁷ s) = 4,7405 km/s."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-h3",
+    "modul": "F2",
+    "subbab": "aturan-kosinus",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "temukan_kesalahan",
+    "soal": "Dua bintang sama-sama memiliki deklinasi δ = +60° dan selisih asensio rekta Δα = 4 jam (= 60°). Seorang siswa menghitung sudut pisah θ memakai Pythagoras datar: θ = √((Δδ)² + (Δα)²) = √(0² + 60²) = 60°. Mengapa hasilnya salah jauh dari nilai eksak ≈ 28,96°?",
+    "opsi": [
+      "Garis sejajar deklinasi δ = +60° merupakan lingkaran kecil berjari-jari cos δ = 0,5, bukan lingkaran besar, sehingga pemisahan di lintang tinggi menyusut dan wajib memakai aturan kosinus bola.",
+      "Asensio rekta Δα = 4 jam seharusnya diubah menjadi 4° bukan 60°.",
+      "Karena kedua bintang berada di belahan langit utara, cos δ bernilai negatif sehingga sudut pisah harus lebih besar dari 90°.",
+      "Selisih Δα hanya boleh dimasukkan jika kedua deklinasinya bernilai 0° dan +90°."
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "cos θ = sin δ₁ sin δ₂ + cos δ₁ cos δ₂ cos Δα",
+      "Aproksimasi kecil: θ ≈ √((Δδ)² + (Δα cos δ)²)"
+    ],
+    "langkah_penyelesaian": [
+      "Pada lintang/deklinasi δ = 60°, keliling lingkaran deklinasi mengecil sebesar faktor cos 60° = 0,5.",
+      "Dengan aturan kosinus bola: cos θ = sin²60° + cos²60° cos 60° = 0,75 + 0,25(0,5) = 0,875 → θ = arccos(0,875) ≈ 28,96°, kurang dari separuh 60°."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-h4",
+    "modul": "F2",
+    "subbab": "vektor-komponen",
+    "topik": "trigonometri-vektor",
+    "level": "menengah",
+    "difficulty": "sedang",
+    "tipe": "pilihan_ganda",
+    "soal": "Dalam koordinat galaktik Kartesius (km/s), bintang A memiliki kecepatan v_A = (30, 40, 0) dan bintang B memiliki v_B = (−40, 30, 50). Berapa sudut antara v_A dan v_B serta besar kecepatan relatif |v_A − v_B|?",
+    "opsi": [
+      "Sudut 90° dan |v_A − v_B| = 50√3 ≈ 86,6 km/s",
+      "Sudut 90° dan |v_A − v_B| = 50√2 ≈ 70,7 km/s",
+      "Sudut 60° dan |v_A − v_B| = 86,6 km/s",
+      "Sudut 120° dan |v_A − v_B| = 100 km/s"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "v_A · v_B = v_Ax v_Bx + v_Ay v_By + v_Az v_Bz",
+      "|v_A − v_B| = √((Δv_x)² + (Δv_y)² + (Δv_z)²)"
+    ],
+    "langkah_penyelesaian": [
+      "Hitung perkalian titik: v_A · v_B = 30(−40) + 40(30) + 0(50) = −1.200 + 1.200 + 0 = 0, artinya kedua vektor saling tegak lurus (90°).",
+      "Kecepatan relatif: Δv = (70, 10, −50) → |Δv| = √(70² + 10² + (−50)²) = √(4900 + 100 + 2500) = √7500 = 50√3 ≈ 86,6 km/s."
+    ],
+    "satuan": "—"
+  },
+  {
+    "id": "f2-h5",
+    "modul": "F2",
+    "subbab": "vektor-komponen",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "multi_langkah",
+    "media": {
+      "type": "schematic",
+      "params": {
+        "variant": "vector_projection",
+        "axisLabel": "Garis pandang (v_r = 25,3 km/s)",
+        "orthoLabel": "Bidang langit (v_t = 4,74 μ d)",
+        "showComponents": true,
+        "vectors": [
+          { "label": "v_ruang", "mag": 31.6, "angleDeg": 36.9 }
+        ]
+      },
+      "caption": "Diagram menunjukkan penguraian vektor ruang 3D bintang dari gabungan ukuran astrometri (paralaks + gerak diri) dan spektroskopi (Doppler)."
+    },
+    "soal": "Sebuah bintang terukur memiliki paralaks p = 0,050\", gerak diri μ = 0,20\"/tahun, dan kecepatan radial v_r = 25,3 km/s menjauhi pengamat. Ikuti tiga langkah berantai untuk mencari sudut arah gerak bintang terhadap garis pandang.",
+    "langkah": [
+      {
+        "instruksi": "Langkah 1: Hitung jarak bintang d dalam parsek dari paralaks p = 0,050\". (satuan: pc)",
+        "tipe": "isian_angka",
+        "jawaban": 20,
+        "toleransi": 0.02,
+        "satuan": "pc"
+      },
+      {
+        "instruksi": "Langkah 2: Gunakan d dari Langkah 1 untuk menghitung kecepatan tangensial v_t = 4,74 μ d dalam km/s. (satuan: km/s)",
+        "tipe": "isian_angka",
+        "jawaban": 18.96,
+        "toleransi": 0.02,
+        "satuan": "km/s"
+      },
+      {
+        "instruksi": "Langkah 3: Hitung sudut θ antara vektor kecepatan ruang bintang dan garis pandang (tan θ = v_t / v_r). (tulis satuan: derajat)",
+        "tipe": "isian_angka",
+        "jawaban": 36.85,
+        "toleransi": 0.03,
+        "satuan": "derajat"
+      }
+    ],
+    "jawaban": [20, 18.96, 36.85],
+    "rumus_dibutuhkan": [
+      "d = 1 / p",
+      "v_t = 4,74 μ d",
+      "tan θ = v_t / v_r"
+    ],
+    "langkah_penyelesaian": [
+      "Langkah 1: d = 1 / 0,050 = 20,0 pc.",
+      "Langkah 2: v_t = 4,74 × 0,20 × 20,0 = 18,96 km/s.",
+      "Langkah 3: θ = arctan(18,96 / 25,3) = arctan(0,7494) = 36,85°."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus berbeda (paralaks, konversi gerak diri v_t, trigonometri vektor arctan) dan (c) chained reasoning 3 tahap di mana hasil d menjadi masukan v_t lalu sudut θ.",
+    "satuan": "—"
+  },
+  {
+    "id": "f2-h6",
+    "modul": "F2",
+    "subbab": "aturan-kosinus",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "isian_angka",
+    "soal": "Dua bintang sama-sama berada pada deklinasi δ = +60° dan berjarak identik d₁ = d₂ = 100 pc dari Bumi, tetapi berbeda asensio rekta sebesar Δα = 1 jam (= 15°). Hitung jarak fisik langsung D antara kedua bintang tersebut dalam parsek. (satuan: pc)",
+    "jawaban": 13.05,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "Konversi waktu ke sudut: Δα = 15°/jam",
+      "Aturan kosinus bola: cos θ = sin δ₁ sin δ₂ + cos δ₁ cos δ₂ cos Δα",
+      "Aturan kosinus 3D / tali busur: D = √(d₁² + d₂² − 2 d₁ d₂ cos θ)"
+    ],
+    "langkah_penyelesaian": [
+      "Konversi Δα = 1 jam = 15°. Hitung cos θ = sin²(60°) + cos²(60°)cos(15°) = 0,75 + 0,25(0,965926) = 0,9914815.",
+      "Substitusi cos θ ke rumus jarak 3D: D = 100 √(2(1 − 0,9914815)) = 100 √(0,017037) = 13,05 pc.",
+      "Pemeriksaan tali busur: θ = 7,484°, sehingga 2 d sin(θ/2) = 200 sin(3,742°) = 13,05 pc."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus berbeda (konversi jam-sudut, aturan kosinus bola, jarak 3D), (b) substitusi langsung cos θ ke dalam persamaan tali busur tanpa kehilangan presisi pembulatan, dan (c) chained reasoning dua geometri berbeda (bola langit → ruang Euklides).",
+    "satuan": "pc"
+  },
+  {
+    "id": "f2-h7",
+    "modul": "F2",
+    "subbab": "aturan-kosinus",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "pilihan_ganda",
+    "soal": "Sebuah bintang dengan deklinasi δ melintasi vertikal utama (lingkaran vertikal tepat Barat atau Timur, sehingga azimut A = 90° atau 270°, cos A = 0) bagi pengamat di lintang φ (0 < |δ| < |φ| < 90°, bertanda sama). Dengan mengeliminasi variabel jarak zenit z antara dua aturan kosinus segitiga bola, tentukan ekspresi sudut jam H bintang saat melintasi vertikal utama.",
+    "opsi": [
+      "cos H = tan δ / tan φ",
+      "cos H = −tan δ · tan φ",
+      "cos H = sin δ / sin φ",
+      "sin H = tan φ / tan δ"
+    ],
+    "jawaban": 0,
+    "rumus_dibutuhkan": [
+      "cos z = sin φ sin δ + cos φ cos δ cos H",
+      "sin δ = sin φ cos z + cos φ sin z cos A (A = 90° → cos A = 0)",
+      "Identitas sin² + cos² dan tan = sin/cos"
+    ],
+    "langkah_penyelesaian": [
+      "Aturan kosinus kedua untuk sisi PS (90°−δ) memberi: sin δ = sin φ cos z + cos φ sin z cos A.",
+      "Pada vertikal utama, cos A = 0 sehingga cos z = sin δ / sin φ.",
+      "Substitusikan cos z ini ke aturan kosinus pertama: sin δ / sin φ = sin φ sin δ + cos φ cos δ cos H.",
+      "Isolasi cos H: cos φ cos δ cos H = sin δ (1 − sin²φ)/sin φ = sin δ cos²φ / sin φ → cos H = (sin δ / cos δ)(cos φ / sin φ) = tan δ / tan φ."
+    ],
+    "alasan_sulit": "Memenuhi (a) kombinasi 3 identitas trigonometri bola berbeda dan (b) manipulasi ekspresi aljabar dengan mengeliminasi cos z di antara dua persamaan segitiga bola untuk mengisolasi cos H.",
+    "satuan": "—"
+  },
+  {
+    "id": "f2-h8",
+    "modul": "F2",
+    "subbab": "vektor-komponen",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "isian_angka",
+    "soal": "Pada bidang ekliptika dengan Matahari di titik asal, wahana A berada di posisi polar (r_A = 1,00 AU, θ_A = 0°) dengan kecepatan tangensial v_A = 30,0 km/s berlawanan jarum jam (arah 90°). Wahana B berada di (r_B = 1,50 AU, θ_B = 60°) dengan kecepatan tangensial v_B = 24,5 km/s berlawanan jarum jam (arah 150°). Hitung laju pendekatan radial (magnitudo proyeksi kecepatan relatif sepanjang garis hubung kedua wahana, |Δv · r̂_AB|). (satuan: km/s)",
+    "jawaban": 13.42,
+    "toleransi": 0.02,
+    "rumus_dibutuhkan": [
+      "Transformasi polar ke Kartesius: r = (r cos θ, r sin θ)",
+      "Vektor kecepatan relatif Δv = v_B − v_A dan vektor jarak Δr = r_B − r_A",
+      "Proyeksi radial melalui perkalian titik: v_rad = |Δv · Δr| / |Δr|"
+    ],
+    "langkah_penyelesaian": [
+      "Posisi: r_A = (1,00; 0) AU dan r_B = (1,5 cos 60°; 1,5 sin 60°) = (0,750; 1,2990) AU → Δr = (−0,250; 1,2990) AU dengan panjang |Δr| = √(0,0625 + 1,6875) = √1,75 = 1,3229 AU.",
+      "Kecepatan: v_A = (0; 30,0) km/s dan v_B = (24,5 cos 150°; 24,5 sin 150°) = (−21,218; 12,250) km/s → Δv = (−21,218; −17,750) km/s.",
+      "Hitung proyeksi radial: Δv · Δr = (−21,218)(−0,250) + (−17,750)(1,2990) = 5,305 − 23,057 = −17,753 AU·km/s → laju pendekatan = |−17,753| / 1,3229 = 13,42 km/s."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 tahap rumus (konversi polar-Kartesius, selisih vektor 2D, perkalian titik proyeksi) dan (c) chained reasoning 3 langkah dari posisi/kecepatan masing-masing wahana ke vektor relatif lalu laju pendekatan.",
+    "satuan": "km/s"
+  },
+  {
+    "id": "f2-h9",
+    "modul": "F2",
+    "subbab": "aturan-kosinus",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "multi_langkah",
+    "media": {
+      "type": "pzs_triangle",
+      "params": {
+        "phiDeg": -30,
+        "decDeg": -45,
+        "haDeg": 90,
+        "interactive": false,
+        "highlightSide": "ZS"
+      },
+      "caption": "Pengamat di lintang selatan φ = −30° mengamati bintang selatan dengan δ = −45° saat melintasi horizon (z = 90°)."
+    },
+    "soal": "Pengamat berada di lintang selatan φ = −30° dan mengamati sebuah bintang berdeklinasi δ = −45°. Selesaikan rangkaian tiga tahap berikut untuk menguji apakah bintang ini sirkumpolar dan berapa lama ia tampak di atas horizon.",
+    "langkah": [
+      {
+        "instruksi": "Langkah 1: Dari syarat bintang sirkumpolar di belahan selatan (kulminasi bawah tepat menyentuh horizon), tentukan batas deklinasi agar bintang selalu di atas horizon di φ = −30°.",
+        "tipe": "pilihan_ganda",
+        "opsi": [
+          "δ ≤ −60°",
+          "δ ≥ −30°",
+          "δ ≤ −30°",
+          "δ ≤ −45°"
+        ],
+        "jawaban": 0
+      },
+      {
+        "instruksi": "Langkah 2: Karena δ = −45° terbit dan terbenam, gunakan aturan kosinus segitiga PZS saat di horizon (z = 90°) untuk menghitung sudut jam terbenam H₀ dalam derajat (ambil H₀ > 0°). (tulis satuan: derajat)",
+        "tipe": "isian_angka",
+        "jawaban": 125.26,
+        "toleransi": 0.02,
+        "satuan": "derajat"
+      },
+      {
+        "instruksi": "Langkah 3: Dari H₀ tersebut, hitung total durasi bintang berada di atas horizon dalam jam (dengan laju rotasi 15°/jam). (satuan: jam)",
+        "tipe": "isian_angka",
+        "jawaban": 16.7,
+        "toleransi": 0.02,
+        "satuan": "jam"
+      }
+    ],
+    "jawaban": [0, 125.26, 16.7],
+    "rumus_dibutuhkan": [
+      "Syarat sirkumpolar selatan: |δ| ≥ 90° − |φ|",
+      "cos H₀ = −tan φ tan δ (dari z = 90° di cos z = sin φ sin δ + cos φ cos δ cos H)",
+      "T_atas = 2 H₀ / 15° jam⁻¹"
+    ],
+    "langkah_penyelesaian": [
+      "Langkah 1: Agar bintang selatan tidak pernah terbenam, ketinggian kulminasi bawah ≥ 0° → |δ| ≥ 90° − 30° = 60°, yaitu δ ≤ −60°.",
+      "Langkah 2: cos H₀ = −tan(−30°)tan(−45°) = −(−1/√3)(−1) = −1/√3 ≈ −0,57735 → H₀ = arccos(−0,57735) = 125,26°.",
+      "Langkah 3: Bintang melintasi sudut jam −H₀ hingga +H₀, total busur 2H₀ = 250,53° → lama di atas horizon = 250,53 / 15 = 16,70 jam."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 konsep rumus terhubung (syarat sirkumpolar, isolasi cos H₀ pada horizon z=90°, konversi sudut ke durasi rotasi) dan (c) chained reasoning 3 langkah berurutan.",
+    "satuan": "—"
+  },
+  {
+    "id": "f2-h10",
+    "modul": "F2",
+    "subbab": "sudut-kecil",
+    "topik": "trigonometri-vektor",
+    "level": "olimpiade",
+    "difficulty": "sulit",
+    "tipe": "esai_penalaran",
+    "soal": "Dengan mengekspansi sin θ dan tan θ dalam deret Taylor di sekitar θ = 0 hingga suku orde ketiga, buktikan secara analitik mengapa galat relatif aproksimasi sudut kecil untuk tan θ ≈ θ selalu mendekati dua kali galat relatif untuk sin θ ≈ θ, lalu perkirakan batas sudut maksimum (dalam derajat) agar masing-masing aproksimasi memiliki galat relatif tidak melebihi 1%.",
+    "rubrik": [
+      { "poin": "Menuliskan ekspansi Taylor sin θ = θ − θ³/6 + ... dan tan θ = θ + θ³/3 + ...", "bobot": 2 },
+      { "poin": "Menurunkan galat relatif masing-masing (~ θ²/6 untuk sin θ dan ~ θ²/3 untuk tan θ) sehingga rasionya tepat 2.", "bobot": 2 },
+      { "poin": "Menyelesaikan θ_max untuk batas 1% (0,01): √0,03 ≈ 0,173 rad (≈ 9,9°) untuk tan θ dan √0,06 ≈ 0,245 rad (≈ 14,0°) untuk sin θ.", "bobot": 2 },
+      { "poin": "Menyimpulkan aplikasi astronomisnya: pendekatan diameter sudut tan θ ≈ θ lebih cepat meleset daripada proyeksi sin θ ≈ θ.", "bobot": 1 }
+    ],
+    "jawaban": "Ekspansi Taylor orde ketiga memberikan sin θ ≈ θ − θ³/6 dan tan θ ≈ θ + θ³/3. Oleh sebab itu galat relatif |(θ − sin θ)/sin θ| ≈ θ²/6 sedangkan |(tan θ − θ)/tan θ| ≈ θ²/3, yang tepat dua kali lebih besar. Agar galat relatif ≤ 0,01 (1%), untuk tan θ disyaratkan θ²/3 ≤ 0,01 → θ ≤ 0,1732 rad ≈ 9,9°, sedangkan untuk sin θ disyaratkan θ²/6 ≤ 0,01 → θ ≤ 0,2449 rad ≈ 14,0°.",
+    "jawabanTeladan": "Dari deret Maclaurin, sin θ = θ − θ³/6 + O(θ⁵) sedangkan tan θ = θ + θ³/3 + O(θ⁵). Galat relatif masing-masing pada orde terdepan adalah |Δ_sin| ≈ (θ³/6)/θ = θ²/6 dan |Δ_tan| ≈ (θ³/3)/θ = θ²/3, sehingga |Δ_tan| / |Δ_sin| = 2. Untuk batas galat 1% (= 0,01), aproksimasi tan θ ≈ θ bertahan sampai θ_max = √0,03 ≈ 0,1732 rad = 9,92° (~10°), sedangkan sin θ ≈ θ bertahan sampai θ_max = √0,06 ≈ 0,2449 rad = 14,03° (~14°). Karena itu pengukuran ukuran sudut tampak (yang aslinya s = D tan θ untuk sisi tegak lurus atau 2D tan(θ/2)) lebih sensitif terhadap batas sudut kecil.",
+    "rumus_dibutuhkan": [
+      "sin θ = θ − θ³/3! + ...",
+      "tan θ = θ + θ³/3 + ...",
+      "θ_deg = θ_rad × 180°/π"
+    ],
+    "langkah_penyelesaian": [
+      "Tulis deret Taylor sin θ ≈ θ − θ³/6 dan tan θ ≈ θ + θ³/3.",
+      "Bagi selisih terhadap θ dengan θ (orde terdepan): galat relatif sin θ ≈ θ²/6 dan tan θ ≈ θ²/3 (rasio = 2).",
+      "Selesaikan pertidaksamaan θ²/3 ≤ 0,01 → θ ≤ 0,173 rad (9,9°) dan θ²/6 ≤ 0,01 → θ ≤ 0,245 rad (14,0°)."
+    ],
+    "alasan_sulit": "Memenuhi (a) 3 rumus berbeda (deret sin, deret tan, konversi rad-deg) dan (b) manipulasi ekspresi pertidaksamaan Taylor untuk mengisolasi sudut batas maksimum θ_max.",
+    "satuan": "—"
+  }
+]
+

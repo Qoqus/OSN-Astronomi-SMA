@@ -1,0 +1,477 @@
+<IdentitasModul
+  kode="F6"
+  tier="Klaster Fondasi · Modul 6 dari 19"
+  posisi="Elektromagnetisme, Plasma Kosmik, Kuantum Pengantar & Fisika Nuklir Bintang"
+  estimasi="85 menit studi mendalam"
+  tingkat="S1 Pengantar & IOAA Penuh"
+  prasyarat={[
+    { id: 'f3', label: 'F3 · Kalkulus & Analisis Data' },
+    { id: 'f4', label: 'F4 · Mekanika' },
+    { id: 'f5', label: 'F5 · Gelombang, Optik & Termodinamika' },
+  ]}
+  koneksi={[
+    { id: 'a5', label: 'A5 · Radiasi & Fotometri', peran: 'Interaksi foton–materi, penyerapan garis, dan vektor Poynting' },
+    { id: 'a6', label: 'A6 · Tata Surya & Eksoplanet', peran: 'Siklus magnetik Matahari (tekanan magnetik), angin surya, dan debu komet' },
+    { id: 'a7', label: 'A7 · Instrumen & Observasi', peran: 'Efek fotolistrik CCD, konstanta waktu RC, dan efisiensi kuantum' },
+    { id: 'l1', label: 'L1 · Bintang: Karakteristik & Spektrum', peran: 'Spektroskopi transisi atom Bohr, eksitasi Boltzmann & ionisasi Saha' },
+    { id: 'l2', label: 'L2 · Interior & Evolusi Bintang', peran: 'Reaksi fusi pp-chain, CNO, terobosan Gamow, dan tekanan degenerasi elektron' },
+  ]}
+  sumberUtama={['SRC-04', 'SRC-06', 'SRC-11', 'SRC-14']}
+/>
+
+<Tujuan>
+
+- Menerapkan Hukum Coulomb dan **Hukum Gauss** pada distribusi muatan bola (termasuk penurunan energi ikat elektrostatik bola seragam dan perbandingan kekuatannya dengan gravitasi).
+- Menganalisis dinamika partikel bermuatan dalam medan magnetik kosmik via **Gaya Lorentz** (radius Larmor/siklotron $r_L = mv_\perp/(|q|B)$, frekuensi siklotron) serta membandingkan **tekanan magnetik** $B^2/(2\mu_0)$ terhadap tekanan termal gas (**plasma $\beta$**).
+- Menganalisis rangkaian DC/RC dasar (waktu tunda $\tau = RC$), **fluks energi Poynting**, dan **tekanan radiasi foton** ($P_{\text{rad}} = F/c$ vs $2F/c$, ekor debu komet, dan batas kesetimbangan Eddington).
+- Menurunkan tingkat energi atom hidrogen dan ion mirip-hidrogen dari **Model Kuantum Bohr** dengan koreksi massa tereduksi, serta menerapkan **Efek Fotolistrik**, **Hamburan Compton** ($\Delta\lambda$), dan panjang gelombang de Broglie.
+- Menghitung **defek massa ($\Delta m$)**, nilai-$Q$ reaksi fusi/fisi dari kurva energi ikat $B/A$, dan menjelaskan peran krusial **Efek Terobosan Kuantum (Puncak Gamow)** di inti bintang.
+
+</Tujuan>
+
+<PetaKonsep
+  simpul={[
+    {
+      id: 'gauss',
+      label: 'Coulomb & Hukum Gauss Bola',
+      peran: 'Medan & energi ikat elektrostatik vs gravitasi yang menjelaskan mengapa bintang netral.',
+      ke: ['lorentz', 'gamow'],
+    },
+    {
+      id: 'lorentz',
+      label: 'Gaya Lorentz & Plasma Kosmik',
+      peran: 'Gerak siklotron r_L = mv/(qB), jebakan magnetosfer, dan tekanan magnetik B²/(2μ₀).',
+      ke: ['poynting'],
+    },
+    {
+      id: 'poynting',
+      label: 'Rangkaian RC & Tekanan Radiasi',
+      peran: 'Fluks Poynting membawa momentum p = E/c: menggerakkan ekor debu & batas Eddington.',
+      ke: ['kuantum'],
+    },
+    {
+      id: 'kuantum',
+      label: 'Foton, Compton, de Broglie & Bohr',
+      peran: 'Mengkuantisasi spektrum garis atom H (E_n = −13,6 Z²/n²) dan kerja detektor CCD.',
+      ke: ['gamow'],
+    },
+    {
+      id: 'gamow',
+      label: 'Defek Massa & Terobosan Gamow',
+      peran: 'Penghalang Coulomb MeV vs energi termal keV yang dijembatani tunneling kuantum.',
+    },
+  ]}
+/>
+
+<div className="lead">
+  Mengapa alam semesta pada skala besar tunduk kepada gravitasi (gaya paling lemah), sedangkan atom, spektrum bintang, bintik Matahari, dan tungku nuklir bintang diatur oleh gaya listrik-magnet dan mekanika kuantum? Modul penutup klaster fondasi ini memadukan <Sorot>elektrodinamika Gauss–Lorentz, tekanan radiasi Poynting, kuantisasi Bohr–Compton, dan fisika inti terobosan Gamow</Sorot> (`SRC-04`, `SRC-14`) sebagai gerbang langsung menuju astrofisika bintang dan galaksi.
+</div>
+
+<Bagian id="elektrostatika-gauss" judul="1. Elektrostatika, Hukum Gauss Bola & Mengapa Bintang Netral" tag="Elektrostatika">
+
+Dua muatan titik $q_1, q_2$ berinteraksi lewat gaya Coulomb $F = \dfrac{1}{4\pi\varepsilon_0}\dfrac{q_1 q_2}{r^2}$ (dengan $k_e = \frac{1}{4\pi\varepsilon_0} \approx 8{,}9876\times 10^9\ \text{N m}^2\text{C}^{-2}$). Bentuk integral yang jauh lebih kuat untuk simetri bola, silinder, atau bidang adalah **Hukum Gauss**:
+
+$$\oint_S \vec{E}\cdot d\vec{A} = \frac{Q_{\text{dalam}}}{\varepsilon_0}.$$
+
+Analogi matematiknya dengan Teorema Kulit Newton sempurna: di dalam kulit bola bermuatan seragam $E(r) = 0$; di luar kulit $E(r) = \dfrac{k_e Q}{r^2}$; dan di dalam bola pejal bermuatan seragam beradius $R$, muatan terlingkup adalah $Q(<r) = Q(r/R)^3$, sehingga $E(r) = \dfrac{k_e Q r}{R^3}$. Dengan menyusun cangkang demi cangkang $dU_e = \dfrac{k_e Q(<r)\,dq}{r}$, integral memberi **energi diri elektrostatik bola seragam** (identik bentuknya dengan energi ikat gravitasi, berbeda tanda!):
+
+$$U_e = \int_0^R \frac{k_e \left(Q r^3/R^3\right)\left(3Q r^2 dr/R^3\right)}{r} = \frac{3}{5}\frac{k_e Q^2}{R}.$$
+
+<Contoh judul="Perbandingan gaya listrik vs gravitasi & mengapa bintang tak boleh bermuatan neto besar">
+
+<Langkah>
+
+Untuk dua proton bebas berjarak $r$, hitung rasio gaya tolak listrik terhadap gaya tarik gravitasi:
+$$\frac{F_e}{F_g} = \frac{k_e e^2}{G m_p^2} = \frac{(8{,}99\times 10^9)(1{,}602\times 10^{-19})^2}{(6{,}674\times 10^{-11})(1{,}673\times 10^{-27})^2} \approx 1{,}24 \times 10^{36}!$$
+
+</Langkah>
+
+<Langkah>
+
+Karena gaya listrik $10^{36}$ kali lebih kuat daripada gravitasi, berapa selisih kelebihan muatan positif maksimum per proton ($f = \Delta N/N$) yang masih dapat ditahan oleh gravitasi Matahari sebelum muatan berlebih terpental keluar? Syarat $F_e \le F_g$ pada satu proton di permukaan memberi:
+$$k_e \frac{(f N e) e}{R^2} \le G \frac{(N m_p) m_p}{R^2} \implies f \le \frac{G m_p^2}{k_e e^2} \approx 8{,}1 \times 10^{-37}!$$
+
+</Langkah>
+
+<Langkah>
+
+Artinya, jika hanya ada $1$ elektron hilang dari setiap $10^{36}$ atom hidrogen, gaya tolak elektrostatik sudah melebihi gravitasi bintang seluruhnya! Inilah bukti mendalam mengapa plasma kosmik bersifat **kuasi-netral** ($n_e \approx n_i$), sehingga pada skala makroskopik **gravitasi** keluar sebagai penguasa struktur semesta.
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="magnetostatika-plasma" judul="2. Gaya Lorentz, Gerak Siklotron Kosmik & Tekanan Magnetik" tag="Magnetisme & Plasma">
+
+Muatan $q$ berkecepatan $\vec{v}$ dalam medan listrik $\vec{E}$ dan medan magnetik $\vec{B}$ mengalami **Gaya Lorentz**:
+
+$$\vec{F} = q\left(\vec{E} + \vec{v} \times \vec{B}\right).$$
+
+Dalam plasma kosmik konduktif tinggi (seperti fotosfer Matahari atau ruang antarbintang), medan listrik dalam kerangka plasma nyaris nol sehingga hanya gaya magnetik $\vec{F}_B = q\vec{v}\times\vec{B}$ yang bekerja. Karena $\vec{F}_B \perp \vec{v}$ selalu, usaha oleh medan magnetik murni adalah $\delta W = \vec{F}_B\cdot\vec{v}\,dt = 0$: <Sorot>medan magnet statis tidak pernah mengubah laju/energi kinetik partikel, hanya membelokkan arahnya</Sorot>!
+
+Jika kecepatan $\vec{v}$ dipecah menjadi $v_\parallel$ sejajar $\vec{B}$ dan $v_\perp$ tegak lurus $\vec{B}$, komponen sejajar bergerak konstan sementara komponen tegak lurus dipaksa menempuh gerak melingkar dengan **radius Larmor (girasi)** dan **frekuensi siklotron**:
+
+$$\frac{mv_\perp^2}{r_L} = |q| v_\perp B \implies r_L = \frac{m v_\perp}{|q| B}, \qquad \omega_c = \frac{v_\perp}{r_L} = \frac{|q| B}{m}.$$
+
+Gabungan keduanya membentuk lintasan **heliks (spiral)** mengikat partikel bermuatan di sekitar garis medan magnet (mekanisme sabuk radiasi Van Allen Bumi & akselerasi sinar kosmik).
+
+### Tekanan Magnetik & Plasma Beta ($\beta$) pada Bintik Matahari
+
+Dalam elektrodinamika Maxwell (`SRC-14`), medan magnetik bukan sekadar alat bantu vektor — ia menyimpan **kerapatan energi** sekaligus **tekanan magnetik isotropik** ke arah tegak lurus garis medan:
+
+$$u_B = P_B = \frac{B^2}{2\mu_0} \qquad (\mu_0 = 4\pi \times 10^{-7}\ \text{N A}^{-2}).$$
+
+Di atmosfer Matahari, perbandingan antara tekanan gas termal $P_{\text{gas}} = n k_B T$ dan tekanan magnetik disebut **parameter plasma beta**: $\beta_{\text{plasma}} \equiv \dfrac{P_{\text{gas}}}{P_B}$. Di **bintik Matahari (*sunspot*)**, medan magnet lokal sangat kuat ($B \approx 0{,}3\ \text{T} = 3\,000\ \text{G}$) sehingga tekanan total di luar dan di dalam fluks magnet harus seimbang:
+
+$$P_{\text{gas, luar}} \approx P_{\text{gas, dalam}} + \frac{B^2}{2\mu_0}.$$
+
+Akibatnya $P_{\text{gas, dalam}}$ (dan suhu bintik Matahari) turun drastis dari $\sim 5\,800\ \text{K}$ menjadi $\sim 4\,000\ \text{K}$, sehingga tampak gelap kontras terhadap fotosfer!
+
+<Contoh judul="Radius girasi proton angin surya & tekanan magnetik bintik Matahari">
+
+<Langkah>
+
+**Bagian A:** Proton energi tinggi ($m_p = 1{,}673\times 10^{-27}\ \text{kg}$, $q = 1{,}602\times 10^{-19}\ \text{C}$) bergerak tegak lurus medan magnet antarbintang Bima Sakti ($B \approx 5\times 10^{-10}\ \text{T} = 5\ \mu\text{G}$) dengan kelajuan $v = 1\,000\ \text{km/s}$. Hitung radius girasi $r_L$!
+$$r_L = \frac{m_p v}{e B} = \frac{(1{,}673\times 10^{-27})(10^6)}{(1{,}602\times 10^{-19})(5\times 10^{-10})} \approx 2{,}09\times 10^7\ \text{m} \approx 21\,000\ \text{km}.$$
+*(Jauh lebih kecil daripada ukuran nebula atau jarak antar bintang $\sim 10^{16}\ \text{m}$, sehingga partikel bermuatan energi sedang terperangkap erat mengikuti garis medan magnet galaksi!)*
+
+</Langkah>
+
+<Langkah>
+
+**Bagian B:** Hitung tekanan magnetik di pusat bintik Matahari dengan $B = 0{,}30\ \text{T}$:
+$$P_B = \frac{B^2}{2\mu_0} = \frac{(0{,}30)^2}{2(4\pi\times 10^{-7})} \approx 3{,}58\times 10^4\ \text{Pa}.$$
+Bandingkan dengan tekanan gas fotosfer Matahari ($P_{\text{fotosfer}} \sim 10^4\text{--}10^5\ \text{Pa}$): $P_B$ sebanding langsung dengan $P_{\text{gas}}$, cukup untuk menekan konveksi panas dari bawah sehingga bintik mendingin!
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="rangkaian-poynting" judul="3. Rangkaian DC/RC, Fluks Poynting & Tekanan Radiasi Foton" tag="Rangkaian & Radiasi EM">
+
+Di instrumen observasi (seperti penguat CCD atau penerima radio), aliran muatan mematuhi Hukum Ohm $V = IR$, daya disipasi $P = VI = I^2R = V^2/R$, serta hukum Kirchhoff rangkaian seri ($R_{\text{seri}} = \sum R_i$) dan paralel ($R_\parallel^{-1} = \sum R_i^{-1}$). Jika sebuah kapasitor berkapasitansi $C$ dikosongkan melalui resistor $R$, PDB terpisah $-C\,\frac{dV}{dt} = \frac{V}{R}$ menghasilkan peluruhan eksponensial $V(t) = V_0 e^{-t/\tau}$ dengan **konstanta waktu $\tau = RC$** — besaran yang mengatur seberapa cepat piksel detektor dapat direset dan dibaca tanpa *ghosting*.
+
+### Vektor Poynting & Tekanan Radiasi
+
+Gelombang elektromagnetik membawa energi sekaligus momentum linear! Laju energi per satuan waktu per satuan luas (fluks intensitas sesaat) diberikan oleh **Vektor Poynting**:
+
+$$\vec{S} = \frac{1}{\mu_0}\left(\vec{E}\times\vec{B}\right), \qquad F = \langle |\vec{S}| \rangle.$$
+
+Karena tiap foton berenergi $E_\gamma$ membawa momentum $p_\gamma = E_\gamma / c$, penyerapan sempurna berkas radiasi berfluks $F$ memberikan **tekanan radiasi**:
+
+$$P_{\text{rad}} = \frac{F}{c} \quad (\text{diserap sempurna}), \qquad P_{\text{rad}} = \frac{2F}{c} \quad (\text{dipantulkan sempurna tegak lurus}).$$
+
+**Aplikasi Tata Surya — Ekor Debu Komet & Batas Eddington:** Untuk butir debu sferis beradius $a$ dan kerapatan $\rho$ pada jarak $r$ dari Matahari, rasio gaya dorong radiasi ($\beta_{\text{rad}} = F_{\text{rad}}/F_{\text{grav}}$) bersifat **independen terhadap jarak $r$** karena baik fluks radiasi maupun gravitasi sama-sama turun sebagai $1/r^2$! Akibatnya, hanya ukuran butir $a$ dan kerapatan $\rho$ yang menentukan apakah debu terdorong keluar membentuk ekor komet yang melengkung menjauhi Matahari (`SRC-06`).
+
+</Bagian>
+
+<Bagian id="kuantum-bohr" judul="4. Foton, Compton, de Broglie & Penurunan Model Atom Bohr" tag="Fisika Kuantum">
+
+Di awal abad ke-20, empat fenomena mikroskopis meruntuhkan fisika klasik sekaligus menyediakan kunci pembaca spektrum bintang (`SRC-04`, `SRC-11`):
+
+1. **Efek Fotolistrik (Prinsip Kerja CCD):** Elektron terikat pada fungsi kerja $\phi$ baru lepas jika energi foton tunggal mencukupi: $K_{\text{maks}} = h\nu - \phi$. Dalam silikon detektor CCD ($\phi_{\text{gap}} \approx 1{,}12\ \text{eV}$), foton inframerah dengan $\lambda > 1\,100\ \text{nm}$ gagal melepaskan fotoelektron karena energinya di bawah celah pita silikon!
+2. **Hamburan Compton:** Tumbukan elastis relativistik antara foton ($\lambda_0$) dan elektron diam ($m_e$) menggeser panjang gelombang foton terhambur pada sudut $\theta$ sebesar:
+   $$\Delta\lambda = \lambda' - \lambda_0 = \frac{h}{m_e c}(1 - \cos\theta), \qquad \lambda_C \equiv \frac{h}{m_e c} \approx 2{,}426\times 10^{-12}\ \text{m}.$$
+   *(Jika elektron justru bergerak sangat cepat dan bertabrakan dengan foton energi rendah — disebut **Inverse Compton** — foton terangkat ke sinar-X/gamma, mekanisme utama radiasi blazar dan efek Sunyaev–Zel'dovich pada gugus galaksi!).*
+3. **Panjang Gelombang de Broglie:** Partikel bermomentum $p$ memiliki sifat gelombang $\lambda_{\text{dB}} = \frac{h}{p}$. Saat bintang katai putih memadat hingga jarak rata-rata antar elektron menjadi sebanding dengan $\lambda_{\text{dB}}$ elektron, prinsip eksklusi Pauli memicu **tekanan degenerasi kuantum** yang menahan keruntuhan gravitasi.
+
+### Penurunan Tingkat Energi Atom Bohr–Rydberg
+
+Dari syarat kuantisasi momentum sudut orbital $L = m_e v r = n\hbar$ (atau $2\pi r = n\lambda_{\text{dB}}$) dan keseimbangan gaya sentripetal Coulomb $\dfrac{m_e v^2}{r} = \dfrac{k_e Z e^2}{r^2}$ untuk inti bermuatan $+Ze$:
+- Eliminasi $v = \dfrac{n\hbar}{m_e r}$ memberi jari-jari orbit terkuantisasi:
+  $$r_n = \frac{n^2 \hbar^2}{k_e Z m_e e^2} = \frac{n^2}{Z}\,a_0, \qquad a_0 \approx 5{,}2918\times 10^{-11}\ \text{m} \text{ (radius Bohr)}.$$
+- Energi mekanik totalnya $E_n = K + U = \frac{1}{2}m_e v^2 - \frac{k_e Z e^2}{r_n} = -\frac{k_e Z e^2}{2 r_n}$ menjadi:
+
+<Rumus judul="Tingkat Energi Kuantum Atom Bohr & Transisi Garis Spektrum">
+
+$$E_n = -\frac{13{,}606\ \text{eV}\cdot Z^2}{n^2}, \qquad \frac{1}{\lambda} = R_\infty Z^2 \left(\frac{1}{n_{\text{bawah}}^2} - \frac{1}{n_{\text{atas}}^2}\right)$$
+
+</Rumus>
+
+*(Untuk tingkat presisi tinggi antara hidrogen vs deuterium, gantilah $m_e$ dengan massa tereduksi $\mu_e = \frac{m_e M_{\text{inti}}}{m_e + M_{\text{inti}}}$ — sedikit menggeser garis $D_\alpha$ dari $H_\alpha$ sebesar $\approx 0{,}18\ \text{nm}$, kunci mengukur rasio D/H primordial untuk membuktikan Big Bang!).*
+
+<Gambar id="tingkat-energi-hidrogen" />
+
+</Bagian>
+
+<Bagian id="fisika-inti-gamow" judul="5. Defek Massa, Kurva Energi Ikat & Efek Terobosan Gamow di Inti Bintang" tag="Fisika Nuklir Bintang">
+
+Inti atom $^A_Z X$ tersusun dari $Z$ proton dan $N = A - Z$ neutron. Massa inti terikat $m_{\text{inti}}$ selalu **lebih kecil** daripada jumlah massa nukleon penyusunnya dalam keadaan bebas. Selisih ini adalah **defek massa** $\Delta m$ yang setara dengan **energi ikat inti** $B$ melalui kesetaraan massa–energi Einstein:
+
+$$\Delta m = Z m_p + N m_n - m_{\text{inti}}, \qquad B = \Delta m\,c^2 \qquad (1\ \text{u} = 931{,}494\ \text{MeV}/c^2).$$
+
+Untuk menghitung **nilai-$Q$ reaksi nuklir** $A + B \to C + D$, berlaku:
+
+$$Q = \left(m_{\text{awal}} - m_{\text{akhir}}\right)c^2 = \left(B_C + B_D\right) - \left(B_A + B_B\right).$$
+
+Jika $Q > 0$, reaksi bersifat **eksotermik** (melepaskan energi). Kurva **energi ikat per nukleon ($B/A$)** naik curam dari hidrogen ke puncak tertinggi di wilayah besi–nikel ($^{62}\text{Ni} \approx 8{,}795\ \text{MeV/nukleon}$, $^{56}\text{Fe} \approx 8{,}790\ \text{MeV/nukleon}$), lalu melandai turun menuju uranium ($\sim 7{,}6\ \text{MeV/nukleon}$). Maka fusi inti ringan maupun fisi inti berat sama-sama melepaskan energi karena keduanya bergerak mendaki kurva menuju puncak besi.
+
+### Paradoks Kuantum di Inti Matahari: Efek Terobosan (*Quantum Tunneling*)
+
+Mengapa fusi proton-proton ($p + p \to {}^2\text{H} + e^+ + \nu_e$) bisa menyala di inti Matahari pada suhu $T_c \approx 1{,}5\times 10^7\ \text{K}$? Mari kita uji dengan fisika klasik!
+- Energi kinetik termal rata-rata satu proton hanyalah $\frac{3}{2}k_B T_c \approx \frac{3}{2}(8{,}62\times 10^{-5}\ \text{eV/K})(1{,}5\times 10^7\ \text{K}) \approx 1{,}94\ \text{keV}$.
+- Sementara untuk mendekati jarak gaya inti kuat $r_0 \approx 1{,}4\times 10^{-15}\ \text{m}$, dua proton harus mendaki **penghalang tolak Coulomb** setinggi:
+  $$V_{\text{Coulomb}} = \frac{k_e e^2}{r_0} \approx \frac{(8{,}99\times 10^9)(1{,}602\times 10^{-19})^2}{1{,}4\times 10^{-15}} \approx 1{,}65\times 10^{-13}\ \text{J} \approx 1{,}03\ \text{MeV}!$$
+
+Penghalang Coulomb $1\,030\ \text{keV}$ lebih dari **$500\times$ lebih tinggi** daripada energi termal rata-rata! Secara fisika klasik, fraksi partikel Maxwell–Boltzmann yang melampaui $1\ \text{MeV}$ adalah $e^{-500} \sim 10^{-217}$ — mustahil ada satu reaksi pun di seluruh umur alam semesta!
+
+<Epistemik jenis="interpretasi" judul="Terobosan Kuantum & Puncak Gamow (SRC-06)">
+
+Penyelesaiannya adalah **dualitas gelombang–partikel de Broglie**: fungsi gelombang proton dengan panjang gelombang $\lambda_{\text{dB}} = h/\sqrt{2 m_p E}$ tidak berhenti mendadak di dinding potensial Coulomb, melainkan meluruh eksponensial menembus penghalang dengan peluang terobosan $P_{\text{tunnel}} \propto \exp\!\big(-(E_G/E)^{1/2}\big)$.
+
+Perkalian dua faktor berlawanan — ekor termal Maxwell–Boltzmann yang turun sebagai $e^{-E/(k_B T)}$ dikalikan peluang terobosan Gamow yang naik tajam seiring $E$ sebagai $e^{-\sqrt{E_G/E}}$ — menghasilkan jendela sempit energi reaksi di sekitar $\sim 5\text{--}10\ \text{keV}$ yang disebut **Puncak Gamow**. Inilah alasan Matahari membakar bahan bakarnya dengan tenang selama 10 miliar tahun alih-alih meledak seketika!
+
+</Epistemik>
+
+<Contoh judul="Energi ikat deuteron, nilai-Q fusi 4p → ⁴He & perbandingan laju massa Matahari">
+
+<Langkah>
+
+**Bagian A — Energi ikat deuteron ($^2\text{H}$):** Diketahui massa atom netral $m({}^1\text{H}) = 1{,}007825\ \text{u}$, $m_n = 1{,}008665\ \text{u}$, dan $m({}^2\text{H}) = 2{,}014102\ \text{u}$ (perhatikan massa elektron atomik di kedua sisi saling meniadakan karena $Z=1$ di kiri dan kanan!).
+$$\Delta m = 1{,}007825 + 1{,}008665 - 2{,}014102 = 0{,}002388\ \text{u},$$
+$$B_d = 0{,}002388 \times 931{,}494\ \text{MeV} \approx 2{,}224\ \text{MeV} \quad (\approx 1{,}11\ \text{MeV/nukleon}).$$
+
+</Langkah>
+
+<Langkah>
+
+**Bagian B — Energi total rantai fusi netto $4\,{}^1\text{H} \to {}^4\text{He} + 2e^+ + 2\nu_e$:** Dalam massa atom netral $4\,m({}^1\text{H}) = 4 \times 1{,}007825 = 4{,}031300\ \text{u}$ (sudah membawa $4e^-$) dan $m({}^4\text{He}) = 4{,}002603\ \text{u}$ (membawa $2e^-$). Ketika $2e^+$ beranihilasi dengan sisa $2e^-$ menjadi sinar gamma, selisih massa total atomik persis menjadi energi yang dilepaskan (termasuk $\sim 2\%$ dibawa kabur neutrino):
+$$\Delta m_{\text{net}} = 4{,}031300 - 4{,}002603 = 0{,}028697\ \text{u} \implies Q_{\text{net}} = 0{,}028697 \times 931{,}494 \approx 26{,}73\ \text{MeV}.$$
+Fraksi massa yang diubah menjadi energi: $\eta = \dfrac{0{,}028697}{4{,}0313} \approx 0{,}00712 \approx 0{,}71\%$!
+
+</Langkah>
+
+<Langkah>
+
+**Bagian C — Laju massa yang berubah menjadi cahaya Matahari:** Dengan $L_\odot = 3{,}828\times 10^{26}\ \text{W}$:
+$$\frac{dm}{dt} = \frac{L_\odot}{c^2} = \frac{3{,}828\times 10^{26}}{(2{,}998\times 10^8)^2} \approx 4{,}26\times 10^9\ \text{kg/s} \approx 4{,}3\ \text{juta ton per detik}!$$
+Dan karena setiap $0{,}71\%$ dari total massa H terbakar menjadi $4{,}26\times 10^9\ \text{kg/s}$ energi, Matahari mengubah sekitar $600$ juta ton hidrogen menjadi helium setiap detik!
+
+</Langkah>
+
+</Contoh>
+
+</Bagian>
+
+<Bagian id="miskonsepsi" judul="6. Miskonsepsi Umum & Cara Mendeteksinya" tag="Audit Logika">
+
+<Miskonsepsi
+  daftar={[
+    {
+      salah: 'Medan magnet mempercepat partikel bermuatan di sepanjang garis medan seperti medan listrik, sehingga gerak siklotron menaikkan energi kinetik partikel.',
+      kenapaKeliru: 'Mengira setiap gaya (F = qv × B) pasti melakukan usaha W = F·s. Pada gaya magnetik, arah gaya selalu tegak lurus terhadap vektor kecepatan v setiap saat.',
+      caraDeteksi: 'Hitung laju perubahan energi kinetik dK/dt = F·v = q(v × B)·v ≡ 0 karena hasil kali tripel skalar dua vektor identik selalu nol!',
+      benar: 'Gaya magnetik hanya mengubah arah vektor kecepatan (mengikat partikel dalam heliks beradius Larmor r_L = mv_⊥/(|q|B)), tidak pernah menaikkan energi kinetiknya secara langsung.',
+    },
+    {
+      salah: 'Saat menghitung energi ikat inti atau reaksi fusi, massa proton bebas m_p selalu boleh dicampur dengan massa atom netral dari tabel isotop.',
+      kenapaKeliru: 'Tabel massa atom standar mencantumkan massa ATOM netral (sudah termasuk massa Z elektron dan energi ikat elektron kecil), bukan massa inti telanjang! Kesalahan sebesar Z m_e (~0,511 MeV per elektron!) muncul seketika bila tidak konsisten.',
+      caraDeteksi: 'Lakukan "neraca jumlah elektron": cek apakah jumlah elektron yang tersimpan di dalam simbol atom netral ruas kiri sama dengan ruas kanan (termasuk saat ada produksi/tangkapan positron β⁺ atau elektron β⁻!).',
+      benar: 'Gunakan massa atom netral di kedua ruas untuk reaksi inti biasa, dan tambahkan 2m_e pada sisi produk khusus untuk peluruhan/reaksi β⁺ (seperti p → n + e⁺ + ν_e) sebelum beranihilasi.',
+    },
+    {
+      salah: 'Sebuah foton berenergi rendah dan elektron dengan energi kinetik yang sama pasti memiliki panjang gelombang de Broglie yang sama pula.',
+      kenapaKeliru: 'Menyamakan hubungan energi–momentum foton relativistik (E = pc) dengan partikel bermassa non-relativistik (E = p²/(2m)).',
+      caraDeteksi: 'Bandingkan pada E = 10 eV: p_foton = E/c memberi λ_foton = 124 nm, sedangkan p_elektron = √(2 m_e E) memberi λ_e ≈ 0,39 nm — berbeda lebih dari 300 kali lipat!',
+      benar: 'Panjang gelombang selalu ditentukan oleh momentum p = h/λ, dan kaitan E terhadap p berbeda drastis antara partikel tak bermassa (E = pc) vs partikel bermassa (E_k = p²/(2m)).',
+    },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="cek-latihan" judul="7. Cek Pemahaman, Latihan Bertingkat & Ujian Logika" tag="Asesmen Mendalam">
+
+<CekPaham
+  id="f6-cek-1"
+  pertanyaan="Berapa energi foton dengan panjang gelombang $124\\ \\text{nm}$?"
+  opsi={['$10\\ \\text{eV}$', '$1\\ \\text{eV}$', '$100\\ \\text{eV}$', '$0{,}1\\ \\text{eV}$']}
+  jawaban={0}
+  penjelasan="$E \\approx 1240/124 = 10{,}0\\ \\text{eV}$. Foton ini berada di pita ultraviolet vakum dan mendekati energi ionisasi hidrogen ($13{,}6\\ \\text{eV}$)."
+/>
+
+<CekPaham
+  id="f6-cek-2"
+  pertanyaan="Dua resistor $6\\ \\Omega$ disusun paralel. Berapa hambatan totalnya?"
+  opsi={['$3\\ \\Omega$', '$12\\ \\Omega$', '$6\\ \\Omega$', '$1{,}5\\ \\Omega$']}
+  jawaban={0}
+  penjelasan="$1/R_\\parallel = 1/6 + 1/6 = 1/3 \\implies R_\\parallel = 3\\ \\Omega$. Dua hambatan identik yang dipasang paralel selalu menghasilkan setengah nilai satunya."
+/>
+
+<LatihanBertingkat
+  soal={[
+    {
+      id: 'f6-lat-1',
+      tipe: 'konseptual',
+      pertanyaan:
+        'Sebuah ion $\\text{He}^+$ (helium terionisasi tunggal, $Z = 2$) dan atom hidrogen netral $\\text{H}$ ($Z = 1$) berada di fotosfer bintang panas. Apakah garis emisi transisi $n = 4 \\to 2$ pada $\\text{He}^+$ memiliki panjang gelombang yang persis sama dengan garis Balmer $\\text{H}\\beta$ ($n = 4 \\to 2$ pada $\\text{H}$), atau berimpit dengan transisi lain pada $\\text{H}$?',
+      petunjuk: 'Gunakan rumus Bohr $E_n = -13{,}6\\,Z^2 / n^2$ dan cek rasio $Z^2 / n^2 = 2^2 / n^2 = 1 / (n/2)^2$!',
+      langkahKunci: [
+        'Pada $\\text{He}^+$ ($Z = 2$), selisih energi $n = 4 \\to 2$ adalah $\\Delta E = 13{,}6 \\times 2^2 \\left(\\frac{1}{2^2} - \\frac{1}{4^2}\\right) = 13{,}6\\left(1 - \\frac{1}{4}\\right) = 10{,}2\\ \\text{eV}$.',
+        'Nilai $10{,}2\\ \\text{eV}$ ini IDENTIK (hingga koreksi kecil massa tereduksi inti!) dengan transisi $n = 2 \\to 1$ (Lyman-$\\alpha$!) pada atom hidrogen: $13{,}6(1 - 1/4) = 10{,}2\\ \\text{eV}$!',
+        'Secara umum, setiap garis genap-ke-genap pada $\\text{He}^+$ (deret Pickering $n \\to 4$ dengan $n$ genap) berimpit amat dekat dengan deret Balmer hidrogen ($n/2 \\to 2$), hanya tergeser sedikit $\\sim 0{,}2\\ \\text{nm}$ akibat beda massa tereduksi inti ${}^4\\text{He}$ vs ${}^1\\text{H}$!',
+      ],
+      rubrik: [
+        'Memasukkan faktor $Z^2 = 4$ pada rumus energi Bohr ion mirip-hidrogen.',
+        'Menunjukkan $\\text{He}^+\\,(4\\to 2)$ berimpit dekat dengan $\\text{H}\\,(2\\to 1)$ (dan membedakan efek massa tereduksi jika disebut).',
+      ],
+    },
+    {
+      id: 'f6-lat-2',
+      tipe: 'derivasi',
+      pertanyaan:
+        'Turunkan **ukuran kritis butir debu antarplanet $a_{\\text{krit}}$** (berbentuk bola berjari-jari $a$ dan kerapatan $\\rho_d$, menyerap $100\\%$ cahaya Matahari tanpa memantul) di mana gaya dorong tekanan radiasi Matahari tepat menyeimbangkan gaya tarik gravitasi Matahari ($\\beta_{\\text{rad}} = F_{\\text{rad}}/F_{\\text{grav}} = 1$). Tunjukkan secara eksplisit bahwa jarak $r$ dari Matahari lenyap dari persamaan!',
+      petunjuk: 'Tulis $F_{\\text{rad}} = P_{\\text{rad}}\\cdot(\\pi a^2) = \\frac{L_\\odot}{4\\pi r^2 c}(\\pi a^2)$ dan $F_{\\text{grav}} = \\frac{G M_\\odot (\\frac{4}{3}\\pi a^3 \\rho_d)}{r^2}$.',
+      langkahKunci: [
+        'Fluks radiasi Matahari pada jarak $r$ adalah $F(r) = \\frac{L_\\odot}{4\\pi r^2}$. Untuk bola penyerap sempurna dengan luas penampang efektif $\\sigma_{\\text{abs}} = \\pi a^2$, gaya tekan radiasi total adalah $F_{\\text{rad}} = \\frac{F(r)}{c}\\pi a^2 = \\frac{L_\\odot a^2}{4 c r^2}$.',
+        'Massa butir debu $m_d = \\frac{4}{3}\\pi a^3 \\rho_d$, sehingga gaya gravitasi Matahari adalah $F_{\\text{grav}} = \\frac{4\\pi G M_\\odot \\rho_d a^3}{3 r^2}$.',
+        'Samakan $F_{\\text{rad}} = F_{\\text{grav}}$: faktor $1/r^2$ di kedua ruas langsung saling meniadakan! Mengisolasi $a_{\\text{krit}}$ memberi:',
+        '$$a_{\\text{krit}} = \\frac{3 L_\\odot}{16 \\pi G M_\\odot c \\rho_d}.$$ Untuk $\\rho_d \\approx 2\\,500\\ \\text{kg/m}^3$ (silikat), hasilnya $a_{\\text{krit}} \\approx 0{,}23\\ \\mu\\text{m}$: butir sub-mikrometer langsung tertiup keluar dari Tata Surya oleh cahaya Matahari!',
+      ],
+      rubrik: [
+        'Menggunakan luas penampang cakram $\\pi a^2$ (bukan luas permukaan $4\\pi a^2$) pada gaya tekan radiasi terarah.',
+        'Membuktikan pembatalan $1/r^2$ dan menurunkan $a_{\\text{krit}} = 3L_\\odot/(16\\pi G M_\\odot c \\rho_d)$.',
+      ],
+    },
+    {
+      id: 'f6-lat-3',
+      tipe: 'fermi',
+      pertanyaan:
+        'Sebuah kamera CCD astronomi memiliki kapasitansi piksel efektif $C = 50\\ \\text{fF}$ ($50\\times 10^{-15}\\ \\text{F}$) dan dirangkai dengan hambatan pembacaan $R = 20\\ \\text{k}\\Omega$. Selain itu, satu elektron punya muatan $e = 1{,}6\\times 10^{-19}\\ \\text{C}$. Berapa perubahan tegangan pada satu piksel jika terisi penuh oleh $N = 50\,000$ fotoelektron (*full-well capacity*), dan berapa konstanta waktu RC-nya?',
+      petunjuk: 'Gunakan $\\Delta V = Q/C = (Ne)/C$ dan $\\tau = RC$.',
+      langkahKunci: [
+        'Total muatan yang terkumpul di satu piksel: $Q = N e = (5\\times 10^4)(1{,}6\\times 10^{-19}) = 8\\times 10^{-15}\\ \\text{C}$.',
+        'Kenaikan tegangan piksel: $\\Delta V = Q/C = \\frac{8\\times 10^{-15}}{50\\times 10^{-15}} = 0{,}16\\ \\text{V}$ ($160\\ \\text{mV}$ — sangat mudah dideteksi penguat elektronik!).',
+        'Konstanta waktu peluruhan pembacaan: $\\tau = RC = (2\\times 10^4\\ \\Omega)(5\\times 10^{-14}\\ \\text{F}) = 1{,}0\\times 10^{-9}\\ \\text{s} = 1{,}0\\ \\text{ns}$, memungkinkan jutaan piksel dibaca hanya dalam beberapa detik.',
+      ],
+      rubrik: [
+        'Menghitung muatan $Q = Ne$ dalam Coulomb dan $\\Delta V = Q/C \\approx 0{,}16\\ \\text{V}$.',
+        'Menghitung $\\tau = RC = 1{,}0\\ \\text{ns}$ dengan satuan benar.',
+      ],
+    },
+    {
+      id: 'f6-lat-4',
+      tipe: 'analisis_data',
+      pertanyaan:
+        'Dalam spektrum sebuah nebula antarbintang, dua garis emisi teramati tepat pada $\\lambda_1 = 656{,}28\\ \\text{nm}$ dan $\\lambda_2 = 656{,}10\\ \\text{nm}$. Garis pertama adalah $\\text{H}\\alpha$ ($n=3\\to 2$ hidrogen), sedangkan garis kedua diduga adalah $\\text{D}\\alpha$ (deuterium, dengan inti bermassa $m_D \\approx 2 m_p$). Buktikan dengan rasio massa tereduksi elektron $\\mu_e = \\dfrac{m_e m_{\\text{inti}}}{m_e + m_{\\text{inti}}}$ apakah pergeseran $-0{,}18\\ \\text{nm}$ memang cocok dengan deuterium!',
+      petunjuk: 'Karena energi transisi $\\propto \\mu_e$, maka $\\lambda \\propto 1/\\mu_e \\propto 1 + m_e/m_{\\text{inti}}$. Hitung $\\lambda_D - \\lambda_H$.',
+      langkahKunci: [
+        'Dari $E_n \\propto \\mu_e = \\frac{m_e}{1 + m_e/m_{\\text{inti}}}$, panjang gelombang memenuhi $\\lambda \\propto 1 + \\frac{m_e}{m_{\\text{inti}}}$.',
+        'Selisih fraksional antara deuterium ($m_D \\approx 2 m_p$) dan protium ($m_H = m_p$): $\\frac{\\lambda_D - \\lambda_H}{\\lambda_H} \\approx \\frac{m_e}{2m_p} - \\frac{m_e}{m_p} = -\\frac{m_e}{2 m_p}$.',
+        'Substitusikan $m_e / m_p \\approx 1/1836{,}15$: $\\Delta\\lambda = -656{,}28\\ \\text{nm} \\times \\frac{1}{3\,672{,}3} \\approx -0{,}179\\ \\text{nm} \\implies \\lambda_D \\approx 656{,}10\\ \\text{nm}$! Cocok tepat hingga tiga angka desimal!',
+      ],
+      rubrik: [
+        'Menunjukkan koreksi massa tereduksi menggeser $\\lambda$ sebesar faktor $(1 + m_e/m_{\\text{inti}})$.',
+        'Menghitung $\\Delta\\lambda \\approx -0{,}179\\ \\text{nm}$ dan mengonfirmasi identifikasi garis deuterium.',
+      ],
+    },
+    {
+      id: 'f6-lat-5',
+      tipe: 'terbuka',
+      pertanyaan:
+        'Jelaskan secara fisis bagaimana hubungan antara **kurva energi ikat per nukleon ($B/A$)** dan **penghalang Coulomb ($V_C \\propto Z_1 Z_2$)** menjelaskan mengapa bintang masif hanya bisa menghasilkan energi nuklir sampai terbentuknya inti besi ($^{56}\\text{Fe}$) lalu segera meledak sebagai supernova keruntuhan inti (*core-collapse supernova*)!',
+      petunjuk: 'Tinjau dua hal bersamaan: (1) tanda nilai-$Q$ untuk fusi di atas besi ($A > 56$), dan (2) kenaikan suhu menyala akibat $Z_1 Z_2$ yang membesar.',
+      langkahKunci: [
+        'Pertama, sepanjang rantai fusi H → He → C → O → Ne → Mg → Si → Fe, $Z$ inti terus bertambah sehingga penghalang tolak Coulomb ($V_C \\propto Z_1 Z_2$) melonjak drastis. Setiap tahap membutuhkan suhu inti jauh lebih panas (dari $1{,}5\\times 10^7\\ \\text{K}$ ke $\\sim 3\\times 10^9\\ \\text{K}$), yang mempercepat pembakaran bahan bakar dan kehilangan energi via neutrino.',
+        'Kedua, begitu inti bintang terisi $^{56}\\text{Fe}$ / grup besi di puncak kurva $B/A$, menggabungkan dua inti besi ($A > 56$) justru **menyerap energi (endotermik, $Q < 0$)** karena kurva $B/A$ menurun setelah besi!',
+        'Tanpa sumber energi baru untuk menjaga tekanan termal dan kehilangan energi lewat fotodisintegrasi serta penangkapan elektron, inti besi runtuh bebas dalam sepersekian detik memicu supernova.',
+      ],
+      rubrik: [
+        'Menjelaskan kenaikan penghalang Coulomb $\\propto Z_1 Z_2$ menuntut suhu fusi makin tinggi.',
+        'Menjelaskan kurva $B/A$ memuncak di grup besi sehingga reaksi fusi melampaui besi bersifat endotermik ($Q < 0$).',
+      ],
+    },
+  ]}
+/>
+
+<UjianLogika
+  items={[
+    {
+      id: 'f6-log-1',
+      tipe: 'ubah_asumsi',
+      pertanyaan:
+        'Andaikan dalam alam semesta paralel konstanta Planck $h$ menjadi **10 kali lebih kecil** (lebih mendekati limit klasik $h \\to 0$), sementara massa proton $m_p$, muatan $e$, dan suhu inti Matahari $T_c = 1{,}5\\times 10^7\\ \\text{K}$ tetap sama. Bagaimana dampak langsungnya terhadap **panjang gelombang de Broglie proton** $\\lambda_{\\text{dB}}$ dan **laju fusi nuklir Matahari** via terobosan Gamow?',
+      petunjuk: 'Periksa ketergantungan $\\lambda_{\\text{dB}} = h/p$ dan argumen eksponensial penghalang terobosan kuantum $P_{\\text{tunnel}} \\propto \\exp(-\\text{konst}/h)$.',
+      rubrik: [
+        'Jika $h$ turun $10\\times$, panjang gelombang de Broglie proton menyusut $10\\times$ pada energi yang sama (proton berperilaku jauh lebih "klasik" seperti bola keras).',
+        'Peluang terobosan kuantum menembus penghalang Coulomb $P \\propto \\exp(-2\\pi Z_1 Z_2 e^2 / (4\\pi\\varepsilon_0 \\hbar v))$ anjlok drastis secara eksponensial ($P_{\\text{baru}} = P_{\\text{lama}}^{10}$!), memadamkan fusi di $1{,}5\\times 10^7\\ \\text{K}$ hingga Matahari harus menyusut jauh lebih panas!',
+      ],
+      jawabanKunci:
+        'Jika $h$ berkurang $10\\times$, $\\lambda_{\\text{dB}} = h/p$ mengecil sepuluh kali lipat sehingga sifat gelombang proton hampir lenyap. Karena koefisien eksponen penghalang Gamow mengandung $1/\\hbar$, peluang terobosan $P_{\\text{tunnel}}$ turun menjadi pangkat $10$-nya ($10^{-10}$ kali lebih kecil jika sebelumnya $0{,}1$!). Tungku fusi hidrogen akan padam total pada $1{,}5\\times 10^7\\ \\text{K}$, memaksa gravitasi memampatkan inti Matahari sampai jauh lebih panas agar fusi bisa menyala kembali.',
+    },
+    {
+      id: 'f6-log-2',
+      tipe: 'apa_salah',
+      pertanyaan:
+        'Seorang siswa membaca bahwa gaya radiasi pada cermin datar sempurna yang memantulkan cahaya tegak lurus adalah $2FA/c$, sedangkan pada penyerap hitam adalah $FA/c$. Lalu untuk menghitung **Batas Eddington** pada bagian dalam bintang (di mana foton tersebar merata ke segala arah dan berinteraksi dengan elektron lewat hamburan Thomson), ia memakai $2FA/c$ karena elektron memantulkan foton! Apa kekeliruan fisika di sini?',
+      petunjuk: 'Cek arah rata-rata foton terhambur pada hamburan Thomson (simetri maju–mundur) vs cermin datar yang memantulkan seluruh foton tepat $180^\\circ$ ke belakang!',
+      rubrik: [
+        'Pada cermin datar, seluruh foton dipantulkan tepat balik ($\\Delta p = 2 p_\\gamma$).',
+        'Pada hamburan Thomson di dalam bintang, foton terhambur **simetris ke arah depan dan belakang** ($\\langle \\cos\\theta \\rangle = 0$), sehingga rata-rata momentum foton setelah terhambur adalah NOL — transfer momentum bersih per hamburan tepat sama dengan kasus penyerapan murni ($\\Delta p = p_\\gamma = E_\\gamma/c$), bukan $2 p_\\gamma$!',
+      ],
+      jawabanKunci:
+        'Faktor $2$ hanya muncul apabila foton membalik arah tepat $180^\\circ$ ke belakang seperti di cermin datar. Sebaliknya, hamburan Thomson bersifat simetris antara arah depan ($\\theta$) dan arah belakang ($180^\\circ - \\theta$): rata-rata komponen momentum arah maju sesudah tumbukan persis nol! Dengan demikian, transfer momentum bersih per foton terhambur hanyalah $p_{\\text{awal}} - 0 = E_\\gamma / c$ — identik dengan penyerapan sempurna ($FA/c$, atau $L\\kappa/(4\\pi r^2 c)$ tanpa faktor $2$).',
+    },
+    {
+      id: 'f6-log-3',
+      tipe: 'prediksi_akibat',
+      pertanyaan:
+        'Jika di suatu planet berbatu seluruh medan magnet globalnya tiba-tiba mati menjadi nol ($B = 0$) namun atmosfer dan massanya awalnya tetap, apa yang terjadi pada partikel bermuatan angin surya (proton & elektron berkecepatan $\\sim 500\\ \\text{km/s}$) yang datang mengarah ke planet?',
+      petunjuk: 'Evaluasi radius girasi Larmor $r_L = mv/(qB)$ ketika $B \\to 0$ dan dampaknya terhadap atmosfer atas.',
+      rubrik: [
+        'Ketika $B \\to 0$, gaya Lorentz magnetik lenyap dan radius Larmor $r_L \\to \\infty$ — partikel bermuatan angin surya tidak lagi terbelokkan mengelilingi garis medan magnet.',
+        'Akibatnya angin surya menumbuk langsung ionosfer dan atmosfer atas planet tanpa perisai magnetosfer, mengikis lapisan gas ringan melalui *atmospheric sputtering* (mirip nasib atmosfer Mars!).',
+      ],
+      jawabanKunci:
+        'Dengan hilangnya medan magnet ($B \\to 0$), gaya pembelok Lorentz $q\\vec{v}\\times\\vec{B}$ lenyap ($r_L \\to \\infty$). Aliran proton dan elektron angin surya tidak lagi dibelokkan ke sabuk radiasi atau daerah kutub (aurora), melainkan menembus lurus menghantam eksosfer dan atmosfer atas secara langsung — mentransfer momentum ke molekul atmosfer melalui proses *sputtering* dan perlahan mengikis atmosfer serta air permukaan dalam skala waktu geologis.',
+    },
+  ]}
+/>
+
+<Refleksi
+  id="f6-refleksi-1"
+  pertanyaan="Mengapa gaya listrik $10^{36}$ kali lebih kuat daripada gravitasi di tingkat proton, tetapi alam semesta skala planet, bintang, dan galaksi justru dikendalikan oleh gravitasi — sementara reaksi di pusat Matahari baru bisa menyala berkat mekanika kuantum?"
+/>
+
+<ChecklistMastery
+  items={[
+    { id: 'f6-m1', gerbang: 'derivasi', teks: 'Menerapkan Hukum Gauss bola dan membuktikan secara kuantitatif mengapa plasma kosmik bersifat kuasi-netral.' },
+    { id: 'f6-m2', gerbang: 'derivasi', teks: 'Menghitung radius girasi Larmor r_L = mv/(|q|B), frekuensi siklotron, dan plasma β = P_gas / (B²/2μ₀).' },
+    { id: 'f6-m3', gerbang: 'derivasi', teks: 'Menurunkan ukuran kritis debu a_krit terhadap tekanan radiasi Poynting dan menghitung konstanta waktu RC detektor.' },
+    { id: 'f6-m4', gerbang: 'derivasi', teks: 'Menurunkan energi Bohr E_n = −13,6 Z²/n² dengan koreksi massa tereduksi μ_e, Compton Δλ, dan fotolistrik.' },
+    { id: 'f6-m5', gerbang: 'logika', teks: 'Menghitung defek massa/nilai-Q reaksi fusi serta menjelaskan peran Terobosan Gamow di inti bintang.' },
+  ]}
+/>
+
+</Bagian>
+
+<Bagian id="konstanta-sumber" judul="8. Konstanta & Referensi Akademik" tag="Rujukan Modul F6">
+
+<Konstanta
+  data={[
+    { simbol: 'k_e = 1/(4πε₀)', nilai: '8,98755 × 10⁹', satuan: 'N m² C⁻²' },
+    { simbol: 'μ₀ (permeabilitas vakum)', nilai: '4π × 10⁻⁷', satuan: 'N A⁻²' },
+    { simbol: 'e (muatan elementer)', nilai: '1,60218 × 10⁻¹⁹', satuan: 'C' },
+    { simbol: 'm_e (massa elektron)', nilai: '9,10938 × 10⁻³¹', satuan: 'kg' },
+    { simbol: 'm_p (massa proton)', nilai: '1,67262 × 10⁻²⁷', satuan: 'kg' },
+    { simbol: '1 u (satuan massa atom)', nilai: '931,494', satuan: 'MeV / c²' },
+    { simbol: 'R_∞ (konstanta Rydberg energi)', nilai: '13,6057', satuan: 'eV' },
+    { simbol: 'λ_C = h/(m_e c) (Compton)', nilai: '2,42631 × 10⁻¹²', satuan: 'm' },
+  ]}
+/>
+
+<ReferensiSumber
+  sumberIds={['SRC-04', 'SRC-06', 'SRC-11', 'SRC-14']}
+  pemetaan={[
+    { sumberId: 'SRC-04', rujukan: 'MIT OCW 8.02 (Electromagnetism) & 8.04 (Quantum Physics I): Gauss, Lorentz, Compton, Bohr, dan tunneling.' },
+    { sumberId: 'SRC-06', rujukan: 'Carroll & Ostlie (2e), Bab 5 & 10: spektrum Bohr, massa tereduksi, tekanan radiasi & terobosan Gamow inti bintang.' },
+    { sumberId: 'SRC-11', rujukan: 'OpenStax University Physics Vol. 2 (Gauss, Lorentz, RC) & Vol. 3 (kuantum foton, atom, dan energi ikat nuklir).' },
+    { sumberId: 'SRC-14', rujukan: 'Griffiths Introduction to Electrodynamics (5e), Ch. 2, 5, 8: hukum Gauss, gerak siklotron, vektor Poynting & tekanan magnetik.' },
+  ]}
+/>
+
+</Bagian>
